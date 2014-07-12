@@ -145,6 +145,8 @@
         case MOS6502AddressModeAbsoluteXIndexed:
         case MOS6502AddressModeAbsoluteYIndexed:
         case MOS6502AddressModeIndirect:
+            disasm->prefix.addressSize = 2;
+            disasm->prefix.operandSize = 2;
             return 3;
 
         case MOS6502AddressModeImmediate:
@@ -154,9 +156,13 @@
         case MOS6502AddressModeZeropage:
         case MOS6502AddressModeZeropageXIndexed:
         case MOS6502AddressModeZeropageYIndexed:
+            disasm->prefix.addressSize = 2;
+            disasm->prefix.operandSize = 2;
             return 2;
 
         default:
+            disasm->prefix.addressSize = 0;
+            disasm->prefix.operandSize = 0;
             return 1;
     }
 }
@@ -266,33 +272,36 @@
             operand = [_file readUInt16AtVirtualAddress:disasm->virtualAddr + 1];
             operandString = [NSString stringWithFormat:@"$%04X", operand];
             strcpy(disasm->operand1.mnemonic, operandString.UTF8String);
-            disasm->operand1.type = DISASM_OPERAND_MEMORY_TYPE;
+            disasm->operand1.type = DISASM_OPERAND_MEMORY_TYPE | DISASM_OPERAND_ABSOLUTE;
             disasm->operand1.memory.baseRegister = operand;
             disasm->operand1.memory.displacement = 0;
             disasm->operand1.memory.indexRegister = 0;
             disasm->operand1.memory.scale = 1;
+            disasm->operand1.immediatValue = operand;
             break;
 
         case MOS6502AddressModeAbsoluteXIndexed:
             operand = [_file readUInt16AtVirtualAddress:disasm->virtualAddr + 1];
             operandString = [NSString stringWithFormat:@"$%04X,X", operand];
             strcpy(disasm->operand1.mnemonic, operandString.UTF8String);
-            disasm->operand1.type = DISASM_OPERAND_MEMORY_TYPE;
+            disasm->operand1.type = DISASM_OPERAND_MEMORY_TYPE | DISASM_OPERAND_ABSOLUTE;
             disasm->operand1.memory.baseRegister = operand;
             disasm->operand1.memory.displacement = 0;
-            disasm->operand1.memory.indexRegister = 0;
+            disasm->operand1.memory.indexRegister = 1;
             disasm->operand1.memory.scale = 1;
+            disasm->operand1.immediatValue = operand;
             break;
 
         case MOS6502AddressModeAbsoluteYIndexed:
             operand = [_file readUInt16AtVirtualAddress:disasm->virtualAddr + 1];
             operandString = [NSString stringWithFormat:@"$%04X,Y", operand];
             strcpy(disasm->operand1.mnemonic, operandString.UTF8String);
-            disasm->operand1.type = DISASM_OPERAND_MEMORY_TYPE;
+            disasm->operand1.type = DISASM_OPERAND_MEMORY_TYPE | DISASM_OPERAND_ABSOLUTE;
             disasm->operand1.memory.baseRegister = operand;
             disasm->operand1.memory.displacement = 0;
-            disasm->operand1.memory.indexRegister = 0;
+            disasm->operand1.memory.indexRegister = 2;
             disasm->operand1.memory.scale = 1;
+            disasm->operand1.immediatValue = operand;
             break;
 
         case MOS6502AddressModeImmediate:
@@ -307,33 +316,36 @@
             operand = [_file readUInt16AtVirtualAddress:disasm->virtualAddr + 1];
             operandString = [NSString stringWithFormat:@"($%04X)", operand];
             strcpy(disasm->operand1.mnemonic, operandString.UTF8String);
-            disasm->operand1.type = DISASM_OPERAND_MEMORY_TYPE;
+            disasm->operand1.type = DISASM_OPERAND_MEMORY_TYPE | DISASM_OPERAND_ABSOLUTE;
             disasm->operand1.memory.baseRegister = operand;
             disasm->operand1.memory.displacement = 0;
             disasm->operand1.memory.indexRegister = 0;
             disasm->operand1.memory.scale = 1;
+            disasm->operand1.immediatValue = operand;
             break;
 
         case MOS6502AddressModeIndirectXIndexed:
             operand = [_file readUInt8AtVirtualAddress:disasm->virtualAddr + 1];
             operandString = [NSString stringWithFormat:@"($%02X,X)", operand];
             strcpy(disasm->operand1.mnemonic, operandString.UTF8String);
-            disasm->operand1.type = DISASM_OPERAND_MEMORY_TYPE;
+            disasm->operand1.type = DISASM_OPERAND_MEMORY_TYPE | DISASM_OPERAND_ABSOLUTE;
             disasm->operand1.memory.baseRegister = operand;
             disasm->operand1.memory.displacement = 0;
-            disasm->operand1.memory.indexRegister = 0;
+            disasm->operand1.memory.indexRegister = 1;
             disasm->operand1.memory.scale = 1;
+            disasm->operand1.immediatValue = operand;
             break;
 
         case MOS6502AddressModeIndirectYIndexed:
             operand = [_file readUInt8AtVirtualAddress:disasm->virtualAddr + 1];
             operandString = [NSString stringWithFormat:@"($%02X),Y", operand];
             strcpy(disasm->operand1.mnemonic, operandString.UTF8String);
-            disasm->operand1.type = DISASM_OPERAND_MEMORY_TYPE;
+            disasm->operand1.type = DISASM_OPERAND_MEMORY_TYPE | DISASM_OPERAND_ABSOLUTE;
             disasm->operand1.memory.baseRegister = operand;
             disasm->operand1.memory.displacement = 0;
-            disasm->operand1.memory.indexRegister = 0;
+            disasm->operand1.memory.indexRegister = 2;
             disasm->operand1.memory.scale = 1;
+            disasm->operand1.immediatValue = operand;
             break;
 
         case MOS6502AddressModeZeropage:
@@ -345,6 +357,7 @@
             disasm->operand1.memory.displacement = 0;
             disasm->operand1.memory.indexRegister = 0;
             disasm->operand1.memory.scale = 1;
+            disasm->operand1.immediatValue = operand;
             break;
 
         case MOS6502AddressModeZeropageXIndexed:
@@ -354,8 +367,9 @@
             disasm->operand1.type = DISASM_OPERAND_MEMORY_TYPE;
             disasm->operand1.memory.baseRegister = operand;
             disasm->operand1.memory.displacement = 0;
-            disasm->operand1.memory.indexRegister = 0;
+            disasm->operand1.memory.indexRegister = 1;
             disasm->operand1.memory.scale = 1;
+            disasm->operand1.immediatValue = operand;
             break;
 
         case MOS6502AddressModeZeropageYIndexed:
@@ -365,8 +379,12 @@
             disasm->operand1.type = DISASM_OPERAND_MEMORY_TYPE;
             disasm->operand1.memory.baseRegister = operand;
             disasm->operand1.memory.displacement = 0;
-            disasm->operand1.memory.indexRegister = 0;
+            disasm->operand1.memory.indexRegister = 2;
             disasm->operand1.memory.scale = 1;
+            disasm->operand1.immediatValue = operand;
+            break;
+
+        case MOS6502AddressModeImplied:
             break;
 
         default:
@@ -451,9 +469,12 @@
             disasm->operand1.immediatValue = operand;
             break;
 
+        case MOS6502AddressModeImplied:
+            break;
+
         default:
-            NSLog(@"Internal error: branch opcode with address mode %lu found",
-                  opcode->addressMode);
+            NSLog(@"Internal error: branch opcode %@ with address mode %lu found",
+                  [NSString stringWithUTF8String:opcode->name], opcode->addressMode);
             break;
     }
 }
