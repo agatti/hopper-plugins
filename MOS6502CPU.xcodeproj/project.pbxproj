@@ -1,0 +1,345 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		6801368719706CC5004964BD /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6801368619706CC5004964BD /* CoreFoundation.framework */; };
+		6801368D19706CC5004964BD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6801368B19706CC5004964BD /* InfoPlist.strings */; };
+		6801369719706DE8004964BD /* MOS6502CPU.m in Sources */ = {isa = PBXBuildFile; fileRef = 6801369619706DE8004964BD /* MOS6502CPU.m */; };
+		680136AF19707514004964BD /* MOS6502Ctx.m in Sources */ = {isa = PBXBuildFile; fileRef = 680136AE19707514004964BD /* MOS6502Ctx.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		6801368319706CC5004964BD /* MOS6502CPU.hopperCPU */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MOS6502CPU.hopperCPU; sourceTree = BUILT_PRODUCTS_DIR; };
+		6801368619706CC5004964BD /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		6801368A19706CC5004964BD /* MOS6502CPU-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MOS6502CPU-Info.plist"; sourceTree = "<group>"; };
+		6801368C19706CC5004964BD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		6801368E19706CC5004964BD /* MOS6502CPU-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MOS6502CPU-Prefix.pch"; sourceTree = "<group>"; };
+		6801369519706DE8004964BD /* MOS6502CPU.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOS6502CPU.h; sourceTree = "<group>"; };
+		6801369619706DE8004964BD /* MOS6502CPU.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOS6502CPU.m; sourceTree = "<group>"; };
+		680136AD19707514004964BD /* MOS6502Ctx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOS6502Ctx.h; sourceTree = "<group>"; };
+		680136AE19707514004964BD /* MOS6502Ctx.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOS6502Ctx.m; sourceTree = "<group>"; };
+		680136B319708105004964BD /* MOS6502Opcodes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MOS6502Opcodes.h; sourceTree = "<group>"; };
+		68E9E6691971321A00D8386A /* CommonTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CommonTypes.h; path = Hopper/CommonTypes.h; sourceTree = "<group>"; };
+		68E9E66A1971321A00D8386A /* CPUContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPUContext.h; path = Hopper/CPUContext.h; sourceTree = "<group>"; };
+		68E9E66B1971321A00D8386A /* CPUDefinition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPUDefinition.h; path = Hopper/CPUDefinition.h; sourceTree = "<group>"; };
+		68E9E66C1971321A00D8386A /* DisasmStruct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DisasmStruct.h; path = Hopper/DisasmStruct.h; sourceTree = "<group>"; };
+		68E9E66D1971321A00D8386A /* FileLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FileLoader.h; path = Hopper/FileLoader.h; sourceTree = "<group>"; };
+		68E9E66E1971321A00D8386A /* Hopper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Hopper.h; path = Hopper/Hopper.h; sourceTree = "<group>"; };
+		68E9E66F1971321A00D8386A /* HopperPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HopperPlugin.h; path = Hopper/HopperPlugin.h; sourceTree = "<group>"; };
+		68E9E6701971321A00D8386A /* HopperTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HopperTool.h; path = Hopper/HopperTool.h; sourceTree = "<group>"; };
+		68E9E6711971321A00D8386A /* HPBasicBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPBasicBlock.h; path = Hopper/HPBasicBlock.h; sourceTree = "<group>"; };
+		68E9E6721971321A00D8386A /* HPDetectedFileType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPDetectedFileType.h; path = Hopper/HPDetectedFileType.h; sourceTree = "<group>"; };
+		68E9E6731971321A00D8386A /* HPDisassembledFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPDisassembledFile.h; path = Hopper/HPDisassembledFile.h; sourceTree = "<group>"; };
+		68E9E6741971321A00D8386A /* HPDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPDocument.h; path = Hopper/HPDocument.h; sourceTree = "<group>"; };
+		68E9E6751971321A00D8386A /* HPFormattedInstructionInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPFormattedInstructionInfo.h; path = Hopper/HPFormattedInstructionInfo.h; sourceTree = "<group>"; };
+		68E9E6761971321A00D8386A /* HPHopperServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPHopperServices.h; path = Hopper/HPHopperServices.h; sourceTree = "<group>"; };
+		68E9E6771971321A00D8386A /* HPLoaderOptionComponents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPLoaderOptionComponents.h; path = Hopper/HPLoaderOptionComponents.h; sourceTree = "<group>"; };
+		68E9E6781971321A00D8386A /* HPProcedure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPProcedure.h; path = Hopper/HPProcedure.h; sourceTree = "<group>"; };
+		68E9E6791971321A00D8386A /* HPSection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPSection.h; path = Hopper/HPSection.h; sourceTree = "<group>"; };
+		68E9E67A1971321A00D8386A /* HPSegment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPSegment.h; path = Hopper/HPSegment.h; sourceTree = "<group>"; };
+		68E9E67B1971321A00D8386A /* HPTag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPTag.h; path = Hopper/HPTag.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		6801368019706CC5004964BD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6801368719706CC5004964BD /* CoreFoundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		6801367A19706CC5004964BD = {
+			isa = PBXGroup;
+			children = (
+				6801368819706CC5004964BD /* MOS6502CPU */,
+				6801368519706CC5004964BD /* Frameworks */,
+				6801368419706CC5004964BD /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		6801368419706CC5004964BD /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				6801368319706CC5004964BD /* MOS6502CPU.hopperCPU */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		6801368519706CC5004964BD /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				6801368619706CC5004964BD /* CoreFoundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		6801368819706CC5004964BD /* MOS6502CPU */ = {
+			isa = PBXGroup;
+			children = (
+				68E9E654197131FF00D8386A /* Hopper Includes */,
+				6801368919706CC5004964BD /* Supporting Files */,
+				6801369519706DE8004964BD /* MOS6502CPU.h */,
+				6801369619706DE8004964BD /* MOS6502CPU.m */,
+				680136AD19707514004964BD /* MOS6502Ctx.h */,
+				680136AE19707514004964BD /* MOS6502Ctx.m */,
+				680136B319708105004964BD /* MOS6502Opcodes.h */,
+			);
+			path = MOS6502CPU;
+			sourceTree = "<group>";
+		};
+		6801368919706CC5004964BD /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				6801368A19706CC5004964BD /* MOS6502CPU-Info.plist */,
+				6801368B19706CC5004964BD /* InfoPlist.strings */,
+				6801368E19706CC5004964BD /* MOS6502CPU-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		68E9E654197131FF00D8386A /* Hopper Includes */ = {
+			isa = PBXGroup;
+			children = (
+				68E9E6691971321A00D8386A /* CommonTypes.h */,
+				68E9E66A1971321A00D8386A /* CPUContext.h */,
+				68E9E66B1971321A00D8386A /* CPUDefinition.h */,
+				68E9E66C1971321A00D8386A /* DisasmStruct.h */,
+				68E9E66D1971321A00D8386A /* FileLoader.h */,
+				68E9E66E1971321A00D8386A /* Hopper.h */,
+				68E9E66F1971321A00D8386A /* HopperPlugin.h */,
+				68E9E6701971321A00D8386A /* HopperTool.h */,
+				68E9E6711971321A00D8386A /* HPBasicBlock.h */,
+				68E9E6721971321A00D8386A /* HPDetectedFileType.h */,
+				68E9E6731971321A00D8386A /* HPDisassembledFile.h */,
+				68E9E6741971321A00D8386A /* HPDocument.h */,
+				68E9E6751971321A00D8386A /* HPFormattedInstructionInfo.h */,
+				68E9E6761971321A00D8386A /* HPHopperServices.h */,
+				68E9E6771971321A00D8386A /* HPLoaderOptionComponents.h */,
+				68E9E6781971321A00D8386A /* HPProcedure.h */,
+				68E9E6791971321A00D8386A /* HPSection.h */,
+				68E9E67A1971321A00D8386A /* HPSegment.h */,
+				68E9E67B1971321A00D8386A /* HPTag.h */,
+			);
+			name = "Hopper Includes";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		6801368219706CC5004964BD /* MOS6502CPU */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6801369119706CC5004964BD /* Build configuration list for PBXNativeTarget "MOS6502CPU" */;
+			buildPhases = (
+				6801367F19706CC5004964BD /* Sources */,
+				6801368019706CC5004964BD /* Frameworks */,
+				6801368119706CC5004964BD /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MOS6502CPU;
+			productName = MOS6502CPU;
+			productReference = 6801368319706CC5004964BD /* MOS6502CPU.hopperCPU */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		6801367B19706CC5004964BD /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = frob.it;
+			};
+			buildConfigurationList = 6801367E19706CC5004964BD /* Build configuration list for PBXProject "MOS6502CPU" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 6801367A19706CC5004964BD;
+			productRefGroup = 6801368419706CC5004964BD /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				6801368219706CC5004964BD /* MOS6502CPU */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		6801368119706CC5004964BD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6801368D19706CC5004964BD /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		6801367F19706CC5004964BD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				680136AF19707514004964BD /* MOS6502Ctx.m in Sources */,
+				6801369719706DE8004964BD /* MOS6502CPU.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		6801368B19706CC5004964BD /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				6801368C19706CC5004964BD /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		6801368F19706CC5004964BD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		6801369019706CC5004964BD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/include",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		6801369219706CC5004964BD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MOS6502CPU/MOS6502CPU-Prefix.pch";
+				INFOPLIST_FILE = "MOS6502CPU/MOS6502CPU-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = hopperCPU;
+			};
+			name = Debug;
+		};
+		6801369319706CC5004964BD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MOS6502CPU/MOS6502CPU-Prefix.pch";
+				INFOPLIST_FILE = "MOS6502CPU/MOS6502CPU-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = hopperCPU;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		6801367E19706CC5004964BD /* Build configuration list for PBXProject "MOS6502CPU" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6801368F19706CC5004964BD /* Debug */,
+				6801369019706CC5004964BD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6801369119706CC5004964BD /* Build configuration list for PBXNativeTarget "MOS6502CPU" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6801369219706CC5004964BD /* Debug */,
+				6801369319706CC5004964BD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 6801367B19706CC5004964BD /* Project object */;
+}
