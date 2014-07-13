@@ -26,6 +26,12 @@
 
 #import "MOS6502CPU.h"
 #import "MOS6502Ctx.h"
+#import "MOS6502Opcodes.h"
+
+static NSString * const kCpuFamily = @"MOS";
+static NSString * const kCpuSubFamily = @"6502";
+static NSString * const kSyntaxVariant = @"Generic";
+static NSString * const kCpuMode = @"generic";
 
 @implementation MOS6502CPU {
     NSObject<HPHopperServices> *_services;
@@ -73,25 +79,17 @@
 }
 
 - (NSArray *)cpuFamilies {
-    return @[@"MOS"];
+    return @[ kCpuFamily ];
 }
 
 - (NSArray *)cpuSubFamiliesForFamily:(NSString *)family {
-    if ([family isEqualToString:@"MOS"]) {
-        return @[@"6502"];
-    }
-
-    return nil;
+    return [kCpuFamily isEqualToString:family] ? @[ kCpuSubFamily ] : nil;
 }
 
 - (int)addressSpaceWidthInBitsForCPUFamily:(NSString *)family
                               andSubFamily:(NSString *)subFamily {
-    if ([family isEqualToString:@"MOS"] &&
-        [subFamily isEqualToString:@"6502"]) {
-        return 16;
-    }
-
-    return 0;
+    return ([kCpuFamily isEqualToString:family] &&
+            [kCpuSubFamily isEqualToString:kCpuSubFamily]) ? 16 : 0;
 }
 
 - (NSString *)registerIndexToString:(int)reg
@@ -135,11 +133,11 @@
 }
 
 - (NSArray *)syntaxVariantNames {
-    return @[@"generic"];
+    return @[ kSyntaxVariant ];
 }
 
 - (NSArray *)cpuModeNames {
-    return @[@"generic"];
+    return @[ kCpuMode ];
 }
 
 - (NSUInteger)registerClassCount {
@@ -173,13 +171,13 @@
 - (NSAttributedString *)colorizeInstructionString:(NSAttributedString *)string {
     NSMutableAttributedString *colorized = [string mutableCopy];
     [_services colorizeASMString:colorized
-               operatorPredicate:^BOOL(unichar c) {
-                   return (c == '#' || c == '$');
+               operatorPredicate:^BOOL(unichar character) {
+                   return (character == '#' || character == '$');
                }
-           languageWordPredicate:^BOOL(NSString *s) {
+           languageWordPredicate:^BOOL(NSString *string) {
                return NO;
             }
-        subLanguageWordPredicate:^BOOL(NSString *s) {
+        subLanguageWordPredicate:^BOOL(NSString *string) {
             return NO;
         }];
     return colorized;

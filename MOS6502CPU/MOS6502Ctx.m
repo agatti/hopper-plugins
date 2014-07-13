@@ -29,10 +29,10 @@
 
 @interface MOS6502Ctx()
 
-- (void) handleNonBranchOpcode:(const struct MOS6502Opcode *)opcode
-                     forDisasm:(DisasmStruct *)disasm;
-- (void) handleBranchOpcode:(const struct MOS6502Opcode *)opcode
-                  forDisasm:(DisasmStruct *)disasm;
+- (void)handleNonBranchOpcode:(const struct MOS6502Opcode *)opcode
+                    forDisasm:(DisasmStruct *)disasm;
+- (void)handleBranchOpcode:(const struct MOS6502Opcode *)opcode
+                 forDisasm:(DisasmStruct *)disasm;
 
 @end
 
@@ -125,6 +125,7 @@
 
     disasm->instruction.branchType = opcode.branchType;
     disasm->instruction.addressValue = 0;
+    disasm->instruction.pcRegisterValue = disasm->virtualAddr;
     for (int index = 0; index < DISASM_MAX_OPERANDS; index++) {
         disasm->operand[index].type = DISASM_OPERAND_NO_OPERAND;
     }
@@ -137,8 +138,11 @@
                        forDisasm:disasm];
     }
 
-    strcpy(disasm->instruction.mnemonic, opcode.name);
-    strcpy(disasm->instruction.unconditionalMnemonic, opcode.name);
+    const char *name = kOpcodeNames[opcode.type];
+
+    disasm->instruction.instructionFamily = opcode.type;
+    strcpy(disasm->instruction.mnemonic, name);
+    strcpy(disasm->instruction.unconditionalMnemonic, name);
 
     switch (opcode.addressMode) {
         case MOS6502AddressModeAbsolute:
@@ -147,6 +151,7 @@
         case MOS6502AddressModeIndirect:
             disasm->prefix.addressSize = 2;
             disasm->prefix.operandSize = 2;
+            disasm->instruction.length = 3;
             return 3;
 
         case MOS6502AddressModeImmediate:
@@ -157,18 +162,20 @@
         case MOS6502AddressModeZeropageXIndexed:
         case MOS6502AddressModeZeropageYIndexed:
             disasm->prefix.addressSize = 2;
-            disasm->prefix.operandSize = 2;
+            disasm->prefix.operandSize = 1;
+            disasm->instruction.length = 2;
             return 2;
 
         default:
             disasm->prefix.addressSize = 0;
             disasm->prefix.operandSize = 0;
+            disasm->instruction.length = 1;
             return 1;
     }
 }
 
 - (BOOL)instructionHaltsExecutionFlow:(DisasmStruct *)disasm {
-    return strcmp(disasm->instruction.mnemonic, "BRK") == 0;
+    return disasm->instruction.instructionFamily == MOS6502OpcodeTypeBRK;
 }
 
 - (void)performBranchesAnalysis:(DisasmStruct *)disasm
@@ -201,7 +208,6 @@
 - (void)buildInstructionString:(DisasmStruct *)disasm
                     forSegment:(NSObject<HPSegment> *)segment
                 populatingInfo:(NSObject<HPFormattedInstructionInfo> *)formattedInstructionInfo {
-
     const char *spaces = "    ";
     strcpy(disasm->completeInstructionString, disasm->instruction.mnemonic);
     strcat(disasm->completeInstructionString, spaces + strlen(disasm->instruction.mnemonic));
@@ -277,6 +283,7 @@
             disasm->operand1.memory.displacement = 0;
             disasm->operand1.memory.indexRegister = 0;
             disasm->operand1.memory.scale = 1;
+            disasm->operand1.size = 16;
             disasm->operand1.immediatValue = operand;
             break;
 
@@ -289,6 +296,7 @@
             disasm->operand1.memory.displacement = 0;
             disasm->operand1.memory.indexRegister = 1;
             disasm->operand1.memory.scale = 1;
+            disasm->operand1.size = 16;
             disasm->operand1.immediatValue = operand;
             break;
 
@@ -301,6 +309,7 @@
             disasm->operand1.memory.displacement = 0;
             disasm->operand1.memory.indexRegister = 2;
             disasm->operand1.memory.scale = 1;
+            disasm->operand1.size = 16;
             disasm->operand1.immediatValue = operand;
             break;
 
@@ -310,6 +319,7 @@
             strcpy(disasm->operand1.mnemonic, operandString.UTF8String);
             disasm->operand1.type = DISASM_OPERAND_CONSTANT_TYPE;
             disasm->operand1.immediatValue = operand;
+            disasm->operand1.size = 8;
             break;
 
         case MOS6502AddressModeIndirect:
@@ -321,6 +331,7 @@
             disasm->operand1.memory.displacement = 0;
             disasm->operand1.memory.indexRegister = 0;
             disasm->operand1.memory.scale = 1;
+            disasm->operand1.size = 16;
             disasm->operand1.immediatValue = operand;
             break;
 
@@ -333,6 +344,7 @@
             disasm->operand1.memory.displacement = 0;
             disasm->operand1.memory.indexRegister = 1;
             disasm->operand1.memory.scale = 1;
+            disasm->operand1.size = 8;
             disasm->operand1.immediatValue = operand;
             break;
 
@@ -345,6 +357,7 @@
             disasm->operand1.memory.displacement = 0;
             disasm->operand1.memory.indexRegister = 2;
             disasm->operand1.memory.scale = 1;
+            disasm->operand1.size = 8;
             disasm->operand1.immediatValue = operand;
             break;
 
@@ -357,6 +370,7 @@
             disasm->operand1.memory.displacement = 0;
             disasm->operand1.memory.indexRegister = 0;
             disasm->operand1.memory.scale = 1;
+            disasm->operand1.size = 8;
             disasm->operand1.immediatValue = operand;
             break;
 
@@ -369,6 +383,7 @@
             disasm->operand1.memory.displacement = 0;
             disasm->operand1.memory.indexRegister = 1;
             disasm->operand1.memory.scale = 1;
+            disasm->operand1.size = 8;
             disasm->operand1.immediatValue = operand;
             break;
 
@@ -381,6 +396,7 @@
             disasm->operand1.memory.displacement = 0;
             disasm->operand1.memory.indexRegister = 2;
             disasm->operand1.memory.scale = 1;
+            disasm->operand1.size = 8;
             disasm->operand1.immediatValue = operand;
             break;
 
@@ -399,33 +415,33 @@
         opcode->addressMode != MOS6502AddressModeRelative &&
         opcode->addressMode != MOS6502AddressModeImplied) {
 
-        switch (opcode->opcodeType) {
-            case MOS6502OpcodeTypeLoad:
+        switch (opcode->opcodeCategory) {
+            case MOS6502OpcodeCategoryLoad:
                 disasm->operand1.accessMode = DISASM_ACCESS_READ;
                 break;
 
-            case MOS6502OpcodeTypeStore:
+            case MOS6502OpcodeCategoryStore:
                 disasm->operand1.accessMode = DISASM_ACCESS_WRITE;
                 break;
 
-            case MOS6502OpcodeTypeComparison:
-            case MOS6502OpcodeTypeLogical:
-            case MOS6502OpcodeTypeArithmetic:
+            case MOS6502OpcodeCategoryComparison:
+            case MOS6502OpcodeCategoryLogical:
+            case MOS6502OpcodeCategoryArithmetic:
                 disasm->operand1.accessMode = DISASM_ACCESS_READ;
                 break;
 
-            case MOS6502OpcodeTypeIncrementDecrement:
-            case MOS6502OpcodeTypeShifts:
+            case MOS6502OpcodeCategoryIncrementDecrement:
+            case MOS6502OpcodeCategoryShifts:
                 disasm->operand1.accessMode = DISASM_ACCESS_WRITE;
                 break;
 
-            case MOS6502OpcodeTypeJumps:
-            case MOS6502OpcodeTypeStack:
-            case MOS6502OpcodeTypeSystem:
-            case MOS6502OpcodeTypeBranches:
-            case MOS6502OpcodeTypeRegisterTransfers:
-            case MOS6502OpcodeTypeStatusFlagChanges:
-            case MOS6502OpcodeTypeUnknown:
+            case MOS6502OpcodeCategoryJumps:
+            case MOS6502OpcodeCategoryStack:
+            case MOS6502OpcodeCategorySystem:
+            case MOS6502OpcodeCategoryBranches:
+            case MOS6502OpcodeCategoryRegisterTransfers:
+            case MOS6502OpcodeCategoryStatusFlagChanges:
+            case MOS6502OpcodeCategoryUnknown:
                 break;
         }
     }
@@ -445,6 +461,7 @@
             disasm->operand1.type = DISASM_OPERAND_CONSTANT_TYPE | DISASM_OPERAND_ABSOLUTE;
             disasm->instruction.addressValue = operand;
             disasm->operand1.immediatValue = operand;
+            disasm->operand1.size = 16;
             break;
 
         case MOS6502AddressModeIndirect:
@@ -454,6 +471,7 @@
             disasm->operand1.type = DISASM_OPERAND_MEMORY_TYPE | DISASM_OPERAND_RELATIVE;
             disasm->instruction.addressValue = operand;
             disasm->operand1.immediatValue = operand;
+            disasm->operand1.size = 16;
             break;
 
         case MOS6502AddressModeRelative:
@@ -467,14 +485,15 @@
             disasm->operand1.type = DISASM_OPERAND_CONSTANT_TYPE | DISASM_OPERAND_RELATIVE;
             disasm->instruction.addressValue = operand;
             disasm->operand1.immediatValue = operand;
+            disasm->operand1.size = 16;
             break;
 
         case MOS6502AddressModeImplied:
             break;
 
         default:
-            NSLog(@"Internal error: branch opcode %@ with address mode %lu found",
-                  [NSString stringWithUTF8String:opcode->name], opcode->addressMode);
+            NSLog(@"Internal error: branch opcode with address mode %lu found",
+                  opcode->addressMode);
             break;
     }
 }
