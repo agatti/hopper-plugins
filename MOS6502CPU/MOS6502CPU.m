@@ -71,11 +71,11 @@ static NSString * const kCpuMode = @"generic";
 }
 
 - (NSString *)pluginCopyright {
-    return @"© 2014 Alessandro Gatti";
+    return @"©2014 Alessandro Gatti";
 }
 
 - (NSString *)pluginVersion {
-    return @"0.0.1";
+    return @"0.0.2";
 }
 
 - (NSArray *)cpuFamilies {

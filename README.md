@@ -1,4 +1,4 @@
-HopperC64 0.0.1
+HopperC64 0.0.2
 ---
 A couple of simple plugins allowing Hopper to load and disassemble C64 executables.
 
