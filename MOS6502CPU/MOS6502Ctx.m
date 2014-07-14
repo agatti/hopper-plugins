@@ -418,19 +418,13 @@
 
         switch (opcode->opcodeCategory) {
             case MOS6502OpcodeCategoryLoad:
-                disasm->operand1.accessMode = DISASM_ACCESS_READ;
-                break;
-
-            case MOS6502OpcodeCategoryStore:
-                disasm->operand1.accessMode = DISASM_ACCESS_WRITE;
-                break;
-
             case MOS6502OpcodeCategoryComparison:
             case MOS6502OpcodeCategoryLogical:
             case MOS6502OpcodeCategoryArithmetic:
                 disasm->operand1.accessMode = DISASM_ACCESS_READ;
                 break;
 
+            case MOS6502OpcodeCategoryStore:
             case MOS6502OpcodeCategoryIncrementDecrement:
             case MOS6502OpcodeCategoryShifts:
                 disasm->operand1.accessMode = DISASM_ACCESS_WRITE;
