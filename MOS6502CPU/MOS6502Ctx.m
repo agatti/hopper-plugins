@@ -448,13 +448,19 @@
 
         case MOS6502AddressModeRelative:
             operand = [_file readUInt8AtVirtualAddress:disasm->virtualAddr + 1];
-            if (operand & 1 << 7) {
-                operand = -(operand & 0x7F);
+            size_t offset;
+            if (operand & (1 << 7)) {
+                offset = operand & 0x7F;
+                offset = -((~offset + 1) & 0x7F);
+            } else {
+                offset = operand;
             }
-            operand = disasm->virtualAddr + operand;
+
+            offset += disasm->instruction.pcRegisterValue + 2;
+
             disasm->operand1.type = DISASM_OPERAND_CONSTANT_TYPE | DISASM_OPERAND_RELATIVE;
-            disasm->instruction.addressValue = operand;
-            disasm->operand1.immediatValue = operand;
+            disasm->instruction.addressValue = offset;
+            disasm->operand1.immediatValue = offset;
             disasm->operand1.size = 16;
             break;
 
