@@ -156,8 +156,6 @@
         case MOS6502AddressModeAbsoluteXIndexed:
         case MOS6502AddressModeAbsoluteYIndexed:
         case MOS6502AddressModeIndirect:
-            disasm->prefix.addressSize = 2;
-            disasm->prefix.operandSize = 2;
             disasm->instruction.length = 3;
             return 3;
 
@@ -168,14 +166,10 @@
         case MOS6502AddressModeZeropage:
         case MOS6502AddressModeZeropageXIndexed:
         case MOS6502AddressModeZeropageYIndexed:
-            disasm->prefix.addressSize = 2;
-            disasm->prefix.operandSize = 1;
             disasm->instruction.length = 2;
             return 2;
 
         default:
-            disasm->prefix.addressSize = 0;
-            disasm->prefix.operandSize = 0;
             disasm->instruction.length = 1;
             return 1;
     }
