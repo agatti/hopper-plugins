@@ -33,6 +33,15 @@
                     forDisasm:(DisasmStruct *)disasm;
 - (void)handleBranchOpcode:(const struct MOS6502Opcode *)opcode
                  forDisasm:(DisasmStruct *)disasm;
++ (NSString *)valueAsHexadecimal:(DisasmStruct *)disasm
+                 forOperandIndex:(size_t)operand
+                        isSigned:(BOOL)isSigned;
++ (NSString *)valueAsDecimal:(DisasmStruct *)disasm
+             forOperandIndex:(size_t)operand
+                    isSigned:(BOOL)isSigned;
++ (NSString *)valueAsOctal:(DisasmStruct *)disasm
+           forOperandIndex:(size_t)operand
+                  isSigned:(BOOL)isSigned;
 
 @end
 
@@ -131,6 +140,7 @@
     uint8_t opcodeByte = [_file readUInt8AtVirtualAddress:disasm->virtualAddr];
 
     struct MOS6502Opcode opcode = kOpcodes[opcodeByte];
+    disasm->instruction.instructionFamily = opcodeByte;
     if (opcode.addressMode == MOS6502AddressModeUnknown) {
         return DISASM_UNKNOWN_OPCODE;
     }
@@ -146,8 +156,6 @@
     }
 
     const char *name = kOpcodeNames[opcode.type];
-
-    disasm->instruction.instructionFamily = opcode.type;
     strcpy(disasm->instruction.mnemonic, name);
     strcpy(disasm->instruction.unconditionalMnemonic, name);
 
@@ -176,7 +184,7 @@
 }
 
 - (BOOL)instructionHaltsExecutionFlow:(DisasmStruct *)disasm {
-    return disasm->instruction.instructionFamily == MOS6502OpcodeTypeBRK;
+    return kOpcodes[disasm->instruction.instructionFamily].type == MOS6502OpcodeTypeBRK;
 }
 
 - (void)performBranchesAnalysis:(DisasmStruct *)disasm
@@ -212,17 +220,13 @@
     const char *spaces = "    ";
     strcpy(disasm->completeInstructionString, disasm->instruction.mnemonic);
     strcat(disasm->completeInstructionString, spaces + strlen(disasm->instruction.mnemonic));
-    for (int operandIndex = 0; operandIndex < DISASM_MAX_OPERANDS; operandIndex++) {
-        if (!disasm->operand[operandIndex].mnemonic[0]) {
-            break;
-        }
-
-        if (operandIndex > 0) {
-            strcat(disasm->completeInstructionString, ", ");
-        }
-
-        strcat(disasm->completeInstructionString, disasm->operand[operandIndex].mnemonic);
-    }
+    ArgFormat format = [_file formatForArgument:0
+                               atVirtualAddress:disasm->virtualAddr];
+    NSString *formatted = [MOS6502Ctx formatInstruction:disasm
+                                       withOperandIndex:0
+                                             withFormat:format];
+    strcpy(disasm->operand1.mnemonic, formatted.UTF8String);
+    strcat(disasm->completeInstructionString, formatted.UTF8String);
 }
 
 - (BOOL)canDecompileProcedure:(NSObject<HPProcedure> *)procedure {
@@ -271,14 +275,11 @@
 
 - (void) handleNonBranchOpcode:(const struct MOS6502Opcode *)opcode
                      forDisasm:(DisasmStruct *)disasm {
-    NSString *operandString;
     uint16_t operand = 0;
 
     switch (opcode->addressMode) {
         case MOS6502AddressModeAbsolute:
             operand = [_file readUInt16AtVirtualAddress:disasm->virtualAddr + 1];
-            operandString = [NSString stringWithFormat:@"$%04X", operand];
-            strcpy(disasm->operand1.mnemonic, operandString.UTF8String);
             disasm->operand1.type = DISASM_OPERAND_MEMORY_TYPE | DISASM_OPERAND_ABSOLUTE;
             disasm->operand1.memory.baseRegister = operand;
             disasm->operand1.memory.displacement = 0;
@@ -290,8 +291,6 @@
 
         case MOS6502AddressModeAbsoluteXIndexed:
             operand = [_file readUInt16AtVirtualAddress:disasm->virtualAddr + 1];
-            operandString = [NSString stringWithFormat:@"$%04X,X", operand];
-            strcpy(disasm->operand1.mnemonic, operandString.UTF8String);
             disasm->operand1.type = DISASM_OPERAND_MEMORY_TYPE | DISASM_OPERAND_ABSOLUTE;
             disasm->operand1.memory.baseRegister = operand;
             disasm->operand1.memory.displacement = 0;
@@ -303,8 +302,6 @@
 
         case MOS6502AddressModeAbsoluteYIndexed:
             operand = [_file readUInt16AtVirtualAddress:disasm->virtualAddr + 1];
-            operandString = [NSString stringWithFormat:@"$%04X,Y", operand];
-            strcpy(disasm->operand1.mnemonic, operandString.UTF8String);
             disasm->operand1.type = DISASM_OPERAND_MEMORY_TYPE | DISASM_OPERAND_ABSOLUTE;
             disasm->operand1.memory.baseRegister = operand;
             disasm->operand1.memory.displacement = 0;
@@ -316,8 +313,6 @@
 
         case MOS6502AddressModeImmediate:
             operand = [_file readUInt8AtVirtualAddress:disasm->virtualAddr + 1];
-            operandString = [NSString stringWithFormat:@"#$%02X", operand];
-            strcpy(disasm->operand1.mnemonic, operandString.UTF8String);
             disasm->operand1.type = DISASM_OPERAND_CONSTANT_TYPE;
             disasm->operand1.immediatValue = operand;
             disasm->operand1.size = 8;
@@ -325,8 +320,6 @@
 
         case MOS6502AddressModeIndirect:
             operand = [_file readUInt16AtVirtualAddress:disasm->virtualAddr + 1];
-            operandString = [NSString stringWithFormat:@"($%04X)", operand];
-            strcpy(disasm->operand1.mnemonic, operandString.UTF8String);
             disasm->operand1.type = DISASM_OPERAND_MEMORY_TYPE | DISASM_OPERAND_ABSOLUTE;
             disasm->operand1.memory.baseRegister = operand;
             disasm->operand1.memory.displacement = 0;
@@ -338,8 +331,6 @@
 
         case MOS6502AddressModeIndirectXIndexed:
             operand = [_file readUInt8AtVirtualAddress:disasm->virtualAddr + 1];
-            operandString = [NSString stringWithFormat:@"($%02X,X)", operand];
-            strcpy(disasm->operand1.mnemonic, operandString.UTF8String);
             disasm->operand1.type = DISASM_OPERAND_MEMORY_TYPE | DISASM_OPERAND_ABSOLUTE;
             disasm->operand1.memory.baseRegister = operand;
             disasm->operand1.memory.displacement = 0;
@@ -351,8 +342,6 @@
 
         case MOS6502AddressModeIndirectYIndexed:
             operand = [_file readUInt8AtVirtualAddress:disasm->virtualAddr + 1];
-            operandString = [NSString stringWithFormat:@"($%02X),Y", operand];
-            strcpy(disasm->operand1.mnemonic, operandString.UTF8String);
             disasm->operand1.type = DISASM_OPERAND_MEMORY_TYPE | DISASM_OPERAND_ABSOLUTE;
             disasm->operand1.memory.baseRegister = operand;
             disasm->operand1.memory.displacement = 0;
@@ -364,8 +353,6 @@
 
         case MOS6502AddressModeZeropage:
             operand = [_file readUInt8AtVirtualAddress:disasm->virtualAddr + 1];
-            operandString = [NSString stringWithFormat:@"#%02X", operand];
-            strcpy(disasm->operand1.mnemonic, operandString.UTF8String);
             disasm->operand1.type = DISASM_OPERAND_MEMORY_TYPE;
             disasm->operand1.memory.baseRegister = operand;
             disasm->operand1.memory.displacement = 0;
@@ -377,8 +364,6 @@
 
         case MOS6502AddressModeZeropageXIndexed:
             operand = [_file readUInt8AtVirtualAddress:disasm->virtualAddr + 1];
-            operandString = [NSString stringWithFormat:@"#%02X,X", operand];
-            strcpy(disasm->operand1.mnemonic, operandString.UTF8String);
             disasm->operand1.type = DISASM_OPERAND_MEMORY_TYPE;
             disasm->operand1.memory.baseRegister = operand;
             disasm->operand1.memory.displacement = 0;
@@ -390,8 +375,6 @@
 
         case MOS6502AddressModeZeropageYIndexed:
             operand = [_file readUInt8AtVirtualAddress:disasm->virtualAddr + 1];
-            operandString = [NSString stringWithFormat:@"#%02X,Y", operand];
-            strcpy(disasm->operand1.mnemonic, operandString.UTF8String);
             disasm->operand1.type = DISASM_OPERAND_MEMORY_TYPE;
             disasm->operand1.memory.baseRegister = operand;
             disasm->operand1.memory.displacement = 0;
@@ -444,15 +427,11 @@
 
 - (void) handleBranchOpcode:(const struct MOS6502Opcode *)opcode
                   forDisasm:(DisasmStruct *)disasm {
-
-    NSString *operandString;
     uint16_t operand = 0;
 
     switch (opcode->addressMode) {
         case MOS6502AddressModeAbsolute:
             operand = [_file readUInt16AtVirtualAddress:disasm->virtualAddr + 1];
-            operandString = [NSString stringWithFormat:@"$%04X", operand];
-            strcpy(disasm->operand1.mnemonic, operandString.UTF8String);
             disasm->operand1.type = DISASM_OPERAND_CONSTANT_TYPE | DISASM_OPERAND_ABSOLUTE;
             disasm->instruction.addressValue = operand;
             disasm->operand1.immediatValue = operand;
@@ -461,8 +440,6 @@
 
         case MOS6502AddressModeIndirect:
             operand = [_file readUInt16AtVirtualAddress:disasm->virtualAddr + 1];
-            operandString = [NSString stringWithFormat:@"($%04X)", operand];
-            strcpy(disasm->operand1.mnemonic, operandString.UTF8String);
             disasm->operand1.type = DISASM_OPERAND_MEMORY_TYPE | DISASM_OPERAND_RELATIVE;
             disasm->instruction.addressValue = operand;
             disasm->operand1.immediatValue = operand;
@@ -475,8 +452,6 @@
                 operand = -(operand & 0x7F);
             }
             operand = disasm->virtualAddr + operand;
-            operandString = [NSString stringWithFormat:@"$%04X", operand];
-            strcpy(disasm->operand1.mnemonic, operandString.UTF8String);
             disasm->operand1.type = DISASM_OPERAND_CONSTANT_TYPE | DISASM_OPERAND_RELATIVE;
             disasm->instruction.addressValue = operand;
             disasm->operand1.immediatValue = operand;
@@ -490,6 +465,235 @@
             NSLog(@"Internal error: branch opcode with address mode %lu found",
                   opcode->addressMode);
             break;
+    }
+}
+
++ (NSString *)formatInstruction:(DisasmStruct *)disasm
+               withOperandIndex:(size_t)operand
+                     withFormat:(ArgFormat)format {
+
+    switch ((int) format) {
+        case Format_Hexadecimal | Format_Signed:
+            return [MOS6502Ctx valueAsHexadecimal:disasm
+                                  forOperandIndex:operand
+                                         isSigned:YES];
+
+        case Format_Hexadecimal:
+            return [MOS6502Ctx valueAsHexadecimal:disasm
+                                  forOperandIndex:operand
+                                         isSigned:NO];
+
+        case Format_Decimal | Format_Signed:
+            return [MOS6502Ctx valueAsDecimal:disasm
+                              forOperandIndex:operand
+                                     isSigned:YES];
+
+        case Format_Decimal:
+            return [MOS6502Ctx valueAsDecimal:disasm
+                              forOperandIndex:operand
+                                     isSigned:NO];
+
+        case Format_Octal:
+            return [MOS6502Ctx valueAsOctal:disasm
+                            forOperandIndex:operand
+                                   isSigned:NO];
+
+        default:
+            return [MOS6502Ctx valueAsHexadecimal:disasm
+                                  forOperandIndex:operand
+                                         isSigned:NO];
+    }
+}
+
++ (NSString *)valueAsHexadecimal:(DisasmStruct *)disasm
+                 forOperandIndex:(size_t)operand
+                        isSigned:(BOOL)isSigned {
+    if (disasm->operand[operand].type == DISASM_OPERAND_NO_OPERAND) {
+        return @"";
+    }
+
+    int64_t operandValue = disasm->operand[operand].immediatValue;
+    int64_t value;
+    BOOL negative;
+    if (operandValue & (1 << (disasm->operand[operand].size - 1)) && isSigned) {
+        value = ~operandValue + 1;
+        negative = YES;
+    } else {
+        value = operandValue;
+        negative = NO;
+    }
+
+    switch (kOpcodes[disasm->instruction.instructionFamily].addressMode) {
+        case MOS6502AddressModeAbsolute:
+        case MOS6502AddressModeRelative:
+            return [NSString stringWithFormat:@"%@$%04X",
+                    negative ? @"-" : @"", (uint16_t) (value & 0xFFFF)];
+
+        case MOS6502AddressModeAbsoluteXIndexed:
+            return [NSString stringWithFormat:@"%@$%04X,X",
+                    negative ? @"-" : @"", (uint16_t) (value & 0xFFFF)];
+
+        case MOS6502AddressModeAbsoluteYIndexed:
+            return [NSString stringWithFormat:@"%@$%04X,Y",
+                    negative ? @"-" : @"", (uint16_t) (value & 0xFFFF)];
+
+        case MOS6502AddressModeImmediate:
+        case MOS6502AddressModeZeropage:
+            return [NSString stringWithFormat:@"#%@$%02X",
+                    negative ? @"-" : @"", (uint8_t) (value & 0xFF)];
+
+        case MOS6502AddressModeIndirect:
+            return [NSString stringWithFormat:@"(%@$%04X)",
+                    negative ? @"-" : @"", (uint16_t) (value & 0xFFFF)];
+
+        case MOS6502AddressModeIndirectXIndexed:
+            return [NSString stringWithFormat:@"(%@$%02X,X)",
+                    negative ? @"-" : @"", (uint16_t) (value & 0xFF)];
+
+        case MOS6502AddressModeIndirectYIndexed:
+            return [NSString stringWithFormat:@"(%@$%02X),Y",
+                    negative ? @"-" : @"", (uint16_t) (value & 0xFF)];
+
+        case MOS6502AddressModeZeropageXIndexed:
+            return [NSString stringWithFormat:@"#%@$%02X,X",
+                    negative ? @"-" : @"", (uint8_t) (value & 0xFF)];
+
+        case MOS6502AddressModeZeropageYIndexed:
+            return [NSString stringWithFormat:@"#%@$%02X,Y",
+                    negative ? @"-" : @"", (uint8_t) (value & 0xFF)];
+
+        case MOS6502AddressModeUnknown:
+        case MOS6502AddressModeImplied:
+        default:
+            return @"";
+    }
+}
+
++ (NSString *)valueAsDecimal:(DisasmStruct *)disasm
+             forOperandIndex:(size_t)operand
+                    isSigned:(BOOL)isSigned {
+    if (disasm->operand[operand].type == DISASM_OPERAND_NO_OPERAND) {
+        return @"";
+    }
+
+    int64_t operandValue = disasm->operand[operand].immediatValue;
+    int64_t value;
+    BOOL negative;
+    if (operandValue & (1 << (disasm->operand[operand].size - 1)) && isSigned) {
+        value = ~operandValue + 1;
+        negative = YES;
+    } else {
+        value = operandValue;
+        negative = NO;
+    }
+
+    switch (kOpcodes[disasm->instruction.instructionFamily].addressMode) {
+        case MOS6502AddressModeAbsolute:
+        case MOS6502AddressModeRelative:
+            return [NSString stringWithFormat:@"%@%d",
+                    negative ? @"-" : @"", (uint16_t) (value & 0xFFFF)];
+
+        case MOS6502AddressModeAbsoluteXIndexed:
+            return [NSString stringWithFormat:@"%@%d,X",
+                    negative ? @"-" : @"", (uint16_t) (value & 0xFFFF)];
+
+        case MOS6502AddressModeAbsoluteYIndexed:
+            return [NSString stringWithFormat:@"%@%d,Y",
+                    negative ? @"-" : @"", (uint16_t) (value & 0xFFFF)];
+
+        case MOS6502AddressModeImmediate:
+        case MOS6502AddressModeZeropage:
+            return [NSString stringWithFormat:@"#%@%d",
+                    negative ? @"-" : @"", (uint8_t) (value & 0xFF)];
+
+        case MOS6502AddressModeIndirect:
+            return [NSString stringWithFormat:@"(%@%d)",
+                    negative ? @"-" : @"", (uint16_t) (value & 0xFFFF)];
+
+        case MOS6502AddressModeIndirectXIndexed:
+            return [NSString stringWithFormat:@"(%@%d,X)",
+                    negative ? @"-" : @"", (uint16_t) (value & 0xFF)];
+
+        case MOS6502AddressModeIndirectYIndexed:
+            return [NSString stringWithFormat:@"(%@%d),Y",
+                    negative ? @"-" : @"", (uint16_t) (value & 0xFF)];
+
+        case MOS6502AddressModeZeropageXIndexed:
+            return [NSString stringWithFormat:@"#%@%d,X",
+                    negative ? @"-" : @"", (uint8_t) (value & 0xFF)];
+
+        case MOS6502AddressModeZeropageYIndexed:
+            return [NSString stringWithFormat:@"#%@%d,Y",
+                    negative ? @"-" : @"", (uint8_t) (value & 0xFF)];
+
+        case MOS6502AddressModeUnknown:
+        case MOS6502AddressModeImplied:
+        default:
+            return @"";
+    }
+}
+
++ (NSString *)valueAsOctal:(DisasmStruct *)disasm
+           forOperandIndex:(size_t)operand
+                  isSigned:(BOOL)isSigned {
+    if (disasm->operand[operand].type == DISASM_OPERAND_NO_OPERAND) {
+        return @"";
+    }
+
+    int64_t operandValue = disasm->operand[operand].immediatValue;
+    int64_t value;
+    BOOL negative;
+    if (operandValue & (1 << (disasm->operand[operand].size - 1)) && isSigned) {
+        value = ~operandValue + 1;
+        negative = YES;
+    } else {
+        value = operandValue;
+        negative = NO;
+    }
+
+    switch (kOpcodes[disasm->instruction.instructionFamily].addressMode) {
+        case MOS6502AddressModeAbsolute:
+        case MOS6502AddressModeRelative:
+            return [NSString stringWithFormat:@"%@%oo",
+                    negative ? @"-" : @"", (uint16_t) (value & 0xFFFF)];
+
+        case MOS6502AddressModeAbsoluteXIndexed:
+            return [NSString stringWithFormat:@"%@%oo,X",
+                    negative ? @"-" : @"", (uint16_t) (value & 0xFFFF)];
+
+        case MOS6502AddressModeAbsoluteYIndexed:
+            return [NSString stringWithFormat:@"%@%oo,Y",
+                    negative ? @"-" : @"", (uint16_t) (value & 0xFFFF)];
+
+        case MOS6502AddressModeImmediate:
+        case MOS6502AddressModeZeropage:
+            return [NSString stringWithFormat:@"#%@%oo",
+                    negative ? @"-" : @"", (uint8_t) (value & 0xFF)];
+
+        case MOS6502AddressModeIndirect:
+            return [NSString stringWithFormat:@"(%@%oo)",
+                    negative ? @"-" : @"", (uint16_t) (value & 0xFFFF)];
+
+        case MOS6502AddressModeIndirectXIndexed:
+            return [NSString stringWithFormat:@"(%@%oo,X)",
+                    negative ? @"-" : @"", (uint16_t) (value & 0xFF)];
+
+        case MOS6502AddressModeIndirectYIndexed:
+            return [NSString stringWithFormat:@"(%@%oo),Y",
+                    negative ? @"-" : @"", (uint16_t) (value & 0xFF)];
+
+        case MOS6502AddressModeZeropageXIndexed:
+            return [NSString stringWithFormat:@"#%@%oo,X",
+                    negative ? @"-" : @"", (uint8_t) (value & 0xFF)];
+
+        case MOS6502AddressModeZeropageYIndexed:
+            return [NSString stringWithFormat:@"#%@%oo,Y",
+                    negative ? @"-" : @"", (uint8_t) (value & 0xFF)];
+
+        case MOS6502AddressModeUnknown:
+        case MOS6502AddressModeImplied:
+        default:
+            return @"";
     }
 }
 
