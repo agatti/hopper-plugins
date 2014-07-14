@@ -116,6 +116,18 @@
 - (int)disassembleSingleInstruction:(DisasmStruct *)disasm
                  usingProcessorMode:(NSUInteger)mode {
 
+    // Clear all modifiable fields first.
+
+    bzero(disasm->completeInstructionString, sizeof(disasm->completeInstructionString));
+    bzero(&disasm->instruction, sizeof(DisasmInstruction));
+    disasm->instruction.addressValue = 0;
+    disasm->instruction.pcRegisterValue = disasm->virtualAddr;
+    for (int index = 0; index < DISASM_MAX_OPERANDS; index++) {
+        bzero(&disasm->operand[index], sizeof(DisasmOperand));
+    }
+
+    // Perform the disassembling operation.
+
     uint8_t opcodeByte = [_file readUInt8AtVirtualAddress:disasm->virtualAddr];
 
     struct MOS6502Opcode opcode = kOpcodes[opcodeByte];
@@ -124,11 +136,6 @@
     }
 
     disasm->instruction.branchType = opcode.branchType;
-    disasm->instruction.addressValue = 0;
-    disasm->instruction.pcRegisterValue = disasm->virtualAddr;
-    for (int index = 0; index < DISASM_MAX_OPERANDS; index++) {
-        disasm->operand[index].type = DISASM_OPERAND_NO_OPERAND;
-    }
 
     if (opcode.branchType == DISASM_BRANCH_NONE) {
         [self handleNonBranchOpcode:&opcode
