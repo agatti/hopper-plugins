@@ -129,13 +129,14 @@
 
     bzero(disasm->completeInstructionString, sizeof(disasm->completeInstructionString));
     bzero(&disasm->instruction, sizeof(DisasmInstruction));
-    disasm->instruction.addressValue = 0;
-    disasm->instruction.pcRegisterValue = disasm->virtualAddr;
     for (int index = 0; index < DISASM_MAX_OPERANDS; index++) {
         bzero(&disasm->operand[index], sizeof(DisasmOperand));
     }
 
     // Perform the disassembling operation.
+
+    disasm->instruction.addressValue = 0;
+    disasm->instruction.pcRegisterValue = disasm->virtualAddr;
 
     uint8_t opcodeByte = [_file readUInt8AtVirtualAddress:disasm->virtualAddr];
 
@@ -158,6 +159,41 @@
     const char *name = kOpcodeNames[opcode.type];
     strcpy(disasm->instruction.mnemonic, name);
     strcpy(disasm->instruction.unconditionalMnemonic, name);
+
+    if (opcode.opcodeCategory == MOS6502OpcodeCategoryStatusFlagChanges) {
+        switch (opcode.type) {
+            case MOS6502OpcodeTypeCLC:
+                disasm->instruction.eflags.CF_flag = DISASM_EFLAGS_RESET;
+                break;
+
+            case MOS6502OpcodeTypeCLD:
+                disasm->instruction.eflags.DF_flag = DISASM_EFLAGS_RESET;
+                break;
+
+            case MOS6502OpcodeTypeCLI:
+                disasm->instruction.eflags.IF_flag = DISASM_EFLAGS_RESET;
+                break;
+
+            case MOS6502OpcodeTypeCLV:
+                disasm->instruction.eflags.OF_flag = DISASM_EFLAGS_RESET;
+                break;
+
+            case MOS6502OpcodeTypeSEC:
+                disasm->instruction.eflags.CF_flag = DISASM_EFLAGS_SET;
+                break;
+
+            case MOS6502OpcodeTypeSED:
+                disasm->instruction.eflags.DF_flag = DISASM_EFLAGS_SET;
+                break;
+
+            case MOS6502OpcodeTypeSEI:
+                disasm->instruction.eflags.IF_flag = DISASM_EFLAGS_SET;
+                break;
+                
+            default:
+                break;
+        }
+    }
 
     switch (opcode.addressMode) {
         case MOS6502AddressModeAbsolute:
