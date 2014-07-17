@@ -12,6 +12,7 @@
 
 #import <Foundation/Foundation.h>
 #import "HPDisassembledFile.h"
+#import "HPDetectedFileType.h"
 #import "HopperPlugin.h"
 #import "CommonTypes.h"
 
@@ -35,7 +36,7 @@
 /// Extract a file
 /// In the case of a "composite loader", extract the NSData object of the selected file.
 - (NSData *)extractFromData:(NSData *)data
-      usingDetectedFileType:(DetectedFileType *)fileType
+      usingDetectedFileType:(NSObject<HPDetectedFileType> *)fileType
          returnAdjustOffset:(uint64_t *)adjustOffset;
 
 @end

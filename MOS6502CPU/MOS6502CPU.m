@@ -26,7 +26,6 @@
 
 #import "MOS6502CPU.h"
 #import "MOS6502Ctx.h"
-#import "MOS6502Opcodes.h"
 
 static NSString * const kCpuFamily = @"MOS";
 static NSString * const kCpuSubFamily = @"6502";
@@ -56,7 +55,7 @@ static NSString * const kCpuMode = @"generic";
 
 - (instancetype)initWithHopperServices:(NSObject<HPHopperServices> *)services {
     NSUInteger version = [MOS6502CPU integerHopperVersion:services];
-    if (version > 0x00030302) {
+    if (version > 0x00030303) {
         [services logMessage:[NSString stringWithFormat:@"Hopper version %@ is too new for this plugin",
                               [services hopperVersionString]]];
         return nil;
@@ -134,6 +133,9 @@ static NSString * const kCpuMode = @"generic";
 
                 case 2:
                     return @"Y";
+
+                default:
+                    break;
             }
             break;
 
@@ -228,9 +230,9 @@ static NSString * const kCpuMode = @"generic";
 #pragma mark Utility methods
 
 + (NSUInteger)integerHopperVersion:(NSObject<HPHopperServices> *)services {
-    return ([services hopperMajorVersion] << 16) |
-            ([services hopperMinorVersion] << 8) |
-            [services hopperRevision];
+    return (NSUInteger) (([services hopperMajorVersion] << 16) |
+                ([services hopperMinorVersion] << 8) |
+                [services hopperRevision]);
 }
 
 @end

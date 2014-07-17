@@ -120,9 +120,9 @@ typedef NS_ENUM(NSUInteger, MOS6502OpcodeType) {
     MOS6502OpcodeTypeUndocumented
 };
 
-static size_t kOpcodeNamesCount = 56;
+static const size_t kOpcodeNamesCount = 56;
 
-static const char *const kOpcodeNames[] = {
+static const char *const kOpcodeNames[kOpcodeNamesCount] = {
     "ADC", "AND", "ASL", "BCC", "BCS", "BEQ", "BIT", "BMI", "BNE", "BPL",
     "BRK", "BVC", "BVS", "CLC", "CLD", "CLI", "CLV", "CMP", "CPX", "CPY",
     "DEC", "DEX", "DEY", "EOR", "INC", "INX", "INY", "JMP", "JSR", "LDA",

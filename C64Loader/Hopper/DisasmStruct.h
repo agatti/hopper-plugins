@@ -241,7 +241,7 @@ typedef struct  {
     char                unconditionalMnemonic[16];  /// Mnemonic string without the conditional part.
     DisasmCondition     condition;                  /// Condition to be met to execute instruction.
 
-    uint32_t            instructionFamily;          /// A field that you can use internally to keep information on the instruction. Hopper don't need it.
+    uint32_t            userData;                   /// A field that you can use internally to keep information on the instruction. Hopper don't need it.
 
     uint8_t             length;                     /// Length in bytes of the instruction encoding.
 
@@ -278,7 +278,7 @@ typedef struct {
     int32_t            shiftAmount;         /// Shifting amount (if not shifted by a register)
     int32_t            shiftByReg;          /// Shifting register
 
-    int64_t            immediatValue;       /// The immediate value for this operand, if known.
+    int64_t            immediateValue;      /// The immediate value for this operand, if known.
 } DisasmOperand;
 
 typedef struct {

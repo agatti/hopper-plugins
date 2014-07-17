@@ -40,8 +40,11 @@
              forOperandIndex:(size_t)operand
                     isSigned:(BOOL)isSigned;
 + (NSString *)valueAsOctal:(DisasmStruct *)disasm
-           forOperandIndex:(size_t)operand
-                  isSigned:(BOOL)isSigned;
+           forOperandIndex:(size_t)operand;
++ (NSString *)valueAsBinary:(DisasmStruct *)disasm
+            forOperandIndex:(size_t)operand;
++ (NSString *)convertToBinary:(uint64_t)value
+                   sizeInBits:(size_t)bits;
 
 @end
 
@@ -141,7 +144,7 @@
     uint8_t opcodeByte = [_file readUInt8AtVirtualAddress:disasm->virtualAddr];
 
     struct MOS6502Opcode opcode = kOpcodes[opcodeByte];
-    disasm->instruction.instructionFamily = opcodeByte;
+    disasm->instruction.userData = opcodeByte;
     if (opcode.addressMode == MOS6502AddressModeUnknown) {
         return DISASM_UNKNOWN_OPCODE;
     }
@@ -220,7 +223,7 @@
 }
 
 - (BOOL)instructionHaltsExecutionFlow:(DisasmStruct *)disasm {
-    return kOpcodes[disasm->instruction.instructionFamily].type == MOS6502OpcodeTypeBRK;
+    return kOpcodes[disasm->instruction.userData].type == MOS6502OpcodeTypeBRK;
 }
 
 - (void)performBranchesAnalysis:(DisasmStruct *)disasm
@@ -322,7 +325,7 @@
             disasm->operand1.memory.indexRegister = 0;
             disasm->operand1.memory.scale = 1;
             disasm->operand1.size = 16;
-            disasm->operand1.immediatValue = operand;
+            disasm->operand1.immediateValue = operand;
             break;
 
         case MOS6502AddressModeAbsoluteXIndexed:
@@ -333,7 +336,7 @@
             disasm->operand1.memory.indexRegister = 1;
             disasm->operand1.memory.scale = 1;
             disasm->operand1.size = 16;
-            disasm->operand1.immediatValue = operand;
+            disasm->operand1.immediateValue = operand;
             break;
 
         case MOS6502AddressModeAbsoluteYIndexed:
@@ -344,13 +347,13 @@
             disasm->operand1.memory.indexRegister = 2;
             disasm->operand1.memory.scale = 1;
             disasm->operand1.size = 16;
-            disasm->operand1.immediatValue = operand;
+            disasm->operand1.immediateValue = operand;
             break;
 
         case MOS6502AddressModeImmediate:
             operand = [_file readUInt8AtVirtualAddress:disasm->virtualAddr + 1];
             disasm->operand1.type = DISASM_OPERAND_CONSTANT_TYPE;
-            disasm->operand1.immediatValue = operand;
+            disasm->operand1.immediateValue = operand;
             disasm->operand1.size = 8;
             break;
 
@@ -362,7 +365,7 @@
             disasm->operand1.memory.indexRegister = 0;
             disasm->operand1.memory.scale = 1;
             disasm->operand1.size = 16;
-            disasm->operand1.immediatValue = operand;
+            disasm->operand1.immediateValue = operand;
             break;
 
         case MOS6502AddressModeIndirectXIndexed:
@@ -373,7 +376,7 @@
             disasm->operand1.memory.indexRegister = 1;
             disasm->operand1.memory.scale = 1;
             disasm->operand1.size = 8;
-            disasm->operand1.immediatValue = operand;
+            disasm->operand1.immediateValue = operand;
             break;
 
         case MOS6502AddressModeIndirectYIndexed:
@@ -384,7 +387,7 @@
             disasm->operand1.memory.indexRegister = 2;
             disasm->operand1.memory.scale = 1;
             disasm->operand1.size = 8;
-            disasm->operand1.immediatValue = operand;
+            disasm->operand1.immediateValue = operand;
             break;
 
         case MOS6502AddressModeZeropage:
@@ -395,7 +398,7 @@
             disasm->operand1.memory.indexRegister = 0;
             disasm->operand1.memory.scale = 1;
             disasm->operand1.size = 8;
-            disasm->operand1.immediatValue = operand;
+            disasm->operand1.immediateValue = operand;
             break;
 
         case MOS6502AddressModeZeropageXIndexed:
@@ -406,7 +409,7 @@
             disasm->operand1.memory.indexRegister = 1;
             disasm->operand1.memory.scale = 1;
             disasm->operand1.size = 8;
-            disasm->operand1.immediatValue = operand;
+            disasm->operand1.immediateValue = operand;
             break;
 
         case MOS6502AddressModeZeropageYIndexed:
@@ -417,7 +420,7 @@
             disasm->operand1.memory.indexRegister = 2;
             disasm->operand1.memory.scale = 1;
             disasm->operand1.size = 8;
-            disasm->operand1.immediatValue = operand;
+            disasm->operand1.immediateValue = operand;
             break;
 
         case MOS6502AddressModeImplied:
@@ -470,7 +473,7 @@
             operand = [_file readUInt16AtVirtualAddress:disasm->virtualAddr + 1];
             disasm->operand1.type = DISASM_OPERAND_CONSTANT_TYPE | DISASM_OPERAND_ABSOLUTE;
             disasm->instruction.addressValue = operand;
-            disasm->operand1.immediatValue = operand;
+            disasm->operand1.immediateValue = operand;
             disasm->operand1.size = 16;
             break;
 
@@ -478,13 +481,13 @@
             operand = [_file readUInt16AtVirtualAddress:disasm->virtualAddr + 1];
             disasm->operand1.type = DISASM_OPERAND_MEMORY_TYPE | DISASM_OPERAND_RELATIVE;
             disasm->instruction.addressValue = operand;
-            disasm->operand1.immediatValue = operand;
+            disasm->operand1.immediateValue = operand;
             disasm->operand1.size = 16;
             break;
 
         case MOS6502AddressModeRelative:
             operand = [_file readUInt8AtVirtualAddress:disasm->virtualAddr + 1];
-            size_t offset;
+            int offset;
             if (operand & (1 << 7)) {
                 offset = operand & 0x7F;
                 offset = -((~offset + 1) & 0x7F);
@@ -495,8 +498,8 @@
             offset += disasm->instruction.pcRegisterValue + 2;
 
             disasm->operand1.type = DISASM_OPERAND_CONSTANT_TYPE | DISASM_OPERAND_RELATIVE;
-            disasm->instruction.addressValue = offset;
-            disasm->operand1.immediatValue = offset;
+            disasm->instruction.addressValue = (Address) offset;
+            disasm->operand1.immediateValue = offset;
             disasm->operand1.size = 16;
             break;
 
@@ -537,8 +540,11 @@
 
         case Format_Octal:
             return [MOS6502Ctx valueAsOctal:disasm
-                            forOperandIndex:operand
-                                   isSigned:NO];
+                            forOperandIndex:operand];
+
+        case Format_Binary:
+            return [MOS6502Ctx valueAsBinary:disasm
+                             forOperandIndex:operand];
 
         default:
             return [MOS6502Ctx valueAsHexadecimal:disasm
@@ -554,7 +560,7 @@
         return @"";
     }
 
-    int64_t operandValue = disasm->operand[operand].immediatValue;
+    int64_t operandValue = disasm->operand[operand].immediateValue;
     int64_t value;
     BOOL negative;
     if (operandValue & (1 << (disasm->operand[operand].size - 1)) && isSigned) {
@@ -565,7 +571,7 @@
         negative = NO;
     }
 
-    switch (kOpcodes[disasm->instruction.instructionFamily].addressMode) {
+    switch (kOpcodes[disasm->instruction.userData].addressMode) {
         case MOS6502AddressModeAbsolute:
         case MOS6502AddressModeRelative:
             return [NSString stringWithFormat:@"%@$%04X",
@@ -618,7 +624,7 @@
         return @"";
     }
 
-    int64_t operandValue = disasm->operand[operand].immediatValue;
+    int64_t operandValue = disasm->operand[operand].immediateValue;
     int64_t value;
     BOOL negative;
     if (operandValue & (1 << (disasm->operand[operand].size - 1)) && isSigned) {
@@ -629,7 +635,7 @@
         negative = NO;
     }
 
-    switch (kOpcodes[disasm->instruction.instructionFamily].addressMode) {
+    switch (kOpcodes[disasm->instruction.userData].addressMode) {
         case MOS6502AddressModeAbsolute:
         case MOS6502AddressModeRelative:
             return [NSString stringWithFormat:@"%@%d",
@@ -676,16 +682,15 @@
 }
 
 + (NSString *)valueAsOctal:(DisasmStruct *)disasm
-           forOperandIndex:(size_t)operand
-                  isSigned:(BOOL)isSigned {
+           forOperandIndex:(size_t)operand {
     if (disasm->operand[operand].type == DISASM_OPERAND_NO_OPERAND) {
         return @"";
     }
 
-    int64_t operandValue = disasm->operand[operand].immediatValue;
+    int64_t operandValue = disasm->operand[operand].immediateValue;
     int64_t value;
     BOOL negative;
-    if (operandValue & (1 << (disasm->operand[operand].size - 1)) && isSigned) {
+    if (operandValue & (1 << (disasm->operand[operand].size - 1))) {
         value = ~operandValue + 1;
         negative = YES;
     } else {
@@ -693,7 +698,7 @@
         negative = NO;
     }
 
-    switch (kOpcodes[disasm->instruction.instructionFamily].addressMode) {
+    switch (kOpcodes[disasm->instruction.userData].addressMode) {
         case MOS6502AddressModeAbsolute:
         case MOS6502AddressModeRelative:
             return [NSString stringWithFormat:@"%@%oo",
@@ -737,6 +742,80 @@
         default:
             return @"";
     }
+}
+
++ (NSString *)valueAsBinary:(DisasmStruct *)disasm
+            forOperandIndex:(size_t)operand {
+    if (disasm->operand[operand].type == DISASM_OPERAND_NO_OPERAND) {
+        return @"";
+    }
+
+    int64_t operandValue = disasm->operand[operand].immediateValue &
+        ((1 << disasm->operand[operand].size) - 1);
+    NSString *binaryValue = [MOS6502Ctx convertToBinary:operandValue
+                                             sizeInBits:disasm->operand[operand].size];
+
+    switch (kOpcodes[disasm->instruction.userData].addressMode) {
+        case MOS6502AddressModeAbsolute:
+        case MOS6502AddressModeRelative:
+            return [NSString stringWithFormat:@"%%%@", binaryValue];
+
+        case MOS6502AddressModeAbsoluteXIndexed:
+            return [NSString stringWithFormat:@"%%%@,X", binaryValue];
+
+        case MOS6502AddressModeAbsoluteYIndexed:
+            return [NSString stringWithFormat:@"%%%@,Y", binaryValue];
+
+        case MOS6502AddressModeImmediate:
+        case MOS6502AddressModeZeropage:
+            return [NSString stringWithFormat:@"#%%%@", binaryValue];
+
+        case MOS6502AddressModeIndirect:
+            return [NSString stringWithFormat:@"(%%%@)", binaryValue];
+
+        case MOS6502AddressModeIndirectXIndexed:
+            return [NSString stringWithFormat:@"(%%%@,X)", binaryValue];
+
+        case MOS6502AddressModeIndirectYIndexed:
+            return [NSString stringWithFormat:@"(%%%@),Y", binaryValue];
+
+        case MOS6502AddressModeZeropageXIndexed:
+            return [NSString stringWithFormat:@"#%%%@,X", binaryValue];
+
+        case MOS6502AddressModeZeropageYIndexed:
+            return [NSString stringWithFormat:@"#%%%@,Y", binaryValue];
+
+        case MOS6502AddressModeUnknown:
+        case MOS6502AddressModeImplied:
+        default:
+            return @"";
+    }
+}
+
++ (NSString *)convertToBinary:(uint64_t)value
+                   sizeInBits:(size_t)bits {
+    NSMutableString *output = [NSMutableString new];
+    long startBit = bits - 1;
+    BOOL firstBitSet = NO;
+    while (startBit >= 0) {
+        BOOL bitSet = (value & (1 << startBit)) == (1 << startBit);
+        startBit--;
+        if (bitSet) {
+            firstBitSet = YES;
+        } else {
+            if (!firstBitSet) {
+                continue;
+            }
+        }
+
+        [output appendFormat:@"%c", bitSet ? '1' : '0' ];
+    }
+
+    if (output.length == 0) {
+        [output appendFormat:@"0"];
+    }
+
+    return output;
 }
 
 @end

@@ -75,6 +75,7 @@ HP_BEGIN_DECL_ENUM(NSUInteger, ArgFormat) {
     Format_Offset,
     Format_Address,
     Format_Float,
+    Format_Binary,
 
     Format_Signed = 0x80
 }
@@ -129,6 +130,7 @@ HP_BEGIN_DECL_ENUM(NSUInteger, LOCKind) {
 HP_END_DECL_ENUM(LOCKind);
 
 HP_BEGIN_DECL_ENUM(NSUInteger, DFTAddressWidth) {
+    AW_16bits = 1,
     AW_32bits = 2,
     AW_64bits = 3
 }

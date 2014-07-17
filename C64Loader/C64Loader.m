@@ -25,7 +25,6 @@
  */
 
 #import "C64Loader.h"
-
 #import "C64Basic.h"
 
 @interface C64Loader()
@@ -56,7 +55,7 @@
 
 - (instancetype)initWithHopperServices:(NSObject<HPHopperServices> *)services {
     NSUInteger version = [C64Loader integerHopperVersion:services];
-    if (version > 0x00030302) {
+    if (version > 0x00030303) {
         [services logMessage:[NSString stringWithFormat:@"Hopper version %@ is too new for this plugin",
                               [services hopperVersionString]]];
         return nil;
@@ -107,7 +106,7 @@
 - (NSArray *)detectedTypesForData:(NSData *)data {
     NSObject<HPDetectedFileType> *detectedType = [_services detectedType];
     detectedType.fileDescription = @"C64 Executable code";
-    detectedType.addressWidth = AW_32bits; // :(
+    detectedType.addressWidth = AW_16bits;
     detectedType.cpuFamily = @"MOS";
     detectedType.cpuSubFamily = @"6502";
     detectedType.additionalParameters = @[
@@ -133,7 +132,7 @@
 
     uint16 startingAddress = OSReadLittleInt16(data.bytes, 0);
     unsigned long size = data.length - 2;
-    uint16 endingAddress = startingAddress + size;
+    uint16 endingAddress = (uint16) ((startingAddress + size) & 0xFFFF);
 
     if (endingAddress > 65535) {
         NSLog(@"File too big: %lu bytes", data.length);
@@ -150,7 +149,7 @@
     segment.fileOffset = 2;
     segment.fileLength = size;
 
-    int fileOffset = 2;
+    size_t fileOffset = 2;
     unsigned long fileLength = size;
 
     if (hasBasic.isChecked) {
@@ -176,7 +175,7 @@
         }
     }
 
-    NSObject<HPSection> *section = [segment addSectionAt:startingAddress + fileOffset - 2
+    NSObject<HPSection> *section = [segment addSectionAt:(startingAddress + fileOffset - 2)
                                                     size:fileLength];
     section.pureCodeSection = NO;
     section.fileOffset = fileOffset;
@@ -272,9 +271,9 @@
 }
 
 + (NSUInteger)integerHopperVersion:(NSObject<HPHopperServices> *)services {
-    return ([services hopperMajorVersion] << 16) |
-    ([services hopperMinorVersion] << 8) |
-    [services hopperRevision];
+    return (NSUInteger) (([services hopperMajorVersion] << 16) |
+        ([services hopperMinorVersion] << 8) |
+        [services hopperRevision]);
 }
 
 @end
