@@ -26,6 +26,7 @@
 
 #import "MOS6502CPU.h"
 #import "MOS6502Ctx.h"
+#import "MOS6502Opcodes.h"
 
 static NSString * const kCpuFamily = @"MOS";
 static NSString * const kCpuSubFamily = @"6502";
@@ -47,13 +48,15 @@ static NSString * const kCpuMode = @"generic";
  */
 + (NSUInteger)integerHopperVersion:(NSObject<HPHopperServices> *)services;
 
+@property (strong, nonatomic, readonly) NSSet *validOpcodes;
+
 @end
 
 @implementation MOS6502CPU {
     NSObject<HPHopperServices> *_services;
 }
 
-- (instancetype)initWithHopperServices:(NSObject<HPHopperServices> *)services {
+- (NSObject<HopperPlugin> *)initWithHopperServices:(NSObject<HPHopperServices> *)services {
     NSUInteger version = [MOS6502CPU integerHopperVersion:services];
     if (version > 0x00030303) {
         [services logMessage:[NSString stringWithFormat:@"Hopper version %@ is too new for this plugin",
@@ -63,6 +66,12 @@ static NSString * const kCpuMode = @"generic";
 
     if (self = [super init]) {
         _services = services;
+
+        NSMutableSet *opcodes = [NSMutableSet new];
+        for (int index = 0; index < kOpcodeNamesCount; index++) {
+            [opcodes addObject:[NSString stringWithUTF8String:kOpcodeNames[index]]];
+        }
+        _validOpcodes = opcodes;
     }
 
     return self;
@@ -195,18 +204,71 @@ static NSString * const kCpuMode = @"generic";
 }
 
 - (NSAttributedString *)colorizeInstructionString:(NSAttributedString *)string {
-    NSMutableAttributedString *colorized = [string mutableCopy];
-    [_services colorizeASMString:colorized
-               operatorPredicate:^BOOL(unichar character) {
-                   return (character == '#' || character == '$');
-               }
-           languageWordPredicate:^BOOL(NSString *string) {
-               return NO;
+
+    // Extremely simplistic, to be changed later - possibly when access
+    // to DisasmStruct is available from here.
+
+    NSMutableAttributedString *clone = [string mutableCopy];
+    [clone beginEditing];
+
+    NSString *rawString = clone.string;
+    if (string.length < 3) {
+        return string;
+    }
+
+    NSRange opcodeRange = NSMakeRange(0, 3);
+    NSString *potentialOpcode = [rawString substringWithRange:opcodeRange];
+    if (![self.validOpcodes containsObject:potentialOpcode]) {
+        return string;
+    }
+
+    [clone setAttributes:(NSDictionary *)[_services ASMLanguageColor] // :(
+                   range:opcodeRange];
+
+    if (string.length > 3) {
+        int offset = 4;
+        const char *buffer = rawString.UTF8String;
+        if (buffer[offset] == '#') {
+            [clone setAttributes:(NSDictionary *)[_services ASMLanguageColor] // :(
+                           range:NSMakeRange(offset, 1)];
+            offset++;
+        }
+
+        unichar character = buffer[offset];
+        if (character == '%' || character == '$' || isdigit(character)) {
+            int start = offset;
+            offset++;
+            BOOL hexFound = character == '$';
+
+            while (offset < rawString.length) {
+                if (isdigit(buffer[offset])) {
+                    offset++;
+                    continue;
+                } else {
+                    if (hexFound) {
+                        if (character == 'A' || character == 'B' ||
+                            character == 'C' || character == 'D' ||
+                            character == 'E' || character == 'F') {
+                            offset++;
+                            continue;
+                        }
+                    }
+                    if (buffer[offset] == 'o') {
+                        offset++;
+                    }
+
+                    break;
+                }
             }
-        subLanguageWordPredicate:^BOOL(NSString *string) {
-            return NO;
-        }];
-    return colorized;
+
+            [clone setAttributes:(NSDictionary *)[_services ASMNumberColor] // :(
+                           range:NSMakeRange(start, offset - start)];
+        }
+    }
+
+    [clone endEditing];
+
+    return clone;
 }
 
 - (NSData *)nopWithSize:(NSUInteger)size
