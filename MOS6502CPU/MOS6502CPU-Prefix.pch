@@ -1,4 +1,4 @@
-/*!
+/*
  Copyright (c) 2014, Alessandro Gatti
  All rights reserved.
 
@@ -28,4 +28,4 @@
     #import <Cocoa/Cocoa.h>
 #endif
 
-#import "Hopper/Hopper.h"
+#import <Hopper/Hopper.h>

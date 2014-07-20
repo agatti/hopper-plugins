@@ -29,6 +29,7 @@ typedef NS_ENUM(NSUInteger, RegClass) {
     RegClass_X86_FPU = RegClass_FirstUserClass,
     RegClass_X86_MMX,
     RegClass_X86_SSE,
+    RegClass_X86_AVX,
 
     // ARM
     RegClass_ARM_VFP_Single = RegClass_FirstUserClass,

@@ -24,25 +24,6 @@
 		680136AD19707514004964BD /* MOS6502Ctx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOS6502Ctx.h; sourceTree = "<group>"; };
 		680136AE19707514004964BD /* MOS6502Ctx.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOS6502Ctx.m; sourceTree = "<group>"; };
 		680136B319708105004964BD /* MOS6502Opcodes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MOS6502Opcodes.h; sourceTree = "<group>"; };
-		68E9E6691971321A00D8386A /* CommonTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CommonTypes.h; path = Hopper/CommonTypes.h; sourceTree = "<group>"; };
-		68E9E66A1971321A00D8386A /* CPUContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPUContext.h; path = Hopper/CPUContext.h; sourceTree = "<group>"; };
-		68E9E66B1971321A00D8386A /* CPUDefinition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPUDefinition.h; path = Hopper/CPUDefinition.h; sourceTree = "<group>"; };
-		68E9E66C1971321A00D8386A /* DisasmStruct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DisasmStruct.h; path = Hopper/DisasmStruct.h; sourceTree = "<group>"; };
-		68E9E66D1971321A00D8386A /* FileLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FileLoader.h; path = Hopper/FileLoader.h; sourceTree = "<group>"; };
-		68E9E66E1971321A00D8386A /* Hopper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Hopper.h; path = Hopper/Hopper.h; sourceTree = "<group>"; };
-		68E9E66F1971321A00D8386A /* HopperPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HopperPlugin.h; path = Hopper/HopperPlugin.h; sourceTree = "<group>"; };
-		68E9E6701971321A00D8386A /* HopperTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HopperTool.h; path = Hopper/HopperTool.h; sourceTree = "<group>"; };
-		68E9E6711971321A00D8386A /* HPBasicBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPBasicBlock.h; path = Hopper/HPBasicBlock.h; sourceTree = "<group>"; };
-		68E9E6721971321A00D8386A /* HPDetectedFileType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPDetectedFileType.h; path = Hopper/HPDetectedFileType.h; sourceTree = "<group>"; };
-		68E9E6731971321A00D8386A /* HPDisassembledFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPDisassembledFile.h; path = Hopper/HPDisassembledFile.h; sourceTree = "<group>"; };
-		68E9E6741971321A00D8386A /* HPDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPDocument.h; path = Hopper/HPDocument.h; sourceTree = "<group>"; };
-		68E9E6751971321A00D8386A /* HPFormattedInstructionInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPFormattedInstructionInfo.h; path = Hopper/HPFormattedInstructionInfo.h; sourceTree = "<group>"; };
-		68E9E6761971321A00D8386A /* HPHopperServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPHopperServices.h; path = Hopper/HPHopperServices.h; sourceTree = "<group>"; };
-		68E9E6771971321A00D8386A /* HPLoaderOptionComponents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPLoaderOptionComponents.h; path = Hopper/HPLoaderOptionComponents.h; sourceTree = "<group>"; };
-		68E9E6781971321A00D8386A /* HPProcedure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPProcedure.h; path = Hopper/HPProcedure.h; sourceTree = "<group>"; };
-		68E9E6791971321A00D8386A /* HPSection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPSection.h; path = Hopper/HPSection.h; sourceTree = "<group>"; };
-		68E9E67A1971321A00D8386A /* HPSegment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPSegment.h; path = Hopper/HPSegment.h; sourceTree = "<group>"; };
-		68E9E67B1971321A00D8386A /* HPTag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPTag.h; path = Hopper/HPTag.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,7 +66,6 @@
 		6801368819706CC5004964BD /* MOS6502CPU */ = {
 			isa = PBXGroup;
 			children = (
-				68E9E654197131FF00D8386A /* Hopper Includes */,
 				6801368919706CC5004964BD /* Supporting Files */,
 				6801369519706DE8004964BD /* MOS6502CPU.h */,
 				6801369619706DE8004964BD /* MOS6502CPU.m */,
@@ -104,32 +84,6 @@
 				6801368E19706CC5004964BD /* MOS6502CPU-Prefix.pch */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		68E9E654197131FF00D8386A /* Hopper Includes */ = {
-			isa = PBXGroup;
-			children = (
-				68E9E6691971321A00D8386A /* CommonTypes.h */,
-				68E9E66A1971321A00D8386A /* CPUContext.h */,
-				68E9E66B1971321A00D8386A /* CPUDefinition.h */,
-				68E9E66C1971321A00D8386A /* DisasmStruct.h */,
-				68E9E66D1971321A00D8386A /* FileLoader.h */,
-				68E9E66E1971321A00D8386A /* Hopper.h */,
-				68E9E66F1971321A00D8386A /* HopperPlugin.h */,
-				68E9E6701971321A00D8386A /* HopperTool.h */,
-				68E9E6711971321A00D8386A /* HPBasicBlock.h */,
-				68E9E6721971321A00D8386A /* HPDetectedFileType.h */,
-				68E9E6731971321A00D8386A /* HPDisassembledFile.h */,
-				68E9E6741971321A00D8386A /* HPDocument.h */,
-				68E9E6751971321A00D8386A /* HPFormattedInstructionInfo.h */,
-				68E9E6761971321A00D8386A /* HPHopperServices.h */,
-				68E9E6771971321A00D8386A /* HPLoaderOptionComponents.h */,
-				68E9E6781971321A00D8386A /* HPProcedure.h */,
-				68E9E6791971321A00D8386A /* HPSection.h */,
-				68E9E67A1971321A00D8386A /* HPSegment.h */,
-				68E9E67B1971321A00D8386A /* HPTag.h */,
-			);
-			name = "Hopper Includes";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -248,6 +202,7 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/HopperSDK",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				ONLY_ACTIVE_ARCH = YES;
@@ -285,7 +240,7 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
-					"$(SRCROOT)/include",
+					"$(SRCROOT)/HopperSDK",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				SDKROOT = macosx;

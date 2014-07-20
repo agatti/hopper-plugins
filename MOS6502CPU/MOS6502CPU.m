@@ -1,4 +1,4 @@
-/*!
+/*
  Copyright (c) 2014, Alessandro Gatti
  All rights reserved.
 
@@ -35,19 +35,6 @@ static NSString * const kCpuMode = @"generic";
 
 @interface MOS6502CPU()
 
-/*!
- Gets the Hopper version for the given services object instance as a hex value.
-
- The value is built as such: 0x00MMmmrr with MM being the major version,
- mm being the minor version, and rr being the revision.  This is exactly the
- same as what Python's sys.hexversion works.
-
- @param services The instance of Hopper services object.
-
- @return The version value.
- */
-+ (NSUInteger)integerHopperVersion:(NSObject<HPHopperServices> *)services;
-
 @property (strong, nonatomic, readonly) NSSet *validOpcodes;
 
 @end
@@ -57,13 +44,6 @@ static NSString * const kCpuMode = @"generic";
 }
 
 - (NSObject<HopperPlugin> *)initWithHopperServices:(NSObject<HPHopperServices> *)services {
-    NSUInteger version = [MOS6502CPU integerHopperVersion:services];
-    if (version > 0x00030303) {
-        [services logMessage:[NSString stringWithFormat:@"Hopper version %@ is too new for this plugin",
-                              [services hopperVersionString]]];
-        return nil;
-    }
-
     if (self = [super init]) {
         _services = services;
 
@@ -387,10 +367,5 @@ static NSString * const kCpuMode = @"generic";
 
 #pragma mark Utility methods
 
-+ (NSUInteger)integerHopperVersion:(NSObject<HPHopperServices> *)services {
-    return (NSUInteger) (([services hopperMajorVersion] << 16) |
-                ([services hopperMinorVersion] << 8) |
-                [services hopperRevision]);
-}
 
 @end

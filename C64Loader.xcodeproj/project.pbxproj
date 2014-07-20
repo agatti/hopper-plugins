@@ -13,25 +13,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		683C9F62197141900005973C /* CommonTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CommonTypes.h; path = Hopper/CommonTypes.h; sourceTree = "<group>"; };
-		683C9F63197141900005973C /* CPUContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPUContext.h; path = Hopper/CPUContext.h; sourceTree = "<group>"; };
-		683C9F64197141900005973C /* CPUDefinition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPUDefinition.h; path = Hopper/CPUDefinition.h; sourceTree = "<group>"; };
-		683C9F65197141900005973C /* DisasmStruct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DisasmStruct.h; path = Hopper/DisasmStruct.h; sourceTree = "<group>"; };
-		683C9F66197141900005973C /* FileLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FileLoader.h; path = Hopper/FileLoader.h; sourceTree = "<group>"; };
-		683C9F67197141900005973C /* Hopper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Hopper.h; path = Hopper/Hopper.h; sourceTree = "<group>"; };
-		683C9F68197141900005973C /* HopperPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HopperPlugin.h; path = Hopper/HopperPlugin.h; sourceTree = "<group>"; };
-		683C9F69197141900005973C /* HopperTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HopperTool.h; path = Hopper/HopperTool.h; sourceTree = "<group>"; };
-		683C9F6A197141900005973C /* HPBasicBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPBasicBlock.h; path = Hopper/HPBasicBlock.h; sourceTree = "<group>"; };
-		683C9F6B197141900005973C /* HPDetectedFileType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPDetectedFileType.h; path = Hopper/HPDetectedFileType.h; sourceTree = "<group>"; };
-		683C9F6C197141900005973C /* HPDisassembledFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPDisassembledFile.h; path = Hopper/HPDisassembledFile.h; sourceTree = "<group>"; };
-		683C9F6D197141900005973C /* HPDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPDocument.h; path = Hopper/HPDocument.h; sourceTree = "<group>"; };
-		683C9F6E197141900005973C /* HPFormattedInstructionInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPFormattedInstructionInfo.h; path = Hopper/HPFormattedInstructionInfo.h; sourceTree = "<group>"; };
-		683C9F6F197141900005973C /* HPHopperServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPHopperServices.h; path = Hopper/HPHopperServices.h; sourceTree = "<group>"; };
-		683C9F70197141900005973C /* HPLoaderOptionComponents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPLoaderOptionComponents.h; path = Hopper/HPLoaderOptionComponents.h; sourceTree = "<group>"; };
-		683C9F71197141900005973C /* HPProcedure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPProcedure.h; path = Hopper/HPProcedure.h; sourceTree = "<group>"; };
-		683C9F72197141900005973C /* HPSection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPSection.h; path = Hopper/HPSection.h; sourceTree = "<group>"; };
-		683C9F73197141900005973C /* HPSegment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPSegment.h; path = Hopper/HPSegment.h; sourceTree = "<group>"; };
-		683C9F74197141900005973C /* HPTag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPTag.h; path = Hopper/HPTag.h; sourceTree = "<group>"; };
 		683C9F75197141C80005973C /* C64Loader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = C64Loader.h; sourceTree = "<group>"; };
 		683C9F76197141C80005973C /* C64Loader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = C64Loader.m; sourceTree = "<group>"; };
 		683C9F78197148220005973C /* C64Basic.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = C64Basic.h; sourceTree = "<group>"; };
@@ -54,32 +35,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		683C9F61197141800005973C /* Hopper Includes */ = {
-			isa = PBXGroup;
-			children = (
-				683C9F62197141900005973C /* CommonTypes.h */,
-				683C9F63197141900005973C /* CPUContext.h */,
-				683C9F64197141900005973C /* CPUDefinition.h */,
-				683C9F65197141900005973C /* DisasmStruct.h */,
-				683C9F66197141900005973C /* FileLoader.h */,
-				683C9F67197141900005973C /* Hopper.h */,
-				683C9F68197141900005973C /* HopperPlugin.h */,
-				683C9F69197141900005973C /* HopperTool.h */,
-				683C9F6A197141900005973C /* HPBasicBlock.h */,
-				683C9F6B197141900005973C /* HPDetectedFileType.h */,
-				683C9F6C197141900005973C /* HPDisassembledFile.h */,
-				683C9F6D197141900005973C /* HPDocument.h */,
-				683C9F6E197141900005973C /* HPFormattedInstructionInfo.h */,
-				683C9F6F197141900005973C /* HPHopperServices.h */,
-				683C9F70197141900005973C /* HPLoaderOptionComponents.h */,
-				683C9F71197141900005973C /* HPProcedure.h */,
-				683C9F72197141900005973C /* HPSection.h */,
-				683C9F73197141900005973C /* HPSegment.h */,
-				683C9F74197141900005973C /* HPTag.h */,
-			);
-			name = "Hopper Includes";
-			sourceTree = "<group>";
-		};
 		68C7B36E1971407D0067434B = {
 			isa = PBXGroup;
 			children = (
@@ -108,7 +63,6 @@
 		68C7B37C1971407D0067434B /* C64Loader */ = {
 			isa = PBXGroup;
 			children = (
-				683C9F61197141800005973C /* Hopper Includes */,
 				68C7B37D1971407D0067434B /* Supporting Files */,
 				683C9F75197141C80005973C /* C64Loader.h */,
 				683C9F76197141C80005973C /* C64Loader.m */,
@@ -239,6 +193,11 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/HopperSDK",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
@@ -272,6 +231,11 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/HopperSDK",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				SDKROOT = macosx;
 			};

@@ -1,4 +1,4 @@
-/*!
+/*
  Copyright (c) 2014, Alessandro Gatti
  All rights reserved.
 
@@ -25,7 +25,8 @@
  */
 
 #import <Foundation/Foundation.h>
-#import "MOS6502CPU.h"
+
+@class MOS6502CPU;
 
 @interface MOS6502Ctx : NSObject<CPUContext>
 

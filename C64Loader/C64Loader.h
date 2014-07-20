@@ -1,4 +1,4 @@
-/*!
+/*
  Copyright (c) 2014, Alessandro Gatti
  All rights reserved.
 

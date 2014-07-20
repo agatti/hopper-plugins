@@ -1,4 +1,4 @@
-/*!
+/*
  Copyright (c) 2014, Alessandro Gatti
  All rights reserved.
 
@@ -24,6 +24,7 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#import "MOS6502CPU.h"
 #import "MOS6502Ctx.h"
 #import "MOS6502Opcodes.h"
 

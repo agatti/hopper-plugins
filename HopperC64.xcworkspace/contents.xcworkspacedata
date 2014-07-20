@@ -7,6 +7,67 @@
    <FileRef
       location = "group:README.md">
    </FileRef>
+   <Group
+      location = "container:"
+      name = "Hopper SDK include files">
+      <FileRef
+         location = "group:HopperSDK/Hopper/CommonTypes.h">
+      </FileRef>
+      <FileRef
+         location = "group:HopperSDK/Hopper/CPUContext.h">
+      </FileRef>
+      <FileRef
+         location = "group:HopperSDK/Hopper/CPUDefinition.h">
+      </FileRef>
+      <FileRef
+         location = "group:HopperSDK/Hopper/DisasmStruct.h">
+      </FileRef>
+      <FileRef
+         location = "group:HopperSDK/Hopper/FileLoader.h">
+      </FileRef>
+      <FileRef
+         location = "group:HopperSDK/Hopper/Hopper.h">
+      </FileRef>
+      <FileRef
+         location = "group:HopperSDK/Hopper/HopperPlugin.h">
+      </FileRef>
+      <FileRef
+         location = "group:HopperSDK/Hopper/HopperTool.h">
+      </FileRef>
+      <FileRef
+         location = "group:HopperSDK/Hopper/HPBasicBlock.h">
+      </FileRef>
+      <FileRef
+         location = "group:HopperSDK/Hopper/HPDetectedFileType.h">
+      </FileRef>
+      <FileRef
+         location = "group:HopperSDK/Hopper/HPDisassembledFile.h">
+      </FileRef>
+      <FileRef
+         location = "group:HopperSDK/Hopper/HPDocument.h">
+      </FileRef>
+      <FileRef
+         location = "group:HopperSDK/Hopper/HPFormattedInstructionInfo.h">
+      </FileRef>
+      <FileRef
+         location = "group:HopperSDK/Hopper/HPHopperServices.h">
+      </FileRef>
+      <FileRef
+         location = "group:HopperSDK/Hopper/HPLoaderOptionComponents.h">
+      </FileRef>
+      <FileRef
+         location = "group:HopperSDK/Hopper/HPProcedure.h">
+      </FileRef>
+      <FileRef
+         location = "group:HopperSDK/Hopper/HPSection.h">
+      </FileRef>
+      <FileRef
+         location = "group:HopperSDK/Hopper/HPSegment.h">
+      </FileRef>
+      <FileRef
+         location = "group:HopperSDK/Hopper/HPTag.h">
+      </FileRef>
+   </Group>
    <FileRef
       location = "group:C64Loader.xcodeproj">
    </FileRef>

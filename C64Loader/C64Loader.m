@@ -1,4 +1,4 @@
-/*!
+/*
  Copyright (c) 2014, Alessandro Gatti
  All rights reserved.
 
@@ -29,19 +29,6 @@
 
 @interface C64Loader()
 
-/*!
- Gets the Hopper version for the given services object instance as a hex value.
-
- The value is built as such: 0x00MMmmrr with MM being the major version,
- mm being the minor version, and rr being the revision.  This is exactly the
- same as what Python's sys.hexversion works.
-
- @param services The instance of Hopper services object.
-
- @return The version value.
- */
-+ (NSUInteger)integerHopperVersion:(NSObject<HPHopperServices> *)services;
-
 - (NSError *)parseBasicProgram:(NSData *)data
                      atAddress:(NSUInteger)address
                        toArray:(NSMutableArray *)array
@@ -54,13 +41,6 @@
 }
 
 - (instancetype)initWithHopperServices:(NSObject<HPHopperServices> *)services {
-    NSUInteger version = [C64Loader integerHopperVersion:services];
-    if (version > 0x00030303) {
-        [services logMessage:[NSString stringWithFormat:@"Hopper version %@ is too new for this plugin",
-                              [services hopperVersionString]]];
-        return nil;
-    }
-
     if (self = [super init]) {
         _services = services;
     }
@@ -268,12 +248,6 @@
 
     *size = offset;
     return nil;
-}
-
-+ (NSUInteger)integerHopperVersion:(NSObject<HPHopperServices> *)services {
-    return (NSUInteger) (([services hopperMajorVersion] << 16) |
-        ([services hopperMinorVersion] << 8) |
-        [services hopperRevision]);
 }
 
 @end
