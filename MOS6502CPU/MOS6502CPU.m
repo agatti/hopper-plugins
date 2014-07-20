@@ -107,7 +107,7 @@ static NSString * const kCpuMode = @"generic";
 }
 
 - (NSString *)pluginVersion {
-    return @"0.0.2";
+    return @"0.0.3";
 }
 
 - (NSArray *)cpuFamilies {
