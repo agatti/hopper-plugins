@@ -228,41 +228,137 @@ static NSString * const kCpuMode = @"generic";
     if (string.length > 3) {
         int offset = 4;
         const char *buffer = rawString.UTF8String;
-        if (buffer[offset] == '#') {
-            [clone setAttributes:(NSDictionary *)[_services ASMLanguageColor] // :(
-                           range:NSMakeRange(offset, 1)];
-            offset++;
-        }
+        NSInteger numberStart = NSNotFound;
+        BOOL numberFound = NO;
+        BOOL negativeMarkerFound = NO;
+        ArgFormat formatFound = Format_Decimal;
 
-        unichar character = buffer[offset];
-        if (character == '%' || character == '$' || isdigit(character)) {
-            int start = offset;
-            offset++;
-            BOOL hexFound = character == '$';
+        while (offset < rawString.length) {
+            unichar character = buffer[offset];
 
-            while (offset < rawString.length) {
-                if (isdigit(buffer[offset])) {
-                    offset++;
-                    continue;
-                } else {
-                    if (hexFound) {
-                        if (character == 'A' || character == 'B' ||
-                            character == 'C' || character == 'D' ||
-                            character == 'E' || character == 'F') {
-                            offset++;
-                            continue;
+            if (character == '#') {
+                if (numberFound) {
+                    // Duplicate immediate value markers should not appear, bail out.
+                    [clone endEditing];
+                    return clone;
+                }
+
+                [clone setAttributes:(NSDictionary *)[_services ASMLanguageColor] // :(
+                               range:NSMakeRange(offset, 1)];
+                offset++;
+                continue;
+            }
+
+            if (character == '-') {
+                if (numberFound) {
+                    // Duplicate negative markers should not appear, bail out.
+                    [clone endEditing];
+                    return clone;
+                }
+
+                numberStart = offset;
+                numberFound = YES;
+                negativeMarkerFound = YES;
+                offset++;
+                continue;
+            }
+
+            if (character == '%' || character == '$') {
+                if (numberFound) {
+                    // Duplicate format markers should not appear, bail out.
+                    [clone endEditing];
+                    return clone;
+                }
+
+                numberStart = offset;
+                numberFound = YES;
+
+                switch (character) {
+                    case '$':
+                        formatFound = Format_Hexadecimal;
+                        break;
+
+                    case '%':
+                        formatFound = Format_Binary;
+                        if (negativeMarkerFound) {
+                            // Negative binary numbers should not appear, bail out.
+                            [clone endEditing];
+                            return clone;
                         }
-                    }
-                    if (buffer[offset] == 'o') {
-                        offset++;
-                    }
+                        break;
 
-                    break;
+                    default:
+                        // Should not happen!
+                        break;
+                }
+
+                offset++;
+                continue;
+            }
+
+            if (isdigit(character)) {
+                if (formatFound == Format_Binary) {
+                    if (character != '0' && character != '1') {
+                        // Non-binary digits found with a binary format marker, bail out.
+                        [clone endEditing];
+                        return clone;
+                    }
+                }
+
+                if (!numberFound) {
+                    numberStart = offset;
+                    numberFound = YES;
+                }
+                offset++;
+                continue;
+            }
+
+            if (formatFound == Format_Hexadecimal) {
+                switch (character) {
+                    case 'A':
+                    case 'B':
+                    case 'C':
+                    case 'D':
+                    case 'E':
+                    case 'F':
+                        offset++;
+                        continue;
+
+                    default:
+                        // Non-hexadecimal digit found, mark and exit.
+                        [clone setAttributes:(NSDictionary *)[_services ASMNumberColor] // :(
+                                       range:NSMakeRange(numberStart, offset - numberStart)];
+                        break;
                 }
             }
 
+            if (character == 'o' && formatFound != Format_Binary &&
+                formatFound != Format_Hexadecimal && numberFound) {
+
+                // Octal end marker found, mark and exit.
+                offset++;
+                [clone setAttributes:(NSDictionary *)[_services ASMNumberColor] // :(
+                               range:NSMakeRange(numberStart, offset - numberStart)];
+                break;
+            }
+
+            if (numberFound) {
+                // Non-digit marker found, mark and exit.
+
+                offset++;
+                [clone setAttributes:(NSDictionary *)[_services ASMNumberColor] // :(
+                               range:NSMakeRange(numberStart, offset - numberStart)];
+                break;
+            }
+
+            // Nothing found yet, keep on iterating.
+            offset++;
+        }
+
+        if (numberFound) {
+            // Reached EOL whilst scanning for a number, mark and exit.
             [clone setAttributes:(NSDictionary *)[_services ASMNumberColor] // :(
-                           range:NSMakeRange(start, offset - start)];
+                           range:NSMakeRange(numberStart, offset - numberStart)];
         }
     }
 
