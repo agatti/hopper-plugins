@@ -1,16 +1,16 @@
 /*
- Copyright (c) 2014, Alessandro Gatti
+ Copyright (c) 2014, Alessandro Gatti - frob.it
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
  modification, are permitted provided that the following conditions are met:
 
  1. Redistributions of source code must retain the above copyright notice, this
- list of conditions and the following disclaimer.
+    list of conditions and the following disclaimer.
 
  2. Redistributions in binary form must reproduce the above copyright notice,
- this list of conditions and the following disclaimer in the documentation
- and/or other materials provided with the distribution.
+    this list of conditions and the following disclaimer in the documentation
+    and/or other materials provided with the distribution.
 
  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
@@ -24,22 +24,20 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import "MOS6502CPU.h"
-#import "MOS6502Ctx.h"
-#import "MOS6502Opcodes.h"
+#import "FRBDefinition.h"
+#import "FRBContext.h"
+#import "FRBBase.h"
 
-static NSString * const kCpuFamily = @"MOS";
-static NSString * const kCpuSubFamily = @"6502";
-static NSString * const kSyntaxVariant = @"Generic";
-static NSString * const kCpuMode = @"generic";
+#import "FRBGeneric6502.h"
+#import "FRBGeneric65C02.h"
 
-@interface MOS6502CPU()
+@interface FRBDefinition()
 
 @property (strong, nonatomic, readonly) NSSet *validOpcodes;
 
 @end
 
-@implementation MOS6502CPU {
+@implementation FRBDefinition {
     NSObject<HPHopperServices> *_services;
 }
 
@@ -48,8 +46,8 @@ static NSString * const kCpuMode = @"generic";
         _services = services;
 
         NSMutableSet *opcodes = [NSMutableSet new];
-        for (int index = 0; index < kOpcodeNamesCount; index++) {
-            [opcodes addObject:[NSString stringWithUTF8String:kOpcodeNames[index]]];
+        for (int index = 0; index < FRBUniqueOpcodesCount; index++) {
+            [opcodes addObject:[NSString stringWithUTF8String:FRBInstructions[index].name]];
         }
         _validOpcodes = opcodes;
     }
@@ -58,7 +56,7 @@ static NSString * const kCpuMode = @"generic";
 }
 
 - (NSObject<CPUContext> *)buildCPUContextForFile:(NSObject<HPDisassembledFile> *)file {
-    return [[MOS6502Ctx alloc] initWithCPU:self
+    return [[FRBContext alloc] initWithCPU:self
                                    andFile:file];
 }
 
@@ -75,7 +73,7 @@ static NSString * const kCpuMode = @"generic";
 }
 
 - (NSString *)pluginDescription {
-    return @"MOS 6502/6510 CPU support";
+    return @"65xx-family CPU support";
 }
 
 - (NSString *)pluginAuthor {
@@ -87,21 +85,33 @@ static NSString * const kCpuMode = @"generic";
 }
 
 - (NSString *)pluginVersion {
-    return @"0.0.3";
+    return @"0.0.4";
 }
 
 - (NSArray *)cpuFamilies {
-    return @[ kCpuFamily ];
+    return @[ FRBGenericCPUFamily, FRBWDCCPUFamily ];
 }
 
 - (NSArray *)cpuSubFamiliesForFamily:(NSString *)family {
-    return [kCpuFamily isEqualToString:family] ? @[ kCpuSubFamily ] : nil;
+    if ([FRBGenericCPUFamily isEqualTo:family]) {
+        return @[ FRB6502SubFamily, FRB65c02SubFamily ];
+    }
+
+    if ([FRBWDCCPUFamily isEqualTo:family]) {
+        return @[ FRB65c02SubFamily ];
+    }
+
+    return nil;
 }
 
 - (int)addressSpaceWidthInBitsForCPUFamily:(NSString *)family
                               andSubFamily:(NSString *)subFamily {
-    return ([kCpuFamily isEqualToString:family] &&
-            [kCpuSubFamily isEqualToString:kCpuSubFamily]) ? 16 : 0;
+    if ([FRBGenericCPUFamily isEqualTo:family] ||
+        [FRBWDCCPUFamily isEqualTo:family]) {
+        return 16;
+    }
+
+    return 0;
 }
 
 - (NSString *)registerIndexToString:(int)reg
@@ -148,11 +158,11 @@ static NSString * const kCpuMode = @"generic";
 }
 
 - (NSArray *)syntaxVariantNames {
-    return @[ kSyntaxVariant ];
+    return @[ FRBSyntaxVariant ];
 }
 
 - (NSArray *)cpuModeNames {
-    return @[ kCpuMode ];
+    return @[ FRBCPUMode ];
 }
 
 - (NSUInteger)registerClassCount {
@@ -364,8 +374,5 @@ static NSString * const kCpuMode = @"generic";
                               andSubFamily:(NSString *)subFamily {
     return NO;
 }
-
-#pragma mark Utility methods
-
 
 @end

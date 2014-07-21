@@ -17,7 +17,7 @@
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<string>0.0.4</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
@@ -43,6 +43,6 @@
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 2014 Alessandro Gatti. All rights reserved.</string>
 	<key>NSPrincipalClass</key>
-	<string>MOS6502CPU</string>
+	<string>FRBDefinition</string>
 </dict>
 </plist>

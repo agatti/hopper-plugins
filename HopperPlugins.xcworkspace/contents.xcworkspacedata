@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:6502.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:LICENSE">
    </FileRef>
    <FileRef
@@ -70,8 +73,5 @@
    </Group>
    <FileRef
       location = "group:C64Loader.xcodeproj">
-   </FileRef>
-   <FileRef
-      location = "group:MOS6502CPU.xcodeproj">
    </FileRef>
 </Workspace>
