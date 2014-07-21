@@ -27,10 +27,6 @@
 #ifndef FRBBase_h
 #define FRBBase_h
 
-static NSString * const FRBGenericCPUFamily = @"Generic";
-static NSString * const FRBWDCCPUFamily = @"WDC";
-static NSString * const FRB6502SubFamily = @"6502";
-static NSString * const FRB65c02SubFamily = @"65c02";
 static NSString * const FRBSyntaxVariant = @"Generic";
 static NSString * const FRBCPUMode = @"generic";
 

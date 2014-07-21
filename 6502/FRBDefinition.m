@@ -27,6 +27,7 @@
 #import "FRBDefinition.h"
 #import "FRBContext.h"
 #import "FRBBase.h"
+#import "FRBModelHandler.h"
 
 #import "FRBGeneric6502.h"
 #import "FRBGeneric65C02.h"
@@ -34,12 +35,12 @@
 @interface FRBDefinition()
 
 @property (strong, nonatomic, readonly) NSSet *validOpcodes;
+@property (strong, nonatomic, readonly) NSObject<HPHopperServices> *services;
+@property (strong, nonatomic, readonly) FRBModelHandler *modelHandler;
 
 @end
 
-@implementation FRBDefinition {
-    NSObject<HPHopperServices> *_services;
-}
+@implementation FRBDefinition
 
 - (NSObject<HopperPlugin> *)initWithHopperServices:(NSObject<HPHopperServices> *)services {
     if (self = [super init]) {
@@ -50,6 +51,7 @@
             [opcodes addObject:[NSString stringWithUTF8String:FRBInstructions[index].name]];
         }
         _validOpcodes = opcodes;
+        _modelHandler = [FRBModelHandler sharedModelHandler];
     }
 
     return self;
@@ -89,26 +91,22 @@
 }
 
 - (NSArray *)cpuFamilies {
-    return @[ FRBGenericCPUFamily, FRBWDCCPUFamily ];
+    return [self.modelHandler.models.allKeys sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        return [obj1 compare:obj2];
+    }];
 }
 
 - (NSArray *)cpuSubFamiliesForFamily:(NSString *)family {
-    if ([FRBGenericCPUFamily isEqualTo:family]) {
-        return @[ FRB6502SubFamily, FRB65c02SubFamily ];
-    }
-
-    if ([FRBWDCCPUFamily isEqualTo:family]) {
-        return @[ FRB65c02SubFamily ];
-    }
-
-    return nil;
+    return [((NSDictionary *)self.modelHandler.models[family]).allKeys sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        return [obj1 compare:obj2];
+    }];
 }
 
 - (int)addressSpaceWidthInBitsForCPUFamily:(NSString *)family
                               andSubFamily:(NSString *)subFamily {
-    if ([FRBGenericCPUFamily isEqualTo:family] ||
-        [FRBWDCCPUFamily isEqualTo:family]) {
-        return 16;
+    NSDictionary *subFamilies = self.modelHandler.models[family];
+    if (subFamilies && subFamilies[subFamily]) {
+            return 16;
     }
 
     return 0;

@@ -28,14 +28,14 @@
 #import "FRBContext.h"
 #import "FRBBase.h"
 #import "FRBProvider.h"
-#import "FRBGeneric6502.h"
-#import "FRBGeneric65C02.h"
+#import "FRBModelHandler.h"
 
 @interface FRBContext()
 
 @property (strong, nonatomic) FRBDefinition *cpu;
 @property (strong, nonatomic) NSObject<HPDisassembledFile> *file;
 @property (strong, nonatomic) NSObject<FRBProvider> *provider;
+@property (strong, nonatomic) FRBModelHandler *handler;
 
 - (void)handleNonBranchOpcode:(const struct FRBOpcode *)opcode
                     forDisasm:(DisasmStruct *)disasm;
@@ -63,18 +63,13 @@
     if (self = [super init]) {
         _cpu = cpu;
         _file = file;
+        _handler = [FRBModelHandler sharedModelHandler];
+        NSString *providerName = [_handler providerNameForFamily:file.cpuFamily
+                                                    andSubFamily:file.cpuSubFamily];
+        _provider = [[FRBModelHandler sharedModelHandler] providerForName:providerName];
 
-        if ([file.cpuFamily isEqualToString:FRBGenericCPUFamily]) {
-            if ([file.cpuSubFamily isEqualToString:FRB6502SubFamily]) {
-                _provider = [FRBGeneric6502 new];
-            }
-            if ([file.cpuSubFamily isEqualToString:FRB65c02SubFamily]) {
-                _provider = [FRBGeneric65C02 new];
-            }
-        }
-
-        if ([file.cpuFamily isEqualToString:FRBWDCCPUFamily]) {
-            _provider = [FRBGeneric65C02 new];
+        if (!_provider) {
+            return nil;
         }
     }
     return self;

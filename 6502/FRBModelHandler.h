@@ -26,13 +26,18 @@
 
 #import <Foundation/Foundation.h>
 
-#import "FRBBase.h"
+@protocol FRBProvider;
 
-@protocol FRBProvider <NSObject>
+@interface FRBModelHandler : NSObject
 
-@property (strong, nonatomic, readonly) NSString *name;
++(instancetype)sharedModelHandler;
 
--(const struct FRBOpcode *)opcodeForByte:(uint8_t)byte;
--(BOOL)haltsExecutionFlow:(const struct FRBOpcode *)opcode;
+@property (strong, nonatomic, readonly) NSDictionary *models;
+
+-(void)registerProvider:(Class)provider
+                forName:(NSString *)name;
+-(NSString *)providerNameForFamily:(NSString *)family
+                      andSubFamily:(NSString *)subFamily;
+-(NSObject<FRBProvider> *)providerForName:(NSString *)name;
 
 @end

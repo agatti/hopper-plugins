@@ -13,6 +13,9 @@
 		683A4C25197C8E4700B7F172 /* FRBDefinition.m in Sources */ = {isa = PBXBuildFile; fileRef = 683A4C1C197C8E4700B7F172 /* FRBDefinition.m */; };
 		683A4C27197C8E4700B7F172 /* FRBGeneric6502.m in Sources */ = {isa = PBXBuildFile; fileRef = 683A4C21197C8E4700B7F172 /* FRBGeneric6502.m */; };
 		683A4C31197C8E7000B7F172 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 683A4C2F197C8E7000B7F172 /* InfoPlist.strings */; };
+		688E0143197C949E00C9DC94 /* FRBW65C02S.m in Sources */ = {isa = PBXBuildFile; fileRef = 688E0142197C949E00C9DC94 /* FRBW65C02S.m */; };
+		68CEFDC6197CB07C0068B320 /* models.plist in Resources */ = {isa = PBXBuildFile; fileRef = 68CEFDC5197CB07C0068B320 /* models.plist */; };
+		68CEFDC9197CB5840068B320 /* FRBModelHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 68CEFDC8197CB5840068B320 /* FRBModelHandler.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +36,12 @@
 		683A4C2B197C8E5700B7F172 /* FRB6502Plugin-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "FRB6502Plugin-Info.plist"; path = "6502/FRB6502Plugin-Info.plist"; sourceTree = SOURCE_ROOT; };
 		683A4C2C197C8E5700B7F172 /* FRB6502Plugin-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "FRB6502Plugin-Prefix.pch"; path = "6502/FRB6502Plugin-Prefix.pch"; sourceTree = SOURCE_ROOT; };
 		683A4C30197C8E7000B7F172 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = 6502/en.lproj/InfoPlist.strings; sourceTree = SOURCE_ROOT; };
+		688E0141197C949E00C9DC94 /* FRBW65C02S.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FRBW65C02S.h; path = 6502/FRBW65C02S.h; sourceTree = SOURCE_ROOT; };
+		688E0142197C949E00C9DC94 /* FRBW65C02S.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FRBW65C02S.m; path = 6502/FRBW65C02S.m; sourceTree = SOURCE_ROOT; };
+		688E0144197C94BD00C9DC94 /* FRBW65C02STable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FRBW65C02STable.h; path = 6502/FRBW65C02STable.h; sourceTree = SOURCE_ROOT; };
+		68CEFDC5197CB07C0068B320 /* models.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = models.plist; path = 6502/models.plist; sourceTree = SOURCE_ROOT; };
+		68CEFDC7197CB5840068B320 /* FRBModelHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FRBModelHandler.h; path = 6502/FRBModelHandler.h; sourceTree = SOURCE_ROOT; };
+		68CEFDC8197CB5840068B320 /* FRBModelHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FRBModelHandler.m; path = 6502/FRBModelHandler.m; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,9 +97,14 @@
 				683A4C21197C8E4700B7F172 /* FRBGeneric6502.m */,
 				683A4C22197C8E4700B7F172 /* FRBGeneric6502Table.h */,
 				683A4C23197C8E4700B7F172 /* FRBProvider.h */,
+				688E0141197C949E00C9DC94 /* FRBW65C02S.h */,
+				688E0142197C949E00C9DC94 /* FRBW65C02S.m */,
+				688E0144197C94BD00C9DC94 /* FRBW65C02STable.h */,
+				68CEFDC7197CB5840068B320 /* FRBModelHandler.h */,
+				68CEFDC8197CB5840068B320 /* FRBModelHandler.m */,
 			);
 			name = 6502;
-			path = MOS6502CPU;
+			path = 6502;
 			sourceTree = "<group>";
 		};
 		6801368919706CC5004964BD /* Supporting Files */ = {
@@ -99,6 +113,7 @@
 				683A4C2F197C8E7000B7F172 /* InfoPlist.strings */,
 				683A4C2B197C8E5700B7F172 /* FRB6502Plugin-Info.plist */,
 				683A4C2C197C8E5700B7F172 /* FRB6502Plugin-Prefix.pch */,
+				68CEFDC5197CB07C0068B320 /* models.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -119,7 +134,7 @@
 			dependencies = (
 			);
 			name = 6502;
-			productName = MOS6502CPU;
+			productName = 6502;
 			productReference = 6801368319706CC5004964BD /* 6502.hopperCPU */;
 			productType = "com.apple.product-type.bundle";
 		};
@@ -154,6 +169,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				68CEFDC6197CB07C0068B320 /* models.plist in Resources */,
 				683A4C31197C8E7000B7F172 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -167,8 +183,10 @@
 			files = (
 				683A4C24197C8E4700B7F172 /* FRBContext.m in Sources */,
 				683A4C25197C8E4700B7F172 /* FRBDefinition.m in Sources */,
+				688E0143197C949E00C9DC94 /* FRBW65C02S.m in Sources */,
 				683A4C27197C8E4700B7F172 /* FRBGeneric6502.m in Sources */,
 				683372EA197C909B002B432E /* FRBGeneric65C02.m in Sources */,
+				68CEFDC9197CB5840068B320 /* FRBModelHandler.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -266,6 +284,7 @@
 					"$(SRCROOT)/HopperSDK",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				PRODUCT_NAME = 6502;
 				SDKROOT = macosx;
 			};
 			name = Release;

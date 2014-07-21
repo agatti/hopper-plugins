@@ -24,11 +24,29 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import "FRBGeneric6502.h"
 #import "FRBBase.h"
+#import "FRBGeneric6502.h"
 #import "FRBGeneric6502Table.h"
+#import "FRBModelHandler.h"
 
 @implementation FRBGeneric6502
+
+static NSString * const FRBProviderName = @"it.frob.hopper.generic6502";
+
+@synthesize name;
+
+-(instancetype)init {
+    if (self = [super init]) {
+        name = FRBProviderName;
+    }
+
+    return self;
+}
+
++(void)load {
+    [[FRBModelHandler sharedModelHandler] registerProvider:[FRBGeneric6502 class]
+                                                   forName:FRBProviderName];
+}
 
 -(const struct FRBOpcode *)opcodeForByte:(uint8_t)byte {
     return &FRBGeneric6502OpcodeTable[byte];

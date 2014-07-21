@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Ricoh</key>
+	<dict>
+		<key>2A03</key>
+		<string>it.frob.hopper.2a03</string>
+	</dict>
+	<key>Rockwell</key>
+	<dict>
+		<key>R6500/11</key>
+		<string>it.frob.hopper.r6500</string>
+		<key>R6500/12</key>
+		<string>it.frob.hopper.r6500</string>
+		<key>R6500/15</key>
+		<string>it.frob.hopper.r6500</string>
+		<key>R6500/16</key>
+		<string>it.frob.hopper.r6500</string>
+		<key>R6502</key>
+		<string>it.frob.hopper.generic6502</string>
+		<key>R6503</key>
+		<string>it.frob.hopper.generic6502</string>
+		<key>R6504</key>
+		<string>it.frob.hopper.generic6502</string>
+		<key>R6505</key>
+		<string>it.frob.hopper.generic6502</string>
+		<key>R6506</key>
+		<string>it.frob.hopper.generic6502</string>
+		<key>R6507</key>
+		<string>it.frob.hopper.generic6502</string>
+		<key>R6512</key>
+		<string>it.frob.hopper.generic6502</string>
+		<key>R6513</key>
+		<string>it.frob.hopper.generic6502</string>
+		<key>R6514</key>
+		<string>it.frob.hopper.generic6502</string>
+		<key>R6515</key>
+		<string>it.frob.hopper.generic6502</string>
+	</dict>
+	<key>WDC</key>
+	<dict>
+		<key>W65C02S</key>
+		<string>it.frob.hopper.w65c02s</string>
+	</dict>
+	<key>Generic</key>
+	<dict>
+		<key>6502</key>
+		<string>it.frob.hopper.generic6502</string>
+		<key>65C02</key>
+		<string>it.frob.hopper.generic65c02</string>
+	</dict>
+</dict>
+</plist>
