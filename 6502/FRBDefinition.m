@@ -35,8 +35,8 @@
 @interface FRBDefinition ()
 
 @property (strong, nonatomic, readonly) NSSet *validOpcodes;
-@property (strong, nonatomic, readonly) NSObject<HPHopperServices> *services;
 @property (strong, nonatomic, readonly) FRBModelHandler *modelHandler;
+@property (strong, nonatomic, readonly) NSCharacterSet *identifierCharacterSet;
 
 @end
 
@@ -52,6 +52,8 @@
         }
         _validOpcodes = opcodes;
         _modelHandler = [FRBModelHandler sharedModelHandler];
+        // No easy way to merge NSCharacterSets?
+        _identifierCharacterSet = [NSCharacterSet characterSetWithCharactersInString:@"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"];
     }
 
     return self;
@@ -87,7 +89,7 @@
 }
 
 - (NSString *)pluginVersion {
-    return @"0.0.5";
+    return @"0.0.6";
 }
 
 - (NSArray *)cpuFamilies {
@@ -220,6 +222,7 @@
         BOOL numberFound = NO;
         BOOL negativeMarkerFound = NO;
         ArgFormat formatFound = Format_Decimal;
+        BOOL asciiFound = NO;
 
         while (offset < rawString.length) {
             unichar character = buffer[offset];
@@ -318,6 +321,7 @@
                                        range:NSMakeRange(numberStart, offset - numberStart)];
                         numberFound = NO;
                         negativeMarkerFound = NO;
+                        asciiFound = NO;
                         formatFound = Format_Default;
                 }
             }
@@ -331,10 +335,11 @@
                                range:NSMakeRange(numberStart, offset - numberStart)];
                 numberFound = NO;
                 negativeMarkerFound = NO;
+                asciiFound = NO;
                 formatFound = Format_Default;
             }
 
-            if (numberFound) {
+            if (numberFound && !asciiFound) {
                 // Non-digit marker found, mark and exit.
 
                 offset++;
@@ -342,6 +347,20 @@
                                range:NSMakeRange(numberStart, offset - numberStart)];
                 numberFound = NO;
                 negativeMarkerFound = NO;
+                asciiFound = NO;
+                formatFound = Format_Default;
+            }
+
+            if (!asciiFound && [self.identifierCharacterSet characterIsMember:character]) {
+                // Identifier found
+                asciiFound = YES;
+            }
+
+            if (character == ',') {
+                // New parameter, reset state
+                numberFound = NO;
+                negativeMarkerFound = NO;
+                asciiFound = NO;
                 formatFound = Format_Default;
             }
 

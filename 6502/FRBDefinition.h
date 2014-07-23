@@ -28,4 +28,6 @@
 
 @interface FRBDefinition : NSObject<CPUDefinition>
 
+@property (strong, nonatomic, readonly) NSObject<HPHopperServices> *services;
+
 @end

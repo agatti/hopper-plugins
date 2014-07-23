@@ -3,19 +3,31 @@ Hopper Plugins
 
 Plugins currently available in the repository:
 
-###**MOS 6502 CPU** - _v0.0.5_
+###**MOS 6502 CPU** - _v0.0.6_
 
 This CPU core plugin allows you to disassemble 6502/65C02 code, used in loads of home computers of the 70s, 80s, and early 90s, and in industrial automation or other specialised tasks where a microcontroller is needed.
+
+CPUs currently supported:
+
+* CMD: G65SC02-A
+* Generic 6502 and 65C02 for chips by compatible vendors.
+* HudsonSoft: HuC6280
+* MOS: 6502, 6507, 6508, 6509, 6510, 7501, 8500, 8501, 8502
+* Ricoh: 2A03
+* Rockwell: R6500/11, R6500/12, R6500/15, R6500/16, R6502, R6503, R6504, R6505, R6505, R6507, R6512, R6513, R6514, R6515
+* Synertek: 6502
+* UMC: UM6502, UM6507, UM6512
+* WDC: W65C02S
 
 ####TODO for next version:
 
 * Add support for more 6502 variants if any are found in the wild.
+* Attempt to reject files too big for address-space reduced chip variants.
+* Add predefined hardware locations like RESET and NMI.
 
 ####Caveats:
 
 * Undocumented opcodes are not recognised.
-
-* Offsets are not recognised as such, therefore if you try to cast an absolute value as an offset the plugin will happily ignore your request and not show the label name if one is present at the address shown (nor will create one if there is not).
 
 ###**CBM File Loader** - _v0.0.3_
 

@@ -32,7 +32,8 @@
 
 + (NSString *)format:(DisasmStruct *)source
              operand:(NSUInteger)operand
-      argumentFormat:(ArgFormat)format;
+      argumentFormat:(ArgFormat)format
+        withServices:(NSObject<HPHopperServices> *)services;
 
 + (NSString *)format:(FRBAddressMode)addressMode
               opcode:(NSString *)opcode

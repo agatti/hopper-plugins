@@ -46,6 +46,10 @@ static const NSArray *FRBOpcodeFormats;
                    operand:(NSUInteger)operand
                signedValue:(BOOL)signedValue; // Ignored
 
++ (NSString *)formatAddress:(DisasmStruct *)source
+                    operand:(NSUInteger)operand
+               withServices:(id<HPHopperServices>)services;
+
 + (NSString *)convertToBinary:(uint64_t)value
                    sizeInBits:(size_t)bits;
 
@@ -109,7 +113,8 @@ static const NSArray *FRBOpcodeFormats;
 
 + (NSString *)format:(DisasmStruct *)source
              operand:(NSUInteger)operand
-      argumentFormat:(ArgFormat)format {
+      argumentFormat:(ArgFormat)format
+        withServices:(NSObject<HPHopperServices> *)services {
 
     switch ((int) format) {
         case Format_Hexadecimal | Format_Signed:
@@ -142,10 +147,15 @@ static const NSArray *FRBOpcodeFormats;
                                       operand:operand
                                   signedValue:NO];
 
+        case Format_Address:
+            return [FRBFormatter formatAddress:source
+                                       operand:operand
+                                  withServices:services];
+
         default:
-            return [FRBFormatter formatHexadecimal:source
-                                           operand:operand
-                                       signedValue:NO];
+            return [FRBFormatter formatAddress:source
+                                       operand:operand
+                                  withServices:services];
     }
 }
 
@@ -235,6 +245,21 @@ static const NSArray *FRBOpcodeFormats;
 
     return [FRBFormatter convertToBinary:source->operand[operand].immediateValue
                               sizeInBits:source->operand[operand].size];
+}
+
++ (NSString *)formatAddress:(DisasmStruct *)source
+                    operand:(NSUInteger)operand
+               withServices:(id<HPHopperServices>)services {
+
+    NSString *name = [[services currentDocument].disassembledFile nameForVirtualAddress:source->operand[operand].immediateValue];
+    NSLog(@"Name for $%04llX: %@", source->operand[operand].immediateValue, name);
+    if (!name) {
+        return [FRBFormatter formatHexadecimal:source
+                                       operand:operand
+                                   signedValue:NO];
+    }
+
+    return name;
 }
 
 + (NSString *)convertToBinary:(uint64_t)value

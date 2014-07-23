@@ -30,14 +30,14 @@
 
 @interface FRBModelHandler : NSObject
 
-+(instancetype)sharedModelHandler;
++ (instancetype)sharedModelHandler;
 
 @property (strong, nonatomic, readonly) NSDictionary *models;
 
--(void)registerProvider:(Class)provider
-                forName:(NSString *)name;
--(NSString *)providerNameForFamily:(NSString *)family
-                      andSubFamily:(NSString *)subFamily;
--(NSObject<FRBProvider> *)providerForName:(NSString *)name;
+- (void)registerProvider:(Class)provider
+                 forName:(NSString *)name;
+- (NSString *)providerNameForFamily:(NSString *)family
+                       andSubFamily:(NSString *)subFamily;
+- (NSObject<FRBProvider> *)providerForName:(NSString *)name;
 
 @end

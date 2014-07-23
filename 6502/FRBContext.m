@@ -686,7 +686,8 @@
                                        atVirtualAddress:source->virtualAddr];
         [strings addObject:[FRBFormatter format:source
                                         operand:index
-                                 argumentFormat:format]];
+                                 argumentFormat:format
+                                   withServices:self.cpu.services]];
     }
 
     const struct FRBOpcode *opcode = [self.provider opcodeForByte:source->instruction.userData];
