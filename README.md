@@ -3,13 +3,13 @@ Hopper Plugins
 
 Plugins currently available in the repository:
 
-###**MOS 6502 CPU** - _v0.0.4_
+###**MOS 6502 CPU** - _v0.0.5_
 
 This CPU core plugin allows you to disassemble 6502/65C02 code, used in loads of home computers of the 70s, 80s, and early 90s, and in industrial automation or other specialised tasks where a microcontroller is needed.
 
 ####TODO for next version:
 
-* Add support for more 6502 variants (HuC6280, etc.)
+* Add support for more 6502 variants if any are found in the wild.
 
 ####Caveats:
 

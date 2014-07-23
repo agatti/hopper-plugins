@@ -71,11 +71,11 @@
 }
 
 - (NSString *)pluginName {
-    return @"6502";
+    return @"6502/65c02";
 }
 
 - (NSString *)pluginDescription {
-    return @"65xx-family CPU support";
+    return @"6502-family CPU support";
 }
 
 - (NSString *)pluginAuthor {
@@ -87,7 +87,7 @@
 }
 
 - (NSString *)pluginVersion {
-    return @"0.0.4";
+    return @"0.0.5";
 }
 
 - (NSArray *)cpuFamilies {
