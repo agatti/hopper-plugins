@@ -27,7 +27,7 @@
 #import "FRBProvider.h"
 #import "FRBModelHandler.h"
 
-@interface FRBModelHandler()
+@interface FRBModelHandler ()
 
 - (BOOL)loadModelsFromPlist:(NSString *)fileName;
 

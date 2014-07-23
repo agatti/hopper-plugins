@@ -32,7 +32,7 @@
 #import "FRBGeneric6502.h"
 #import "FRBGeneric65C02.h"
 
-@interface FRBDefinition()
+@interface FRBDefinition ()
 
 @property (strong, nonatomic, readonly) NSSet *validOpcodes;
 @property (strong, nonatomic, readonly) NSObject<HPHopperServices> *services;

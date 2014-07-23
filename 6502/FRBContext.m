@@ -31,7 +31,7 @@
 #import "FRBModelHandler.h"
 #import "FRBProvider.h"
 
-@interface FRBContext()
+@interface FRBContext ()
 
 @property (strong, nonatomic) FRBDefinition *cpu;
 @property (strong, nonatomic) NSObject<HPDisassembledFile> *file;

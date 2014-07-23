@@ -28,7 +28,7 @@
 
 static const NSArray *FRBOpcodeFormats;
 
-@interface FRBFormatter()
+@interface FRBFormatter ()
 
 + (NSString *)formatHexadecimal:(DisasmStruct *)source
                         operand:(NSUInteger)operand
