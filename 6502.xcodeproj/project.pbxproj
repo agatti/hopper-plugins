@@ -14,6 +14,7 @@
 		683A4C27197C8E4700B7F172 /* FRBGeneric6502.m in Sources */ = {isa = PBXBuildFile; fileRef = 683A4C21197C8E4700B7F172 /* FRBGeneric6502.m */; };
 		683A4C31197C8E7000B7F172 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 683A4C2F197C8E7000B7F172 /* InfoPlist.strings */; };
 		6873AD77197F810400B46DB5 /* FRBR6500.m in Sources */ = {isa = PBXBuildFile; fileRef = 6873AD76197F810400B46DB5 /* FRBR6500.m */; };
+		6873AD7D197F8E7A00B46DB5 /* FRBHuC6280.m in Sources */ = {isa = PBXBuildFile; fileRef = 6873AD7C197F8E7A00B46DB5 /* FRBHuC6280.m */; };
 		6873E34D197CF9F6005AE429 /* FRBFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 6873E34C197CF9F6005AE429 /* FRBFormatter.m */; };
 		688E0143197C949E00C9DC94 /* FRBW65C02S.m in Sources */ = {isa = PBXBuildFile; fileRef = 688E0142197C949E00C9DC94 /* FRBW65C02S.m */; };
 		68CEFDC6197CB07C0068B320 /* models.plist in Resources */ = {isa = PBXBuildFile; fileRef = 68CEFDC5197CB07C0068B320 /* models.plist */; };
@@ -41,6 +42,9 @@
 		6873AD75197F810400B46DB5 /* FRBR6500.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRBR6500.h; sourceTree = "<group>"; };
 		6873AD76197F810400B46DB5 /* FRBR6500.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRBR6500.m; sourceTree = "<group>"; };
 		6873AD78197F816A00B46DB5 /* FRBR6500Table.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FRBR6500Table.h; sourceTree = "<group>"; };
+		6873AD7A197F877000B46DB5 /* FRBHuC6280Table.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FRBHuC6280Table.h; sourceTree = "<group>"; };
+		6873AD7B197F8E7A00B46DB5 /* FRBHuC6280.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRBHuC6280.h; sourceTree = "<group>"; };
+		6873AD7C197F8E7A00B46DB5 /* FRBHuC6280.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRBHuC6280.m; sourceTree = "<group>"; };
 		6873E34B197CF9F6005AE429 /* FRBFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRBFormatter.h; sourceTree = "<group>"; };
 		6873E34C197CF9F6005AE429 /* FRBFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRBFormatter.m; sourceTree = "<group>"; };
 		688E0141197C949E00C9DC94 /* FRBW65C02S.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FRBW65C02S.h; path = 6502/FRBW65C02S.h; sourceTree = SOURCE_ROOT; };
@@ -91,29 +95,18 @@
 		6801368819706CC5004964BD /* 6502 */ = {
 			isa = PBXGroup;
 			children = (
+				6873AD79197F863400B46DB5 /* Chips */,
 				6801368919706CC5004964BD /* Supporting Files */,
 				683A4C18197C8E4700B7F172 /* FRBBase.h */,
 				683A4C19197C8E4700B7F172 /* FRBContext.h */,
 				683A4C1A197C8E4700B7F172 /* FRBContext.m */,
 				683A4C1B197C8E4700B7F172 /* FRBDefinition.h */,
 				683A4C1C197C8E4700B7F172 /* FRBDefinition.m */,
-				683372E8197C909B002B432E /* FRBGeneric65C02.h */,
-				683372E9197C909B002B432E /* FRBGeneric65C02.m */,
-				683A4C1F197C8E4700B7F172 /* FRBGeneric65C02Table.h */,
-				683A4C20197C8E4700B7F172 /* FRBGeneric6502.h */,
-				683A4C21197C8E4700B7F172 /* FRBGeneric6502.m */,
-				683A4C22197C8E4700B7F172 /* FRBGeneric6502Table.h */,
 				683A4C23197C8E4700B7F172 /* FRBProvider.h */,
-				688E0141197C949E00C9DC94 /* FRBW65C02S.h */,
-				688E0142197C949E00C9DC94 /* FRBW65C02S.m */,
-				688E0144197C94BD00C9DC94 /* FRBW65C02STable.h */,
 				68CEFDC7197CB5840068B320 /* FRBModelHandler.h */,
 				68CEFDC8197CB5840068B320 /* FRBModelHandler.m */,
 				6873E34B197CF9F6005AE429 /* FRBFormatter.h */,
 				6873E34C197CF9F6005AE429 /* FRBFormatter.m */,
-				6873AD75197F810400B46DB5 /* FRBR6500.h */,
-				6873AD76197F810400B46DB5 /* FRBR6500.m */,
-				6873AD78197F816A00B46DB5 /* FRBR6500Table.h */,
 			);
 			path = 6502;
 			sourceTree = "<group>";
@@ -127,6 +120,28 @@
 				68CEFDC5197CB07C0068B320 /* models.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		6873AD79197F863400B46DB5 /* Chips */ = {
+			isa = PBXGroup;
+			children = (
+				683A4C20197C8E4700B7F172 /* FRBGeneric6502.h */,
+				683A4C21197C8E4700B7F172 /* FRBGeneric6502.m */,
+				683A4C22197C8E4700B7F172 /* FRBGeneric6502Table.h */,
+				683372E8197C909B002B432E /* FRBGeneric65C02.h */,
+				683372E9197C909B002B432E /* FRBGeneric65C02.m */,
+				683A4C1F197C8E4700B7F172 /* FRBGeneric65C02Table.h */,
+				6873AD7B197F8E7A00B46DB5 /* FRBHuC6280.h */,
+				6873AD7C197F8E7A00B46DB5 /* FRBHuC6280.m */,
+				6873AD7A197F877000B46DB5 /* FRBHuC6280Table.h */,
+				6873AD75197F810400B46DB5 /* FRBR6500.h */,
+				6873AD76197F810400B46DB5 /* FRBR6500.m */,
+				6873AD78197F816A00B46DB5 /* FRBR6500Table.h */,
+				688E0141197C949E00C9DC94 /* FRBW65C02S.h */,
+				688E0142197C949E00C9DC94 /* FRBW65C02S.m */,
+				688E0144197C94BD00C9DC94 /* FRBW65C02STable.h */,
+			);
+			name = Chips;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -195,6 +210,7 @@
 				683A4C24197C8E4700B7F172 /* FRBContext.m in Sources */,
 				683A4C25197C8E4700B7F172 /* FRBDefinition.m in Sources */,
 				688E0143197C949E00C9DC94 /* FRBW65C02S.m in Sources */,
+				6873AD7D197F8E7A00B46DB5 /* FRBHuC6280.m in Sources */,
 				683A4C27197C8E4700B7F172 /* FRBGeneric6502.m in Sources */,
 				6873AD77197F810400B46DB5 /* FRBR6500.m in Sources */,
 				683372EA197C909B002B432E /* FRBGeneric65C02.m in Sources */,

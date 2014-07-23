@@ -57,9 +57,10 @@ static const NSArray *FRBOpcodeFormats;
     FRBOpcodeFormats = [NSArray arrayWithObjects:@"%@    %@", @"%@    %@,X",
                         @"%@    %@,Y", @"%@    #%@", @"%@", @"%@", @"%@",
                         @"%@    (%@)", @"%@    %@", @"%@    %@", @"%@    %@,X",
-                        @"%@    %@,Y", @"%@    (%@,X)", @"%@    (%@,Y)",
-                        @"%@    (%@)", @"%@    (%@,X)", @"%@    %@,%@", @"%@",
-                        nil];
+                        @"%@    %@,Y", @"%@    (%@,X)", @"%@    (%@),Y",
+                        @"%@    (%@)", @"%@    (%@,X)", @"%@    %@,%@",
+                        @"%@    %@,%@,%@", @"%@    %@,%@", @"%@    %@,%@,X",
+                        @"%@    %@,%@", @"%@    %@,%@,X", @"%@", nil];
 }
 
 + (NSString *)format:(FRBAddressMode)addressMode
@@ -90,8 +91,16 @@ static const NSArray *FRBOpcodeFormats;
             return [NSString stringWithFormat:format, opcode];
 
         case FRBAddressModeZeroPageProgramCounterRelative:
+        case FRBAddressModeImmediateZeroPage:
+        case FRBAddressModeImmediateZeroPageX:
+        case FRBAddressModeImmediateAbsolute:
+        case FRBAddressModeImmediateAbsoluteX:
             return [NSString stringWithFormat:format, opcode, operands[0],
                     operands[1]];
+
+        case FRBAddressModeBlockTransfer:
+            return [NSString stringWithFormat:format, opcode, operands[0],
+                    operands[1], operands[2]];
 
         default:
             return nil;

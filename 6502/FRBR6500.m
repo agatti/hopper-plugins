@@ -34,25 +34,27 @@
 static NSString * const FRBProviderName = @"it.frob.hopper.r6500";
 
 @synthesize name;
+@synthesize usesTFlag;
 
--(instancetype)init {
+- (instancetype)init {
     if (self = [super init]) {
         name = FRBProviderName;
+        usesTFlag = NO;
     }
 
     return self;
 }
 
-+(void)load {
++ (void)load {
     [[FRBModelHandler sharedModelHandler] registerProvider:[FRBR6500 class]
                                                    forName:FRBProviderName];
 }
 
--(const struct FRBOpcode *)opcodeForByte:(uint8_t)byte {
+- (const struct FRBOpcode *)opcodeForByte:(uint8_t)byte {
     return &FRBR6500OpcodeTable[byte];
 }
 
--(BOOL)haltsExecutionFlow:(const struct FRBOpcode *)opcode {
+- (BOOL)haltsExecutionFlow:(const struct FRBOpcode *)opcode {
     return opcode->type == FRBOpcodeTypeBRK;
 }
 

@@ -24,38 +24,10 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import "FRBBase.h"
-#import "FRBW65C02S.h"
-#import "FRBW65C02STable.h"
-#import "FRBModelHandler.h"
+#import <Foundation/Foundation.h>
 
-@implementation FRBW65C02S
+#import "FRBProvider.h"
 
-static NSString * const FRBProviderName = @"it.frob.hopper.w65c02s";
-
-@synthesize name;
-@synthesize usesTFlag;
-
-- (instancetype)init {
-    if (self = [super init]) {
-        name = FRBProviderName;
-        usesTFlag = NO;
-    }
-
-    return self;
-}
-
-+ (void)load {
-    [[FRBModelHandler sharedModelHandler] registerProvider:[FRBW65C02S class]
-                                                   forName:FRBProviderName];
-}
-
-- (const struct FRBOpcode *)opcodeForByte:(uint8_t)byte {
-    return &FRBW65C02SOpcodeTable[byte];
-}
-
-- (BOOL)haltsExecutionFlow:(const struct FRBOpcode *)opcode {
-    return opcode->type == FRBOpcodeTypeBRK || opcode->type == FRBOpcodeTypeSTP;
-}
+@interface FRBHuC6280 : NSObject<FRBProvider>
 
 @end

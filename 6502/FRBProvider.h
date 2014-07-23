@@ -31,8 +31,9 @@
 @protocol FRBProvider <NSObject>
 
 @property (strong, nonatomic, readonly) NSString *name;
+@property (assign, nonatomic, readonly) BOOL usesTFlag;
 
--(const struct FRBOpcode *)opcodeForByte:(uint8_t)byte;
--(BOOL)haltsExecutionFlow:(const struct FRBOpcode *)opcode;
+- (const struct FRBOpcode *)opcodeForByte:(uint8_t)byte;
+- (BOOL)haltsExecutionFlow:(const struct FRBOpcode *)opcode;
 
 @end

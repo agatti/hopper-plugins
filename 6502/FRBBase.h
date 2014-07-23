@@ -30,7 +30,7 @@
 static NSString * const FRBSyntaxVariant = @"Generic";
 static NSString * const FRBCPUMode = @"generic";
 
-/*! 6502 Address modes, as per the W65C02S datasheet. */
+/*! 6502 Address modes. */
 typedef NS_ENUM(NSUInteger, FRBAddressMode) {
 
     /*! Absolute: a */
@@ -82,7 +82,22 @@ typedef NS_ENUM(NSUInteger, FRBAddressMode) {
     FRBAddressModeAbsoluteIndexedIndirect, // Generic 65C02, W65C02S, and R6500
 
     /*! Zero Page Program Counter Relative: zp, r */
-    FRBAddressModeZeroPageProgramCounterRelative, // Generic W65C02S, and R6500
+    FRBAddressModeZeroPageProgramCounterRelative, // W65C02S and R6500
+
+    /*! Block transfer: (a, a, a) */
+    FRBAddressModeBlockTransfer, // Hu6280
+
+    /*! Immediate, Zero Page: ? */
+    FRBAddressModeImmediateZeroPage, // Hu6280
+
+    /*! Immediate, Zero Page, X: ? */
+    FRBAddressModeImmediateZeroPageX, // Hu6280
+
+    /*! Immediate, Absolute: ? */
+    FRBAddressModeImmediateAbsolute, // Hu6280
+
+    /*! Immediate, Absolute, X: ? */
+    FRBAddressModeImmediateAbsoluteX, // Hu6280
 
     /*! Unknown address mode, used for undocumented opcodes */
     FRBAddressModeUnknown,
@@ -102,29 +117,30 @@ typedef NS_ENUM(NSUInteger, FRBOpcodeCategory) {
     FRBOpcodeCategoryShifts,
     FRBOpcodeCategoryJumps,
     FRBOpcodeCategoryBranches,
-    FRBOpcodeCategoryStatusFlagChanges
+    FRBOpcodeCategoryStatusFlagChanges,
+    FRBOpcodeCategoryBlockTransfer // Hu6280
 };
 
 typedef NS_ENUM(NSUInteger, FRBOpcodeType) {
     FRBOpcodeTypeADC = 0,
     FRBOpcodeTypeAND,
     FRBOpcodeTypeASL,
-    FRBOpcodeTypeBBR0, // W65C02S and R6500
-    FRBOpcodeTypeBBR1, // W65C02S and R6500
-    FRBOpcodeTypeBBR2, // W65C02S and R6500
-    FRBOpcodeTypeBBR3, // W65C02S and R6500
-    FRBOpcodeTypeBBR4, // W65C02S and R6500
-    FRBOpcodeTypeBBR5, // W65C02S and R6500
-    FRBOpcodeTypeBBR6, // W65C02S and R6500
-    FRBOpcodeTypeBBR7, // W65C02S and R6500
-    FRBOpcodeTypeBBS0, // W65C02S and R6500
-    FRBOpcodeTypeBBS1, // W65C02S and R6500
-    FRBOpcodeTypeBBS2, // W65C02S and R6500
-    FRBOpcodeTypeBBS3, // W65C02S and R6500
-    FRBOpcodeTypeBBS4, // W65C02S and R6500
-    FRBOpcodeTypeBBS5, // W65C02S and R6500
-    FRBOpcodeTypeBBS6, // W65C02S and R6500
-    FRBOpcodeTypeBBS7, // W65C02S and R6500
+    FRBOpcodeTypeBBR0, // W65C02S, R6500, and Hu6280
+    FRBOpcodeTypeBBR1, // W65C02S, R6500, and Hu6280
+    FRBOpcodeTypeBBR2, // W65C02S, R6500, and Hu6280
+    FRBOpcodeTypeBBR3, // W65C02S, R6500, and Hu6280
+    FRBOpcodeTypeBBR4, // W65C02S, R6500, and Hu6280
+    FRBOpcodeTypeBBR5, // W65C02S, R6500, and Hu6280
+    FRBOpcodeTypeBBR6, // W65C02S, R6500, and Hu6280
+    FRBOpcodeTypeBBR7, // W65C02S, R6500, and Hu6280
+    FRBOpcodeTypeBBS0, // W65C02S, R6500, and Hu6280
+    FRBOpcodeTypeBBS1, // W65C02S, R6500, and Hu6280
+    FRBOpcodeTypeBBS2, // W65C02S, R6500, and Hu6280
+    FRBOpcodeTypeBBS3, // W65C02S, R6500, and Hu6280
+    FRBOpcodeTypeBBS4, // W65C02S, R6500, and Hu6280
+    FRBOpcodeTypeBBS5, // W65C02S, R6500, and Hu6280
+    FRBOpcodeTypeBBS6, // W65C02S, R6500, and Hu6280
+    FRBOpcodeTypeBBS7, // W65C02S, R6500, and Hu6280
     FRBOpcodeTypeBCC,
     FRBOpcodeTypeBCS,
     FRBOpcodeTypeBEQ,
@@ -132,17 +148,22 @@ typedef NS_ENUM(NSUInteger, FRBOpcodeType) {
     FRBOpcodeTypeBMI,
     FRBOpcodeTypeBNE,
     FRBOpcodeTypeBPL,
-    FRBOpcodeTypeBRA,  // Generic 65C02, W65C02S, and R6500
+    FRBOpcodeTypeBRA,  // Generic 65C02, W65C02S, R6500, and Hu6280
     FRBOpcodeTypeBRK,
     FRBOpcodeTypeBVC,
     FRBOpcodeTypeBVS,
+    FRBOpcodeTypeCLA,  // Hu6280
     FRBOpcodeTypeCLC,
     FRBOpcodeTypeCLD,
     FRBOpcodeTypeCLI,
     FRBOpcodeTypeCLV,
+    FRBOpcodeTypeCLX,  // Hu6280
+    FRBOpcodeTypeCLY,  // Hu6280
     FRBOpcodeTypeCMP,
     FRBOpcodeTypeCPX,
     FRBOpcodeTypeCPY,
+    FRBOpcodeTypeCSH,  // Hu6280
+    FRBOpcodeTypeCSL,  // Hu6280
     FRBOpcodeTypeDEC,
     FRBOpcodeTypeDEX,
     FRBOpcodeTypeDEY,
@@ -160,55 +181,77 @@ typedef NS_ENUM(NSUInteger, FRBOpcodeType) {
     FRBOpcodeTypeORA,
     FRBOpcodeTypePHA,
     FRBOpcodeTypePHP,
-    FRBOpcodeTypePHX,  // Generic 65C02, W65C02S, and R6500
-    FRBOpcodeTypePHY,  // Generic 65C02, W65C02S, and R6500
+    FRBOpcodeTypePHX,  // Generic 65C02, W65C02S, R6500, and Hu6280
+    FRBOpcodeTypePHY,  // Generic 65C02, W65C02S, R6500, and Hu6280
     FRBOpcodeTypePLA,
     FRBOpcodeTypePLP,
-    FRBOpcodeTypePLX,  // Generic 65C02, W65C02S, and R6500
-    FRBOpcodeTypePLY,  // Generic 65C02, W65C02S, and R6500
-    FRBOpcodeTypeRMB0, // W65C02S and R6500
-    FRBOpcodeTypeRMB1, // W65C02S and R6500
-    FRBOpcodeTypeRMB2, // W65C02S and R6500
-    FRBOpcodeTypeRMB3, // W65C02S and R6500
-    FRBOpcodeTypeRMB4, // W65C02S and R6500
-    FRBOpcodeTypeRMB5, // W65C02S and R6500
-    FRBOpcodeTypeRMB6, // W65C02S and R6500
-    FRBOpcodeTypeRMB7, // W65C02S and R6500
+    FRBOpcodeTypePLX,  // Generic 65C02, W65C02S, R6500, and Hu6280
+    FRBOpcodeTypePLY,  // Generic 65C02, W65C02S, R6500, and Hu6280
+    FRBOpcodeTypeRMB0, // W65C02S, R6500, and Hu6280
+    FRBOpcodeTypeRMB1, // W65C02S, R6500, and Hu6280
+    FRBOpcodeTypeRMB2, // W65C02S, R6500, and Hu6280
+    FRBOpcodeTypeRMB3, // W65C02S, R6500, and Hu6280
+    FRBOpcodeTypeRMB4, // W65C02S, R6500, and Hu6280
+    FRBOpcodeTypeRMB5, // W65C02S, R6500, and Hu6280
+    FRBOpcodeTypeRMB6, // W65C02S, R6500, and Hu6280
+    FRBOpcodeTypeRMB7, // W65C02S, R6500, and Hu6280
     FRBOpcodeTypeROL,
     FRBOpcodeTypeROR,
     FRBOpcodeTypeRTI,
     FRBOpcodeTypeRTS,
+    FRBOpcodeTypeSAX,  // Hu6280
+    FRBOpcodeTypeSAY,  // Hu6280
     FRBOpcodeTypeSBC,
     FRBOpcodeTypeSEC,
     FRBOpcodeTypeSED,
     FRBOpcodeTypeSEI,
-    FRBOpcodeTypeSMB0, // W65C02S and R6500
-    FRBOpcodeTypeSMB1, // W65C02S and R6500
-    FRBOpcodeTypeSMB2, // W65C02S and R6500
-    FRBOpcodeTypeSMB3, // W65C02S and R6500
-    FRBOpcodeTypeSMB4, // W65C02S and R6500
-    FRBOpcodeTypeSMB5, // W65C02S and R6500
-    FRBOpcodeTypeSMB6, // W65C02S and R6500
-    FRBOpcodeTypeSMB7, // W65C02S and R6500
+    FRBOpcodeTypeSET,  // Hu6280
+    FRBOpcodeTypeSMB0, // W65C02S, R6500, and Hu6280
+    FRBOpcodeTypeSMB1, // W65C02S, R6500, and Hu6280
+    FRBOpcodeTypeSMB2, // W65C02S, R6500, and Hu6280
+    FRBOpcodeTypeSMB3, // W65C02S, R6500, and Hu6280
+    FRBOpcodeTypeSMB4, // W65C02S, R6500, and Hu6280
+    FRBOpcodeTypeSMB5, // W65C02S, R6500, and Hu6280
+    FRBOpcodeTypeSMB6, // W65C02S, R6500, and Hu6280
+    FRBOpcodeTypeSMB7, // W65C02S, R6500, and Hu6280
+    FRBOpcodeTypeST0,  // Hu6280
+    FRBOpcodeTypeST1,  // Hu6280
+    FRBOpcodeTypeST2,  // Hu6280
     FRBOpcodeTypeSTA,
     FRBOpcodeTypeSTP,  // W65C02S
     FRBOpcodeTypeSTX,
     FRBOpcodeTypeSTY,
-    FRBOpcodeTypeSTZ,  // Generic 65C02, W65C02S, and R6500
+    FRBOpcodeTypeSTZ,  // Generic 65C02, W65C02S, R6500, and Hu6280
+    FRBOpcodeTypeSXY,  // Hu6280
+    FRBOpcodeTypeTAI,  // Hu6280
+    FRBOpcodeTypeTAM,  // Hu6280
     FRBOpcodeTypeTAX,
     FRBOpcodeTypeTAY,
-    FRBOpcodeTypeTRB,  // Generic 65C02, W65C02S, and R6500
-    FRBOpcodeTypeTSB,  // Generic 65C02, W65C02S, and R6500
+    FRBOpcodeTypeTDD,  // Hu6280
+    FRBOpcodeTypeTIA,  // Hu6280
+    FRBOpcodeTypeTII,  // Hu6280
+    FRBOpcodeTypeTIN,  // Hu6280
+    FRBOpcodeTypeTMA,  // Hu6280
+    FRBOpcodeTypeTRB,  // Generic 65C02, W65C02S, and Hu6280
+    FRBOpcodeTypeTSB,  // Generic 65C02, W65C02S, and Hu6280
+    FRBOpcodeTypeTST,  // Hu6280
     FRBOpcodeTypeTSX,
     FRBOpcodeTypeTXA,
     FRBOpcodeTypeTXS,
     FRBOpcodeTypeTYA,
-    FRBOpcodeTypeWAI,  // W65C02S and R6500
+    FRBOpcodeTypeWAI,  // W65C02S
 
     FRBOpcodeTypeUndocumented
 };
 
-static const size_t FRBUniqueOpcodesCount = 98;
+static const size_t FRBUniqueOpcodesCount = 118;
+
+typedef NS_OPTIONS(NSUInteger, FRBRegisterMask) {
+    FRBRegisterAccumulator = 1 << 0,
+    FRBRegisterIndexX = 1 << 1,
+    FRBRegisterIndexY = 1 << 2,
+    FRBRegisterCustom = 1 << 16
+};
 
 struct FRBInstruction {
     FRBOpcodeType type;
@@ -220,6 +263,8 @@ struct FRBInstruction {
 struct FRBOpcode {
     FRBOpcodeType type;
     FRBAddressMode addressMode;
+    FRBRegisterMask readRegisters;
+    FRBRegisterMask writtenRegisters;
 };
 
 static const struct FRBInstruction FRBInstructions[FRBUniqueOpcodesCount] = {
@@ -253,13 +298,18 @@ static const struct FRBInstruction FRBInstructions[FRBUniqueOpcodesCount] = {
     { FRBOpcodeTypeBRK, "BRK", DISASM_BRANCH_NONE, FRBOpcodeCategorySystem },
     { FRBOpcodeTypeBVC, "BVC", DISASM_BRANCH_JNO, FRBOpcodeCategoryBranches },
     { FRBOpcodeTypeBVS, "BVS", DISASM_BRANCH_JO, FRBOpcodeCategoryBranches },
+    { FRBOpcodeTypeCLA, "CLA", DISASM_BRANCH_NONE, FRBOpcodeCategoryLogical },
     { FRBOpcodeTypeCLC, "CLC", DISASM_BRANCH_NONE, FRBOpcodeCategoryStatusFlagChanges },
     { FRBOpcodeTypeCLD, "CLD", DISASM_BRANCH_NONE, FRBOpcodeCategoryStatusFlagChanges },
     { FRBOpcodeTypeCLI, "CLI", DISASM_BRANCH_NONE, FRBOpcodeCategoryStatusFlagChanges },
     { FRBOpcodeTypeCLV, "CLV", DISASM_BRANCH_NONE, FRBOpcodeCategoryStatusFlagChanges },
+    { FRBOpcodeTypeCLA, "CLX", DISASM_BRANCH_NONE, FRBOpcodeCategoryLogical },
+    { FRBOpcodeTypeCLA, "CLY", DISASM_BRANCH_NONE, FRBOpcodeCategoryLogical },
     { FRBOpcodeTypeCMP, "CMP", DISASM_BRANCH_NONE, FRBOpcodeCategoryComparison },
     { FRBOpcodeTypeCPX, "CPX", DISASM_BRANCH_NONE, FRBOpcodeCategoryComparison },
     { FRBOpcodeTypeCPY, "CPY", DISASM_BRANCH_NONE, FRBOpcodeCategoryComparison },
+    { FRBOpcodeTypeCPY, "CSH", DISASM_BRANCH_NONE, FRBOpcodeCategorySystem },
+    { FRBOpcodeTypeCPY, "CSL", DISASM_BRANCH_NONE, FRBOpcodeCategorySystem },
     { FRBOpcodeTypeDEC, "DEC", DISASM_BRANCH_NONE, FRBOpcodeCategoryIncrementDecrement },
     { FRBOpcodeTypeDEX, "DEX", DISASM_BRANCH_NONE, FRBOpcodeCategoryIncrementDecrement },
     { FRBOpcodeTypeDEY, "DEY", DISASM_BRANCH_NONE, FRBOpcodeCategoryIncrementDecrement },
@@ -284,38 +334,53 @@ static const struct FRBInstruction FRBInstructions[FRBUniqueOpcodesCount] = {
     { FRBOpcodeTypePLX, "PLX", DISASM_BRANCH_NONE, FRBOpcodeCategoryStack },
     { FRBOpcodeTypePLY, "PLY", DISASM_BRANCH_NONE, FRBOpcodeCategoryStack },
     { FRBOpcodeTypeRMB0, "RMB0", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
-    { FRBOpcodeTypeRMB0, "RMB1", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
-    { FRBOpcodeTypeRMB0, "RMB2", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
-    { FRBOpcodeTypeRMB0, "RMB3", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
-    { FRBOpcodeTypeRMB0, "RMB4", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
-    { FRBOpcodeTypeRMB0, "RMB5", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
-    { FRBOpcodeTypeRMB0, "RMB6", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
-    { FRBOpcodeTypeRMB0, "RMB7", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
+    { FRBOpcodeTypeRMB1, "RMB1", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
+    { FRBOpcodeTypeRMB2, "RMB2", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
+    { FRBOpcodeTypeRMB3, "RMB3", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
+    { FRBOpcodeTypeRMB4, "RMB4", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
+    { FRBOpcodeTypeRMB5, "RMB5", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
+    { FRBOpcodeTypeRMB6, "RMB6", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
+    { FRBOpcodeTypeRMB7, "RMB7", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
     { FRBOpcodeTypeROL, "ROL", DISASM_BRANCH_NONE, FRBOpcodeCategoryShifts },
     { FRBOpcodeTypeROR, "ROR", DISASM_BRANCH_NONE, FRBOpcodeCategoryShifts },
     { FRBOpcodeTypeRTI, "RTI", DISASM_BRANCH_RET, FRBOpcodeCategorySystem },
     { FRBOpcodeTypeRTS, "RTS", DISASM_BRANCH_RET, FRBOpcodeCategorySystem },
+    { FRBOpcodeTypeSBC, "SAX", DISASM_BRANCH_NONE, FRBOpcodeCategoryRegisterTransfers },
+    { FRBOpcodeTypeSBC, "SAY", DISASM_BRANCH_NONE, FRBOpcodeCategoryRegisterTransfers },
     { FRBOpcodeTypeSBC, "SBC", DISASM_BRANCH_NONE, FRBOpcodeCategoryArithmetic },
     { FRBOpcodeTypeSEC, "SEC", DISASM_BRANCH_NONE, FRBOpcodeCategoryStatusFlagChanges },
     { FRBOpcodeTypeSED, "SED", DISASM_BRANCH_NONE, FRBOpcodeCategoryStatusFlagChanges },
     { FRBOpcodeTypeSEI, "SEI", DISASM_BRANCH_NONE, FRBOpcodeCategoryStatusFlagChanges },
+    { FRBOpcodeTypeSET, "SET", DISASM_BRANCH_NONE, FRBOpcodeCategoryStatusFlagChanges },
     { FRBOpcodeTypeSMB0, "SMB0", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
-    { FRBOpcodeTypeSMB0, "SMB1", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
-    { FRBOpcodeTypeSMB0, "SMB2", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
-    { FRBOpcodeTypeSMB0, "SMB3", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
-    { FRBOpcodeTypeSMB0, "SMB4", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
-    { FRBOpcodeTypeSMB0, "SMB5", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
-    { FRBOpcodeTypeSMB0, "SMB6", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
-    { FRBOpcodeTypeSMB0, "SMB7", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
+    { FRBOpcodeTypeSMB1, "SMB1", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
+    { FRBOpcodeTypeSMB2, "SMB2", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
+    { FRBOpcodeTypeSMB3, "SMB3", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
+    { FRBOpcodeTypeSMB4, "SMB4", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
+    { FRBOpcodeTypeSMB5, "SMB5", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
+    { FRBOpcodeTypeSMB6, "SMB6", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
+    { FRBOpcodeTypeSMB7, "SMB7", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
+    { FRBOpcodeTypeST0, "ST0", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
+    { FRBOpcodeTypeST1, "ST1", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
+    { FRBOpcodeTypeST2, "ST2", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
     { FRBOpcodeTypeSTA, "STA", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
     { FRBOpcodeTypeSTP, "STP", DISASM_BRANCH_NONE, FRBOpcodeCategorySystem },
     { FRBOpcodeTypeSTX, "STX", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
     { FRBOpcodeTypeSTY, "STY", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
     { FRBOpcodeTypeSTZ, "STZ", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
+    { FRBOpcodeTypeTAX, "SXY", DISASM_BRANCH_NONE, FRBOpcodeCategoryRegisterTransfers },
+    { FRBOpcodeTypeTAI, "TAI", DISASM_BRANCH_NONE, FRBOpcodeCategoryBlockTransfer },
+    { FRBOpcodeTypeTAM, "TAM", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
     { FRBOpcodeTypeTAX, "TAX", DISASM_BRANCH_NONE, FRBOpcodeCategoryRegisterTransfers },
     { FRBOpcodeTypeTAY, "TAY", DISASM_BRANCH_NONE, FRBOpcodeCategoryRegisterTransfers },
+    { FRBOpcodeTypeTDD, "TDD", DISASM_BRANCH_NONE, FRBOpcodeCategoryBlockTransfer },
+    { FRBOpcodeTypeTIA, "TIA", DISASM_BRANCH_NONE, FRBOpcodeCategoryBlockTransfer },
+    { FRBOpcodeTypeTII, "TII", DISASM_BRANCH_NONE, FRBOpcodeCategoryBlockTransfer },
+    { FRBOpcodeTypeTIN, "TIN", DISASM_BRANCH_NONE, FRBOpcodeCategoryBlockTransfer },
+    { FRBOpcodeTypeTMA, "TMA", DISASM_BRANCH_NONE, FRBOpcodeCategoryLoad },
     { FRBOpcodeTypeTRB, "TRB", DISASM_BRANCH_NONE, FRBOpcodeCategoryLogical },
     { FRBOpcodeTypeTSB, "TSB", DISASM_BRANCH_NONE, FRBOpcodeCategoryLogical },
+    { FRBOpcodeTypeTST, "TST", DISASM_BRANCH_NONE, FRBOpcodeCategoryComparison },
     { FRBOpcodeTypeTSX, "TSX", DISASM_BRANCH_NONE, FRBOpcodeCategoryRegisterTransfers },
     { FRBOpcodeTypeTXA, "TXA", DISASM_BRANCH_NONE, FRBOpcodeCategoryRegisterTransfers },
     { FRBOpcodeTypeTXS, "TXS", DISASM_BRANCH_NONE, FRBOpcodeCategoryRegisterTransfers },

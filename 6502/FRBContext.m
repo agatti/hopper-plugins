@@ -43,6 +43,10 @@
 - (void)handleBranchOpcode:(const struct FRBOpcode *)opcode
                  forDisasm:(DisasmStruct *)disasm;
 - (NSString *)formatInstruction:(DisasmStruct *)source;
+- (void)setMemoryFlags:(DisasmStruct *)disasm
+        forInstruction:(const struct FRBInstruction *)instruction;
+- (void)updateRegistersMask:(DisasmStruct *)disasm
+                  forOpcode:(const struct FRBOpcode *)opcode;
 
 @end
 
@@ -195,11 +199,21 @@
             case FRBOpcodeTypeSEI:
                 disasm->instruction.eflags.IF_flag = DISASM_EFLAGS_SET;
                 break;
+
+            case FRBOpcodeTypeSET:
+                disasm->instruction.eflags.TF_flag = DISASM_EFLAGS_SET;
                 
             default:
                 break;
         }
+    } else {
+        if (self.provider.usesTFlag) {
+            disasm->instruction.eflags.TF_flag = DISASM_EFLAGS_RESET;
+        }
     }
+
+    [self updateRegistersMask:disasm
+                    forOpcode:opcode];
 
     switch (opcode->addressMode) {
         case FRBAddressModeAbsolute:
@@ -208,8 +222,15 @@
         case FRBAddressModeAbsoluteIndirect:
         case FRBAddressModeAbsoluteIndexedIndirect:
         case FRBAddressModeZeroPageProgramCounterRelative:
+        case FRBAddressModeImmediateZeroPage:
+        case FRBAddressModeImmediateZeroPageX:
             disasm->instruction.length = 3;
             return 3;
+
+        case FRBAddressModeImmediateAbsolute:
+        case FRBAddressModeImmediateAbsoluteX:
+            disasm->instruction.length = 4;
+            return 4;
 
         case FRBAddressModeImmediate:
         case FRBAddressModeZeroPageIndexedIndirect:
@@ -221,6 +242,10 @@
         case FRBAddressModeZeroPageIndirect:
             disasm->instruction.length = 2;
             return 2;
+
+        case FRBAddressModeBlockTransfer:
+            disasm->instruction.length = 7;
+            return 7;
 
         case FRBAddressModeAccumulator:
         case FRBAddressModeImplied:
@@ -320,7 +345,7 @@
         case FRBAddressModeAbsolute:
             operand = [_file readUInt16AtVirtualAddress:disasm->virtualAddr + 1];
             disasm->operand1.type = DISASM_OPERAND_MEMORY_TYPE | DISASM_OPERAND_ABSOLUTE;
-            disasm->operand1.memory.baseRegister = operand;
+            disasm->operand1.memory.baseRegister = 0;
             disasm->operand1.memory.displacement = 0;
             disasm->operand1.memory.indexRegister = 0;
             disasm->operand1.memory.scale = 1;
@@ -331,9 +356,9 @@
         case FRBAddressModeAbsoluteIndexedX:
             operand = [_file readUInt16AtVirtualAddress:disasm->virtualAddr + 1];
             disasm->operand1.type = DISASM_OPERAND_MEMORY_TYPE | DISASM_OPERAND_ABSOLUTE;
-            disasm->operand1.memory.baseRegister = operand;
+            disasm->operand1.memory.baseRegister = 0;
             disasm->operand1.memory.displacement = 0;
-            disasm->operand1.memory.indexRegister = 1;
+            disasm->operand1.memory.indexRegister = FRBRegisterIndexX;
             disasm->operand1.memory.scale = 1;
             disasm->operand1.size = 16;
             disasm->operand1.immediateValue = operand;
@@ -342,9 +367,9 @@
         case FRBAddressModeAbsoluteIndexedY:
             operand = [_file readUInt16AtVirtualAddress:disasm->virtualAddr + 1];
             disasm->operand1.type = DISASM_OPERAND_MEMORY_TYPE | DISASM_OPERAND_ABSOLUTE;
-            disasm->operand1.memory.baseRegister = operand;
+            disasm->operand1.memory.baseRegister = 0;
             disasm->operand1.memory.displacement = 0;
-            disasm->operand1.memory.indexRegister = 2;
+            disasm->operand1.memory.indexRegister = FRBRegisterIndexY;
             disasm->operand1.memory.scale = 1;
             disasm->operand1.size = 16;
             disasm->operand1.immediateValue = operand;
@@ -360,7 +385,7 @@
         case FRBAddressModeAbsoluteIndirect:
             operand = [_file readUInt16AtVirtualAddress:disasm->virtualAddr + 1];
             disasm->operand1.type = DISASM_OPERAND_MEMORY_TYPE | DISASM_OPERAND_ABSOLUTE;
-            disasm->operand1.memory.baseRegister = operand;
+            disasm->operand1.memory.baseRegister = 0;
             disasm->operand1.memory.displacement = 0;
             disasm->operand1.memory.indexRegister = 0;
             disasm->operand1.memory.scale = 1;
@@ -371,9 +396,9 @@
         case FRBAddressModeZeroPageIndexedIndirect:
             operand = [_file readUInt8AtVirtualAddress:disasm->virtualAddr + 1];
             disasm->operand1.type = DISASM_OPERAND_MEMORY_TYPE | DISASM_OPERAND_ABSOLUTE;
-            disasm->operand1.memory.baseRegister = operand;
+            disasm->operand1.memory.baseRegister = 0;
             disasm->operand1.memory.displacement = 0;
-            disasm->operand1.memory.indexRegister = 1;
+            disasm->operand1.memory.indexRegister = FRBRegisterIndexX;
             disasm->operand1.memory.scale = 1;
             disasm->operand1.size = 8;
             disasm->operand1.immediateValue = operand;
@@ -382,9 +407,9 @@
         case FRBAddressModeZeroPageIndirectIndexedY:
             operand = [_file readUInt8AtVirtualAddress:disasm->virtualAddr + 1];
             disasm->operand1.type = DISASM_OPERAND_MEMORY_TYPE | DISASM_OPERAND_ABSOLUTE;
-            disasm->operand1.memory.baseRegister = operand;
+            disasm->operand1.memory.baseRegister = 0;
             disasm->operand1.memory.displacement = 0;
-            disasm->operand1.memory.indexRegister = 2;
+            disasm->operand1.memory.indexRegister = FRBRegisterIndexY;
             disasm->operand1.memory.scale = 1;
             disasm->operand1.size = 8;
             disasm->operand1.immediateValue = operand;
@@ -393,7 +418,7 @@
         case FRBAddressModeZeroPage:
             operand = [_file readUInt8AtVirtualAddress:disasm->virtualAddr + 1];
             disasm->operand1.type = DISASM_OPERAND_MEMORY_TYPE;
-            disasm->operand1.memory.baseRegister = operand;
+            disasm->operand1.memory.baseRegister = 0;
             disasm->operand1.memory.displacement = 0;
             disasm->operand1.memory.indexRegister = 0;
             disasm->operand1.memory.scale = 1;
@@ -404,9 +429,9 @@
         case FRBAddressModeZeroPageIndexedX:
             operand = [_file readUInt8AtVirtualAddress:disasm->virtualAddr + 1];
             disasm->operand1.type = DISASM_OPERAND_MEMORY_TYPE;
-            disasm->operand1.memory.baseRegister = operand;
+            disasm->operand1.memory.baseRegister = 0;
             disasm->operand1.memory.displacement = 0;
-            disasm->operand1.memory.indexRegister = 1;
+            disasm->operand1.memory.indexRegister = FRBRegisterIndexX;
             disasm->operand1.memory.scale = 1;
             disasm->operand1.size = 8;
             disasm->operand1.immediateValue = operand;
@@ -415,9 +440,9 @@
         case FRBAddressModeZeroPageIndexedY:
             operand = [_file readUInt8AtVirtualAddress:disasm->virtualAddr + 1];
             disasm->operand1.type = DISASM_OPERAND_MEMORY_TYPE;
-            disasm->operand1.memory.baseRegister = operand;
+            disasm->operand1.memory.baseRegister = 0;
             disasm->operand1.memory.displacement = 0;
-            disasm->operand1.memory.indexRegister = 2;
+            disasm->operand1.memory.indexRegister = FRBRegisterIndexX;
             disasm->operand1.memory.scale = 1;
             disasm->operand1.size = 8;
             disasm->operand1.immediateValue = operand;
@@ -426,13 +451,113 @@
         case FRBAddressModeZeroPageIndirect:
             operand = [_file readUInt8AtVirtualAddress:disasm->virtualAddr + 1];
             disasm->operand1.type = DISASM_OPERAND_MEMORY_TYPE | DISASM_OPERAND_ABSOLUTE;
-            disasm->operand1.memory.baseRegister = operand;
+            disasm->operand1.memory.baseRegister = 0;
             disasm->operand1.memory.displacement = 0;
             disasm->operand1.memory.indexRegister = 0;
             disasm->operand1.memory.scale = 1;
             disasm->operand1.size = 8;
             disasm->operand1.immediateValue = operand;
             break;
+
+        case FRBAddressModeBlockTransfer: {
+            uint16_t start = [_file readUInt16AtVirtualAddress:disasm->virtualAddr + 1];
+            uint16_t end = [_file readUInt16AtVirtualAddress:disasm->virtualAddr + 3];
+            uint16_t length = [_file readUInt16AtVirtualAddress:disasm->virtualAddr + 5];
+
+            disasm->operand1.type = DISASM_OPERAND_MEMORY_TYPE | DISASM_OPERAND_ABSOLUTE;
+            disasm->operand1.memory.baseRegister = 0;
+            disasm->operand1.memory.displacement = 0;
+            disasm->operand1.memory.indexRegister = 0;
+            disasm->operand1.memory.scale = 1;
+            disasm->operand1.size = 16;
+            disasm->operand1.immediateValue = start;
+
+            disasm->operand2.type = DISASM_OPERAND_MEMORY_TYPE | DISASM_OPERAND_ABSOLUTE;
+            disasm->operand2.memory.baseRegister = 0;
+            disasm->operand2.memory.displacement = 0;
+            disasm->operand2.memory.indexRegister = 0;
+            disasm->operand2.memory.scale = 1;
+            disasm->operand2.size = 16;
+            disasm->operand2.immediateValue = end;
+
+            disasm->operand3.type = DISASM_OPERAND_CONSTANT_TYPE | DISASM_OPERAND_ABSOLUTE;
+            disasm->operand3.size = 16;
+            disasm->operand3.immediateValue = length;
+
+            break;
+        }
+
+        case FRBAddressModeImmediateZeroPage: {
+            uint8_t value = [_file readUInt8AtVirtualAddress:disasm->virtualAddr + 1];
+            uint8_t zeroPage = [_file readUInt8AtVirtualAddress:disasm->virtualAddr + 2];
+
+            disasm->operand1.type = DISASM_OPERAND_CONSTANT_TYPE | DISASM_OPERAND_ABSOLUTE;
+            disasm->operand1.size = 8;
+            disasm->operand1.immediateValue = value;
+
+            disasm->operand2.type = DISASM_OPERAND_MEMORY_TYPE | DISASM_OPERAND_ABSOLUTE;
+            disasm->operand2.memory.baseRegister = 0;
+            disasm->operand2.memory.displacement = 0;
+            disasm->operand2.memory.indexRegister = 0;
+            disasm->operand2.memory.scale = 1;
+            disasm->operand2.size = 8;
+            disasm->operand2.immediateValue = zeroPage;
+            break;
+        }
+
+        case FRBAddressModeImmediateZeroPageX: {
+            uint8_t value = [_file readUInt8AtVirtualAddress:disasm->virtualAddr + 1];
+            uint8_t zeroPage = [_file readUInt8AtVirtualAddress:disasm->virtualAddr + 2];
+
+            disasm->operand1.type = DISASM_OPERAND_CONSTANT_TYPE | DISASM_OPERAND_ABSOLUTE;
+            disasm->operand1.size = 8;
+            disasm->operand1.immediateValue = value;
+
+            disasm->operand2.type = DISASM_OPERAND_MEMORY_TYPE | DISASM_OPERAND_ABSOLUTE;
+            disasm->operand2.memory.baseRegister = 0;
+            disasm->operand2.memory.displacement = 0;
+            disasm->operand2.memory.indexRegister = FRBRegisterIndexX;
+            disasm->operand2.memory.scale = 1;
+            disasm->operand2.size = 8;
+            disasm->operand2.immediateValue = zeroPage;
+            break;
+        }
+
+        case FRBAddressModeImmediateAbsolute: {
+            uint8_t value = [_file readUInt8AtVirtualAddress:disasm->virtualAddr + 1];
+            uint16_t address = [_file readUInt16AtVirtualAddress:disasm->virtualAddr + 2];
+
+            disasm->operand1.type = DISASM_OPERAND_CONSTANT_TYPE | DISASM_OPERAND_ABSOLUTE;
+            disasm->operand1.size = 8;
+            disasm->operand1.immediateValue = value;
+
+            disasm->operand2.type = DISASM_OPERAND_MEMORY_TYPE | DISASM_OPERAND_ABSOLUTE;
+            disasm->operand2.memory.baseRegister = 0;
+            disasm->operand2.memory.displacement = 0;
+            disasm->operand2.memory.indexRegister = 0;
+            disasm->operand2.memory.scale = 1;
+            disasm->operand2.size = 16;
+            disasm->operand2.immediateValue = address;
+            break;
+        }
+
+        case FRBAddressModeImmediateAbsoluteX: {
+            uint8_t value = [_file readUInt8AtVirtualAddress:disasm->virtualAddr + 1];
+            uint16_t address = [_file readUInt16AtVirtualAddress:disasm->virtualAddr + 2];
+
+            disasm->operand1.type = DISASM_OPERAND_CONSTANT_TYPE | DISASM_OPERAND_ABSOLUTE;
+            disasm->operand1.size = 8;
+            disasm->operand1.immediateValue = value;
+
+            disasm->operand2.type = DISASM_OPERAND_MEMORY_TYPE | DISASM_OPERAND_ABSOLUTE;
+            disasm->operand2.memory.baseRegister = 0;
+            disasm->operand2.memory.displacement = 0;
+            disasm->operand2.memory.indexRegister = FRBRegisterIndexX;
+            disasm->operand2.memory.scale = 1;
+            disasm->operand2.size = 16;
+            disasm->operand2.immediateValue = address;
+            break;
+        }
 
         case FRBAddressModeAccumulator:
         case FRBAddressModeImplied:
@@ -446,37 +571,20 @@
     }
 
     disasm->operand1.accessMode = DISASM_ACCESS_NONE;
+    const struct FRBInstruction instruction = FRBInstructions[opcode->type];
 
-    if (opcode->addressMode != FRBAddressModeImmediate &&
-        opcode->addressMode != FRBAddressModeProgramCounterRelative &&
-        opcode->addressMode != FRBAddressModeAccumulator &&
-        opcode->addressMode != FRBAddressModeImplied &&
-        opcode->addressMode != FRBAddressModeStack) {
+    switch (opcode->addressMode) {
+        case FRBAddressModeImmediate:
+        case FRBAddressModeProgramCounterRelative:
+        case FRBAddressModeAccumulator:
+        case FRBAddressModeImplied:
+        case FRBAddressModeStack:
+            break;
 
-        struct FRBInstruction instruction = FRBInstructions[opcode->type];
-
-        switch (instruction.category) {
-            case FRBOpcodeCategoryLoad:
-            case FRBOpcodeCategoryComparison:
-            case FRBOpcodeCategoryLogical:
-            case FRBOpcodeCategoryArithmetic:
-                disasm->operand1.accessMode = DISASM_ACCESS_READ;
-                break;
-
-            case FRBOpcodeCategoryStore:
-            case FRBOpcodeCategoryIncrementDecrement:
-            case FRBOpcodeCategoryShifts:
-                disasm->operand1.accessMode = DISASM_ACCESS_WRITE;
-                break;
-
-            case FRBOpcodeCategoryJumps:
-            case FRBOpcodeCategoryStack:
-            case FRBOpcodeCategorySystem:
-            case FRBOpcodeCategoryBranches:
-            case FRBOpcodeCategoryRegisterTransfers:
-            case FRBOpcodeCategoryStatusFlagChanges:
-            case FRBOpcodeCategoryUnknown:
-                break;
+        default: {
+            [self setMemoryFlags:disasm
+                  forInstruction:&instruction];
+            break;
         }
     }
 }
@@ -533,7 +641,7 @@
             uint8_t zeroPage = [_file readUInt8AtVirtualAddress:disasm->virtualAddr + 1];
             disasm->operand1.immediateValue = zeroPage;
             disasm->operand1.type = DISASM_OPERAND_MEMORY_TYPE;
-            disasm->operand1.memory.baseRegister = operand;
+            disasm->operand1.memory.baseRegister = 0;
             disasm->operand1.memory.displacement = 0;
             disasm->operand1.memory.indexRegister = 0;
             disasm->operand1.memory.scale = 1;
@@ -586,6 +694,49 @@
     return [FRBFormatter format:opcode->addressMode
                          opcode:[NSString stringWithUTF8String:instruction.name]
                        operands:strings];
+}
+
+- (void)setMemoryFlags:(DisasmStruct *)disasm
+        forInstruction:(const struct FRBInstruction *)instruction {
+
+    switch (instruction->category) {
+        case FRBOpcodeCategoryLoad:
+        case FRBOpcodeCategoryComparison:
+        case FRBOpcodeCategoryLogical:
+        case FRBOpcodeCategoryArithmetic:
+            disasm->operand1.accessMode = DISASM_ACCESS_READ;
+            break;
+
+        case FRBOpcodeCategoryStore:
+        case FRBOpcodeCategoryIncrementDecrement:
+        case FRBOpcodeCategoryShifts:
+            disasm->operand1.accessMode = DISASM_ACCESS_WRITE;
+            break;
+
+        case FRBOpcodeCategoryBlockTransfer:
+            disasm->operand1.accessMode = DISASM_ACCESS_READ;
+            disasm->operand2.accessMode = DISASM_ACCESS_WRITE;
+            break;
+
+        case FRBOpcodeCategoryJumps:
+        case FRBOpcodeCategoryStack:
+        case FRBOpcodeCategorySystem:
+        case FRBOpcodeCategoryBranches:
+        case FRBOpcodeCategoryRegisterTransfers:
+        case FRBOpcodeCategoryStatusFlagChanges:
+        case FRBOpcodeCategoryUnknown:
+            break;
+    }
+}
+
+- (void)updateRegistersMask:(DisasmStruct *)disasm
+                  forOpcode:(const struct FRBOpcode *)opcode {
+    if (opcode->readRegisters & FRBRegisterCustom || opcode->writtenRegisters & FRBRegisterCustom) {
+        return;
+    }
+
+    disasm->implicitlyReadRegisters[DISASM_OPERAND_GENERAL_REG_INDEX] = opcode->readRegisters;
+    disasm->implicitlyWrittenRegisters[DISASM_OPERAND_GENERAL_REG_INDEX] = opcode->writtenRegisters;
 }
 
 @end

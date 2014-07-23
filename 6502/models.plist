@@ -2,6 +2,21 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>CMD</key>
+	<dict>
+		<key>G65SC02-A</key>
+		<string>it.frob.hopper.generic65c02</string>
+	</dict>
+	<key>HudsonSoft</key>
+	<dict>
+		<key>HuC6280</key>
+		<string>it.frob.hopper.huc6280</string>
+	</dict>
+	<key>Synertek</key>
+	<dict>
+		<key>6502</key>
+		<string>it.frob.hopper.generic6502</string>
+	</dict>
 	<key>UMC</key>
 	<dict>
 		<key>UM6502</key>
@@ -14,6 +29,22 @@
 	<key>MOS</key>
 	<dict>
 		<key>6502</key>
+		<string>it.frob.hopper.generic6502</string>
+		<key>6507</key>
+		<string>it.frob.hopper.generic6502</string>
+		<key>6508</key>
+		<string>it.frob.hopper.generic6502</string>
+		<key>6509</key>
+		<string>it.frob.hopper.generic6502</string>
+		<key>6510</key>
+		<string>it.frob.hopper.generic6502</string>
+		<key>7501</key>
+		<string>it.frob.hopper.generic6502</string>
+		<key>8500</key>
+		<string>it.frob.hopper.generic6502</string>
+		<key>8501</key>
+		<string>it.frob.hopper.generic6502</string>
+		<key>8502</key>
 		<string>it.frob.hopper.generic6502</string>
 	</dict>
 	<key>Ricoh</key>

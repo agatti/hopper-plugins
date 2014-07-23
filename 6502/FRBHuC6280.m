@@ -25,13 +25,13 @@
  */
 
 #import "FRBBase.h"
-#import "FRBW65C02S.h"
-#import "FRBW65C02STable.h"
+#import "FRBHuC6280.h"
+#import "FRBHuC6280Table.h"
 #import "FRBModelHandler.h"
 
-@implementation FRBW65C02S
+@implementation FRBHuC6280
 
-static NSString * const FRBProviderName = @"it.frob.hopper.w65c02s";
+static NSString * const FRBProviderName = @"it.frob.hopper.huc6280";
 
 @synthesize name;
 @synthesize usesTFlag;
@@ -39,23 +39,23 @@ static NSString * const FRBProviderName = @"it.frob.hopper.w65c02s";
 - (instancetype)init {
     if (self = [super init]) {
         name = FRBProviderName;
-        usesTFlag = NO;
+        usesTFlag = YES;
     }
 
     return self;
 }
 
 + (void)load {
-    [[FRBModelHandler sharedModelHandler] registerProvider:[FRBW65C02S class]
+    [[FRBModelHandler sharedModelHandler] registerProvider:[FRBHuC6280 class]
                                                    forName:FRBProviderName];
 }
 
 - (const struct FRBOpcode *)opcodeForByte:(uint8_t)byte {
-    return &FRBW65C02SOpcodeTable[byte];
+    return &FRBHuC6280OpcodeTable[byte];
 }
 
 - (BOOL)haltsExecutionFlow:(const struct FRBOpcode *)opcode {
-    return opcode->type == FRBOpcodeTypeBRK || opcode->type == FRBOpcodeTypeSTP;
+    return opcode->type == FRBOpcodeTypeBRK;
 }
 
 @end
