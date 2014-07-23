@@ -2,10 +2,24 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>UMC</key>
+	<dict>
+		<key>UM6502</key>
+		<string>it.frob.hopper.generic6502</string>
+		<key>UM6507</key>
+		<string>it.frob.hopper.generic6502</string>
+		<key>UM6512</key>
+		<string>it.frob.hopper.generic6502</string>
+	</dict>
+	<key>MOS</key>
+	<dict>
+		<key>6502</key>
+		<string>it.frob.hopper.generic6502</string>
+	</dict>
 	<key>Ricoh</key>
 	<dict>
 		<key>2A03</key>
-		<string>it.frob.hopper.2a03</string>
+		<string>it.frob.hopper.generic6502</string>
 	</dict>
 	<key>Rockwell</key>
 	<dict>

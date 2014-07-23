@@ -30,52 +30,62 @@
 static NSString * const FRBSyntaxVariant = @"Generic";
 static NSString * const FRBCPUMode = @"generic";
 
-/*! 6502 Address modes */
+/*! 6502 Address modes, as per the W65C02S datasheet. */
 typedef NS_ENUM(NSUInteger, FRBAddressMode) {
-    /*! Unknown address mode, used for undocumented opcodes */
-    FRBAddressModeUnknown = 0,
 
-    /*! Absolute addressing: $HHLL */
-    FRBAddressModeAbsolute,
+    /*! Absolute: a */
+    FRBAddressModeAbsolute = 0,
 
-    /*! Absolute X-Indexed addressing: $HHLL,X */
-    FRBAddressModeAbsoluteXIndexed,
+    /*! Absolute Indexed with X: a,x */
+    FRBAddressModeAbsoluteIndexedX,
 
-    /*! Absolute Y-Indexed addressing: $HHLL,Y */
-    FRBAddressModeAbsoluteYIndexed,
+    /*! Absolute Indexed with Y: a,y */
+    FRBAddressModeAbsoluteIndexedY,
 
-    /*! Immediate addressing: #$LL */
+    /*! Immediate: # */
     FRBAddressModeImmediate,
 
-    /*! Implied addressing: no operands */
+    /*! Accumulator: A */
+    FRBAddressModeAccumulator,
+
+    /*! Implied: i */
     FRBAddressModeImplied,
 
-    /*! Indirect addressing: ($HHLL) */
-    FRBAddressModeIndirect,
+    /*! Stack: s */
+    FRBAddressModeStack,
 
-    /*! Indirect X-Indexed addressing: ($LL,X) */
-    FRBAddressModeIndirectXIndexed,
+    /*! Absolute Indirect: (a) */
+    FRBAddressModeAbsoluteIndirect,
 
-    /*! Indirect Y-Indexed addressing: ($LL),Y */
-    FRBAddressModeIndirectYIndexed,
+    /*! Program Counter Relative: r */
+    FRBAddressModeProgramCounterRelative,
 
-    /*! Relative addressing: $LL */
-    FRBAddressModeRelative,
+    /*! Zero Page: zp */
+    FRBAddressModeZeroPage,
 
-    /*! Zeropage addressing: $LL */
-    FRBAddressModeZeropage,
+    /*! Zero Page Indexed with X: zp,X */
+    FRBAddressModeZeroPageIndexedX,
 
-    /*! Zeropage X-Indexed addressing: $LL,X */
-    FRBAddressModeZeropageXIndexed,
+    /*! Zero Page Indexed with Y: zp,Y */
+    FRBAddressModeZeroPageIndexedY,
 
-    /*! Zeropage Y-Indexed addressing: $LL,Y */
-    FRBAddressModeZeropageYIndexed,
+    /*! Zero Page Indexed Indirect: (zp,x) */
+    FRBAddressModeZeroPageIndexedIndirect,
 
-    /*! Zeropage Indirect addressing: ($LL) */
-    FRBAddressModeZeropageIndirect, // Generic 65C02
+    /*! Zero Page Indirect Indexed with Y: (zp),y */
+    FRBAddressModeZeroPageIndirectIndexedY,
 
-    /*! Absolute Indirect X-Indexed addressing: ($HHLL,X) */
-    FRBAddressModeAbsoluteIndirectXIndexed, // Generic 65C02
+    /*! Zero Page Indirect: (zp) */
+    FRBAddressModeZeroPageIndirect, // Generic 65C02
+
+    /*! Absolute Indexed Indirect: (a,x) */
+    FRBAddressModeAbsoluteIndexedIndirect, // Generic 65C02, W65C02S, and R6500
+
+    /*! Zero Page Program Counter Relative: zp, r */
+    FRBAddressModeZeroPageProgramCounterRelative, // Generic W65C02S, and R6500
+
+    /*! Unknown address mode, used for undocumented opcodes */
+    FRBAddressModeUnknown,
 };
 
 typedef NS_ENUM(NSUInteger, FRBOpcodeCategory) {
@@ -99,6 +109,22 @@ typedef NS_ENUM(NSUInteger, FRBOpcodeType) {
     FRBOpcodeTypeADC = 0,
     FRBOpcodeTypeAND,
     FRBOpcodeTypeASL,
+    FRBOpcodeTypeBBR0, // W65C02S and R6500
+    FRBOpcodeTypeBBR1, // W65C02S and R6500
+    FRBOpcodeTypeBBR2, // W65C02S and R6500
+    FRBOpcodeTypeBBR3, // W65C02S and R6500
+    FRBOpcodeTypeBBR4, // W65C02S and R6500
+    FRBOpcodeTypeBBR5, // W65C02S and R6500
+    FRBOpcodeTypeBBR6, // W65C02S and R6500
+    FRBOpcodeTypeBBR7, // W65C02S and R6500
+    FRBOpcodeTypeBBS0, // W65C02S and R6500
+    FRBOpcodeTypeBBS1, // W65C02S and R6500
+    FRBOpcodeTypeBBS2, // W65C02S and R6500
+    FRBOpcodeTypeBBS3, // W65C02S and R6500
+    FRBOpcodeTypeBBS4, // W65C02S and R6500
+    FRBOpcodeTypeBBS5, // W65C02S and R6500
+    FRBOpcodeTypeBBS6, // W65C02S and R6500
+    FRBOpcodeTypeBBS7, // W65C02S and R6500
     FRBOpcodeTypeBCC,
     FRBOpcodeTypeBCS,
     FRBOpcodeTypeBEQ,
@@ -106,7 +132,7 @@ typedef NS_ENUM(NSUInteger, FRBOpcodeType) {
     FRBOpcodeTypeBMI,
     FRBOpcodeTypeBNE,
     FRBOpcodeTypeBPL,
-    FRBOpcodeTypeBRA, // Generic 65C02
+    FRBOpcodeTypeBRA,  // Generic 65C02, W65C02S, and R6500
     FRBOpcodeTypeBRK,
     FRBOpcodeTypeBVC,
     FRBOpcodeTypeBVS,
@@ -134,12 +160,20 @@ typedef NS_ENUM(NSUInteger, FRBOpcodeType) {
     FRBOpcodeTypeORA,
     FRBOpcodeTypePHA,
     FRBOpcodeTypePHP,
-    FRBOpcodeTypePHX, // Generic 65C02
-    FRBOpcodeTypePHY, // Generic 65C02
+    FRBOpcodeTypePHX,  // Generic 65C02, W65C02S, and R6500
+    FRBOpcodeTypePHY,  // Generic 65C02, W65C02S, and R6500
     FRBOpcodeTypePLA,
     FRBOpcodeTypePLP,
-    FRBOpcodeTypePLX, // Generic 65C02
-    FRBOpcodeTypePLY, // Generic 65C02
+    FRBOpcodeTypePLX,  // Generic 65C02, W65C02S, and R6500
+    FRBOpcodeTypePLY,  // Generic 65C02, W65C02S, and R6500
+    FRBOpcodeTypeRMB0, // W65C02S and R6500
+    FRBOpcodeTypeRMB1, // W65C02S and R6500
+    FRBOpcodeTypeRMB2, // W65C02S and R6500
+    FRBOpcodeTypeRMB3, // W65C02S and R6500
+    FRBOpcodeTypeRMB4, // W65C02S and R6500
+    FRBOpcodeTypeRMB5, // W65C02S and R6500
+    FRBOpcodeTypeRMB6, // W65C02S and R6500
+    FRBOpcodeTypeRMB7, // W65C02S and R6500
     FRBOpcodeTypeROL,
     FRBOpcodeTypeROR,
     FRBOpcodeTypeRTI,
@@ -148,23 +182,33 @@ typedef NS_ENUM(NSUInteger, FRBOpcodeType) {
     FRBOpcodeTypeSEC,
     FRBOpcodeTypeSED,
     FRBOpcodeTypeSEI,
+    FRBOpcodeTypeSMB0, // W65C02S and R6500
+    FRBOpcodeTypeSMB1, // W65C02S and R6500
+    FRBOpcodeTypeSMB2, // W65C02S and R6500
+    FRBOpcodeTypeSMB3, // W65C02S and R6500
+    FRBOpcodeTypeSMB4, // W65C02S and R6500
+    FRBOpcodeTypeSMB5, // W65C02S and R6500
+    FRBOpcodeTypeSMB6, // W65C02S and R6500
+    FRBOpcodeTypeSMB7, // W65C02S and R6500
     FRBOpcodeTypeSTA,
+    FRBOpcodeTypeSTP,  // W65C02S
     FRBOpcodeTypeSTX,
     FRBOpcodeTypeSTY,
-    FRBOpcodeTypeSTZ, // Generic 65C02
+    FRBOpcodeTypeSTZ,  // Generic 65C02, W65C02S, and R6500
     FRBOpcodeTypeTAX,
     FRBOpcodeTypeTAY,
-    FRBOpcodeTypeTRB, // Generic 65C02
-    FRBOpcodeTypeTSB, // Generic 65C02
+    FRBOpcodeTypeTRB,  // Generic 65C02, W65C02S, and R6500
+    FRBOpcodeTypeTSB,  // Generic 65C02, W65C02S, and R6500
     FRBOpcodeTypeTSX,
     FRBOpcodeTypeTXA,
     FRBOpcodeTypeTXS,
     FRBOpcodeTypeTYA,
+    FRBOpcodeTypeWAI,  // W65C02S and R6500
 
     FRBOpcodeTypeUndocumented
 };
 
-static const size_t FRBUniqueOpcodesCount = 64;
+static const size_t FRBUniqueOpcodesCount = 98;
 
 struct FRBInstruction {
     FRBOpcodeType type;
@@ -182,6 +226,22 @@ static const struct FRBInstruction FRBInstructions[FRBUniqueOpcodesCount] = {
     { FRBOpcodeTypeADC, "ADC", DISASM_BRANCH_NONE, FRBOpcodeCategoryArithmetic },
     { FRBOpcodeTypeAND, "AND", DISASM_BRANCH_NONE, FRBOpcodeCategoryLogical },
     { FRBOpcodeTypeASL, "ASL", DISASM_BRANCH_NONE, FRBOpcodeCategoryShifts },
+    { FRBOpcodeTypeBBR0, "BBR0", DISASM_BRANCH_JE, FRBOpcodeCategoryBranches }, // :(
+    { FRBOpcodeTypeBBR1, "BBR1", DISASM_BRANCH_JE, FRBOpcodeCategoryBranches }, // :(
+    { FRBOpcodeTypeBBR2, "BBR2", DISASM_BRANCH_JE, FRBOpcodeCategoryBranches }, // :(
+    { FRBOpcodeTypeBBR3, "BBR3", DISASM_BRANCH_JE, FRBOpcodeCategoryBranches }, // :(
+    { FRBOpcodeTypeBBR4, "BBR4", DISASM_BRANCH_JE, FRBOpcodeCategoryBranches }, // :(
+    { FRBOpcodeTypeBBR5, "BBR5", DISASM_BRANCH_JE, FRBOpcodeCategoryBranches }, // :(
+    { FRBOpcodeTypeBBR6, "BBR6", DISASM_BRANCH_JE, FRBOpcodeCategoryBranches }, // :(
+    { FRBOpcodeTypeBBR7, "BBR7", DISASM_BRANCH_JE, FRBOpcodeCategoryBranches }, // :(
+    { FRBOpcodeTypeBBS0, "BBS0", DISASM_BRANCH_JNE, FRBOpcodeCategoryBranches }, // :(
+    { FRBOpcodeTypeBBS1, "BBS1", DISASM_BRANCH_JNE, FRBOpcodeCategoryBranches }, // :(
+    { FRBOpcodeTypeBBS2, "BBS2", DISASM_BRANCH_JNE, FRBOpcodeCategoryBranches }, // :(
+    { FRBOpcodeTypeBBS3, "BBS3", DISASM_BRANCH_JNE, FRBOpcodeCategoryBranches }, // :(
+    { FRBOpcodeTypeBBS4, "BBS4", DISASM_BRANCH_JNE, FRBOpcodeCategoryBranches }, // :(
+    { FRBOpcodeTypeBBS5, "BBS5", DISASM_BRANCH_JNE, FRBOpcodeCategoryBranches }, // :(
+    { FRBOpcodeTypeBBS6, "BBS6", DISASM_BRANCH_JNE, FRBOpcodeCategoryBranches }, // :(
+    { FRBOpcodeTypeBBS7, "BBS7", DISASM_BRANCH_JNE, FRBOpcodeCategoryBranches }, // :(
     { FRBOpcodeTypeBCC, "BCC", DISASM_BRANCH_JNC, FRBOpcodeCategoryBranches },
     { FRBOpcodeTypeBCS, "BCS", DISASM_BRANCH_JC, FRBOpcodeCategoryBranches },
     { FRBOpcodeTypeBEQ, "BEQ", DISASM_BRANCH_JE, FRBOpcodeCategoryBranches },
@@ -207,8 +267,8 @@ static const struct FRBInstruction FRBInstructions[FRBUniqueOpcodesCount] = {
     { FRBOpcodeTypeINC, "INC", DISASM_BRANCH_NONE, FRBOpcodeCategoryIncrementDecrement },
     { FRBOpcodeTypeINX, "INX", DISASM_BRANCH_NONE, FRBOpcodeCategoryIncrementDecrement },
     { FRBOpcodeTypeINY, "INY", DISASM_BRANCH_NONE, FRBOpcodeCategoryIncrementDecrement },
-    { FRBOpcodeTypeJMP, "JMP", DISASM_BRANCH_JMP, FRBOpcodeCategoryBranches },
-    { FRBOpcodeTypeJSR, "JSR", DISASM_BRANCH_CALL, FRBOpcodeCategoryBranches },
+    { FRBOpcodeTypeJMP, "JMP", DISASM_BRANCH_JMP, FRBOpcodeCategoryJumps },
+    { FRBOpcodeTypeJSR, "JSR", DISASM_BRANCH_CALL, FRBOpcodeCategoryJumps },
     { FRBOpcodeTypeLDA, "LDA", DISASM_BRANCH_NONE, FRBOpcodeCategoryLoad },
     { FRBOpcodeTypeLDX, "LDX", DISASM_BRANCH_NONE, FRBOpcodeCategoryLoad },
     { FRBOpcodeTypeLDY, "LDY", DISASM_BRANCH_NONE, FRBOpcodeCategoryLoad },
@@ -223,6 +283,14 @@ static const struct FRBInstruction FRBInstructions[FRBUniqueOpcodesCount] = {
     { FRBOpcodeTypePLP, "PLP", DISASM_BRANCH_NONE, FRBOpcodeCategoryStack },
     { FRBOpcodeTypePLX, "PLX", DISASM_BRANCH_NONE, FRBOpcodeCategoryStack },
     { FRBOpcodeTypePLY, "PLY", DISASM_BRANCH_NONE, FRBOpcodeCategoryStack },
+    { FRBOpcodeTypeRMB0, "RMB0", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
+    { FRBOpcodeTypeRMB0, "RMB1", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
+    { FRBOpcodeTypeRMB0, "RMB2", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
+    { FRBOpcodeTypeRMB0, "RMB3", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
+    { FRBOpcodeTypeRMB0, "RMB4", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
+    { FRBOpcodeTypeRMB0, "RMB5", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
+    { FRBOpcodeTypeRMB0, "RMB6", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
+    { FRBOpcodeTypeRMB0, "RMB7", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
     { FRBOpcodeTypeROL, "ROL", DISASM_BRANCH_NONE, FRBOpcodeCategoryShifts },
     { FRBOpcodeTypeROR, "ROR", DISASM_BRANCH_NONE, FRBOpcodeCategoryShifts },
     { FRBOpcodeTypeRTI, "RTI", DISASM_BRANCH_RET, FRBOpcodeCategorySystem },
@@ -231,7 +299,16 @@ static const struct FRBInstruction FRBInstructions[FRBUniqueOpcodesCount] = {
     { FRBOpcodeTypeSEC, "SEC", DISASM_BRANCH_NONE, FRBOpcodeCategoryStatusFlagChanges },
     { FRBOpcodeTypeSED, "SED", DISASM_BRANCH_NONE, FRBOpcodeCategoryStatusFlagChanges },
     { FRBOpcodeTypeSEI, "SEI", DISASM_BRANCH_NONE, FRBOpcodeCategoryStatusFlagChanges },
+    { FRBOpcodeTypeSMB0, "SMB0", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
+    { FRBOpcodeTypeSMB0, "SMB1", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
+    { FRBOpcodeTypeSMB0, "SMB2", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
+    { FRBOpcodeTypeSMB0, "SMB3", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
+    { FRBOpcodeTypeSMB0, "SMB4", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
+    { FRBOpcodeTypeSMB0, "SMB5", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
+    { FRBOpcodeTypeSMB0, "SMB6", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
+    { FRBOpcodeTypeSMB0, "SMB7", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
     { FRBOpcodeTypeSTA, "STA", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
+    { FRBOpcodeTypeSTP, "STP", DISASM_BRANCH_NONE, FRBOpcodeCategorySystem },
     { FRBOpcodeTypeSTX, "STX", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
     { FRBOpcodeTypeSTY, "STY", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
     { FRBOpcodeTypeSTZ, "STZ", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
@@ -243,6 +320,7 @@ static const struct FRBInstruction FRBInstructions[FRBUniqueOpcodesCount] = {
     { FRBOpcodeTypeTXA, "TXA", DISASM_BRANCH_NONE, FRBOpcodeCategoryRegisterTransfers },
     { FRBOpcodeTypeTXS, "TXS", DISASM_BRANCH_NONE, FRBOpcodeCategoryRegisterTransfers },
     { FRBOpcodeTypeTYA, "TYA", DISASM_BRANCH_NONE, FRBOpcodeCategoryRegisterTransfers },
+    { FRBOpcodeTypeWAI, "WAI", DISASM_BRANCH_NONE, FRBOpcodeCategorySystem },
 };
 
 #endif

@@ -200,21 +200,21 @@
     [clone beginEditing];
 
     NSString *rawString = clone.string;
-    if (string.length < 3) {
-        return string;
-    }
-
-    NSRange opcodeRange = NSMakeRange(0, 3);
-    NSString *potentialOpcode = [rawString substringWithRange:opcodeRange];
+    NSScanner *scanner = [NSScanner scannerWithString:clone.string];
+    NSString *potentialOpcode;
+    [scanner scanUpToCharactersFromSet:[NSCharacterSet whitespaceCharacterSet]
+                            intoString:&potentialOpcode];
     if (![self.validOpcodes containsObject:potentialOpcode]) {
         return string;
     }
 
     [clone setAttributes:(NSDictionary *)[_services ASMLanguageColor] // :(
-                   range:opcodeRange];
+                   range:NSMakeRange(0, potentialOpcode.length)];
 
-    if (string.length > 3) {
-        int offset = 4;
+    if (!scanner.isAtEnd) {
+        [scanner scanCharactersFromSet:[NSCharacterSet whitespaceCharacterSet]
+                            intoString:nil];
+        NSUInteger offset = scanner.scanLocation;
         const char *buffer = rawString.UTF8String;
         NSInteger numberStart = NSNotFound;
         BOOL numberFound = NO;
@@ -316,7 +316,9 @@
                         // Non-hexadecimal digit found, mark and exit.
                         [clone setAttributes:(NSDictionary *)[_services ASMNumberColor] // :(
                                        range:NSMakeRange(numberStart, offset - numberStart)];
-                        break;
+                        numberFound = NO;
+                        negativeMarkerFound = NO;
+                        formatFound = Format_Default;
                 }
             }
 
@@ -327,7 +329,9 @@
                 offset++;
                 [clone setAttributes:(NSDictionary *)[_services ASMNumberColor] // :(
                                range:NSMakeRange(numberStart, offset - numberStart)];
-                break;
+                numberFound = NO;
+                negativeMarkerFound = NO;
+                formatFound = Format_Default;
             }
 
             if (numberFound) {
@@ -336,7 +340,9 @@
                 offset++;
                 [clone setAttributes:(NSDictionary *)[_services ASMNumberColor] // :(
                                range:NSMakeRange(numberStart, offset - numberStart)];
-                break;
+                numberFound = NO;
+                negativeMarkerFound = NO;
+                formatFound = Format_Default;
             }
 
             // Nothing found yet, keep on iterating.

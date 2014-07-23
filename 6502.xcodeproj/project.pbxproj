@@ -13,6 +13,8 @@
 		683A4C25197C8E4700B7F172 /* FRBDefinition.m in Sources */ = {isa = PBXBuildFile; fileRef = 683A4C1C197C8E4700B7F172 /* FRBDefinition.m */; };
 		683A4C27197C8E4700B7F172 /* FRBGeneric6502.m in Sources */ = {isa = PBXBuildFile; fileRef = 683A4C21197C8E4700B7F172 /* FRBGeneric6502.m */; };
 		683A4C31197C8E7000B7F172 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 683A4C2F197C8E7000B7F172 /* InfoPlist.strings */; };
+		6873AD77197F810400B46DB5 /* FRBR6500.m in Sources */ = {isa = PBXBuildFile; fileRef = 6873AD76197F810400B46DB5 /* FRBR6500.m */; };
+		6873E34D197CF9F6005AE429 /* FRBFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 6873E34C197CF9F6005AE429 /* FRBFormatter.m */; };
 		688E0143197C949E00C9DC94 /* FRBW65C02S.m in Sources */ = {isa = PBXBuildFile; fileRef = 688E0142197C949E00C9DC94 /* FRBW65C02S.m */; };
 		68CEFDC6197CB07C0068B320 /* models.plist in Resources */ = {isa = PBXBuildFile; fileRef = 68CEFDC5197CB07C0068B320 /* models.plist */; };
 		68CEFDC9197CB5840068B320 /* FRBModelHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 68CEFDC8197CB5840068B320 /* FRBModelHandler.m */; };
@@ -36,6 +38,11 @@
 		683A4C2B197C8E5700B7F172 /* FRB6502Plugin-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "FRB6502Plugin-Info.plist"; path = "6502/FRB6502Plugin-Info.plist"; sourceTree = SOURCE_ROOT; };
 		683A4C2C197C8E5700B7F172 /* FRB6502Plugin-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "FRB6502Plugin-Prefix.pch"; path = "6502/FRB6502Plugin-Prefix.pch"; sourceTree = SOURCE_ROOT; };
 		683A4C30197C8E7000B7F172 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = 6502/en.lproj/InfoPlist.strings; sourceTree = SOURCE_ROOT; };
+		6873AD75197F810400B46DB5 /* FRBR6500.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRBR6500.h; sourceTree = "<group>"; };
+		6873AD76197F810400B46DB5 /* FRBR6500.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRBR6500.m; sourceTree = "<group>"; };
+		6873AD78197F816A00B46DB5 /* FRBR6500Table.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FRBR6500Table.h; sourceTree = "<group>"; };
+		6873E34B197CF9F6005AE429 /* FRBFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRBFormatter.h; sourceTree = "<group>"; };
+		6873E34C197CF9F6005AE429 /* FRBFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRBFormatter.m; sourceTree = "<group>"; };
 		688E0141197C949E00C9DC94 /* FRBW65C02S.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FRBW65C02S.h; path = 6502/FRBW65C02S.h; sourceTree = SOURCE_ROOT; };
 		688E0142197C949E00C9DC94 /* FRBW65C02S.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FRBW65C02S.m; path = 6502/FRBW65C02S.m; sourceTree = SOURCE_ROOT; };
 		688E0144197C94BD00C9DC94 /* FRBW65C02STable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FRBW65C02STable.h; path = 6502/FRBW65C02STable.h; sourceTree = SOURCE_ROOT; };
@@ -102,8 +109,12 @@
 				688E0144197C94BD00C9DC94 /* FRBW65C02STable.h */,
 				68CEFDC7197CB5840068B320 /* FRBModelHandler.h */,
 				68CEFDC8197CB5840068B320 /* FRBModelHandler.m */,
+				6873E34B197CF9F6005AE429 /* FRBFormatter.h */,
+				6873E34C197CF9F6005AE429 /* FRBFormatter.m */,
+				6873AD75197F810400B46DB5 /* FRBR6500.h */,
+				6873AD76197F810400B46DB5 /* FRBR6500.m */,
+				6873AD78197F816A00B46DB5 /* FRBR6500Table.h */,
 			);
-			name = 6502;
 			path = 6502;
 			sourceTree = "<group>";
 		};
@@ -185,7 +196,9 @@
 				683A4C25197C8E4700B7F172 /* FRBDefinition.m in Sources */,
 				688E0143197C949E00C9DC94 /* FRBW65C02S.m in Sources */,
 				683A4C27197C8E4700B7F172 /* FRBGeneric6502.m in Sources */,
+				6873AD77197F810400B46DB5 /* FRBR6500.m in Sources */,
 				683372EA197C909B002B432E /* FRBGeneric65C02.m in Sources */,
+				6873E34D197CF9F6005AE429 /* FRBFormatter.m in Sources */,
 				68CEFDC9197CB5840068B320 /* FRBModelHandler.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

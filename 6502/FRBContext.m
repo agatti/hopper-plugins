@@ -24,11 +24,12 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import "FRBDefinition.h"
-#import "FRBContext.h"
 #import "FRBBase.h"
-#import "FRBProvider.h"
+#import "FRBContext.h"
+#import "FRBDefinition.h"
+#import "FRBFormatter.h"
 #import "FRBModelHandler.h"
+#import "FRBProvider.h"
 
 @interface FRBContext()
 
@@ -41,18 +42,7 @@
                     forDisasm:(DisasmStruct *)disasm;
 - (void)handleBranchOpcode:(const struct FRBOpcode *)opcode
                  forDisasm:(DisasmStruct *)disasm;
-- (NSString *)valueAsHexadecimal:(DisasmStruct *)disasm
-                 forOperandIndex:(size_t)operand
-                        isSigned:(BOOL)isSigned;
-- (NSString *)valueAsDecimal:(DisasmStruct *)disasm
-             forOperandIndex:(size_t)operand
-                    isSigned:(BOOL)isSigned;
-- (NSString *)valueAsOctal:(DisasmStruct *)disasm
-           forOperandIndex:(size_t)operand;
-- (NSString *)valueAsBinary:(DisasmStruct *)disasm
-            forOperandIndex:(size_t)operand;
-+ (NSString *)convertToBinary:(uint64_t)value
-                   sizeInBits:(size_t)bits;
+- (NSString *)formatInstruction:(DisasmStruct *)source;
 
 @end
 
@@ -213,24 +203,28 @@
 
     switch (opcode->addressMode) {
         case FRBAddressModeAbsolute:
-        case FRBAddressModeAbsoluteXIndexed:
-        case FRBAddressModeAbsoluteYIndexed:
-        case FRBAddressModeIndirect:
-        case FRBAddressModeAbsoluteIndirectXIndexed:
+        case FRBAddressModeAbsoluteIndexedX:
+        case FRBAddressModeAbsoluteIndexedY:
+        case FRBAddressModeAbsoluteIndirect:
+        case FRBAddressModeAbsoluteIndexedIndirect:
+        case FRBAddressModeZeroPageProgramCounterRelative:
             disasm->instruction.length = 3;
             return 3;
 
         case FRBAddressModeImmediate:
-        case FRBAddressModeIndirectXIndexed:
-        case FRBAddressModeIndirectYIndexed:
-        case FRBAddressModeRelative:
-        case FRBAddressModeZeropage:
-        case FRBAddressModeZeropageXIndexed:
-        case FRBAddressModeZeropageYIndexed:
-        case FRBAddressModeZeropageIndirect:
+        case FRBAddressModeZeroPageIndexedIndirect:
+        case FRBAddressModeZeroPageIndirectIndexedY:
+        case FRBAddressModeProgramCounterRelative:
+        case FRBAddressModeZeroPage:
+        case FRBAddressModeZeroPageIndexedX:
+        case FRBAddressModeZeroPageIndexedY:
+        case FRBAddressModeZeroPageIndirect:
             disasm->instruction.length = 2;
             return 2;
 
+        case FRBAddressModeAccumulator:
+        case FRBAddressModeImplied:
+        case FRBAddressModeStack:
         default:
             disasm->instruction.length = 1;
             return 1;
@@ -271,16 +265,7 @@
 - (void)buildInstructionString:(DisasmStruct *)disasm
                     forSegment:(NSObject<HPSegment> *)segment
                 populatingInfo:(NSObject<HPFormattedInstructionInfo> *)formattedInstructionInfo {
-    const char *spaces = "    ";
-    strcpy(disasm->completeInstructionString, disasm->instruction.mnemonic);
-    strcat(disasm->completeInstructionString, spaces + strlen(disasm->instruction.mnemonic));
-    ArgFormat format = [_file formatForArgument:0
-                               atVirtualAddress:disasm->virtualAddr];
-    NSString *formatted = [self formatInstruction:disasm
-                                 withOperandIndex:0
-                                       withFormat:format];
-    strcpy(disasm->operand1.mnemonic, formatted.UTF8String);
-    strcat(disasm->completeInstructionString, formatted.UTF8String);
+    strcat(disasm->completeInstructionString, [self formatInstruction:disasm].UTF8String);
 }
 
 - (BOOL)canDecompileProcedure:(NSObject<HPProcedure> *)procedure {
@@ -327,8 +312,8 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 
-- (void) handleNonBranchOpcode:(const struct FRBOpcode *)opcode
-                     forDisasm:(DisasmStruct *)disasm {
+- (void)handleNonBranchOpcode:(const struct FRBOpcode *)opcode
+                    forDisasm:(DisasmStruct *)disasm {
     uint16_t operand = 0;
 
     switch (opcode->addressMode) {
@@ -343,7 +328,7 @@
             disasm->operand1.immediateValue = operand;
             break;
 
-        case FRBAddressModeAbsoluteXIndexed:
+        case FRBAddressModeAbsoluteIndexedX:
             operand = [_file readUInt16AtVirtualAddress:disasm->virtualAddr + 1];
             disasm->operand1.type = DISASM_OPERAND_MEMORY_TYPE | DISASM_OPERAND_ABSOLUTE;
             disasm->operand1.memory.baseRegister = operand;
@@ -354,7 +339,7 @@
             disasm->operand1.immediateValue = operand;
             break;
 
-        case FRBAddressModeAbsoluteYIndexed:
+        case FRBAddressModeAbsoluteIndexedY:
             operand = [_file readUInt16AtVirtualAddress:disasm->virtualAddr + 1];
             disasm->operand1.type = DISASM_OPERAND_MEMORY_TYPE | DISASM_OPERAND_ABSOLUTE;
             disasm->operand1.memory.baseRegister = operand;
@@ -372,7 +357,7 @@
             disasm->operand1.size = 8;
             break;
 
-        case FRBAddressModeIndirect:
+        case FRBAddressModeAbsoluteIndirect:
             operand = [_file readUInt16AtVirtualAddress:disasm->virtualAddr + 1];
             disasm->operand1.type = DISASM_OPERAND_MEMORY_TYPE | DISASM_OPERAND_ABSOLUTE;
             disasm->operand1.memory.baseRegister = operand;
@@ -383,7 +368,7 @@
             disasm->operand1.immediateValue = operand;
             break;
 
-        case FRBAddressModeIndirectXIndexed:
+        case FRBAddressModeZeroPageIndexedIndirect:
             operand = [_file readUInt8AtVirtualAddress:disasm->virtualAddr + 1];
             disasm->operand1.type = DISASM_OPERAND_MEMORY_TYPE | DISASM_OPERAND_ABSOLUTE;
             disasm->operand1.memory.baseRegister = operand;
@@ -394,7 +379,7 @@
             disasm->operand1.immediateValue = operand;
             break;
 
-        case FRBAddressModeIndirectYIndexed:
+        case FRBAddressModeZeroPageIndirectIndexedY:
             operand = [_file readUInt8AtVirtualAddress:disasm->virtualAddr + 1];
             disasm->operand1.type = DISASM_OPERAND_MEMORY_TYPE | DISASM_OPERAND_ABSOLUTE;
             disasm->operand1.memory.baseRegister = operand;
@@ -405,7 +390,7 @@
             disasm->operand1.immediateValue = operand;
             break;
 
-        case FRBAddressModeZeropage:
+        case FRBAddressModeZeroPage:
             operand = [_file readUInt8AtVirtualAddress:disasm->virtualAddr + 1];
             disasm->operand1.type = DISASM_OPERAND_MEMORY_TYPE;
             disasm->operand1.memory.baseRegister = operand;
@@ -416,7 +401,7 @@
             disasm->operand1.immediateValue = operand;
             break;
 
-        case FRBAddressModeZeropageXIndexed:
+        case FRBAddressModeZeroPageIndexedX:
             operand = [_file readUInt8AtVirtualAddress:disasm->virtualAddr + 1];
             disasm->operand1.type = DISASM_OPERAND_MEMORY_TYPE;
             disasm->operand1.memory.baseRegister = operand;
@@ -427,7 +412,7 @@
             disasm->operand1.immediateValue = operand;
             break;
 
-        case FRBAddressModeZeropageYIndexed:
+        case FRBAddressModeZeroPageIndexedY:
             operand = [_file readUInt8AtVirtualAddress:disasm->virtualAddr + 1];
             disasm->operand1.type = DISASM_OPERAND_MEMORY_TYPE;
             disasm->operand1.memory.baseRegister = operand;
@@ -438,7 +423,7 @@
             disasm->operand1.immediateValue = operand;
             break;
 
-        case FRBAddressModeZeropageIndirect:
+        case FRBAddressModeZeroPageIndirect:
             operand = [_file readUInt8AtVirtualAddress:disasm->virtualAddr + 1];
             disasm->operand1.type = DISASM_OPERAND_MEMORY_TYPE | DISASM_OPERAND_ABSOLUTE;
             disasm->operand1.memory.baseRegister = operand;
@@ -449,7 +434,9 @@
             disasm->operand1.immediateValue = operand;
             break;
 
+        case FRBAddressModeAccumulator:
         case FRBAddressModeImplied:
+        case FRBAddressModeStack:
             break;
 
         default:
@@ -461,8 +448,10 @@
     disasm->operand1.accessMode = DISASM_ACCESS_NONE;
 
     if (opcode->addressMode != FRBAddressModeImmediate &&
-        opcode->addressMode != FRBAddressModeRelative &&
-        opcode->addressMode != FRBAddressModeImplied) {
+        opcode->addressMode != FRBAddressModeProgramCounterRelative &&
+        opcode->addressMode != FRBAddressModeAccumulator &&
+        opcode->addressMode != FRBAddressModeImplied &&
+        opcode->addressMode != FRBAddressModeStack) {
 
         struct FRBInstruction instruction = FRBInstructions[opcode->type];
 
@@ -492,8 +481,8 @@
     }
 }
 
-- (void) handleBranchOpcode:(const struct FRBOpcode *)opcode
-                  forDisasm:(DisasmStruct *)disasm {
+- (void)handleBranchOpcode:(const struct FRBOpcode *)opcode
+                 forDisasm:(DisasmStruct *)disasm {
     uint16_t operand = 0;
 
     switch (opcode->addressMode) {
@@ -505,7 +494,7 @@
             disasm->operand1.size = 16;
             break;
 
-        case FRBAddressModeIndirect:
+        case FRBAddressModeAbsoluteIndirect:
             operand = [_file readUInt16AtVirtualAddress:disasm->virtualAddr + 1];
             disasm->operand1.type = DISASM_OPERAND_MEMORY_TYPE | DISASM_OPERAND_RELATIVE;
             disasm->instruction.addressValue = operand;
@@ -513,7 +502,7 @@
             disasm->operand1.size = 16;
             break;
 
-        case FRBAddressModeAbsoluteIndirectXIndexed:
+        case FRBAddressModeAbsoluteIndexedIndirect:
             operand = [_file readUInt16AtVirtualAddress:disasm->virtualAddr + 1];
             disasm->operand1.type = DISASM_OPERAND_MEMORY_TYPE | DISASM_OPERAND_ABSOLUTE;
             disasm->instruction.addressValue = operand;
@@ -521,7 +510,7 @@
             disasm->operand1.size = 16;
             break;
 
-        case FRBAddressModeRelative:
+        case FRBAddressModeProgramCounterRelative: {
             operand = [_file readUInt8AtVirtualAddress:disasm->virtualAddr + 1];
             int offset;
             if (operand & (1 << 7)) {
@@ -538,8 +527,39 @@
             disasm->operand1.immediateValue = offset;
             disasm->operand1.size = 16;
             break;
+        }
 
-        case FRBAddressModeImplied:
+        case FRBAddressModeZeroPageProgramCounterRelative: {
+            uint8_t zeroPage = [_file readUInt8AtVirtualAddress:disasm->virtualAddr + 1];
+            disasm->operand1.immediateValue = zeroPage;
+            disasm->operand1.type = DISASM_OPERAND_MEMORY_TYPE;
+            disasm->operand1.memory.baseRegister = operand;
+            disasm->operand1.memory.displacement = 0;
+            disasm->operand1.memory.indexRegister = 0;
+            disasm->operand1.memory.scale = 1;
+            disasm->operand1.size = 8;
+            disasm->operand1.immediateValue = zeroPage;
+
+            operand = [_file readUInt8AtVirtualAddress:disasm->virtualAddr + 2];
+
+            int offset;
+            if (operand & (1 << 7)) {
+                offset = operand & 0x7F;
+                offset = -((~offset + 1) & 0x7F);
+            } else {
+                offset = operand;
+            }
+
+            offset += disasm->instruction.pcRegisterValue + 2;
+            
+            disasm->operand2.type = DISASM_OPERAND_CONSTANT_TYPE | DISASM_OPERAND_RELATIVE;
+            disasm->instruction.addressValue = (Address) offset;
+            disasm->operand2.immediateValue = offset;
+            disasm->operand2.size = 16;
+            break;
+        }
+
+        case FRBAddressModeStack:
             break;
 
         default:
@@ -549,339 +569,23 @@
     }
 }
 
-- (NSString *)formatInstruction:(DisasmStruct *)disasm
-               withOperandIndex:(size_t)operand
-                     withFormat:(ArgFormat)format {
+- (NSString *)formatInstruction:(DisasmStruct *)source {
 
-    switch ((int) format) {
-        case Format_Hexadecimal | Format_Signed:
-            return [self valueAsHexadecimal:disasm
-                            forOperandIndex:operand
-                                   isSigned:YES];
+    NSMutableArray *strings = [NSMutableArray new];
 
-        case Format_Hexadecimal:
-            return [self valueAsHexadecimal:disasm
-                            forOperandIndex:operand
-                                   isSigned:NO];
-
-        case Format_Decimal | Format_Signed:
-            return [self valueAsDecimal:disasm
-                        forOperandIndex:operand
-                               isSigned:YES];
-
-        case Format_Decimal:
-            return [self valueAsDecimal:disasm
-                        forOperandIndex:operand
-                               isSigned:NO];
-
-        case Format_Octal:
-            return [self valueAsOctal:disasm
-                      forOperandIndex:operand];
-
-        case Format_Binary:
-            return [self valueAsBinary:disasm
-                       forOperandIndex:operand];
-
-        default:
-            return [self valueAsHexadecimal:disasm
-                            forOperandIndex:operand
-                                   isSigned:NO];
-    }
-}
-
-- (NSString *)valueAsHexadecimal:(DisasmStruct *)disasm
-                 forOperandIndex:(size_t)operand
-                        isSigned:(BOOL)isSigned {
-    if (disasm->operand[operand].type == DISASM_OPERAND_NO_OPERAND) {
-        return @"";
+    for (int index = 0; index < DISASM_MAX_OPERANDS; index++) {
+        ArgFormat format = [self.file formatForArgument:index
+                                       atVirtualAddress:source->virtualAddr];
+        [strings addObject:[FRBFormatter format:source
+                                        operand:index
+                                 argumentFormat:format]];
     }
 
-    int64_t operandValue = disasm->operand[operand].immediateValue;
-    int64_t value;
-    BOOL negative;
-    if (operandValue & (1 << (disasm->operand[operand].size - 1)) && isSigned) {
-        value = ~operandValue + 1;
-        negative = YES;
-    } else {
-        value = operandValue;
-        negative = NO;
-    }
-
-    switch ([self.provider opcodeForByte:disasm->instruction.userData]->addressMode) {
-        case FRBAddressModeAbsolute:
-        case FRBAddressModeRelative:
-            return [NSString stringWithFormat:@"%@$%04X",
-                    negative ? @"-" : @"", (uint16_t) (value & 0xFFFF)];
-
-        case FRBAddressModeAbsoluteXIndexed:
-            return [NSString stringWithFormat:@"%@$%04X,X",
-                    negative ? @"-" : @"", (uint16_t) (value & 0xFFFF)];
-
-        case FRBAddressModeAbsoluteYIndexed:
-            return [NSString stringWithFormat:@"%@$%04X,Y",
-                    negative ? @"-" : @"", (uint16_t) (value & 0xFFFF)];
-
-        case FRBAddressModeImmediate:
-        case FRBAddressModeZeropage:
-            return [NSString stringWithFormat:@"#%@$%02X",
-                    negative ? @"-" : @"", (uint8_t) (value & 0xFF)];
-
-        case FRBAddressModeIndirect:
-            return [NSString stringWithFormat:@"(%@$%04X)",
-                    negative ? @"-" : @"", (uint16_t) (value & 0xFFFF)];
-
-        case FRBAddressModeIndirectXIndexed:
-            return [NSString stringWithFormat:@"(%@$%02X,X)",
-                    negative ? @"-" : @"", (uint16_t) (value & 0xFF)];
-
-        case FRBAddressModeIndirectYIndexed:
-            return [NSString stringWithFormat:@"(%@$%02X),Y",
-                    negative ? @"-" : @"", (uint16_t) (value & 0xFF)];
-
-        case FRBAddressModeZeropageXIndexed:
-            return [NSString stringWithFormat:@"#%@$%02X,X",
-                    negative ? @"-" : @"", (uint8_t) (value & 0xFF)];
-
-        case FRBAddressModeZeropageYIndexed:
-            return [NSString stringWithFormat:@"#%@$%02X,Y",
-                    negative ? @"-" : @"", (uint8_t) (value & 0xFF)];
-
-        case FRBAddressModeZeropageIndirect:
-            return [NSString stringWithFormat:@"(%@$%02X)",
-                    negative ? @"-" : @"", (uint16_t) (value & 0xFF)];
-
-        case FRBAddressModeAbsoluteIndirectXIndexed:
-            return [NSString stringWithFormat:@"(%@$%04X,X)",
-                    negative ? @"-" : @"", (uint16_t) (value & 0xFF)];
-
-        case FRBAddressModeUnknown:
-        case FRBAddressModeImplied:
-        default:
-            return @"";
-    }
-}
-
-- (NSString *)valueAsDecimal:(DisasmStruct *)disasm
-             forOperandIndex:(size_t)operand
-                    isSigned:(BOOL)isSigned {
-    if (disasm->operand[operand].type == DISASM_OPERAND_NO_OPERAND) {
-        return @"";
-    }
-
-    int64_t operandValue = disasm->operand[operand].immediateValue;
-    int64_t value;
-    BOOL negative;
-    if (operandValue & (1 << (disasm->operand[operand].size - 1)) && isSigned) {
-        value = ~operandValue + 1;
-        negative = YES;
-    } else {
-        value = operandValue;
-        negative = NO;
-    }
-
-    switch ([self.provider opcodeForByte:disasm->instruction.userData]->addressMode) {
-        case FRBAddressModeAbsolute:
-        case FRBAddressModeRelative:
-            return [NSString stringWithFormat:@"%@%d",
-                    negative ? @"-" : @"", (uint16_t) (value & 0xFFFF)];
-
-        case FRBAddressModeAbsoluteXIndexed:
-            return [NSString stringWithFormat:@"%@%d,X",
-                    negative ? @"-" : @"", (uint16_t) (value & 0xFFFF)];
-
-        case FRBAddressModeAbsoluteYIndexed:
-            return [NSString stringWithFormat:@"%@%d,Y",
-                    negative ? @"-" : @"", (uint16_t) (value & 0xFFFF)];
-
-        case FRBAddressModeImmediate:
-        case FRBAddressModeZeropage:
-            return [NSString stringWithFormat:@"#%@%d",
-                    negative ? @"-" : @"", (uint8_t) (value & 0xFF)];
-
-        case FRBAddressModeIndirect:
-            return [NSString stringWithFormat:@"(%@%d)",
-                    negative ? @"-" : @"", (uint16_t) (value & 0xFFFF)];
-
-        case FRBAddressModeIndirectXIndexed:
-            return [NSString stringWithFormat:@"(%@%d,X)",
-                    negative ? @"-" : @"", (uint16_t) (value & 0xFF)];
-
-        case FRBAddressModeIndirectYIndexed:
-            return [NSString stringWithFormat:@"(%@%d),Y",
-                    negative ? @"-" : @"", (uint16_t) (value & 0xFF)];
-
-        case FRBAddressModeZeropageXIndexed:
-            return [NSString stringWithFormat:@"#%@%d,X",
-                    negative ? @"-" : @"", (uint8_t) (value & 0xFF)];
-
-        case FRBAddressModeZeropageYIndexed:
-            return [NSString stringWithFormat:@"#%@%d,Y",
-                    negative ? @"-" : @"", (uint8_t) (value & 0xFF)];
-
-        case FRBAddressModeZeropageIndirect:
-            return [NSString stringWithFormat:@"(%@%d)",
-                    negative ? @"-" : @"", (uint16_t) (value & 0xFF)];
-
-        case FRBAddressModeAbsoluteIndirectXIndexed:
-            return [NSString stringWithFormat:@"(%@%d,X)",
-                    negative ? @"-" : @"", (uint16_t) (value & 0xFF)];
-
-        case FRBAddressModeUnknown:
-        case FRBAddressModeImplied:
-        default:
-            return @"";
-    }
-}
-
-- (NSString *)valueAsOctal:(DisasmStruct *)disasm
-           forOperandIndex:(size_t)operand {
-    if (disasm->operand[operand].type == DISASM_OPERAND_NO_OPERAND) {
-        return @"";
-    }
-
-    int64_t operandValue = disasm->operand[operand].immediateValue;
-    int64_t value;
-    BOOL negative;
-    if (operandValue & (1 << (disasm->operand[operand].size - 1))) {
-        value = ~operandValue + 1;
-        negative = YES;
-    } else {
-        value = operandValue;
-        negative = NO;
-    }
-
-    switch ([self.provider opcodeForByte:disasm->instruction.userData]->addressMode) {
-        case FRBAddressModeAbsolute:
-        case FRBAddressModeRelative:
-            return [NSString stringWithFormat:@"%@%oo",
-                    negative ? @"-" : @"", (uint16_t) (value & 0xFFFF)];
-
-        case FRBAddressModeAbsoluteXIndexed:
-            return [NSString stringWithFormat:@"%@%oo,X",
-                    negative ? @"-" : @"", (uint16_t) (value & 0xFFFF)];
-
-        case FRBAddressModeAbsoluteYIndexed:
-            return [NSString stringWithFormat:@"%@%oo,Y",
-                    negative ? @"-" : @"", (uint16_t) (value & 0xFFFF)];
-
-        case FRBAddressModeImmediate:
-        case FRBAddressModeZeropage:
-            return [NSString stringWithFormat:@"#%@%oo",
-                    negative ? @"-" : @"", (uint8_t) (value & 0xFF)];
-
-        case FRBAddressModeIndirect:
-            return [NSString stringWithFormat:@"(%@%oo)",
-                    negative ? @"-" : @"", (uint16_t) (value & 0xFFFF)];
-
-        case FRBAddressModeIndirectXIndexed:
-            return [NSString stringWithFormat:@"(%@%oo,X)",
-                    negative ? @"-" : @"", (uint16_t) (value & 0xFF)];
-
-        case FRBAddressModeIndirectYIndexed:
-            return [NSString stringWithFormat:@"(%@%oo),Y",
-                    negative ? @"-" : @"", (uint16_t) (value & 0xFF)];
-
-        case FRBAddressModeZeropageXIndexed:
-            return [NSString stringWithFormat:@"#%@%oo,X",
-                    negative ? @"-" : @"", (uint8_t) (value & 0xFF)];
-
-        case FRBAddressModeZeropageYIndexed:
-            return [NSString stringWithFormat:@"#%@%oo,Y",
-                    negative ? @"-" : @"", (uint8_t) (value & 0xFF)];
-
-        case FRBAddressModeZeropageIndirect:
-            return [NSString stringWithFormat:@"(%@$%oo)",
-                    negative ? @"-" : @"", (uint16_t) (value & 0xFF)];
-
-        case FRBAddressModeAbsoluteIndirectXIndexed:
-            return [NSString stringWithFormat:@"(%@$%oo,X)",
-                    negative ? @"-" : @"", (uint16_t) (value & 0xFF)];
-
-        case FRBAddressModeUnknown:
-        case FRBAddressModeImplied:
-        default:
-            return @"";
-    }
-}
-
-- (NSString *)valueAsBinary:(DisasmStruct *)disasm
-            forOperandIndex:(size_t)operand {
-    if (disasm->operand[operand].type == DISASM_OPERAND_NO_OPERAND) {
-        return @"";
-    }
-
-    int64_t operandValue = disasm->operand[operand].immediateValue &
-        ((1 << disasm->operand[operand].size) - 1);
-    NSString *binaryValue = [FRBContext convertToBinary:operandValue
-                                                sizeInBits:disasm->operand[operand].size];
-
-    switch ([self.provider opcodeForByte:disasm->instruction.userData]->addressMode) {
-        case FRBAddressModeAbsolute:
-        case FRBAddressModeRelative:
-            return [NSString stringWithFormat:@"%%%@", binaryValue];
-
-        case FRBAddressModeAbsoluteXIndexed:
-            return [NSString stringWithFormat:@"%%%@,X", binaryValue];
-
-        case FRBAddressModeAbsoluteYIndexed:
-            return [NSString stringWithFormat:@"%%%@,Y", binaryValue];
-
-        case FRBAddressModeImmediate:
-        case FRBAddressModeZeropage:
-            return [NSString stringWithFormat:@"#%%%@", binaryValue];
-
-        case FRBAddressModeIndirect:
-            return [NSString stringWithFormat:@"(%%%@)", binaryValue];
-
-        case FRBAddressModeIndirectXIndexed:
-            return [NSString stringWithFormat:@"(%%%@,X)", binaryValue];
-
-        case FRBAddressModeIndirectYIndexed:
-            return [NSString stringWithFormat:@"(%%%@),Y", binaryValue];
-
-        case FRBAddressModeZeropageXIndexed:
-            return [NSString stringWithFormat:@"#%%%@,X", binaryValue];
-
-        case FRBAddressModeZeropageYIndexed:
-            return [NSString stringWithFormat:@"#%%%@,Y", binaryValue];
-
-        case FRBAddressModeZeropageIndirect:
-            return [NSString stringWithFormat:@"(%%%@)", binaryValue];
-
-        case FRBAddressModeAbsoluteIndirectXIndexed:
-            return [NSString stringWithFormat:@"(%%%@,X)", binaryValue];
-
-        case FRBAddressModeUnknown:
-        case FRBAddressModeImplied:
-        default:
-            return @"";
-    }
-}
-
-+ (NSString *)convertToBinary:(uint64_t)value
-                   sizeInBits:(size_t)bits {
-    NSMutableString *output = [NSMutableString new];
-    long startBit = bits - 1;
-    BOOL firstBitSet = NO;
-    while (startBit >= 0) {
-        BOOL bitSet = (value & (1 << startBit)) == (1 << startBit);
-        startBit--;
-        if (bitSet) {
-            firstBitSet = YES;
-        } else {
-            if (!firstBitSet) {
-                continue;
-            }
-        }
-
-        [output appendFormat:@"%c", bitSet ? '1' : '0' ];
-    }
-
-    if (output.length == 0) {
-        [output appendFormat:@"0"];
-    }
-
-    return output;
+    const struct FRBOpcode *opcode = [self.provider opcodeForByte:source->instruction.userData];
+    struct FRBInstruction instruction = FRBInstructions[opcode->type];
+    return [FRBFormatter format:opcode->addressMode
+                         opcode:[NSString stringWithUTF8String:instruction.name]
+                       operands:strings];
 }
 
 @end
