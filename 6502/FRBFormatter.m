@@ -252,7 +252,6 @@ static const NSArray *FRBOpcodeFormats;
                withServices:(id<HPHopperServices>)services {
 
     NSString *name = [[services currentDocument].disassembledFile nameForVirtualAddress:source->operand[operand].immediateValue];
-    NSLog(@"Name for $%04llX: %@", source->operand[operand].immediateValue, name);
     if (!name) {
         return [FRBFormatter formatHexadecimal:source
                                        operand:operand

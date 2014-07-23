@@ -50,6 +50,13 @@
 
 @end
 
+static NSString * const FRBNMIVectorName = @"NMI_Vector";
+static NSString * const FRBRESETVectorName = @"RESET_Vector";
+static NSString * const FRBIRQVectorName = @"IRQ_Vector";
+static const NSUInteger FRBNMIVectorAddress = 0xFFFA;
+static const NSUInteger FRBRESETVectorAddress = 0xFFFC;
+static const NSUInteger FRBIRQVectorAddress = 0xFFFE;
+
 @implementation FRBContext
 
 - (instancetype)initWithCPU:(FRBDefinition *)cpu
@@ -65,6 +72,24 @@
         if (!_provider) {
             return nil;
         }
+
+        [file setName:FRBNMIVectorName
+    forVirtualAddress:FRBNMIVectorAddress];
+        [file setType:Type_Int16
+     atVirtualAddress:FRBNMIVectorAddress
+            forLength:sizeof(uint16_t)];
+
+        [file setName:FRBRESETVectorName
+    forVirtualAddress:FRBRESETVectorAddress];
+        [file setType:Type_Int16
+     atVirtualAddress:FRBRESETVectorAddress
+            forLength:sizeof(uint16_t)];
+
+        [file setName:FRBIRQVectorName
+    forVirtualAddress:FRBIRQVectorAddress];
+        [file setType:Type_Int16
+     atVirtualAddress:FRBIRQVectorAddress
+            forLength:sizeof(uint16_t)];
     }
     return self;
 }
