@@ -29,7 +29,7 @@ CPUs currently supported:
 
 * Undocumented opcodes are not recognised.
 
-###**CBM File Loader** - _v0.0.3_
+###**CBM File Loader** - _v0.0.4_
 
 This file loader plugin allows you to load Commodore 16/116/64/+4/VIC20 binaries to be disassembled.  Commodore 128 files are currently not supported due to the fact that binaries may be bigger than 64k and thus something may need to be rearranged.  _(Please note that the plugin depends on the 6502 CPU core to be installed in order to work properly)_
 

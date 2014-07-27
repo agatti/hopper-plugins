@@ -667,7 +667,6 @@ static const NSUInteger FRBIRQVectorAddress = 0xFFFE;
 
         case FRBAddressModeZeroPageProgramCounterRelative: {
             uint8_t zeroPage = [_file readUInt8AtVirtualAddress:disasm->virtualAddr + 1];
-            disasm->operand1.immediateValue = zeroPage;
             disasm->operand1.type = DISASM_OPERAND_MEMORY_TYPE;
             disasm->operand1.memory.baseRegister = 0;
             disasm->operand1.memory.displacement = 0;

@@ -6,11 +6,11 @@
  modification, are permitted provided that the following conditions are met:
 
  1. Redistributions of source code must retain the above copyright notice, this
- list of conditions and the following disclaimer.
+    list of conditions and the following disclaimer.
 
  2. Redistributions in binary form must reproduce the above copyright notice,
- this list of conditions and the following disclaimer in the documentation
- and/or other materials provided with the distribution.
+    this list of conditions and the following disclaimer in the documentation
+    and/or other materials provided with the distribution.
 
  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
@@ -24,10 +24,10 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef C64Loader_C64Basic_h
-#define C64Loader_C64Basic_h
+#ifndef C64Basic_h
+#define C64Basic_h
 
-static const char * const kC64BasicTokens[256] = {
+static const char * const FRBC64BasicTokens[256] = {
     NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
     NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
     NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
@@ -64,7 +64,7 @@ static const char * const kC64BasicTokens[256] = {
     NULL, NULL, NULL, NULL, "PI",
 };
 
-static const char * const kC64PetsciiCharacters[256] = {
+static const char * const FRBC64PetsciiCharacters[256] = {
     "{$00}", "{$01}", "{$02}", "{$03}", "{$04}", "{WHITE}", "{$06}",
     "{$07}", "{$08}", "{$09}", "{$0A}", "{$0B}", "{$0C}", "{$0D}",
     "{LOWERCASE}", "{$0F}", "{$10}", "{DOWN}", "{RVSON}", "{HOME}",

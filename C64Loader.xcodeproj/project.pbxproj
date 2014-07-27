@@ -7,20 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		683C9F77197141C80005973C /* C64Loader.m in Sources */ = {isa = PBXBuildFile; fileRef = 683C9F76197141C80005973C /* C64Loader.m */; };
+		683C9F77197141C80005973C /* FRBC64Loader.m in Sources */ = {isa = PBXBuildFile; fileRef = 683C9F76197141C80005973C /* FRBC64Loader.m */; };
 		68C7B37B1971407D0067434B /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 68C7B37A1971407D0067434B /* CoreFoundation.framework */; };
 		68C7B3811971407D0067434B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 68C7B37F1971407D0067434B /* InfoPlist.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		683C9F75197141C80005973C /* C64Loader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = C64Loader.h; sourceTree = "<group>"; };
-		683C9F76197141C80005973C /* C64Loader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = C64Loader.m; sourceTree = "<group>"; };
-		683C9F78197148220005973C /* C64Basic.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = C64Basic.h; sourceTree = "<group>"; };
+		683C9F75197141C80005973C /* FRBC64Loader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRBC64Loader.h; sourceTree = "<group>"; };
+		683C9F76197141C80005973C /* FRBC64Loader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRBC64Loader.m; sourceTree = "<group>"; };
+		683C9F78197148220005973C /* FRBC64Basic.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FRBC64Basic.h; sourceTree = "<group>"; };
 		68C7B3771971407D0067434B /* C64Loader.hopperLoader */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = C64Loader.hopperLoader; sourceTree = BUILT_PRODUCTS_DIR; };
 		68C7B37A1971407D0067434B /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
-		68C7B37E1971407D0067434B /* C64Loader-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "C64Loader-Info.plist"; sourceTree = "<group>"; };
+		68C7B37E1971407D0067434B /* FRBC64Loader-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "FRBC64Loader-Info.plist"; sourceTree = "<group>"; };
 		68C7B3801971407D0067434B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		68C7B3821971407D0067434B /* C64Loader-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "C64Loader-Prefix.pch"; sourceTree = "<group>"; };
+		68C7B3821971407D0067434B /* FRBC64Loader-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "FRBC64Loader-Prefix.pch"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,9 +64,9 @@
 			isa = PBXGroup;
 			children = (
 				68C7B37D1971407D0067434B /* Supporting Files */,
-				683C9F75197141C80005973C /* C64Loader.h */,
-				683C9F76197141C80005973C /* C64Loader.m */,
-				683C9F78197148220005973C /* C64Basic.h */,
+				683C9F75197141C80005973C /* FRBC64Loader.h */,
+				683C9F76197141C80005973C /* FRBC64Loader.m */,
+				683C9F78197148220005973C /* FRBC64Basic.h */,
 			);
 			path = C64Loader;
 			sourceTree = "<group>";
@@ -74,9 +74,9 @@
 		68C7B37D1971407D0067434B /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				68C7B37E1971407D0067434B /* C64Loader-Info.plist */,
+				68C7B37E1971407D0067434B /* FRBC64Loader-Info.plist */,
 				68C7B37F1971407D0067434B /* InfoPlist.strings */,
-				68C7B3821971407D0067434B /* C64Loader-Prefix.pch */,
+				68C7B3821971407D0067434B /* FRBC64Loader-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -143,7 +143,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				683C9F77197141C80005973C /* C64Loader.m in Sources */,
+				683C9F77197141C80005973C /* FRBC64Loader.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -246,8 +246,8 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "C64Loader/C64Loader-Prefix.pch";
-				INFOPLIST_FILE = "C64Loader/C64Loader-Info.plist";
+				GCC_PREFIX_HEADER = "C64Loader/FRBC64Loader-Prefix.pch";
+				INFOPLIST_FILE = "C64Loader/FRBC64Loader-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = hopperLoader;
@@ -259,8 +259,8 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "C64Loader/C64Loader-Prefix.pch";
-				INFOPLIST_FILE = "C64Loader/C64Loader-Info.plist";
+				GCC_PREFIX_HEADER = "C64Loader/FRBC64Loader-Prefix.pch";
+				INFOPLIST_FILE = "C64Loader/FRBC64Loader-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = hopperLoader;

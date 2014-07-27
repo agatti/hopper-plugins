@@ -6,11 +6,11 @@
  modification, are permitted provided that the following conditions are met:
 
  1. Redistributions of source code must retain the above copyright notice, this
- list of conditions and the following disclaimer.
+    list of conditions and the following disclaimer.
 
  2. Redistributions in binary form must reproduce the above copyright notice,
- this list of conditions and the following disclaimer in the documentation
- and/or other materials provided with the distribution.
+    this list of conditions and the following disclaimer in the documentation
+    and/or other materials provided with the distribution.
 
  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
@@ -24,10 +24,10 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import "C64Loader.h"
-#import "C64Basic.h"
+#import "FRBC64Loader.h"
+#import "FRBC64Basic.h"
 
-@interface C64Loader()
+@interface FRBC64Loader()
 
 - (NSError *)parseBasicProgram:(NSData *)data
                      atAddress:(NSUInteger)address
@@ -36,7 +36,7 @@
 
 @end
 
-@implementation C64Loader {
+@implementation FRBC64Loader {
     NSObject<HPHopperServices> *_services;
 }
 
@@ -72,7 +72,7 @@
 }
 
 - (NSString *)pluginVersion {
-    return @"0.0.3";
+    return @"0.0.4";
 }
 
 - (CPUEndianess)endianess {
@@ -234,14 +234,14 @@
                 [line addObject:[NSString stringWithFormat:@"%c", byte]];
             } else {
                 if (!quoteMode && byte >= 0x80) {
-                    const char *opcode = kC64BasicTokens[byte];
+                    const char *opcode = FRBC64BasicTokens[byte];
                     if (!opcode) {
                         [line addObject:@"{UNKNOWN}"];
                     } else {
                         [line addObject:[NSString stringWithUTF8String:opcode]];
                     }
                 } else {
-                    [line addObject:[NSString stringWithUTF8String:kC64PetsciiCharacters[byte]]];
+                    [line addObject:[NSString stringWithUTF8String:FRBC64PetsciiCharacters[byte]]];
                 }
             }
         }
