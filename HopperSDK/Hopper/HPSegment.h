@@ -26,6 +26,8 @@
 - (Address)endAddress;
 - (size_t)length;
 
+- (BOOL)containsVirtualAddress:(Address)virtualAddress;
+
 - (NSArray *)sections; /// An array of NSObject<HPSection> objects
 - (NSUInteger)sectionCount;
 
@@ -38,10 +40,6 @@
 - (NSObject<HPSection> *)firstSection;
 - (NSObject<HPSection> *)lastSection;
 - (NSObject<HPSection> *)sectionNamed:(NSString *)name;
-
-- (void)setComment:(NSString *)comment atVirtualAddress:(Address)virtualAddress;
-- (void)appendComment:(NSString *)comment atVirtualAddress:(Address)virtualAddress;
-- (void)setInlineComment:(NSString *)comment atVirtualAddress:(Address)virtualAddress;
 
 // XREFs
 - (NSArray *)referencesToAddress:(Address)virtualAddress;

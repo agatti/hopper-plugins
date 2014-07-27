@@ -116,7 +116,7 @@ static const NSArray *FRBOpcodeFormats;
       argumentFormat:(ArgFormat)format
         withServices:(NSObject<HPHopperServices> *)services {
 
-    switch ((int) format) {
+    switch ((int) format) { // :(
         case Format_Hexadecimal | Format_Signed:
             return [FRBFormatter formatHexadecimal:source
                                            operand:operand

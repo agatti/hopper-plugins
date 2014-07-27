@@ -35,12 +35,12 @@
 // New detected type
 - (NSObject<HPDetectedFileType> *)detectedType;
 
-// Information about colors used in the ASM view
-- (NSColor *)ASMOperatorColor;
-- (NSColor *)ASMNumberColor;
-- (NSColor *)ASMLanguageColor;
-- (NSColor *)ASMSubLanguageColor;
-- (NSColor *)ASMCommentColor;
+// Information about attributes used in the ASM view
+- (NSDictionary *)ASMOperatorAttributes;
+- (NSDictionary *)ASMNumberAttributes;
+- (NSDictionary *)ASMLanguageAttributes;
+- (NSDictionary *)ASMSubLanguageAttributes;
+- (NSDictionary *)ASMCommentAttributes;
 
 - (void)colorizeASMString:(NSMutableAttributedString *)string
         operatorPredicate:(BOOL(^)(unichar c))operatorPredicate

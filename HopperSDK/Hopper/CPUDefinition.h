@@ -15,30 +15,6 @@
 #import "HopperPlugin.h"
 #import "CommonTypes.h"
 
-#define MAX_REGISTER_CLASS  16
-
-typedef NS_ENUM(NSUInteger, RegClass) {
-    RegClass_CPUState = 0,                // State register
-    RegClass_PseudoRegisterSTACK = 1,     // Pseudo registers to simulate the stack
-
-    RegClass_GeneralPurposeRegister = 2,
-
-    RegClass_FirstUserClass = 3,
-
-    // x86
-    RegClass_X86_FPU = RegClass_FirstUserClass,
-    RegClass_X86_MMX,
-    RegClass_X86_SSE,
-    RegClass_X86_AVX,
-
-    // ARM
-    RegClass_ARM_VFP_Single = RegClass_FirstUserClass,
-    RegClass_ARM_VFP_Double,
-    RegClass_ARM_VFP_Quad,
-    RegClass_ARM_Media
-};
-
-
 @protocol CPUDefinition <NSObject,HopperPlugin>
 
 /// Build a context for disassembling.

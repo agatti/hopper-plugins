@@ -150,8 +150,11 @@
             fileOffset += basicSize;
             fileLength -= basicSize;
 
-            [segment setComment:[NSString stringWithFormat:@"Basic program:\n%@", [lines componentsJoinedByString:@"\n"]]
-               atVirtualAddress:startingAddress];
+            // :(
+
+            [file setComment:[NSString stringWithFormat:@"Basic program:\n%@", [lines componentsJoinedByString:@"\n"]]
+            atVirtualAddress:startingAddress
+                      reason:CCReason_Script];
         }
     }
 

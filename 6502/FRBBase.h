@@ -30,7 +30,7 @@
 static NSString * const FRBSyntaxVariant = @"Generic";
 static NSString * const FRBCPUMode = @"generic";
 
-/*! 6502 Address modes. */
+/*! Address modes. */
 typedef NS_ENUM(NSUInteger, FRBAddressMode) {
 
     /*! Absolute: a */
@@ -254,7 +254,6 @@ typedef NS_OPTIONS(NSUInteger, FRBRegisterMask) {
 };
 
 struct FRBInstruction {
-    FRBOpcodeType type;
     const char * const name;
     DisasmBranchType branchType;
     FRBOpcodeCategory category;
@@ -268,124 +267,124 @@ struct FRBOpcode {
 };
 
 static const struct FRBInstruction FRBInstructions[FRBUniqueOpcodesCount] = {
-    { FRBOpcodeTypeADC, "ADC", DISASM_BRANCH_NONE, FRBOpcodeCategoryArithmetic },
-    { FRBOpcodeTypeAND, "AND", DISASM_BRANCH_NONE, FRBOpcodeCategoryLogical },
-    { FRBOpcodeTypeASL, "ASL", DISASM_BRANCH_NONE, FRBOpcodeCategoryShifts },
-    { FRBOpcodeTypeBBR0, "BBR0", DISASM_BRANCH_JE, FRBOpcodeCategoryBranches }, // :(
-    { FRBOpcodeTypeBBR1, "BBR1", DISASM_BRANCH_JE, FRBOpcodeCategoryBranches }, // :(
-    { FRBOpcodeTypeBBR2, "BBR2", DISASM_BRANCH_JE, FRBOpcodeCategoryBranches }, // :(
-    { FRBOpcodeTypeBBR3, "BBR3", DISASM_BRANCH_JE, FRBOpcodeCategoryBranches }, // :(
-    { FRBOpcodeTypeBBR4, "BBR4", DISASM_BRANCH_JE, FRBOpcodeCategoryBranches }, // :(
-    { FRBOpcodeTypeBBR5, "BBR5", DISASM_BRANCH_JE, FRBOpcodeCategoryBranches }, // :(
-    { FRBOpcodeTypeBBR6, "BBR6", DISASM_BRANCH_JE, FRBOpcodeCategoryBranches }, // :(
-    { FRBOpcodeTypeBBR7, "BBR7", DISASM_BRANCH_JE, FRBOpcodeCategoryBranches }, // :(
-    { FRBOpcodeTypeBBS0, "BBS0", DISASM_BRANCH_JNE, FRBOpcodeCategoryBranches }, // :(
-    { FRBOpcodeTypeBBS1, "BBS1", DISASM_BRANCH_JNE, FRBOpcodeCategoryBranches }, // :(
-    { FRBOpcodeTypeBBS2, "BBS2", DISASM_BRANCH_JNE, FRBOpcodeCategoryBranches }, // :(
-    { FRBOpcodeTypeBBS3, "BBS3", DISASM_BRANCH_JNE, FRBOpcodeCategoryBranches }, // :(
-    { FRBOpcodeTypeBBS4, "BBS4", DISASM_BRANCH_JNE, FRBOpcodeCategoryBranches }, // :(
-    { FRBOpcodeTypeBBS5, "BBS5", DISASM_BRANCH_JNE, FRBOpcodeCategoryBranches }, // :(
-    { FRBOpcodeTypeBBS6, "BBS6", DISASM_BRANCH_JNE, FRBOpcodeCategoryBranches }, // :(
-    { FRBOpcodeTypeBBS7, "BBS7", DISASM_BRANCH_JNE, FRBOpcodeCategoryBranches }, // :(
-    { FRBOpcodeTypeBCC, "BCC", DISASM_BRANCH_JNC, FRBOpcodeCategoryBranches },
-    { FRBOpcodeTypeBCS, "BCS", DISASM_BRANCH_JC, FRBOpcodeCategoryBranches },
-    { FRBOpcodeTypeBEQ, "BEQ", DISASM_BRANCH_JE, FRBOpcodeCategoryBranches },
-    { FRBOpcodeTypeBIT, "BIT", DISASM_BRANCH_NONE, FRBOpcodeCategoryLogical },
-    { FRBOpcodeTypeBMI, "BMI", DISASM_BRANCH_JS, FRBOpcodeCategoryBranches },
-    { FRBOpcodeTypeBNE, "BNE", DISASM_BRANCH_JNE, FRBOpcodeCategoryBranches },
-    { FRBOpcodeTypeBPL, "BPL", DISASM_BRANCH_JNS, FRBOpcodeCategoryBranches },
-    { FRBOpcodeTypeBRA, "BRA", DISASM_BRANCH_JMP, FRBOpcodeCategoryBranches },
-    { FRBOpcodeTypeBRK, "BRK", DISASM_BRANCH_NONE, FRBOpcodeCategorySystem },
-    { FRBOpcodeTypeBVC, "BVC", DISASM_BRANCH_JNO, FRBOpcodeCategoryBranches },
-    { FRBOpcodeTypeBVS, "BVS", DISASM_BRANCH_JO, FRBOpcodeCategoryBranches },
-    { FRBOpcodeTypeCLA, "CLA", DISASM_BRANCH_NONE, FRBOpcodeCategoryLogical },
-    { FRBOpcodeTypeCLC, "CLC", DISASM_BRANCH_NONE, FRBOpcodeCategoryStatusFlagChanges },
-    { FRBOpcodeTypeCLD, "CLD", DISASM_BRANCH_NONE, FRBOpcodeCategoryStatusFlagChanges },
-    { FRBOpcodeTypeCLI, "CLI", DISASM_BRANCH_NONE, FRBOpcodeCategoryStatusFlagChanges },
-    { FRBOpcodeTypeCLV, "CLV", DISASM_BRANCH_NONE, FRBOpcodeCategoryStatusFlagChanges },
-    { FRBOpcodeTypeCLX, "CLX", DISASM_BRANCH_NONE, FRBOpcodeCategoryLogical },
-    { FRBOpcodeTypeCLY, "CLY", DISASM_BRANCH_NONE, FRBOpcodeCategoryLogical },
-    { FRBOpcodeTypeCMP, "CMP", DISASM_BRANCH_NONE, FRBOpcodeCategoryComparison },
-    { FRBOpcodeTypeCPX, "CPX", DISASM_BRANCH_NONE, FRBOpcodeCategoryComparison },
-    { FRBOpcodeTypeCPY, "CPY", DISASM_BRANCH_NONE, FRBOpcodeCategoryComparison },
-    { FRBOpcodeTypeCSH, "CSH", DISASM_BRANCH_NONE, FRBOpcodeCategorySystem },
-    { FRBOpcodeTypeCSL, "CSL", DISASM_BRANCH_NONE, FRBOpcodeCategorySystem },
-    { FRBOpcodeTypeDEC, "DEC", DISASM_BRANCH_NONE, FRBOpcodeCategoryIncrementDecrement },
-    { FRBOpcodeTypeDEX, "DEX", DISASM_BRANCH_NONE, FRBOpcodeCategoryIncrementDecrement },
-    { FRBOpcodeTypeDEY, "DEY", DISASM_BRANCH_NONE, FRBOpcodeCategoryIncrementDecrement },
-    { FRBOpcodeTypeEOR, "EOR", DISASM_BRANCH_NONE, FRBOpcodeCategoryLogical },
-    { FRBOpcodeTypeINC, "INC", DISASM_BRANCH_NONE, FRBOpcodeCategoryIncrementDecrement },
-    { FRBOpcodeTypeINX, "INX", DISASM_BRANCH_NONE, FRBOpcodeCategoryIncrementDecrement },
-    { FRBOpcodeTypeINY, "INY", DISASM_BRANCH_NONE, FRBOpcodeCategoryIncrementDecrement },
-    { FRBOpcodeTypeJMP, "JMP", DISASM_BRANCH_JMP, FRBOpcodeCategoryJumps },
-    { FRBOpcodeTypeJSR, "JSR", DISASM_BRANCH_CALL, FRBOpcodeCategoryJumps },
-    { FRBOpcodeTypeLDA, "LDA", DISASM_BRANCH_NONE, FRBOpcodeCategoryLoad },
-    { FRBOpcodeTypeLDX, "LDX", DISASM_BRANCH_NONE, FRBOpcodeCategoryLoad },
-    { FRBOpcodeTypeLDY, "LDY", DISASM_BRANCH_NONE, FRBOpcodeCategoryLoad },
-    { FRBOpcodeTypeLSR, "LSR", DISASM_BRANCH_NONE, FRBOpcodeCategoryShifts },
-    { FRBOpcodeTypeNOP, "NOP", DISASM_BRANCH_NONE, FRBOpcodeCategorySystem },
-    { FRBOpcodeTypeORA, "ORA", DISASM_BRANCH_NONE, FRBOpcodeCategoryLogical },
-    { FRBOpcodeTypePHA, "PHA", DISASM_BRANCH_NONE, FRBOpcodeCategoryStack },
-    { FRBOpcodeTypePHP, "PHP", DISASM_BRANCH_NONE, FRBOpcodeCategoryStack },
-    { FRBOpcodeTypePHX, "PHX", DISASM_BRANCH_NONE, FRBOpcodeCategoryStack },
-    { FRBOpcodeTypePHY, "PHY", DISASM_BRANCH_NONE, FRBOpcodeCategoryStack },
-    { FRBOpcodeTypePLA, "PLA", DISASM_BRANCH_NONE, FRBOpcodeCategoryStack },
-    { FRBOpcodeTypePLP, "PLP", DISASM_BRANCH_NONE, FRBOpcodeCategoryStack },
-    { FRBOpcodeTypePLX, "PLX", DISASM_BRANCH_NONE, FRBOpcodeCategoryStack },
-    { FRBOpcodeTypePLY, "PLY", DISASM_BRANCH_NONE, FRBOpcodeCategoryStack },
-    { FRBOpcodeTypeRMB0, "RMB0", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
-    { FRBOpcodeTypeRMB1, "RMB1", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
-    { FRBOpcodeTypeRMB2, "RMB2", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
-    { FRBOpcodeTypeRMB3, "RMB3", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
-    { FRBOpcodeTypeRMB4, "RMB4", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
-    { FRBOpcodeTypeRMB5, "RMB5", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
-    { FRBOpcodeTypeRMB6, "RMB6", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
-    { FRBOpcodeTypeRMB7, "RMB7", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
-    { FRBOpcodeTypeROL, "ROL", DISASM_BRANCH_NONE, FRBOpcodeCategoryShifts },
-    { FRBOpcodeTypeROR, "ROR", DISASM_BRANCH_NONE, FRBOpcodeCategoryShifts },
-    { FRBOpcodeTypeRTI, "RTI", DISASM_BRANCH_RET, FRBOpcodeCategorySystem },
-    { FRBOpcodeTypeRTS, "RTS", DISASM_BRANCH_RET, FRBOpcodeCategorySystem },
-    { FRBOpcodeTypeSAX, "SAX", DISASM_BRANCH_NONE, FRBOpcodeCategoryRegisterTransfers },
-    { FRBOpcodeTypeSAY, "SAY", DISASM_BRANCH_NONE, FRBOpcodeCategoryRegisterTransfers },
-    { FRBOpcodeTypeSBC, "SBC", DISASM_BRANCH_NONE, FRBOpcodeCategoryArithmetic },
-    { FRBOpcodeTypeSEC, "SEC", DISASM_BRANCH_NONE, FRBOpcodeCategoryStatusFlagChanges },
-    { FRBOpcodeTypeSED, "SED", DISASM_BRANCH_NONE, FRBOpcodeCategoryStatusFlagChanges },
-    { FRBOpcodeTypeSEI, "SEI", DISASM_BRANCH_NONE, FRBOpcodeCategoryStatusFlagChanges },
-    { FRBOpcodeTypeSET, "SET", DISASM_BRANCH_NONE, FRBOpcodeCategoryStatusFlagChanges },
-    { FRBOpcodeTypeSMB0, "SMB0", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
-    { FRBOpcodeTypeSMB1, "SMB1", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
-    { FRBOpcodeTypeSMB2, "SMB2", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
-    { FRBOpcodeTypeSMB3, "SMB3", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
-    { FRBOpcodeTypeSMB4, "SMB4", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
-    { FRBOpcodeTypeSMB5, "SMB5", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
-    { FRBOpcodeTypeSMB6, "SMB6", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
-    { FRBOpcodeTypeSMB7, "SMB7", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
-    { FRBOpcodeTypeST0, "ST0", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
-    { FRBOpcodeTypeST1, "ST1", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
-    { FRBOpcodeTypeST2, "ST2", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
-    { FRBOpcodeTypeSTA, "STA", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
-    { FRBOpcodeTypeSTP, "STP", DISASM_BRANCH_NONE, FRBOpcodeCategorySystem },
-    { FRBOpcodeTypeSTX, "STX", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
-    { FRBOpcodeTypeSTY, "STY", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
-    { FRBOpcodeTypeSTZ, "STZ", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
-    { FRBOpcodeTypeSXY, "SXY", DISASM_BRANCH_NONE, FRBOpcodeCategoryRegisterTransfers },
-    { FRBOpcodeTypeTAI, "TAI", DISASM_BRANCH_NONE, FRBOpcodeCategoryBlockTransfer },
-    { FRBOpcodeTypeTAM, "TAM", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
-    { FRBOpcodeTypeTAX, "TAX", DISASM_BRANCH_NONE, FRBOpcodeCategoryRegisterTransfers },
-    { FRBOpcodeTypeTAY, "TAY", DISASM_BRANCH_NONE, FRBOpcodeCategoryRegisterTransfers },
-    { FRBOpcodeTypeTDD, "TDD", DISASM_BRANCH_NONE, FRBOpcodeCategoryBlockTransfer },
-    { FRBOpcodeTypeTIA, "TIA", DISASM_BRANCH_NONE, FRBOpcodeCategoryBlockTransfer },
-    { FRBOpcodeTypeTII, "TII", DISASM_BRANCH_NONE, FRBOpcodeCategoryBlockTransfer },
-    { FRBOpcodeTypeTIN, "TIN", DISASM_BRANCH_NONE, FRBOpcodeCategoryBlockTransfer },
-    { FRBOpcodeTypeTMA, "TMA", DISASM_BRANCH_NONE, FRBOpcodeCategoryLoad },
-    { FRBOpcodeTypeTRB, "TRB", DISASM_BRANCH_NONE, FRBOpcodeCategoryLogical },
-    { FRBOpcodeTypeTSB, "TSB", DISASM_BRANCH_NONE, FRBOpcodeCategoryLogical },
-    { FRBOpcodeTypeTST, "TST", DISASM_BRANCH_NONE, FRBOpcodeCategoryComparison },
-    { FRBOpcodeTypeTSX, "TSX", DISASM_BRANCH_NONE, FRBOpcodeCategoryRegisterTransfers },
-    { FRBOpcodeTypeTXA, "TXA", DISASM_BRANCH_NONE, FRBOpcodeCategoryRegisterTransfers },
-    { FRBOpcodeTypeTXS, "TXS", DISASM_BRANCH_NONE, FRBOpcodeCategoryRegisterTransfers },
-    { FRBOpcodeTypeTYA, "TYA", DISASM_BRANCH_NONE, FRBOpcodeCategoryRegisterTransfers },
-    { FRBOpcodeTypeWAI, "WAI", DISASM_BRANCH_NONE, FRBOpcodeCategorySystem },
+    { "ADC", DISASM_BRANCH_NONE, FRBOpcodeCategoryArithmetic },
+    { "AND", DISASM_BRANCH_NONE, FRBOpcodeCategoryLogical },
+    { "ASL", DISASM_BRANCH_NONE, FRBOpcodeCategoryShifts },
+    { "BBR0", DISASM_BRANCH_JE, FRBOpcodeCategoryBranches }, // :(
+    { "BBR1", DISASM_BRANCH_JE, FRBOpcodeCategoryBranches }, // :(
+    { "BBR2", DISASM_BRANCH_JE, FRBOpcodeCategoryBranches }, // :(
+    { "BBR3", DISASM_BRANCH_JE, FRBOpcodeCategoryBranches }, // :(
+    { "BBR4", DISASM_BRANCH_JE, FRBOpcodeCategoryBranches }, // :(
+    { "BBR5", DISASM_BRANCH_JE, FRBOpcodeCategoryBranches }, // :(
+    { "BBR6", DISASM_BRANCH_JE, FRBOpcodeCategoryBranches }, // :(
+    { "BBR7", DISASM_BRANCH_JE, FRBOpcodeCategoryBranches }, // :(
+    { "BBS0", DISASM_BRANCH_JNE, FRBOpcodeCategoryBranches }, // :(
+    { "BBS1", DISASM_BRANCH_JNE, FRBOpcodeCategoryBranches }, // :(
+    { "BBS2", DISASM_BRANCH_JNE, FRBOpcodeCategoryBranches }, // :(
+    { "BBS3", DISASM_BRANCH_JNE, FRBOpcodeCategoryBranches }, // :(
+    { "BBS4", DISASM_BRANCH_JNE, FRBOpcodeCategoryBranches }, // :(
+    { "BBS5", DISASM_BRANCH_JNE, FRBOpcodeCategoryBranches }, // :(
+    { "BBS6", DISASM_BRANCH_JNE, FRBOpcodeCategoryBranches }, // :(
+    { "BBS7", DISASM_BRANCH_JNE, FRBOpcodeCategoryBranches }, // :(
+    { "BCC", DISASM_BRANCH_JNC, FRBOpcodeCategoryBranches },
+    { "BCS", DISASM_BRANCH_JC, FRBOpcodeCategoryBranches },
+    { "BEQ", DISASM_BRANCH_JE, FRBOpcodeCategoryBranches },
+    { "BIT", DISASM_BRANCH_NONE, FRBOpcodeCategoryLogical },
+    { "BMI", DISASM_BRANCH_JS, FRBOpcodeCategoryBranches },
+    { "BNE", DISASM_BRANCH_JNE, FRBOpcodeCategoryBranches },
+    { "BPL", DISASM_BRANCH_JNS, FRBOpcodeCategoryBranches },
+    { "BRA", DISASM_BRANCH_JMP, FRBOpcodeCategoryBranches },
+    { "BRK", DISASM_BRANCH_NONE, FRBOpcodeCategorySystem },
+    { "BVC", DISASM_BRANCH_JNO, FRBOpcodeCategoryBranches },
+    { "BVS", DISASM_BRANCH_JO, FRBOpcodeCategoryBranches },
+    { "CLA", DISASM_BRANCH_NONE, FRBOpcodeCategoryLogical },
+    { "CLC", DISASM_BRANCH_NONE, FRBOpcodeCategoryStatusFlagChanges },
+    { "CLD", DISASM_BRANCH_NONE, FRBOpcodeCategoryStatusFlagChanges },
+    { "CLI", DISASM_BRANCH_NONE, FRBOpcodeCategoryStatusFlagChanges },
+    { "CLV", DISASM_BRANCH_NONE, FRBOpcodeCategoryStatusFlagChanges },
+    { "CLX", DISASM_BRANCH_NONE, FRBOpcodeCategoryLogical },
+    { "CLY", DISASM_BRANCH_NONE, FRBOpcodeCategoryLogical },
+    { "CMP", DISASM_BRANCH_NONE, FRBOpcodeCategoryComparison },
+    { "CPX", DISASM_BRANCH_NONE, FRBOpcodeCategoryComparison },
+    { "CPY", DISASM_BRANCH_NONE, FRBOpcodeCategoryComparison },
+    { "CSH", DISASM_BRANCH_NONE, FRBOpcodeCategorySystem },
+    { "CSL", DISASM_BRANCH_NONE, FRBOpcodeCategorySystem },
+    { "DEC", DISASM_BRANCH_NONE, FRBOpcodeCategoryIncrementDecrement },
+    { "DEX", DISASM_BRANCH_NONE, FRBOpcodeCategoryIncrementDecrement },
+    { "DEY", DISASM_BRANCH_NONE, FRBOpcodeCategoryIncrementDecrement },
+    { "EOR", DISASM_BRANCH_NONE, FRBOpcodeCategoryLogical },
+    { "INC", DISASM_BRANCH_NONE, FRBOpcodeCategoryIncrementDecrement },
+    { "INX", DISASM_BRANCH_NONE, FRBOpcodeCategoryIncrementDecrement },
+    { "INY", DISASM_BRANCH_NONE, FRBOpcodeCategoryIncrementDecrement },
+    { "JMP", DISASM_BRANCH_JMP, FRBOpcodeCategoryJumps },
+    { "JSR", DISASM_BRANCH_CALL, FRBOpcodeCategoryJumps },
+    { "LDA", DISASM_BRANCH_NONE, FRBOpcodeCategoryLoad },
+    { "LDX", DISASM_BRANCH_NONE, FRBOpcodeCategoryLoad },
+    { "LDY", DISASM_BRANCH_NONE, FRBOpcodeCategoryLoad },
+    { "LSR", DISASM_BRANCH_NONE, FRBOpcodeCategoryShifts },
+    { "NOP", DISASM_BRANCH_NONE, FRBOpcodeCategorySystem },
+    { "ORA", DISASM_BRANCH_NONE, FRBOpcodeCategoryLogical },
+    { "PHA", DISASM_BRANCH_NONE, FRBOpcodeCategoryStack },
+    { "PHP", DISASM_BRANCH_NONE, FRBOpcodeCategoryStack },
+    { "PHX", DISASM_BRANCH_NONE, FRBOpcodeCategoryStack },
+    { "PHY", DISASM_BRANCH_NONE, FRBOpcodeCategoryStack },
+    { "PLA", DISASM_BRANCH_NONE, FRBOpcodeCategoryStack },
+    { "PLP", DISASM_BRANCH_NONE, FRBOpcodeCategoryStack },
+    { "PLX", DISASM_BRANCH_NONE, FRBOpcodeCategoryStack },
+    { "PLY", DISASM_BRANCH_NONE, FRBOpcodeCategoryStack },
+    { "RMB0", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
+    { "RMB1", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
+    { "RMB2", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
+    { "RMB3", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
+    { "RMB4", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
+    { "RMB5", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
+    { "RMB6", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
+    { "RMB7", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
+    { "ROL", DISASM_BRANCH_NONE, FRBOpcodeCategoryShifts },
+    { "ROR", DISASM_BRANCH_NONE, FRBOpcodeCategoryShifts },
+    { "RTI", DISASM_BRANCH_RET, FRBOpcodeCategorySystem },
+    { "RTS", DISASM_BRANCH_RET, FRBOpcodeCategorySystem },
+    { "SAX", DISASM_BRANCH_NONE, FRBOpcodeCategoryRegisterTransfers },
+    { "SAY", DISASM_BRANCH_NONE, FRBOpcodeCategoryRegisterTransfers },
+    { "SBC", DISASM_BRANCH_NONE, FRBOpcodeCategoryArithmetic },
+    { "SEC", DISASM_BRANCH_NONE, FRBOpcodeCategoryStatusFlagChanges },
+    { "SED", DISASM_BRANCH_NONE, FRBOpcodeCategoryStatusFlagChanges },
+    { "SEI", DISASM_BRANCH_NONE, FRBOpcodeCategoryStatusFlagChanges },
+    { "SET", DISASM_BRANCH_NONE, FRBOpcodeCategoryStatusFlagChanges },
+    { "SMB0", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
+    { "SMB1", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
+    { "SMB2", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
+    { "SMB3", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
+    { "SMB4", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
+    { "SMB5", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
+    { "SMB6", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
+    { "SMB7", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
+    { "ST0", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
+    { "ST1", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
+    { "ST2", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
+    { "STA", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
+    { "STP", DISASM_BRANCH_NONE, FRBOpcodeCategorySystem },
+    { "STX", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
+    { "STY", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
+    { "STZ", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
+    { "SXY", DISASM_BRANCH_NONE, FRBOpcodeCategoryRegisterTransfers },
+    { "TAI", DISASM_BRANCH_NONE, FRBOpcodeCategoryBlockTransfer },
+    { "TAM", DISASM_BRANCH_NONE, FRBOpcodeCategoryStore },
+    { "TAX", DISASM_BRANCH_NONE, FRBOpcodeCategoryRegisterTransfers },
+    { "TAY", DISASM_BRANCH_NONE, FRBOpcodeCategoryRegisterTransfers },
+    { "TDD", DISASM_BRANCH_NONE, FRBOpcodeCategoryBlockTransfer },
+    { "TIA", DISASM_BRANCH_NONE, FRBOpcodeCategoryBlockTransfer },
+    { "TII", DISASM_BRANCH_NONE, FRBOpcodeCategoryBlockTransfer },
+    { "TIN", DISASM_BRANCH_NONE, FRBOpcodeCategoryBlockTransfer },
+    { "TMA", DISASM_BRANCH_NONE, FRBOpcodeCategoryLoad },
+    { "TRB", DISASM_BRANCH_NONE, FRBOpcodeCategoryLogical },
+    { "TSB", DISASM_BRANCH_NONE, FRBOpcodeCategoryLogical },
+    { "TST", DISASM_BRANCH_NONE, FRBOpcodeCategoryComparison },
+    { "TSX", DISASM_BRANCH_NONE, FRBOpcodeCategoryRegisterTransfers },
+    { "TXA", DISASM_BRANCH_NONE, FRBOpcodeCategoryRegisterTransfers },
+    { "TXS", DISASM_BRANCH_NONE, FRBOpcodeCategoryRegisterTransfers },
+    { "TYA", DISASM_BRANCH_NONE, FRBOpcodeCategoryRegisterTransfers },
+    { "WAI", DISASM_BRANCH_NONE, FRBOpcodeCategorySystem },
 };
 
 #endif

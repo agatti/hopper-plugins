@@ -74,19 +74,22 @@ static const NSUInteger FRBIRQVectorAddress = 0xFFFE;
         }
 
         [file setName:FRBNMIVectorName
-    forVirtualAddress:FRBNMIVectorAddress];
+    forVirtualAddress:FRBNMIVectorAddress
+               reason:NCReason_Script]; // :(
         [file setType:Type_Int16
      atVirtualAddress:FRBNMIVectorAddress
             forLength:sizeof(uint16_t)];
 
         [file setName:FRBRESETVectorName
-    forVirtualAddress:FRBRESETVectorAddress];
+    forVirtualAddress:FRBRESETVectorAddress
+               reason:NCReason_Script]; // :(
         [file setType:Type_Int16
      atVirtualAddress:FRBRESETVectorAddress
             forLength:sizeof(uint16_t)];
 
         [file setName:FRBIRQVectorName
-    forVirtualAddress:FRBIRQVectorAddress];
+    forVirtualAddress:FRBIRQVectorAddress
+               reason:NCReason_Script]; // :(
         [file setType:Type_Int16
      atVirtualAddress:FRBIRQVectorAddress
             forLength:sizeof(uint16_t)];

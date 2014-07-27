@@ -61,6 +61,36 @@ HP_BEGIN_DECL_ENUM(uint8_t, ByteType) {
 }
 HP_END_DECL_ENUM(ByteType);
 
+HP_BEGIN_DECL_ENUM(uint8_t, ProcedureCreationReason) {
+    PCReason_None,
+    PCReason_Unknown,       // Unknown reason
+    PCReason_User,          // Created by the used
+    PCReason_Script,        // A Python script created the procedure
+    PCReason_Called,        // A call statement has been found somewhere
+    PCReason_Prolog         // A procedure prolog was detected during the analysis
+}
+HP_END_DECL_ENUM(ProcedureCreationReason);
+
+HP_BEGIN_DECL_ENUM(uint8_t, CommentCreationReason) {
+    CCReason_None,
+    CCReason_Unknown,       // Unknown reason
+    CCReason_User,          // Created by the used
+    CCReason_Script,        // A Python script created the comment
+    CCReason_Automatic,     // Automatic comment, like XREF comments, values found during the analysis...
+}
+HP_END_DECL_ENUM(CommentCreationReason);
+
+HP_BEGIN_DECL_ENUM(uint8_t, NameCreationReason) {
+    NCReason_None,
+    NCReason_Unknown,       // Unknown reason
+    NCReason_User,          // Created by the used
+    NCReason_Script,        // A Python script created the name
+    NCReason_Import,        // The name was read from the executable file
+    NCReason_Metadata,      // The name was derived from metadata (like Objective-C)
+    NCReason_Automatic      // An automatic temporary name (like sub_XXXXX)
+}
+HP_END_DECL_ENUM(NameCreationReason);
+
 // Operand Format
 #define FORMAT_TYPE_MASK  0x7F
 
@@ -108,6 +138,32 @@ HP_BEGIN_DECL_ENUM(NSUInteger, CPUEndianess) {
     CPUEndianess_Big
 }
 HP_END_DECL_ENUM(CPUEndianess);
+
+// Register Class
+
+#define MAX_REGISTER_CLASS  16
+
+HP_BEGIN_DECL_ENUM(NSUInteger, RegClass) {
+    RegClass_CPUState = 0,                // State register
+    RegClass_PseudoRegisterSTACK = 1,     // Pseudo registers to simulate the stack
+
+    RegClass_GeneralPurposeRegister = 2,
+
+    RegClass_FirstUserClass = 3,
+
+    // x86
+    RegClass_X86_FPU = RegClass_FirstUserClass,
+    RegClass_X86_MMX,
+    RegClass_X86_SSE,
+    RegClass_X86_AVX,
+
+    // ARM
+    RegClass_ARM_VFP_Single = RegClass_FirstUserClass,
+    RegClass_ARM_VFP_Double,
+    RegClass_ARM_VFP_Quad,
+    RegClass_ARM_Media
+}
+HP_END_DECL_ENUM(RegClass);
 
 // File Loaders
 

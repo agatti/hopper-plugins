@@ -210,7 +210,7 @@
         return string;
     }
 
-    [clone setAttributes:(NSDictionary *)[_services ASMLanguageColor] // :(
+    [clone setAttributes:[_services ASMLanguageAttributes]
                    range:NSMakeRange(0, potentialOpcode.length)];
 
     if (!scanner.isAtEnd) {
@@ -218,7 +218,7 @@
                             intoString:nil];
         NSUInteger offset = scanner.scanLocation;
         const char *buffer = rawString.UTF8String;
-        NSInteger numberStart = NSNotFound;
+        NSInteger componentStart = NSNotFound;
         BOOL numberFound = NO;
         BOOL negativeMarkerFound = NO;
         ArgFormat formatFound = Format_Decimal;
@@ -234,7 +234,7 @@
                     return clone;
                 }
 
-                [clone setAttributes:(NSDictionary *)[_services ASMLanguageColor] // :(
+                [clone setAttributes:[_services ASMLanguageAttributes]
                                range:NSMakeRange(offset, 1)];
                 offset++;
                 continue;
@@ -247,7 +247,7 @@
                     return clone;
                 }
 
-                numberStart = offset;
+                componentStart = offset;
                 numberFound = YES;
                 negativeMarkerFound = YES;
                 offset++;
@@ -261,7 +261,7 @@
                     return clone;
                 }
 
-                numberStart = offset;
+                componentStart = offset;
                 numberFound = YES;
 
                 switch (character) {
@@ -287,7 +287,7 @@
                 continue;
             }
 
-            if (isdigit(character)) {
+            if (isdigit(character) && !asciiFound) {
                 if (formatFound == Format_Binary) {
                     if (character != '0' && character != '1') {
                         // Non-binary digits found with a binary format marker, bail out.
@@ -297,7 +297,7 @@
                 }
 
                 if (!numberFound) {
-                    numberStart = offset;
+                    componentStart = offset;
                     numberFound = YES;
                 }
                 offset++;
@@ -317,8 +317,8 @@
 
                     default:
                         // Non-hexadecimal digit found, mark and exit.
-                        [clone setAttributes:(NSDictionary *)[_services ASMNumberColor] // :(
-                                       range:NSMakeRange(numberStart, offset - numberStart)];
+                        [clone setAttributes:[_services ASMNumberAttributes]
+                                       range:NSMakeRange(componentStart, offset - componentStart)];
                         numberFound = NO;
                         negativeMarkerFound = NO;
                         asciiFound = NO;
@@ -331,8 +331,8 @@
 
                 // Octal end marker found, mark and exit.
                 offset++;
-                [clone setAttributes:(NSDictionary *)[_services ASMNumberColor] // :(
-                               range:NSMakeRange(numberStart, offset - numberStart)];
+                [clone setAttributes:[_services ASMNumberAttributes] // :(
+                               range:NSMakeRange(componentStart, offset - componentStart)];
                 numberFound = NO;
                 negativeMarkerFound = NO;
                 asciiFound = NO;
@@ -343,8 +343,8 @@
                 // Non-digit marker found, mark and exit.
 
                 offset++;
-                [clone setAttributes:(NSDictionary *)[_services ASMNumberColor] // :(
-                               range:NSMakeRange(numberStart, offset - numberStart)];
+                [clone setAttributes:[_services ASMNumberAttributes]
+                               range:NSMakeRange(componentStart, offset - componentStart)];
                 numberFound = NO;
                 negativeMarkerFound = NO;
                 asciiFound = NO;
@@ -354,6 +354,7 @@
             if (!asciiFound && [self.identifierCharacterSet characterIsMember:character]) {
                 // Identifier found
                 asciiFound = YES;
+                componentStart = offset;
             }
 
             if (character == ',') {
@@ -368,10 +369,10 @@
             offset++;
         }
 
-        if (numberFound) {
+        if ((numberFound || asciiFound) && componentStart != NSNotFound) {
             // Reached EOL whilst scanning for a number, mark and exit.
-            [clone setAttributes:(NSDictionary *)[_services ASMNumberColor] // :(
-                           range:NSMakeRange(numberStart, offset - numberStart)];
+            [clone setAttributes:[_services ASMNumberAttributes] // :(
+                           range:NSMakeRange(componentStart, offset - componentStart)];
         }
     }
 

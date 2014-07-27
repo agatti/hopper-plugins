@@ -64,12 +64,14 @@ typedef void (^FileLoadingCallbackInfo)(NSString *desc, float progress);
 - (NSArray *)allNamedAddresses;
 - (NSString *)nameForVirtualAddress:(Address)virtualAddress;
 - (NSString *)nearestNameBeforeVirtualAddress:(Address)virtualAddress;
-- (void)setName:(NSString *)name forVirtualAddress:(Address)virtualAddress;
+- (void)setName:(NSString *)name forVirtualAddress:(Address)virtualAddress reason:(NameCreationReason)reason;
 - (Address)findVirtualAddressNamed:(NSString *)name;
 
 // Comments
-- (void)setComment:(NSString *)comment atVirtualAddress:(Address)virtualAddress;
-- (void)setInlineComment:(NSString *)comment atVirtualAddress:(Address)virtualAddress;
+- (void)removeCommentAtVirtualAddress:(Address)virtualAddress;
+- (void)removeInlineCommentAtVirtualAddress:(Address)virtualAddress;
+- (void)setComment:(NSString *)comment atVirtualAddress:(Address)virtualAddress reason:(CommentCreationReason)reason;
+- (void)setInlineComment:(NSString *)comment atVirtualAddress:(Address)virtualAddress reason:(CommentCreationReason)reason;
 
 // Types
 - (BOOL)typeCanBeModifiedAtAddress:(Address)va;
