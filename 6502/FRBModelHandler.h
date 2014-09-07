@@ -28,16 +28,17 @@
 
 @protocol FRBProvider;
 
-@interface FRBModelHandler : NSObject
+@interface ItFrobHopper6502ModelHandler : NSObject
 
 + (instancetype)sharedModelHandler;
 
 @property (strong, nonatomic, readonly) NSDictionary *models;
+@property (strong, nonatomic, readonly) NSString *defaultModel;
 
 - (void)registerProvider:(Class)provider
                  forName:(NSString *)name;
 - (NSString *)providerNameForFamily:(NSString *)family
                        andSubFamily:(NSString *)subFamily;
-- (NSObject<FRBProvider> *)providerForName:(NSString *)name;
+- (id<FRBProvider>)providerForName:(NSString *)name;
 
 @end

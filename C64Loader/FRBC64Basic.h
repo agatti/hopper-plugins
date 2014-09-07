@@ -24,9 +24,12 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef C64Basic_h
-#define C64Basic_h
+#ifndef FRBC64Basic_h
+#define FRBC64Basic_h
 
+/*!
+ *	C64 BASIC tokens lookup table.
+ */
 static const char * const FRBC64BasicTokens[256] = {
     NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
     NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
@@ -64,6 +67,9 @@ static const char * const FRBC64BasicTokens[256] = {
     NULL, NULL, NULL, NULL, "PI",
 };
 
+/*!
+ *	C64 PETSCII character lookup table.
+ */
 static const char * const FRBC64PetsciiCharacters[256] = {
     "{$00}", "{$01}", "{$02}", "{$03}", "{$04}", "{WHITE}", "{$06}",
     "{$07}", "{$08}", "{$09}", "{$0A}", "{$0B}", "{$0C}", "{$0D}",

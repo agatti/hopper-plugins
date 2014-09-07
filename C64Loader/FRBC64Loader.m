@@ -27,20 +27,33 @@
 #import "FRBC64Loader.h"
 #import "FRBC64Basic.h"
 
-@interface FRBC64Loader()
+@interface ItFrobHopperC64Loader() {
 
+    /*!
+     *	Hopper Services provider instance.
+     */
+    id<HPHopperServices> _services;
+}
+
+/*!
+ *	Attempts to parse a C64 BASIC program into a human-readable form.
+ *
+ *	@param data    the BASIC token stream.
+ *	@param address the offset in the data block to start reading from.
+ *	@param array   a list of lines with the decoded BASIC program.
+ *	@param size    a pointer to the amount of bytes that have been consumed.
+ *
+ *	@return an instance of NSError if an error occurred, nil otherwise.
+ */
 - (NSError *)parseBasicProgram:(NSData *)data
                      atAddress:(NSUInteger)address
                        toArray:(NSMutableArray *)array
                           size:(NSUInteger *)size;
-
 @end
 
-@implementation FRBC64Loader {
-    NSObject<HPHopperServices> *_services;
-}
+@implementation ItFrobHopperC64Loader
 
-- (instancetype)initWithHopperServices:(NSObject<HPHopperServices> *)services {
+- (instancetype)initWithHopperServices:(id<HPHopperServices>)services {
     if (self = [super init]) {
         _services = services;
     }
@@ -84,10 +97,10 @@
 }
 
 - (NSArray *)detectedTypesForData:(NSData *)data {
-    NSObject<HPDetectedFileType> *detectedType = [_services detectedType];
+    id<HPDetectedFileType> detectedType = [_services detectedType];
     detectedType.fileDescription = @"C64 Executable code";
     detectedType.addressWidth = AW_16bits;
-    detectedType.cpuFamily = @"MOS";
+    detectedType.cpuFamily = @"Generic";
     detectedType.cpuSubFamily = @"6502";
     detectedType.additionalParameters = @[
                                           [_services checkboxComponentWithLabel:@"Contains BASIC code"
@@ -99,14 +112,14 @@
 - (FileLoaderLoadingStatus)loadData:(NSData *)data
               usingDetectedFileType:(DetectedFileType *)fileType
                             options:(FileLoaderOptions)options
-                            forFile:(NSObject<HPDisassembledFile> *)file
+                            forFile:(id<HPDisassembledFile>)file
                       usingCallback:(FileLoadingCallbackInfo)callback {
 
-    NSObject<HPDetectedFileType> *detectedType = (NSObject<HPDetectedFileType> *)fileType; // :(
-    NSObject<HPLoaderOptionComponents> *hasBasic = detectedType.additionalParameters[0];
+    id<HPDetectedFileType> detectedType = (id<HPDetectedFileType>)fileType; // :(
+    id<HPLoaderOptionComponents> hasBasic = detectedType.additionalParameters[0];
 
     if (data.length > 65538) {
-        NSLog(@"File too big: %lu bytes", data.length);
+        [_services logMessage:[NSString stringWithFormat:@"File too big: %lu bytes", data.length]];
         return DIS_BadFormat;
     }
 
@@ -115,15 +128,15 @@
     uint16 endingAddress = (uint16) ((startingAddress + size) & 0xFFFF);
 
     if (endingAddress > 65535) {
-        NSLog(@"File too big: %lu bytes", data.length);
+        [_services logMessage:[NSString stringWithFormat:@"File too big: %lu bytes", data.length]];
         return DIS_BadFormat;
     }
 
     NSData *fileData = [NSData dataWithBytes:data.bytes + 2
                                       length:size];
 
-    NSObject<HPSegment> *segment = [file addSegmentAt:startingAddress
-                                                 size:size];
+    id<HPSegment> segment = [file addSegmentAt:startingAddress
+                                          size:size];
     segment.mappedData = fileData;
     segment.segmentName = @"CODE";
     segment.fileOffset = 2;
@@ -140,8 +153,8 @@
                                          toArray:lines
                                             size:&basicSize];
         if (!error) {
-            NSObject<HPSection> *section = [segment addSectionAt:startingAddress
-                                                            size:basicSize];
+            id<HPSection> section = [segment addSectionAt:startingAddress
+                                                     size:basicSize];
             section.pureCodeSection = NO;
             section.fileOffset = fileOffset;
             section.fileLength = basicSize;
@@ -158,8 +171,8 @@
         }
     }
 
-    NSObject<HPSection> *section = [segment addSectionAt:(startingAddress + fileOffset - 2)
-                                                    size:fileLength];
+    id<HPSection> section = [segment addSectionAt:(startingAddress + fileOffset - 2)
+                                             size:fileLength];
     section.pureCodeSection = NO;
     section.fileOffset = fileOffset;
     section.fileLength = fileLength;

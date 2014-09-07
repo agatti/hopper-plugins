@@ -26,8 +26,6 @@
 
 #import <Foundation/Foundation.h>
 
-@interface FRBDefinition : NSObject<CPUDefinition>
-
-@property (strong, nonatomic, readonly) NSObject<HPHopperServices> *services;
+@interface ItFrobHopper6502Definition : NSObject<CPUDefinition>
 
 @end

@@ -26,6 +26,9 @@
 
 #import <Foundation/Foundation.h>
 
-@interface FRBC64Loader : NSObject<FileLoader>
+/*!
+ *	C64 binary file loader.
+ */
+@interface ItFrobHopperC64Loader : NSObject<FileLoader>
 
 @end

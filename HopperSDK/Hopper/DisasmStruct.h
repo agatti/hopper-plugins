@@ -42,17 +42,18 @@
 #define DISASM_BUILD_REGISTER_INDEX_MASK(INDEX)         (1llu << (INDEX))
 #define DISASM_BUILD_REGISTER_MASK(CLS,INDEX)           (DISASM_BUILD_REGISTER_CLS_MASK(CLS) | DISASM_BUILD_REGISTER_INDEX_MASK(INDEX))
 
+#define DISASM_OPERAND_GENERAL_REG_INDEX                2
+
 // Register class (x86)
-#define DISASM_OPERAND_GENERAL_REG_INDEX                0
-#define DISASM_OPERAND_X86_FPU_REG_INDEX                1
-#define DISASM_OPERAND_X86_MMX_REG_INDEX                2
-#define DISASM_OPERAND_X86_SSE_REG_INDEX                3
-#define DISASM_OPERAND_X86_AVX_REG_INDEX                4
-#define DISASM_OPERAND_X86_CR_REG_INDEX                 5
-#define DISASM_OPERAND_X86_DR_REG_INDEX                 6
-#define DISASM_OPERAND_X86_SPECIAL_REG_INDEX            7
-#define DISASM_OPERAND_X86_MEMORY_MANAGEMENT_REG_INDEX  8
-#define DISASM_OPERAND_X86_SEGMENT_REG_INDEX            9
+#define DISASM_OPERAND_X86_FPU_REG_INDEX                3
+#define DISASM_OPERAND_X86_MMX_REG_INDEX                4
+#define DISASM_OPERAND_X86_SSE_REG_INDEX                5
+#define DISASM_OPERAND_X86_AVX_REG_INDEX                6
+#define DISASM_OPERAND_X86_CR_REG_INDEX                 7
+#define DISASM_OPERAND_X86_DR_REG_INDEX                 8
+#define DISASM_OPERAND_X86_SPECIAL_REG_INDEX            9
+#define DISASM_OPERAND_X86_MEMORY_MANAGEMENT_REG_INDEX  10
+#define DISASM_OPERAND_X86_SEGMENT_REG_INDEX            11
 
 #define DISASM_OPERAND_GENERAL_REG                      DISASM_BUILD_REGISTER_CLS_MASK(DISASM_OPERAND_GENERAL_REG_INDEX)
 #define DISASM_OPERAND_X86_FPU_REG                      DISASM_BUILD_REGISTER_CLS_MASK(DISASM_OPERAND_X86_FPU_REG_INDEX)
@@ -66,10 +67,10 @@
 #define DISASM_OPERAND_X86_SEGMENT_REG                  DISASM_BUILD_REGISTER_CLS_MASK(DISASM_OPERAND_X86_SEGMENT_REG_INDEX)
 
 // Register class (ARM)
-#define DISASM_OPERAND_ARM_VFP_SINGLE_REG_INDEX         0
-#define DISASM_OPERAND_ARM_VFP_DOUBLE_REG_INDEX         1
-#define DISASM_OPERAND_ARM_VFP_QUAD_REG_INDEX           2
-#define DISASM_OPERAND_ARM_MEDIA_REG_INDEX              3
+#define DISASM_OPERAND_ARM_VFP_SINGLE_REG_INDEX         3
+#define DISASM_OPERAND_ARM_VFP_DOUBLE_REG_INDEX         4
+#define DISASM_OPERAND_ARM_VFP_QUAD_REG_INDEX           5
+#define DISASM_OPERAND_ARM_MEDIA_REG_INDEX              6
 
 #define DISASM_OPERAND_ARM_VFP_SINGLE_REG               DISASM_BUILD_REGISTER_CLS_MASK(DISASM_OPERAND_ARM_VFP_SINGLE_REG_INDEX)
 #define DISASM_OPERAND_ARM_VFP_DOUBLE_REG               DISASM_BUILD_REGISTER_CLS_MASK(DISASM_OPERAND_ARM_VFP_DOUBLE_REG_INDEX)
@@ -310,19 +311,7 @@ typedef struct {
     uint32_t          implicitlyWrittenRegisters[DISASM_MAX_REG_CLASSES];
 
     /// Instruction operands description
-    union {
-        struct {
-            DisasmOperand operand[DISASM_MAX_OPERANDS];
-        };
-        struct {
-            DisasmOperand operand1;
-            DisasmOperand operand2;
-            DisasmOperand operand3;
-            DisasmOperand operand4;
-            DisasmOperand operand5;
-            DisasmOperand operand6;
-        };
-    };
+    DisasmOperand     operand[DISASM_MAX_OPERANDS];
 } DisasmStruct;
 
 #endif

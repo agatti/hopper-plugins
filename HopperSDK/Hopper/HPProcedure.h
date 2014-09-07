@@ -15,6 +15,9 @@
 
 @protocol HPProcedure
 
+- (BOOL)bpBasedFrame;
+- (int32_t)stackOffset;
+
 - (NSUInteger)basicBlockCount;
 - (NSObject<HPBasicBlock> *)firstBasicBlock;
 - (NSObject<HPBasicBlock> *)basicBlockStartingAt:(Address)address;

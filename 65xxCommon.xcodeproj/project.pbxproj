@@ -1,0 +1,303 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		6857367F1985708600D790A9 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6857367E1985708600D790A9 /* Cocoa.framework */; };
+		685736A71985715E00D790A9 /* FRBCPUSupport.h in Headers */ = {isa = PBXBuildFile; fileRef = 685736A51985715E00D790A9 /* FRBCPUSupport.h */; };
+		685736A81985715E00D790A9 /* FRBCPUSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 685736A61985715E00D790A9 /* FRBCPUSupport.m */; };
+		685736AC198573CF00D790A9 /* FRB65xxCommon-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 685736AB198573CF00D790A9 /* FRB65xxCommon-Prefix.pch */; };
+		685736AF19859CD300D790A9 /* FRBOperandFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = 685736AD19859CD300D790A9 /* FRBOperandFormatter.h */; };
+		685736B019859CD300D790A9 /* FRBOperandFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 685736AE19859CD300D790A9 /* FRBOperandFormatter.m */; };
+		6868D2811989BB1200323B5F /* FRBBaseContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 6868D27F1989BB1200323B5F /* FRBBaseContext.h */; };
+		6868D2821989BB1200323B5F /* FRBBaseContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 6868D2801989BB1200323B5F /* FRBBaseContext.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		6857367B1985708600D790A9 /* lib65xxCommon.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = lib65xxCommon.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		6857367E1985708600D790A9 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		685736811985708600D790A9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		685736821985708600D790A9 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		685736831985708600D790A9 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		685736A51985715E00D790A9 /* FRBCPUSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRBCPUSupport.h; sourceTree = "<group>"; };
+		685736A61985715E00D790A9 /* FRBCPUSupport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRBCPUSupport.m; sourceTree = "<group>"; };
+		685736AB198573CF00D790A9 /* FRB65xxCommon-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "FRB65xxCommon-Prefix.pch"; sourceTree = "<group>"; };
+		685736AD19859CD300D790A9 /* FRBOperandFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRBOperandFormatter.h; sourceTree = "<group>"; };
+		685736AE19859CD300D790A9 /* FRBOperandFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRBOperandFormatter.m; sourceTree = "<group>"; };
+		6868D27F1989BB1200323B5F /* FRBBaseContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRBBaseContext.h; sourceTree = "<group>"; };
+		6868D2801989BB1200323B5F /* FRBBaseContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRBBaseContext.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		685736781985708600D790A9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6857367F1985708600D790A9 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		685736721985708600D790A9 = {
+			isa = PBXGroup;
+			children = (
+				685736841985708600D790A9 /* 65xxCommon */,
+				6857367D1985708600D790A9 /* Frameworks */,
+				6857367C1985708600D790A9 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		6857367C1985708600D790A9 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				6857367B1985708600D790A9 /* lib65xxCommon.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		6857367D1985708600D790A9 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				6857367E1985708600D790A9 /* Cocoa.framework */,
+				685736801985708600D790A9 /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		685736801985708600D790A9 /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				685736811985708600D790A9 /* Foundation.framework */,
+				685736821985708600D790A9 /* CoreData.framework */,
+				685736831985708600D790A9 /* AppKit.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		685736841985708600D790A9 /* 65xxCommon */ = {
+			isa = PBXGroup;
+			children = (
+				685736851985708600D790A9 /* Supporting Files */,
+				685736A51985715E00D790A9 /* FRBCPUSupport.h */,
+				685736A61985715E00D790A9 /* FRBCPUSupport.m */,
+				685736AD19859CD300D790A9 /* FRBOperandFormatter.h */,
+				685736AE19859CD300D790A9 /* FRBOperandFormatter.m */,
+				6868D27F1989BB1200323B5F /* FRBBaseContext.h */,
+				6868D2801989BB1200323B5F /* FRBBaseContext.m */,
+			);
+			path = 65xxCommon;
+			sourceTree = "<group>";
+		};
+		685736851985708600D790A9 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				685736AB198573CF00D790A9 /* FRB65xxCommon-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		685736791985708600D790A9 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6868D2811989BB1200323B5F /* FRBBaseContext.h in Headers */,
+				685736AC198573CF00D790A9 /* FRB65xxCommon-Prefix.pch in Headers */,
+				685736A71985715E00D790A9 /* FRBCPUSupport.h in Headers */,
+				685736AF19859CD300D790A9 /* FRBOperandFormatter.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		6857367A1985708600D790A9 /* 65xxCommon */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6857369F1985708600D790A9 /* Build configuration list for PBXNativeTarget "65xxCommon" */;
+			buildPhases = (
+				685736771985708600D790A9 /* Sources */,
+				685736781985708600D790A9 /* Frameworks */,
+				685736791985708600D790A9 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = 65xxCommon;
+			productName = 65xxCommon;
+			productReference = 6857367B1985708600D790A9 /* lib65xxCommon.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		685736731985708600D790A9 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = frob.it;
+			};
+			buildConfigurationList = 685736761985708600D790A9 /* Build configuration list for PBXProject "65xxCommon" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 685736721985708600D790A9;
+			productRefGroup = 6857367C1985708600D790A9 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				6857367A1985708600D790A9 /* 65xxCommon */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		685736771985708600D790A9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				685736A81985715E00D790A9 /* FRBCPUSupport.m in Sources */,
+				6868D2821989BB1200323B5F /* FRBBaseContext.m in Sources */,
+				685736B019859CD300D790A9 /* FRBOperandFormatter.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		6857369D1985708600D790A9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/HopperSDK",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/HopperCommon";
+			};
+			name = Debug;
+		};
+		6857369E1985708600D790A9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/HopperSDK",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				SDKROOT = macosx;
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/HopperCommon";
+			};
+			name = Release;
+		};
+		685736A01985708600D790A9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "65xxCommon/FRB65xxCommon-Prefix.pch";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		685736A11985708600D790A9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "65xxCommon/FRB65xxCommon-Prefix.pch";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		685736761985708600D790A9 /* Build configuration list for PBXProject "65xxCommon" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6857369D1985708600D790A9 /* Debug */,
+				6857369E1985708600D790A9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6857369F1985708600D790A9 /* Build configuration list for PBXNativeTarget "65xxCommon" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				685736A01985708600D790A9 /* Debug */,
+				685736A11985708600D790A9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 685736731985708600D790A9 /* Project object */;
+}

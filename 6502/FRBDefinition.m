@@ -29,39 +29,58 @@
 #import "FRBBase.h"
 #import "FRBModelHandler.h"
 
-#import "FRBGeneric6502.h"
-#import "FRBGeneric65C02.h"
+// 65xxCommon library imports
 
-@interface FRBDefinition ()
+#import "FRBCPUSupport.h"
 
-@property (strong, nonatomic, readonly) NSSet *validOpcodes;
-@property (strong, nonatomic, readonly) FRBModelHandler *modelHandler;
-@property (strong, nonatomic, readonly) NSCharacterSet *identifierCharacterSet;
+// HopperCommon library imports
+
+#import "NSDataHopperAdditions.h"
+
+/*!
+ *	List of valid opcodes.
+ */
+static const NSSet *kValidOpcodes;
+
+/*!
+ *	CPU type and subtype model handler.
+ */
+static const ItFrobHopper6502ModelHandler *kModelHandler;
+
+@interface ItFrobHopper6502Definition () {
+
+    /*!
+     *  Hopper Services instance.
+     */
+    id<HPHopperServices> _services;
+}
 
 @end
 
-@implementation FRBDefinition
+@implementation ItFrobHopper6502Definition
 
-- (NSObject<HopperPlugin> *)initWithHopperServices:(NSObject<HPHopperServices> *)services {
+- (id<HopperPlugin>)initWithHopperServices:(id<HPHopperServices>)services {
     if (self = [super init]) {
         _services = services;
 
-        NSMutableSet *opcodes = [NSMutableSet new];
-        for (int index = 0; index < FRBUniqueOpcodesCount; index++) {
-            [opcodes addObject:[NSString stringWithUTF8String:FRBInstructions[index].name]];
-        }
-        _validOpcodes = opcodes;
-        _modelHandler = [FRBModelHandler sharedModelHandler];
-        // No easy way to merge NSCharacterSets?
-        _identifierCharacterSet = [NSCharacterSet characterSetWithCharactersInString:@"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"];
+        static dispatch_once_t onceToken;
+        dispatch_once(&onceToken, ^{
+            NSMutableSet *opcodes = [NSMutableSet new];
+            for (int index = 0; index < FRBUniqueOpcodesCount; index++) {
+                [opcodes addObject:[[NSString stringWithUTF8String:FRBInstructions[index].name] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]]];
+            }
+            kValidOpcodes = opcodes;
+            kModelHandler = [ItFrobHopper6502ModelHandler sharedModelHandler];
+        });
     }
 
     return self;
 }
 
-- (NSObject<CPUContext> *)buildCPUContextForFile:(NSObject<HPDisassembledFile> *)file {
-    return [[FRBContext alloc] initWithCPU:self
-                                   andFile:file];
+- (id<CPUContext>)buildCPUContextForFile:(id<HPDisassembledFile>)file {
+    return [[ItFrobHopper6502Context alloc] initWithCPU:self
+                                                andFile:file
+                                           withServices:_services];
 }
 
 - (UUID *)pluginUUID {
@@ -77,7 +96,7 @@
 }
 
 - (NSString *)pluginDescription {
-    return @"6502-family CPU support";
+    return @"65xx-family CPU support";
 }
 
 - (NSString *)pluginAuthor {
@@ -89,29 +108,32 @@
 }
 
 - (NSString *)pluginVersion {
-    return @"0.0.6";
+    return @"0.1.0";
 }
 
 - (NSArray *)cpuFamilies {
-    return [self.modelHandler.models.allKeys sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-        return [obj1 compare:obj2];
-    }];
+    NSMutableArray *remaining = [NSMutableArray arrayWithArray:[kModelHandler.models.allKeys sortedArrayUsingComparator:^NSComparisonResult(id first, id second) {
+        return [first compare:second];
+    }]];
+    [remaining removeObject:kModelHandler.defaultModel];
+
+    NSMutableArray *families = [NSMutableArray new];
+    [families addObject:kModelHandler.defaultModel];
+    [families addObjectsFromArray:remaining];
+
+    return families;
 }
 
 - (NSArray *)cpuSubFamiliesForFamily:(NSString *)family {
-    return [((NSDictionary *)self.modelHandler.models[family]).allKeys sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-        return [obj1 compare:obj2];
+    return [((NSDictionary *)kModelHandler.models[family]).allKeys sortedArrayUsingComparator:^NSComparisonResult(id first, id second) {
+        return [first compare:second];
     }];
 }
 
 - (int)addressSpaceWidthInBitsForCPUFamily:(NSString *)family
                               andSubFamily:(NSString *)subFamily {
-    NSDictionary *subFamilies = self.modelHandler.models[family];
-    if (subFamilies && subFamilies[subFamily]) {
-            return 16;
-    }
-
-    return 0;
+    const NSDictionary *subFamilies = kModelHandler.models[family];
+    return subFamilies && subFamilies[subFamily] ? 16 : 0;
 }
 
 - (NSString *)registerIndexToString:(int)reg
@@ -120,29 +142,75 @@
                         andPosition:(DisasmPosition)position {
     switch (reg_class) {
         case RegClass_PseudoRegisterSTACK:
-            return @"SP";
+            break;
 
         case RegClass_GeneralPurposeRegister:
             switch (reg) {
-                case 0:
+                case FRBRegisterA:
                     return @"A";
 
-                case 1:
+                case FRBRegisterX:
                     return @"X";
 
-                case 2:
+                case FRBRegisterY:
                     return @"Y";
+
+                // Until the SDK allows to manipulate the stack pointer
+                // directly, we have to consider the stack pointer as a
+                // general purpose register for the sake of block register
+                // usage markers.
+
+                case FRBRegisterS:
+                    return @"S";
+
+                case FRBRegisterP:
+                    return @"P";
+
+                // R65C19 extended registers.
+
+                case FRBRegisterW:
+                    return @"W";
+
+                case FRBRegisterI:
+                    return @"I";
 
                 default:
                     break;
             }
             break;
 
+        case RegClass_CPUState:
+            switch (reg) {
+                case 0:
+                    return @"P";
+
+                default:
+                    break;
+            }
+
         default:
             break;
     }
 
     return nil;
+}
+
+- (NSString *)cpuRegisterStateMaskToString:(uint32_t)cpuState {
+    return @"";
+}
+
+- (BOOL)registerIndexIsStackPointer:(uint32_t)reg
+                            ofClass:(RegClass)reg_class {
+    return reg == FRBRegisterS && reg_class == RegClass_GeneralPurposeRegister;
+}
+
+- (BOOL)registerIndexIsFrameBasePointer:(uint32_t)reg
+                                ofClass:(RegClass)reg_class {
+    return NO;
+}
+
+- (BOOL)registerIndexIsProgramCounter:(uint32_t)reg {
+    return NO;
 }
 
 - (CPUEndianess)endianess {
@@ -158,11 +226,11 @@
 }
 
 - (NSArray *)syntaxVariantNames {
-    return @[ FRBSyntaxVariant ];
+    return @[ kSyntaxVariant ];
 }
 
 - (NSArray *)cpuModeNames {
-    return @[ FRBCPUMode ];
+    return @[ kCPUMode ];
 }
 
 - (NSUInteger)registerClassCount {
@@ -172,19 +240,27 @@
 - (NSUInteger)registerCountForClass:(NSUInteger)reg_class {
     switch (reg_class) {
         case RegClass_CPUState:
-            return 0;
-
-        case RegClass_PseudoRegisterSTACK:
             return 1;
 
+        case RegClass_PseudoRegisterSTACK:
+            return 0;
+
         case RegClass_GeneralPurposeRegister:
-            return 3;
+            return 6;
 
         default:
             break;
     }
 
     return 0;
+}
+
+- (BOOL)registerIsStackPointer:(uint32_t)reg {
+    return NO;
+}
+
+- (BOOL)registerIsFrameBasePointer:(uint32_t)reg {
+    return NO;
 }
 
 - (NSUInteger)translateOperandIndex:(NSUInteger)index
@@ -194,199 +270,13 @@
 }
 
 - (NSAttributedString *)colorizeInstructionString:(NSAttributedString *)string {
-
-    // Extremely simplistic, to be changed later - possibly when access
-    // to DisasmStruct is available from here.
-
-    NSMutableAttributedString *clone = [string mutableCopy];
-    [clone beginEditing];
-
-    NSString *rawString = clone.string;
-    NSScanner *scanner = [NSScanner scannerWithString:clone.string];
-    NSString *potentialOpcode;
-    [scanner scanUpToCharactersFromSet:[NSCharacterSet whitespaceCharacterSet]
-                            intoString:&potentialOpcode];
-    if (![self.validOpcodes containsObject:potentialOpcode]) {
-        return string;
-    }
-
-    [clone setAttributes:[_services ASMLanguageAttributes]
-                   range:NSMakeRange(0, potentialOpcode.length)];
-
-    if (!scanner.isAtEnd) {
-        [scanner scanCharactersFromSet:[NSCharacterSet whitespaceCharacterSet]
-                            intoString:nil];
-        NSUInteger offset = scanner.scanLocation;
-        const char *buffer = rawString.UTF8String;
-        NSInteger componentStart = NSNotFound;
-        BOOL numberFound = NO;
-        BOOL negativeMarkerFound = NO;
-        ArgFormat formatFound = Format_Decimal;
-        BOOL asciiFound = NO;
-
-        while (offset < rawString.length) {
-            unichar character = buffer[offset];
-
-            if (character == '#') {
-                if (numberFound) {
-                    // Duplicate immediate value markers should not appear, bail out.
-                    [clone endEditing];
-                    return clone;
-                }
-
-                [clone setAttributes:[_services ASMLanguageAttributes]
-                               range:NSMakeRange(offset, 1)];
-                offset++;
-                continue;
-            }
-
-            if (character == '-') {
-                if (numberFound) {
-                    // Duplicate negative markers should not appear, bail out.
-                    [clone endEditing];
-                    return clone;
-                }
-
-                componentStart = offset;
-                numberFound = YES;
-                negativeMarkerFound = YES;
-                offset++;
-                continue;
-            }
-
-            if (character == '%' || character == '$') {
-                if (numberFound) {
-                    // Duplicate format markers should not appear, bail out.
-                    [clone endEditing];
-                    return clone;
-                }
-
-                componentStart = offset;
-                numberFound = YES;
-
-                switch (character) {
-                    case '$':
-                        formatFound = Format_Hexadecimal;
-                        break;
-
-                    case '%':
-                        formatFound = Format_Binary;
-                        if (negativeMarkerFound) {
-                            // Negative binary numbers should not appear, bail out.
-                            [clone endEditing];
-                            return clone;
-                        }
-                        break;
-
-                    default:
-                        // Should not happen!
-                        break;
-                }
-
-                offset++;
-                continue;
-            }
-
-            if (isdigit(character) && !asciiFound) {
-                if (formatFound == Format_Binary) {
-                    if (character != '0' && character != '1') {
-                        // Non-binary digits found with a binary format marker, bail out.
-                        [clone endEditing];
-                        return clone;
-                    }
-                }
-
-                if (!numberFound) {
-                    componentStart = offset;
-                    numberFound = YES;
-                }
-                offset++;
-                continue;
-            }
-
-            if (formatFound == Format_Hexadecimal) {
-                switch (character) {
-                    case 'A':
-                    case 'B':
-                    case 'C':
-                    case 'D':
-                    case 'E':
-                    case 'F':
-                        offset++;
-                        continue;
-
-                    default:
-                        // Non-hexadecimal digit found, mark and exit.
-                        [clone setAttributes:[_services ASMNumberAttributes]
-                                       range:NSMakeRange(componentStart, offset - componentStart)];
-                        numberFound = NO;
-                        negativeMarkerFound = NO;
-                        asciiFound = NO;
-                        formatFound = Format_Default;
-                }
-            }
-
-            if (character == 'o' && formatFound != Format_Binary &&
-                formatFound != Format_Hexadecimal && numberFound) {
-
-                // Octal end marker found, mark and exit.
-                offset++;
-                [clone setAttributes:[_services ASMNumberAttributes] // :(
-                               range:NSMakeRange(componentStart, offset - componentStart)];
-                numberFound = NO;
-                negativeMarkerFound = NO;
-                asciiFound = NO;
-                formatFound = Format_Default;
-            }
-
-            if (numberFound && !asciiFound) {
-                // Non-digit marker found, mark and exit.
-
-                offset++;
-                [clone setAttributes:[_services ASMNumberAttributes]
-                               range:NSMakeRange(componentStart, offset - componentStart)];
-                numberFound = NO;
-                negativeMarkerFound = NO;
-                asciiFound = NO;
-                formatFound = Format_Default;
-            }
-
-            if (!asciiFound && [self.identifierCharacterSet characterIsMember:character]) {
-                // Identifier found
-                asciiFound = YES;
-                componentStart = offset;
-            }
-
-            if (character == ',') {
-                // New parameter, reset state
-                numberFound = NO;
-                negativeMarkerFound = NO;
-                asciiFound = NO;
-                formatFound = Format_Default;
-            }
-
-            // Nothing found yet, keep on iterating.
-            offset++;
-        }
-
-        if ((numberFound || asciiFound) && componentStart != NSNotFound) {
-            // Reached EOL whilst scanning for a number, mark and exit.
-            [clone setAttributes:[_services ASMNumberAttributes] // :(
-                           range:NSMakeRange(componentStart, offset - componentStart)];
-        }
-    }
-
-    [clone endEditing];
-
-    return clone;
+    return ColouriseInstructionString(string, kValidOpcodes, _services);
 }
 
 - (NSData *)nopWithSize:(NSUInteger)size
                 andMode:(NSUInteger)cpuMode
-                forFile:(NSObject<HPDisassembledFile> *)file {
-    NSMutableData *nopBuffer = [[NSMutableData alloc] initWithCapacity:size];
-    memset(nopBuffer.mutableBytes, 0xEA, size);
-    return nopBuffer;
+                forFile:(id<HPDisassembledFile>)file {
+    return NSDataWithFiller(0xEA, size);
 }
 
 - (BOOL)canAssembleInstructionsForCPUFamily:(NSString *)family

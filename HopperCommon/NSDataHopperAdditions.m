@@ -24,19 +24,17 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import <Foundation/Foundation.h>
+#import "NSDataHopperAdditions.h"
 
-#import "FRBBase.h"
+NSData *NSDataWithFiller(const uint8_t filler, NSUInteger length) {
+    NSMutableData *data = [[NSMutableData alloc] initWithCapacity:length];
+    memset(data.mutableBytes, filler, length);
+    return data;
+}
 
-@interface FRBFormatter : NSObject
-
-+ (NSString *)format:(DisasmStruct *)source
-             operand:(NSUInteger)operand
-      argumentFormat:(ArgFormat)format
-        withServices:(NSObject<HPHopperServices> *)services;
-
-+ (NSString *)format:(FRBAddressMode)addressMode
-              opcode:(NSString *)opcode
-            operands:(NSArray *)operands;
-
-@end
+NSMutableData *NSMutableDataWithFiller(const uint8_t filler,
+                                       NSUInteger length) {
+    NSMutableData *data = [[NSMutableData alloc] initWithCapacity:length];
+    memset(data.mutableBytes, filler, length);
+    return data;
+}

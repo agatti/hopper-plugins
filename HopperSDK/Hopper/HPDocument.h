@@ -47,6 +47,15 @@ typedef void (^CancelBlock)(void);
 - (void)beginToWait:(NSString *)message cancelBlock:(CancelBlock)block;
 - (void)endWaiting;
 
+// Display message
+- (void)logStringMessage:(NSString *)message;
+- (void)logErrorStringMessage:(NSString *)message;
+- (NSModalResponse)displayAlertWithMessageText:(NSString *)text
+                                 defaultButton:(NSString *)defaultButton
+                               alternateButton:(NSString *)alternateButton
+                                   otherButton:(NSString *)otherButton
+                               informativeText:(NSString *)message;
+
 // Reading and modifying file
 // These operations are performed in the endianess of the CPU module attached
 // to the file. During the loading process, you should NOT use these methods,

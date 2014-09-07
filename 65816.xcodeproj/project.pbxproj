@@ -1,0 +1,348 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		68259B2E19B738E00060713A /* libHopperCommon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 68259B2D19B738E00060713A /* libHopperCommon.a */; };
+		684A7243198568DC00955AF5 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 684A7242198568DC00955AF5 /* CoreFoundation.framework */; };
+		684A7249198568DC00955AF5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 684A7247198568DC00955AF5 /* InfoPlist.strings */; };
+		684A726B1985692100955AF5 /* FRBContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 684A72521985692100955AF5 /* FRBContext.m */; };
+		684A726C1985692100955AF5 /* FRBDefinition.m in Sources */ = {isa = PBXBuildFile; fileRef = 684A72541985692100955AF5 /* FRBDefinition.m */; };
+		684A72711985692100955AF5 /* FRBModelHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 684A72611985692100955AF5 /* FRBModelHandler.m */; };
+		684A72731985692100955AF5 /* FRBGeneric65186.m in Sources */ = {isa = PBXBuildFile; fileRef = 684A72671985692100955AF5 /* FRBGeneric65186.m */; };
+		684A72741985692100955AF5 /* models.plist in Resources */ = {isa = PBXBuildFile; fileRef = 684A726A1985692100955AF5 /* models.plist */; };
+		68AD4F1819A4B3AA00E0EBE2 /* lib65xxCommon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 68AD4F1719A4B3AA00E0EBE2 /* lib65xxCommon.a */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		68259B2C19B736D80060713A /* FRBProvider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FRBProvider.h; sourceTree = "<group>"; };
+		68259B2D19B738E00060713A /* libHopperCommon.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libHopperCommon.a; path = "../../Library/Developer/Xcode/DerivedData/HopperPlugins-fzslwhyufvevicghqykcwcprlbow/Build/Products/Debug/libHopperCommon.a"; sourceTree = "<group>"; };
+		684A723F198568DC00955AF5 /* 65816.hopperCPU */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = 65816.hopperCPU; sourceTree = BUILT_PRODUCTS_DIR; };
+		684A7242198568DC00955AF5 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		684A7246198568DC00955AF5 /* FRB65816-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "FRB65816-Info.plist"; sourceTree = "<group>"; };
+		684A7248198568DC00955AF5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		684A724A198568DC00955AF5 /* FRB65816-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "FRB65816-Prefix.pch"; sourceTree = "<group>"; };
+		684A72501985692100955AF5 /* FRBBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRBBase.h; sourceTree = "<group>"; };
+		684A72511985692100955AF5 /* FRBContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRBContext.h; sourceTree = "<group>"; };
+		684A72521985692100955AF5 /* FRBContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRBContext.m; sourceTree = "<group>"; };
+		684A72531985692100955AF5 /* FRBDefinition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRBDefinition.h; sourceTree = "<group>"; };
+		684A72541985692100955AF5 /* FRBDefinition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRBDefinition.m; sourceTree = "<group>"; };
+		684A72601985692100955AF5 /* FRBModelHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRBModelHandler.h; sourceTree = "<group>"; };
+		684A72611985692100955AF5 /* FRBModelHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRBModelHandler.m; sourceTree = "<group>"; };
+		684A72661985692100955AF5 /* FRBGeneric65816.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRBGeneric65816.h; sourceTree = "<group>"; };
+		684A72671985692100955AF5 /* FRBGeneric65186.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRBGeneric65186.m; sourceTree = "<group>"; };
+		684A726A1985692100955AF5 /* models.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = models.plist; sourceTree = "<group>"; };
+		68AD4F1719A4B3AA00E0EBE2 /* lib65xxCommon.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = lib65xxCommon.a; path = "../../Library/Developer/Xcode/DerivedData/HopperPlugins-fzslwhyufvevicghqykcwcprlbow/Build/Products/Debug/lib65xxCommon.a"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		684A723C198568DC00955AF5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				68259B2E19B738E00060713A /* libHopperCommon.a in Frameworks */,
+				68AD4F1819A4B3AA00E0EBE2 /* lib65xxCommon.a in Frameworks */,
+				684A7243198568DC00955AF5 /* CoreFoundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		6814467819B2324F0058AB8B /* Chips */ = {
+			isa = PBXGroup;
+			children = (
+				684A72661985692100955AF5 /* FRBGeneric65816.h */,
+				684A72671985692100955AF5 /* FRBGeneric65186.m */,
+			);
+			name = Chips;
+			sourceTree = "<group>";
+		};
+		684A7236198568DC00955AF5 = {
+			isa = PBXGroup;
+			children = (
+				684A7244198568DC00955AF5 /* 65816 */,
+				684A7241198568DC00955AF5 /* Frameworks */,
+				684A7240198568DC00955AF5 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		684A7240198568DC00955AF5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				684A723F198568DC00955AF5 /* 65816.hopperCPU */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		684A7241198568DC00955AF5 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				68259B2D19B738E00060713A /* libHopperCommon.a */,
+				68AD4F1719A4B3AA00E0EBE2 /* lib65xxCommon.a */,
+				684A7242198568DC00955AF5 /* CoreFoundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		684A7244198568DC00955AF5 /* 65816 */ = {
+			isa = PBXGroup;
+			children = (
+				6814467819B2324F0058AB8B /* Chips */,
+				684A72501985692100955AF5 /* FRBBase.h */,
+				684A72511985692100955AF5 /* FRBContext.h */,
+				684A72521985692100955AF5 /* FRBContext.m */,
+				684A72531985692100955AF5 /* FRBDefinition.h */,
+				684A72541985692100955AF5 /* FRBDefinition.m */,
+				684A72601985692100955AF5 /* FRBModelHandler.h */,
+				684A72611985692100955AF5 /* FRBModelHandler.m */,
+				68259B2C19B736D80060713A /* FRBProvider.h */,
+				684A7245198568DC00955AF5 /* Supporting Files */,
+			);
+			path = 65816;
+			sourceTree = "<group>";
+		};
+		684A7245198568DC00955AF5 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				684A726A1985692100955AF5 /* models.plist */,
+				684A7246198568DC00955AF5 /* FRB65816-Info.plist */,
+				684A7247198568DC00955AF5 /* InfoPlist.strings */,
+				684A724A198568DC00955AF5 /* FRB65816-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		684A723E198568DC00955AF5 /* 65816 */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 684A724D198568DC00955AF5 /* Build configuration list for PBXNativeTarget "65816" */;
+			buildPhases = (
+				684A723B198568DC00955AF5 /* Sources */,
+				684A723C198568DC00955AF5 /* Frameworks */,
+				684A723D198568DC00955AF5 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = 65816;
+			productName = 65816;
+			productReference = 684A723F198568DC00955AF5 /* 65816.hopperCPU */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		684A7237198568DC00955AF5 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = frob.it;
+			};
+			buildConfigurationList = 684A723A198568DC00955AF5 /* Build configuration list for PBXProject "65816" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 684A7236198568DC00955AF5;
+			productRefGroup = 684A7240198568DC00955AF5 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				684A723E198568DC00955AF5 /* 65816 */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		684A723D198568DC00955AF5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				684A72741985692100955AF5 /* models.plist in Resources */,
+				684A7249198568DC00955AF5 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		684A723B198568DC00955AF5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				684A72731985692100955AF5 /* FRBGeneric65186.m in Sources */,
+				684A726B1985692100955AF5 /* FRBContext.m in Sources */,
+				684A72711985692100955AF5 /* FRBModelHandler.m in Sources */,
+				684A726C1985692100955AF5 /* FRBDefinition.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		684A7247198568DC00955AF5 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				684A7248198568DC00955AF5 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		684A724B198568DC00955AF5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/HopperSDK",
+				);
+				LIBRARY_SEARCH_PATHS = "$(BUILT_PRODUCTS_DIR)";
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/65xxCommon";
+			};
+			name = Debug;
+		};
+		684A724C198568DC00955AF5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/HopperSDK",
+				);
+				LIBRARY_SEARCH_PATHS = "$(BUILT_PRODUCTS_DIR)";
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				SDKROOT = macosx;
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/65xxCommon";
+			};
+			name = Release;
+		};
+		684A724E198568DC00955AF5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "65816/FRB65816-Prefix.pch";
+				INFOPLIST_FILE = "65816/FRB65816-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/HopperPlugins-fzslwhyufvevicghqykcwcprlbow/Build/Products/Debug",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/65xxCommon $(SRCROOT)/HopperCommon";
+				WRAPPER_EXTENSION = hopperCPU;
+			};
+			name = Debug;
+		};
+		684A724F198568DC00955AF5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "65816/FRB65816-Prefix.pch";
+				INFOPLIST_FILE = "65816/FRB65816-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/HopperPlugins-fzslwhyufvevicghqykcwcprlbow/Build/Products/Debug",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/65xxCommon $(SRCROOT)/HopperCommon";
+				WRAPPER_EXTENSION = hopperCPU;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		684A723A198568DC00955AF5 /* Build configuration list for PBXProject "65816" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				684A724B198568DC00955AF5 /* Debug */,
+				684A724C198568DC00955AF5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		684A724D198568DC00955AF5 /* Build configuration list for PBXNativeTarget "65816" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				684A724E198568DC00955AF5 /* Debug */,
+				684A724F198568DC00955AF5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 684A7237198568DC00955AF5 /* Project object */;
+}

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>defaultbackend</key>
+	<string>Sunplus</string>
+	<key>backends</key>
+	<dict>
+		<key>Sunplus</key>
+		<dict>
+			<key>65N02</key>
+			<string>it.frob.hopper.65N02</string>
+			<key>65R02</key>
+			<string>it.frob.hopper.65R02</string>
+			<key>65S02</key>
+			<string>it.frob.hopper.65S02</string>
+			<key>SunPlus</key>
+			<string>it.frob.hopper.SunPlus</string>
+		</dict>
+	</dict>
+</dict>
+</plist>

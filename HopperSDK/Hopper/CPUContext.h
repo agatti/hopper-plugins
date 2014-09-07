@@ -53,7 +53,7 @@
 
 - (Address)nextAddressToTryIfInstructionFailedToDecodeAt:(Address)address forCPUMode:(uint8_t)mode;
 
-- (BOOL)haveProcedurePrologAt:(Address)address;
+- (BOOL)hasProcedurePrologAt:(Address)address;
 
 /// Notify the plugin that an analysisbegan from an entry point.
 /// This could be either a simple disassembling, or a procedure creation.
@@ -86,9 +86,14 @@
 /// Returns whether or not an instruction may halt the processor (like the HLT Intel instruction).
 - (BOOL)instructionHaltsExecutionFlow:(DisasmStruct *)disasm;
 
-/// Thess methods are called to let you update your internal plugin state during the analysis.
+/// These methods are called to let you update your internal plugin state during the analysis.
 - (void)performProcedureAnalysis:(NSObject<HPProcedure> *)procedure basicBlock:(NSObject<HPBasicBlock> *)basicBlock disasm:(DisasmStruct *)disasm;
 - (void)updateProcedureAnalysis:(DisasmStruct *)disasm;
+
+/// Return YES if the provided DisasmStruct represents an instruction that cand directly reference a memory address.
+/// Ususally, this methods returns YES. This is used by the ARM plugin to avoid false references on "MOVW" instruction
+/// for instance.
+- (BOOL)instructionCanBeUsedToExtractDirectMemoryReferences:(DisasmStruct *)disasmStruct;
 
 /// If a branch instruction is found, Hopper calls this method to compute additional destinations of the instruction.
 /// The "*next" value is already set to the address which follows the instruction if the jump does not occurs.
@@ -120,6 +125,15 @@
 
 /// The method should return a default name for a local variable at a given displacement on stack.
 - (NSString *)formattedVariableNameForDisplacement:(int64_t)displacement inProcedure:(NSObject<HPProcedure> *)procedure;
+
+/// Returns YES if the displacement correcponds to an argument of the procedure.
+- (BOOL)displacementIsAnArgument:(int64_t)displacement forProcedure:(NSObject<HPProcedure> *)procedure;
+
+/// If the displacement is an access to a stack argument, returns the slot index.
+- (NSUInteger)stackArgumentSlotForDisplacement:(int64_t)displacement inProcedure:(NSObject<HPProcedure> *)procedure;
+
+/// Return a displacement for a stack slot index
+- (int64_t)displacementForStackSlotIndex:(NSUInteger)slot inProcedure:(NSObject<HPProcedure> *)procedure;
 
 /// Build the complete instruction string in the DisasmStruct structure.
 /// This is the string to be displayed in Hopper.

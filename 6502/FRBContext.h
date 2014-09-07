@@ -26,11 +26,21 @@
 
 #import <Foundation/Foundation.h>
 
-@class FRBDefinition;
+#import "FRBBaseContext.h"
 
-@interface FRBContext : NSObject<CPUContext>
+@interface ItFrobHopper6502Context : FRBBaseContext
 
-- (instancetype)initWithCPU:(FRBDefinition *)cpu
-                    andFile:(NSObject<HPDisassembledFile> *)file;
+/*!
+ *	Initialises a CPU context object.
+ *
+ *	@param cpu      the CPU definition instance to base upon.
+ *	@param file     the file being disassembled.
+ *	@param services the shared Hopper services instance.
+ *
+ *	@return a new CPU context object.
+ */
+- (instancetype)initWithCPU:(id<CPUDefinition>)cpu
+                    andFile:(id<HPDisassembledFile>)file
+               withServices:(id<HPHopperServices>)services;
 
 @end

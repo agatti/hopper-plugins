@@ -2,7 +2,22 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:HopperCommon.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:65xxCommon.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:65816.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:6502.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Sunplus6502.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:C64Loader.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:LICENSE">
@@ -71,7 +86,4 @@
          location = "group:HopperSDK/Hopper/HPTag.h">
       </FileRef>
    </Group>
-   <FileRef
-      location = "group:C64Loader.xcodeproj">
-   </FileRef>
 </Workspace>

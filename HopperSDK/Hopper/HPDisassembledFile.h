@@ -70,6 +70,8 @@ typedef void (^FileLoadingCallbackInfo)(NSString *desc, float progress);
 // Comments
 - (void)removeCommentAtVirtualAddress:(Address)virtualAddress;
 - (void)removeInlineCommentAtVirtualAddress:(Address)virtualAddress;
+- (NSString *)commentAtVirtualAddress:(Address)virtualAddress;
+- (NSString *)inlineCommentAtVirtualAddress:(Address)virtualAddress;
 - (void)setComment:(NSString *)comment atVirtualAddress:(Address)virtualAddress reason:(CommentCreationReason)reason;
 - (void)setInlineComment:(NSString *)comment atVirtualAddress:(Address)virtualAddress reason:(CommentCreationReason)reason;
 

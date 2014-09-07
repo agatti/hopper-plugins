@@ -41,6 +41,10 @@
 - (NSUInteger)registerClassCount;
 - (NSUInteger)registerCountForClass:(NSUInteger)reg_class;
 - (NSString *)registerIndexToString:(int)reg ofClass:(RegClass)reg_class withBitSize:(int)size andPosition:(DisasmPosition)position;
+- (NSString *)cpuRegisterStateMaskToString:(uint32_t)cpuState;
+- (BOOL)registerIndexIsStackPointer:(uint32_t)reg ofClass:(RegClass)reg_class;
+- (BOOL)registerIndexIsFrameBasePointer:(uint32_t)reg ofClass:(RegClass)reg_class;
+- (BOOL)registerIndexIsProgramCounter:(uint32_t)reg;
 
 /// A weirdness of the Hopper internals. You'll usually simply need to return the "index" argument.
 /// This is used by Hopper to handle the fact that operands in Intel and AT&T syntaxes are inverted.

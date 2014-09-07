@@ -77,6 +77,7 @@ HP_BEGIN_DECL_ENUM(uint8_t, CommentCreationReason) {
     CCReason_User,          // Created by the used
     CCReason_Script,        // A Python script created the comment
     CCReason_Automatic,     // Automatic comment, like XREF comments, values found during the analysis...
+    CCReason_Dynamic        // A dynamic comment. Its content depends on another MBI (the anchor).
 }
 HP_END_DECL_ENUM(CommentCreationReason);
 
@@ -92,7 +93,7 @@ HP_BEGIN_DECL_ENUM(uint8_t, NameCreationReason) {
 HP_END_DECL_ENUM(NameCreationReason);
 
 // Operand Format
-#define FORMAT_TYPE_MASK  0x7F
+#define FORMAT_TYPE_MASK  0x1F
 
 HP_BEGIN_DECL_ENUM(NSUInteger, ArgFormat) {
     Format_Default,
@@ -100,13 +101,15 @@ HP_BEGIN_DECL_ENUM(NSUInteger, ArgFormat) {
     Format_Hexadecimal,
     Format_Decimal,
     Format_Octal,
-    Format_PseudoString,
+    Format_Character,
     Format_StackVariable,
     Format_Offset,
     Format_Address,
     Format_Float,
     Format_Binary,
 
+    Format_Negate = 0x20,
+    Format_LeadingZeroes = 0x40,
     Format_Signed = 0x80
 }
 HP_END_DECL_ENUM(ArgFormat);
@@ -164,6 +167,26 @@ HP_BEGIN_DECL_ENUM(NSUInteger, RegClass) {
     RegClass_ARM_Media
 }
 HP_END_DECL_ENUM(RegClass);
+
+// Calling Conventions
+
+HP_BEGIN_DECL_ENUM(NSUInteger, CallingConvention) {
+    CallingConvention_default = 0,
+
+    CallingConvention_cdecl = 1,
+    CallingConvention_stdcall,
+    CallingConvention_fastcall,
+    CallingConvention_fastcall_borland,
+    CallingConvention_thiscall,
+    CallingConvention_watcom,
+
+    CallingConvention_AAPCS = 10,
+    CallingConvention_AAPCS_VFP,
+
+    CallingConvention_X86_64SysV = 20,
+    CallingConvention_X86_64Win64
+}
+HP_END_DECL_ENUM(CallingConvention);
 
 // File Loaders
 

@@ -27,32 +27,31 @@
 #import "FRBProvider.h"
 #import "FRBModelHandler.h"
 
-@interface FRBModelHandler ()
+@interface ItFrobHopper6502ModelHandler () {
+    NSMutableDictionary *_providers;
+}
 
 - (BOOL)loadModelsFromPlist:(NSString *)fileName;
 
-@property (strong, nonatomic, readonly) NSMutableDictionary *providers;
-
 @end
 
-@implementation FRBModelHandler
+@implementation ItFrobHopper6502ModelHandler
 
-static NSString * const FRBModelsFileName = @"models.plist";
-static NSString * const FRBPluginBundleName = @"it.frob.hopper.-502"; // :(
+static NSString * const kModelsFileName = @"models.plist";
+static NSString * const kPluginBundleName = @"it.frob.hopper.-502"; // :(
 
 + (instancetype)sharedModelHandler {
-    static FRBModelHandler *sharedModelHandler = nil;
+    static ItFrobHopper6502ModelHandler *sharedModelHandler = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        sharedModelHandler = [[FRBModelHandler alloc] initWithModels:FRBModelsFileName];
+        sharedModelHandler = [[ItFrobHopper6502ModelHandler alloc] initWithModels:kModelsFileName];
     });
     return sharedModelHandler;
 }
 
 - (instancetype)initWithModels:(NSString *)fileName {
     if (self = [super init]) {
-        NSLog(@"loading");
-        if (![self loadModelsFromPlist:FRBModelsFileName]) {
+        if (![self loadModelsFromPlist:kModelsFileName]) {
             return nil;
         }
 
@@ -63,7 +62,7 @@ static NSString * const FRBPluginBundleName = @"it.frob.hopper.-502"; // :(
 }
 
 - (BOOL)loadModelsFromPlist:(NSString *)fileName {
-    NSBundle *bundle = [NSBundle bundleWithIdentifier:FRBPluginBundleName];
+    NSBundle *bundle = [NSBundle bundleWithIdentifier:kPluginBundleName];
     NSArray *items = [fileName componentsSeparatedByString:@"."];
     NSString *plistPath = [bundle pathForResource:items[0]
                                            ofType:items.count > 1 ? items[1] : nil];
@@ -91,7 +90,10 @@ static NSString * const FRBPluginBundleName = @"it.frob.hopper.-502"; // :(
         return NO;
     }
 
-    _models = (NSDictionary *) propertyList;
+    NSDictionary *dictionary = (NSDictionary *)propertyList;
+
+    _defaultModel = dictionary[@"defaultbackend"];
+    _models = propertyList[@"backends"];
 
     return YES;
 }
@@ -99,7 +101,7 @@ static NSString * const FRBPluginBundleName = @"it.frob.hopper.-502"; // :(
 - (void)registerProvider:(Class)provider
                  forName:(NSString *)name {
     if ([provider conformsToProtocol:@protocol(FRBProvider)]) {
-        self.providers[name] = provider;
+        _providers[name] = provider;
     }
 }
 
@@ -113,13 +115,13 @@ static NSString * const FRBPluginBundleName = @"it.frob.hopper.-502"; // :(
     return nil;
 }
 
-- (NSObject<FRBProvider> *)providerForName:(NSString *)name {
-    Class providerClass = self.providers[name];
+- (id<FRBProvider>)providerForName:(NSString *)name {
+    Class providerClass = _providers[name];
     if (!providerClass) {
         return nil;
     }
 
-    return [[providerClass alloc] init];
+    return [providerClass new];
 }
 
 @end
