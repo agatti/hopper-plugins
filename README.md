@@ -242,7 +242,7 @@ CPUs currently supported: 65816.
 
 * Rebuilding the test binaries requires having `xa` installed (available from homebrew via `brew install xa`).
 
-###**CBM File Loader** - 0.0.4
+###**CBM File Loader** - 0.1.0
 
 This file loader plugin allows you to load Commodore 16/116/64/+4/VC20/VIC20 binaries to be disassembled.  Commodore 128 files are currently not supported due to the fact that binaries may be bigger than 64k and thus something may need to be rearranged.  _(Please note that the plugin depends on the 6502 CPU core to be installed in order to work properly)_
 

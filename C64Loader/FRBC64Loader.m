@@ -85,7 +85,7 @@
 }
 
 - (NSString *)pluginVersion {
-    return @"0.0.4";
+    return @"0.1.0";
 }
 
 - (CPUEndianess)endianess {
@@ -178,7 +178,7 @@
     section.fileLength = fileLength;
     section.sectionName = @"code";
 
-    file.cpuFamily = @"MOS";
+    file.cpuFamily = @"Generic";
     file.cpuSubFamily = @"6502";
     [file setAddressSpaceWidthInBits:16];
     [file addEntryPoint:section.startAddress];
