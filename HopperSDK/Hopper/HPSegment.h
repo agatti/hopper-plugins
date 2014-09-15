@@ -19,6 +19,7 @@
 @property (nonatomic) uint64_t fileOffset;
 @property (nonatomic) uint64_t fileLength;
 
+- (BOOL)hasMappedData;
 - (NSData *)mappedData;
 - (void)setMappedData:(NSData *)data;
 

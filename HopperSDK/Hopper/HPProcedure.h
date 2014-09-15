@@ -12,6 +12,7 @@
 
 @protocol HPBasicBlock;
 @protocol HPTag;
+@protocol CPUContext;
 
 @protocol HPProcedure
 
@@ -29,6 +30,7 @@
 // Variables
 - (NSString *)variableNameForDisplacement:(int64_t)disp;
 - (void)setVariableName:(NSString *)name forDisplacement:(int64_t)disp;
+- (NSString *)resolvedVariableNameForDisplacement:(int64_t)disp usingCPUContext:(NSObject<CPUContext> *)cpuContext;
 
 // Tags
 - (void)addTag:(NSObject<HPTag> *)tag;

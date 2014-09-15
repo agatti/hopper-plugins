@@ -265,7 +265,7 @@ This file loader plugin allows you to load Commodore 16/116/64/+4/VC20/VIC20 bin
 
 ##Installation instructions:
 
-Checkout from Git, open `HopperPlugins.xcworkspace` in Xcode, select the `Everything` scheme and then rebuild.  Once done, copy the bundles whose name ends in `.hopperLoader` into `~/Library/Application Support/Hopper/PlugIns/Loaders/` and the bundles whose name ends in `.hopperCPU` into `~/Library/Application Support/Hopper/PlugIns/CPUs/`.  Keep in mind that these plugins require **Hopper 3.4.3** or later to work.  They may work on older versions but they are neither tested nor supported on anything older than v3.4.3.
+Checkout from Git, open `HopperPlugins.xcworkspace` in Xcode, select the `Everything` scheme and then rebuild.  Once done, copy the bundles whose name ends in `.hopperLoader` into `~/Library/Application Support/Hopper/PlugIns/Loaders/` and the bundles whose name ends in `.hopperCPU` into `~/Library/Application Support/Hopper/PlugIns/CPUs/`.  Keep in mind that these plugins require **Hopper 3.5.1** or later to work.  They may work on older versions but they are neither tested nor supported on anything older than v3.5.1.
 
 ##Need to get in touch?
 

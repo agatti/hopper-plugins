@@ -25,7 +25,7 @@
 
 all: 6502opcodes.bin 6502jumps.bin 65c02opcodes.bin 65c02jumps.bin \
 	65816opcodes.bin 65816per.bin r6500opcodes.bin r65c02opcodes.bin \
-	w65c02sopcodes.bin spc700.bin
+	w65c02sopcodes.bin
 
 6502opcodes.bin: 6502opcodes.s
 	xa -C -W -o 6502opcodes.bin 6502opcodes.s
@@ -53,10 +53,6 @@ r65c02opcodes.bin: r65c02opcodes.s
 
 w65c02sopcodes.bin: w65c02sopcodes.s
 	xa -w -o w65c02sopcodes.bin w65c02sopcodes.s
-
-spc700.bin: spc700.s spc700.linkfile
-#	wla-spc700 -o spc700.s spc700.o
-#	wlalink -r spc700.linkfile spc700.bin
 
 clean:
 	rm -f *.bin *.o

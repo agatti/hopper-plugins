@@ -135,7 +135,7 @@
 - (void)updateProcedureAnalysis:(DisasmStruct *)disasm {
 }
 
-- (NSString *)formattedVariableNameForDisplacement:(int64_t)displacement
+- (NSString *)defaultFormattedVariableNameForDisplacement:(int64_t)displacement
                                        inProcedure:(id<HPProcedure>)procedure {
     return [NSString stringWithFormat:@"var%lld", displacement];
 }
@@ -203,6 +203,10 @@
 - (int64_t)displacementForStackSlotIndex:(NSUInteger)slot
                              inProcedure:(id<HPProcedure>)procedure {
     return 0;
+}
+
+- (BOOL)instructionMayBeASwitchStatement:(DisasmStruct *)disasmStruct {
+    return NO;
 }
 
 @end

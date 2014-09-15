@@ -57,7 +57,9 @@ HP_BEGIN_DECL_ENUM(uint8_t, ByteType) {
     Type_Data,      /// METATYPE : Only used for searching, no bytes have this type!
     
 	Type_Code,
-	Type_Procedure
+	Type_Procedure,
+
+    Type_Structure
 }
 HP_END_DECL_ENUM(ByteType);
 
@@ -92,6 +94,49 @@ HP_BEGIN_DECL_ENUM(uint8_t, NameCreationReason) {
 }
 HP_END_DECL_ENUM(NameCreationReason);
 
+// Types
+
+HP_BEGIN_DECL_ENUM(NSUInteger, TypeDescType) {
+    TypeDesc_Void,
+
+    // Fixed size primitive types
+    TypeDesc_Int8,
+    TypeDesc_UInt8,
+    TypeDesc_Int16,
+    TypeDesc_UInt16,
+    TypeDesc_Int32,
+    TypeDesc_UInt32,
+    TypeDesc_Int64,
+    TypeDesc_UInt64,
+    TypeDesc_Float,
+    TypeDesc_Double,
+
+    // Primitive types whose size depends on the disassembled file
+    TypeDesc_Int,
+    TypeDesc_UInt,
+    TypeDesc_Long,
+    TypeDesc_ULong,
+    TypeDesc_LongLong,
+    TypeDesc_ULongLong,
+
+    // Non-primitive, structured types
+    TypeDesc_Pointer,
+    TypeDesc_Struct,
+    TypeDesc_Union,
+    TypeDesc_Array,
+
+    TypeDesc_Typedef,
+
+    TypeDesc_Bool,
+    TypeDesc_Char,
+    TypeDesc_UChar,
+    TypeDesc_Short,
+    TypeDesc_UShort,
+
+    TypeDesc_FunctionPointer
+}
+HP_END_DECL_ENUM(TypeDescType);
+
 // Operand Format
 #define FORMAT_TYPE_MASK  0x1F
 
@@ -107,6 +152,8 @@ HP_BEGIN_DECL_ENUM(NSUInteger, ArgFormat) {
     Format_Address,
     Format_Float,
     Format_Binary,
+
+    Format_Structured,
 
     Format_Negate = 0x20,
     Format_LeadingZeroes = 0x40,
@@ -147,8 +194,8 @@ HP_END_DECL_ENUM(CPUEndianess);
 #define MAX_REGISTER_CLASS  16
 
 HP_BEGIN_DECL_ENUM(NSUInteger, RegClass) {
-    RegClass_CPUState = 0,                // State register
-    RegClass_PseudoRegisterSTACK = 1,     // Pseudo registers to simulate the stack
+    RegClass_CPUState = 0,                // CPU State registers
+    RegClass_PseudoRegisterSTACK = 1,     // Pseudo registers used to simulate the stack
 
     RegClass_GeneralPurposeRegister = 2,
 

@@ -25,8 +25,6 @@
 
 @protocol CPUContext
 
-- (NSObject<CPUContext> *)cloneContext;
-
 - (NSObject<CPUDefinition> *)cpuDefinition;
 
 - (void)initDisasmStructure:(DisasmStruct*)disasm withSyntaxIndex:(NSUInteger)syntaxIndex;
@@ -95,6 +93,11 @@
 /// for instance.
 - (BOOL)instructionCanBeUsedToExtractDirectMemoryReferences:(DisasmStruct *)disasmStruct;
 
+/// Return YES if the instruction may be used to build a switch/case statement.
+/// For instance, for the Intel processor, it returns YES for the "JMP reg" and the "JMP [xxx+reg*4]" instructions,
+/// and for the Am processor, it returns YES for the "TBB" and "TBH" instructions.
+- (BOOL)instructionMayBeASwitchStatement:(DisasmStruct *)disasmStruct;
+
 /// If a branch instruction is found, Hopper calls this method to compute additional destinations of the instruction.
 /// The "*next" value is already set to the address which follows the instruction if the jump does not occurs.
 /// The "branches" array is filled by NSNumber objects. The values are the addresses where the instruction can jump. Only the
@@ -124,7 +127,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 /// The method should return a default name for a local variable at a given displacement on stack.
-- (NSString *)formattedVariableNameForDisplacement:(int64_t)displacement inProcedure:(NSObject<HPProcedure> *)procedure;
+- (NSString *)defaultFormattedVariableNameForDisplacement:(int64_t)displacement inProcedure:(NSObject<HPProcedure> *)procedure;
 
 /// Returns YES if the displacement correcponds to an argument of the procedure.
 - (BOOL)displacementIsAnArgument:(int64_t)displacement forProcedure:(NSObject<HPProcedure> *)procedure;
