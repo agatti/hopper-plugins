@@ -51,7 +51,7 @@ static NSString * const kPluginBundleName = @"it.frob.hopper.-502"; // :(
 
 - (instancetype)initWithModels:(NSString *)fileName {
     if (self = [super init]) {
-        if (![self loadModelsFromPlist:kModelsFileName]) {
+        if (![self loadModelsFromPlist:fileName]) {
             return nil;
         }
 

@@ -15,6 +15,8 @@
 		685736B019859CD300D790A9 /* FRBOperandFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 685736AE19859CD300D790A9 /* FRBOperandFormatter.m */; };
 		6868D2811989BB1200323B5F /* FRBBaseContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 6868D27F1989BB1200323B5F /* FRBBaseContext.h */; };
 		6868D2821989BB1200323B5F /* FRBBaseContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 6868D2801989BB1200323B5F /* FRBBaseContext.m */; };
+		689BC5FD19C79E2700A8B6E2 /* FRBInstructionColouriser.h in Headers */ = {isa = PBXBuildFile; fileRef = 689BC5FB19C79E2700A8B6E2 /* FRBInstructionColouriser.h */; };
+		689BC5FE19C79E2700A8B6E2 /* FRBInstructionColouriser.m in Sources */ = {isa = PBXBuildFile; fileRef = 689BC5FC19C79E2700A8B6E2 /* FRBInstructionColouriser.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +32,8 @@
 		685736AE19859CD300D790A9 /* FRBOperandFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRBOperandFormatter.m; sourceTree = "<group>"; };
 		6868D27F1989BB1200323B5F /* FRBBaseContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRBBaseContext.h; sourceTree = "<group>"; };
 		6868D2801989BB1200323B5F /* FRBBaseContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRBBaseContext.m; sourceTree = "<group>"; };
+		689BC5FB19C79E2700A8B6E2 /* FRBInstructionColouriser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRBInstructionColouriser.h; sourceTree = "<group>"; };
+		689BC5FC19C79E2700A8B6E2 /* FRBInstructionColouriser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRBInstructionColouriser.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,12 +88,14 @@
 			isa = PBXGroup;
 			children = (
 				685736851985708600D790A9 /* Supporting Files */,
-				685736A51985715E00D790A9 /* FRBCPUSupport.h */,
-				685736A61985715E00D790A9 /* FRBCPUSupport.m */,
-				685736AD19859CD300D790A9 /* FRBOperandFormatter.h */,
-				685736AE19859CD300D790A9 /* FRBOperandFormatter.m */,
 				6868D27F1989BB1200323B5F /* FRBBaseContext.h */,
 				6868D2801989BB1200323B5F /* FRBBaseContext.m */,
+				685736A51985715E00D790A9 /* FRBCPUSupport.h */,
+				685736A61985715E00D790A9 /* FRBCPUSupport.m */,
+				689BC5FB19C79E2700A8B6E2 /* FRBInstructionColouriser.h */,
+				689BC5FC19C79E2700A8B6E2 /* FRBInstructionColouriser.m */,
+				685736AD19859CD300D790A9 /* FRBOperandFormatter.h */,
+				685736AE19859CD300D790A9 /* FRBOperandFormatter.m */,
 			);
 			path = 65xxCommon;
 			sourceTree = "<group>";
@@ -113,6 +119,7 @@
 				685736AC198573CF00D790A9 /* FRB65xxCommon-Prefix.pch in Headers */,
 				685736A71985715E00D790A9 /* FRBCPUSupport.h in Headers */,
 				685736AF19859CD300D790A9 /* FRBOperandFormatter.h in Headers */,
+				689BC5FD19C79E2700A8B6E2 /* FRBInstructionColouriser.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -167,6 +174,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				689BC5FE19C79E2700A8B6E2 /* FRBInstructionColouriser.m in Sources */,
 				685736A81985715E00D790A9 /* FRBCPUSupport.m in Sources */,
 				6868D2821989BB1200323B5F /* FRBBaseContext.m in Sources */,
 				685736B019859CD300D790A9 /* FRBOperandFormatter.m in Sources */,

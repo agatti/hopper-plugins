@@ -26,27 +26,29 @@
 
 #import <Foundation/Foundation.h>
 
-@protocol HPHopperServices;
-
-void SetOperandType(DisasmStruct *disasm, int operand,
-                    DisasmOperandType type, uint32_t size,
-                    int64_t immediate);
-Address SetAddressOperand(id<HPDisassembledFile> file, DisasmStruct *disasm,
-                          int operand, uint32_t size, uint32_t effectiveSize,
-                          uint32_t offset, uint32_t indexRegisters);
-Address SetRelativeAddressOperand(id<HPDisassembledFile> file,
-                                  DisasmStruct *disasm, int operand,
-                                  uint32_t size, uint32_t effectiveSize,
-                                  uint32_t offset);
-void SetConstantOperand(id<HPDisassembledFile> file, DisasmStruct *disasm,
-                        int operand, uint32_t size, uint32_t offset);
-BOOL CanReadBytes(id<HPDisassembledFile> file, Address address, size_t bytes);
+/*!
+ *  The instruction colouriser shared amongst all 65xx plugins.
+ */
+@interface ItFrobHopper65xxCommonInstructionColouriser : NSObject
 
 /*!
- *	Calculates the signed displacement for the given branch target value.
+ *	Initialises an instance of the instruction colouriser with the given data.
  *
- *	@param target the branch target value extracted from the opcode.
+ *	@param validOpcodes a list of valid opcodes for the CPU in use.
+ *	@param services     a reference to HPHopperService to fetch theme colours.
  *
- *	@return the calculated relative displacement.
+ *	@return an initialised instance of the instruction colouriser.
  */
-int64_t CalculateRelativeJumpTarget(int64_t target);
+- (instancetype)initWithOpcodesSet:(const NSSet *)validOpcodes
+                       andServices:(id<HPHopperServices>)services;
+
+/*!
+ *	Colourises the given string.
+ *
+ *	@param source an attributed string containing the text to colourise.
+ *
+ *	@return the colourised string, or the original string in case of problems.
+ */
+- (NSAttributedString *)colouriseInstruction:(NSAttributedString *)source;
+
+@end

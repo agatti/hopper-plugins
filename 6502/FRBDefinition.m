@@ -32,15 +32,11 @@
 // 65xxCommon library imports
 
 #import "FRBCPUSupport.h"
+#import "FRBInstructionColouriser.h"
 
 // HopperCommon library imports
 
 #import "NSDataHopperAdditions.h"
-
-/*!
- *	List of valid opcodes.
- */
-static const NSSet *kValidOpcodes;
 
 /*!
  *	CPU type and subtype model handler.
@@ -53,6 +49,11 @@ static const ItFrobHopper6502ModelHandler *kModelHandler;
      *  Hopper Services instance.
      */
     id<HPHopperServices> _services;
+
+    /*!
+     *	Instruction string colouriser.
+     */
+    ItFrobHopper65xxCommonInstructionColouriser *_colouriser;
 }
 
 @end
@@ -69,7 +70,8 @@ static const ItFrobHopper6502ModelHandler *kModelHandler;
             for (int index = 0; index < FRBUniqueOpcodesCount; index++) {
                 [opcodes addObject:[[NSString stringWithUTF8String:FRBInstructions[index].name] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]]];
             }
-            kValidOpcodes = opcodes;
+            _colouriser = [[ItFrobHopper65xxCommonInstructionColouriser alloc] initWithOpcodesSet:opcodes
+                                                                                      andServices:services];
             kModelHandler = [ItFrobHopper6502ModelHandler sharedModelHandler];
         });
     }
@@ -270,7 +272,7 @@ static const ItFrobHopper6502ModelHandler *kModelHandler;
 }
 
 - (NSAttributedString *)colorizeInstructionString:(NSAttributedString *)string {
-    return ColouriseInstructionString(string, kValidOpcodes, _services);
+    return [self->_colouriser colouriseInstruction:string];
 }
 
 - (NSData *)nopWithSize:(NSUInteger)size
