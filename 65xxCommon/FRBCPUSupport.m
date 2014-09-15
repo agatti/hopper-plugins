@@ -184,8 +184,6 @@ NSAttributedString *ColouriseInstructionString(NSAttributedString *string,
         [ranges addObject:[NSValue valueWithRange:currentRange]];
     }
 
-    [services logMessage:ranges.debugDescription];
-
     BOOL isOpcode = YES;
     for (NSValue *rangeValue in ranges) {
         BOOL done = NO;
