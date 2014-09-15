@@ -62,9 +62,30 @@ typedef NS_ENUM(NSUInteger, FRBAddressMode) {
 static const size_t FRBAddressModesCount = FRBAddressModeUnknown;
 
 static const size_t FRBOpcodeLength[FRBAddressModesCount] = {
-    3, 3, 3, 4, 4, 2, 1, 1, 1, // a a,x a,y al al,x, # A i s
-    3, 2, 3, 2, 2, 2, 2, 2, 2, // (a) r rl d d,x d,y (d,x) (d),y (d)
-    2, 2, 3, 2, 2, 3 // [d] [d],y (a,x) d,s (d,s),y xyc
+    3,
+    3,
+    3,
+    4,
+    4,
+    2,
+    1,
+    1,
+    1,
+    3,
+    2,
+    3,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    3,
+    2,
+    2,
+    3
 };
 
 typedef NS_ENUM(NSUInteger, FRBOpcodeCategory) {
@@ -82,7 +103,7 @@ typedef NS_ENUM(NSUInteger, FRBOpcodeCategory) {
     FRBOpcodeCategoryJumps,
     FRBOpcodeCategoryBranches,
     FRBOpcodeCategoryStatusFlagChanges,
-    FRBOpcodeCategoryBlockTransfer // Hu6280
+    FRBOpcodeCategoryBlockTransfer
 };
 
 typedef NS_ENUM(NSUInteger, FRBOpcodeType) {

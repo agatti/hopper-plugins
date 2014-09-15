@@ -28,7 +28,7 @@
 
 #import "FRBBaseContext.h"
 
-@interface ItFrobHopper65816Context : FRBBaseContext
+@interface ItFrobHopper65816Context : ItFrobHopper65xxCommonBaseContext
 
 - (instancetype)initWithCPU:(id<CPUDefinition>)cpu
                     andFile:(id<HPDisassembledFile>)file

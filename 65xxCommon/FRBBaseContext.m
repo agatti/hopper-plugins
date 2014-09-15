@@ -28,17 +28,11 @@
 
 #import "FRBHopperCommon.h"
 
-@implementation FRBBaseContext
-
-- (id<CPUContext>)cloneContext {
-    @throw [NSException exceptionWithName:@"NotImplementedException"
-                                   reason:@"Forgot to override -[FRBBaseContext cloneContext:]"
-                                 userInfo:nil];
-}
+@implementation ItFrobHopper65xxCommonBaseContext
 
 - (id<CPUDefinition>)cpuDefinition {
     @throw [NSException exceptionWithName:@"NotImplementedException"
-                                   reason:@"Forgot to override -[FRBBaseContext cpuDefinition:]"
+                                   reason:@"Forgot to override -[ItFrobHopper65xxCommonBaseContext cpuDefinition:]"
                                  userInfo:nil];
 }
 
@@ -99,7 +93,7 @@
 - (int)disassembleSingleInstruction:(DisasmStruct *)disasm
                  usingProcessorMode:(NSUInteger)mode {
     @throw [NSException exceptionWithName:@"NotImplementedException"
-                                   reason:@"Forgot to override -[FRBBaseContext disassembleSingleInstruction:usingProcessorMode:]"
+                                   reason:@"Forgot to override -[ItFrobHopper65xxCommonBaseContext disassembleSingleInstruction:usingProcessorMode:]"
                                  userInfo:nil];
 }
 
@@ -109,7 +103,7 @@
 
 - (BOOL)instructionHaltsExecutionFlow:(DisasmStruct *)disasm {
     @throw [NSException exceptionWithName:@"NotImplementedException"
-                                   reason:@"Forgot to override -[FRBBaseContext instructionHaltsExecutionFlow:]"
+                                   reason:@"Forgot to override -[ItFrobHopper65xxCommonBaseContext instructionHaltsExecutionFlow:]"
                                  userInfo:nil];
 }
 
@@ -136,7 +130,7 @@
 }
 
 - (NSString *)defaultFormattedVariableNameForDisplacement:(int64_t)displacement
-                                       inProcedure:(id<HPProcedure>)procedure {
+                                              inProcedure:(id<HPProcedure>)procedure {
     return [NSString stringWithFormat:@"var%lld", displacement];
 }
 
@@ -144,7 +138,7 @@
                     forSegment:(id<HPSegment>)segment
                 populatingInfo:(id<HPFormattedInstructionInfo>)formattedInstructionInfo {
     @throw [NSException exceptionWithName:@"NotImplementedException"
-                                   reason:@"Forgot to override -[FRBBaseContext buildInstructionString:forSegment:populatingInfo:]"
+                                   reason:@"Forgot to override -[ItFrobHopper65xxCommonBaseContext buildInstructionString:forSegment:populatingInfo:]"
                                  userInfo:nil];
 }
 

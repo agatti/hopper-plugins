@@ -119,12 +119,6 @@ static const ItFrobHopper6502ModelHandler *kModelHandler;
 
 #pragma mark CPUContext methods
 
-- (id<CPUContext>)cloneContext {
-    return [[ItFrobHopper6502Context alloc] initWithCPU:_cpu
-                                                andFile:_file
-                                           withServices:_services];
-}
-
 - (id<CPUDefinition>)cpuDefinition {
     return _cpu;
 }

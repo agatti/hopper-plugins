@@ -3,7 +3,7 @@ Hopper Plugins
 
 Plugins currently available in the repository:
 
-###**6502 CPU Support** - v0.1.0
+###**6502 CPU Support** - v0.1.1
 
 This CPU core plugin allows you to disassemble 6502/65C02 code, used in loads of home computers of the 70s, 80s, and early 90s, and in industrial automation or other specialised tasks where a microcontroller is needed.
 
@@ -115,7 +115,6 @@ CPUs currently supported: 6502, 65C02, HuC6280, M50734, R6500, R65C02, R65C19, R
 
 ####TODO for next version(s):
 
-* Rewrite colouriser.
 * Negation for hexadecimal, decimal, and octal types.
 * Re-test 6502, 65C02, R6500, R65C02, and W65C02 backends.
 * Write tests for the HuC6280 backend.
@@ -137,7 +136,7 @@ CPUs currently supported: 6502, 65C02, HuC6280, M50734, R6500, R65C02, R65C19, R
 * Undocumented opcodes are not recognised (and this is not going to change in the near future).
 * Rebuilding the test binaries requires having `xa` installed (available from homebrew via `brew install xa`).
 
-###**Sunplus CPU Support** - 0.0.1
+###**Sunplus CPU Support** - 0.0.2
 
 This CPU core plugin allows you to disassemble 6502 code that has been translated for Sunplus microcontrollers, used in some handheld games systems.
 
@@ -210,7 +209,7 @@ CPUs currently supported: 65N02, 65R02, 65S02, SunPlus.
 * Properly relocate files in the entire address space with BSS sections around data segments.
 * Have a customised memory map with named registers for each chip (needs BSS support first).
 
-###**65816 CPU Support** - 0.0.1
+###**65816 CPU Support** - 0.0.2
 
 This CPU core plugin allows you to disassemble 65816/65802 code, used in some of home computers of the 80s, and early 90s, for industrial automation or other specialised tasks where a microcontroller is needed, and in the Super Nintendo/Super Famicom games console.
 

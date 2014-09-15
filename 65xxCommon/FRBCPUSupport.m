@@ -30,194 +30,202 @@
 
 static BOOL IsBitsSizeValid(size_t size);
 
+typedef NS_ENUM(NSUInteger, FRBInstructionParserState) {
+    FRBInstructionParserStateLookingForOpcode = 0,
+    FRBInstructionParserStateParsingOpcode,
+    FRBInstructionParserStateSkippingSpace,
+    FRBInstructionParserStateParsingOperand,
+    FRBInstructionParserStateInsideOperandDoubleQuote,
+    FRBInstructionParserStateInsideOperandSingleQuote
+};
+
 NSAttributedString *ColouriseInstructionString(NSAttributedString *string,
                                                const NSSet *validOpcodes,
                                                id<HPHopperServices> services) {
+    NSDictionary *opcodeFormattingAttributes = [services ASMLanguageAttributes];
+    NSDictionary *numberFormattingAttributes = [services ASMNumberAttributes];
+
     NSMutableAttributedString *clone = [string mutableCopy];
     [clone beginEditing];
 
     NSString *rawString = clone.string;
-    NSScanner *scanner = [NSScanner scannerWithString:clone.string];
-    NSString *potentialOpcode;
-    [scanner scanUpToCharactersFromSet:[NSCharacterSet whitespaceCharacterSet]
-                            intoString:&potentialOpcode];
-    if (![validOpcodes containsObject:potentialOpcode]) {
-        return string;
-    }
 
-    NSDictionary *opcodeFormattingAttributes = [services ASMLanguageAttributes];
-    NSDictionary *numberFormattingAttributes = [services ASMNumberAttributes];
+    NSMutableArray *ranges = [NSMutableArray new];
 
-    [clone setAttributes:opcodeFormattingAttributes
-                   range:NSMakeRange(0, potentialOpcode.length)];
+    BOOL escaped = NO;
+    FRBInstructionParserState state = FRBInstructionParserStateLookingForOpcode;
+    NSUInteger stringOffset = 0;
+    NSRange currentRange = NSMakeRange(NSNotFound, 0);
 
-    if (!scanner.isAtEnd) {
-        [scanner scanCharactersFromSet:[NSCharacterSet whitespaceCharacterSet]
-                            intoString:nil];
-        NSUInteger offset = scanner.scanLocation;
-        const char *buffer = rawString.UTF8String;
-        NSInteger componentStart = NSNotFound;
-        BOOL numberFound = NO;
-        BOOL negativeMarkerFound = NO;
-        ArgFormat formatFound = Format_Decimal;
-        BOOL asciiFound = NO;
+    while (stringOffset < rawString.length) {
+        unichar character = [rawString characterAtIndex:stringOffset];
 
-        while (offset < rawString.length) {
-            unichar character = buffer[offset];
-
-            if (character == '#') {
-                if (numberFound) {
-                    // Duplicate immediate value markers should not appear, bail out.
-                    [clone endEditing];
-                    return clone;
+        switch (state) {
+            case FRBInstructionParserStateLookingForOpcode:
+                if (isspace(character)) {
+                    stringOffset++;
+                    continue;
                 }
 
-                [clone setAttributes:opcodeFormattingAttributes
-                               range:NSMakeRange(offset, 1)];
-                offset++;
-                continue;
-            }
+                state = FRBInstructionParserStateParsingOpcode;
 
-            if (character == '-') {
-                if (numberFound) {
-                    // Duplicate negative markers should not appear, bail out.
-                    [clone endEditing];
-                    return clone;
+                // Intentional Fallthrough
+
+            case FRBInstructionParserStateParsingOpcode:
+                if (currentRange.location == NSNotFound) {
+                    currentRange.location = stringOffset;
+                    continue;
                 }
 
-                componentStart = offset;
-                numberFound = YES;
-                negativeMarkerFound = YES;
-                offset++;
-                continue;
-            }
-
-            if (character == '%' || character == '$') {
-                if (numberFound) {
-                    // Duplicate format markers should not appear, bail out.
-                    [clone endEditing];
-                    return clone;
-                }
-
-                componentStart = offset;
-                numberFound = YES;
-
-                switch (character) {
-                    case '$':
-                        formatFound = Format_Hexadecimal;
-                        break;
-
-                    case '%':
-                        formatFound = Format_Binary;
-                        if (negativeMarkerFound) {
-                            // Negative binary numbers should not appear, bail out.
-                            [clone endEditing];
-                            return clone;
-                        }
-                        break;
-
-                    default:
-                        // Should not happen!
-                        break;
-                }
-
-                offset++;
-                continue;
-            }
-
-            if (isdigit(character) && !asciiFound) {
-                if (formatFound == Format_Binary) {
-                    if (character != '0' && character != '1') {
-                        // Non-binary digits found with a binary format marker, bail out.
+                if (!isalnum(character)) {
+                    if (![validOpcodes containsObject:[rawString substringWithRange:currentRange]]) {
                         [clone endEditing];
-                        return clone;
+                        return string;
                     }
+
+                    [ranges addObject:[NSValue valueWithRange:currentRange]];
+                    state = FRBInstructionParserStateSkippingSpace;
+                    currentRange = NSMakeRange(NSNotFound, 0);
+                    continue;
                 }
 
-                if (!numberFound) {
-                    componentStart = offset;
-                    numberFound = YES;
+                currentRange.length++;
+                stringOffset++;
+                break;
+
+            case FRBInstructionParserStateSkippingSpace:
+                if (isspace(character)) {
+                    stringOffset++;
+                    continue;
                 }
-                offset++;
+
+                state = FRBInstructionParserStateParsingOperand;
+
+                // Intentional Fallthrough
+
+            case FRBInstructionParserStateParsingOperand: {
+                BOOL alreadyIncremented = NO;
+                BOOL operandFound = NO;
+
+                if (currentRange.location == NSNotFound) {
+                    currentRange.location = stringOffset;
+                    currentRange.length++;
+                    alreadyIncremented = YES;
+                }
+
+                switch (character) {
+                    case '\'':
+                        state = FRBInstructionParserStateInsideOperandSingleQuote;
+                        break;
+
+                    case '"':
+                        state = FRBInstructionParserStateInsideOperandDoubleQuote;
+                        break;
+
+                    case '\\':
+                        escaped = YES;
+                        break;
+
+                    case ',':
+                        operandFound = YES;
+                        break;
+
+                    default:
+                        break;
+                }
+
+                stringOffset++;
+                if (!alreadyIncremented && !operandFound) {
+                    currentRange.length++;
+                }
+
+                if (operandFound) {
+                    [ranges addObject:[NSValue valueWithRange:currentRange]];
+                    state = FRBInstructionParserStateSkippingSpace;
+                    currentRange = NSMakeRange(NSNotFound, 0);
+                }
+
+                break;
+            }
+
+            case FRBInstructionParserStateInsideOperandSingleQuote:
+                currentRange.length++;
+                stringOffset++;
+                if (character != '\'') {
+                    continue;
+                }
+
+                if (escaped) {
+                    escaped = NO;
+                }
+
+                state = FRBInstructionParserStateParsingOperand;
+                break;
+
+            case FRBInstructionParserStateInsideOperandDoubleQuote:
+                currentRange.length++;
+                stringOffset++;
+                if (character != '"') {
+                    continue;
+                }
+
+                if (escaped) {
+                    escaped = NO;
+                }
+
+                state = FRBInstructionParserStateParsingOperand;
+                break;
+            default:
+                break;
+        }
+    }
+
+    if (currentRange.location != NSNotFound) {
+        [ranges addObject:[NSValue valueWithRange:currentRange]];
+    }
+
+    [services logMessage:ranges.debugDescription];
+
+    BOOL isOpcode = YES;
+    for (NSValue *rangeValue in ranges) {
+        BOOL done = NO;
+        NSRange range = rangeValue.rangeValue;
+        NSUInteger firstValidOffset = range.location;
+
+        while ((firstValidOffset - range.location) <= range.length && !done) {
+            unichar character = [rawString characterAtIndex:firstValidOffset];
+
+            if (isspace(character) || character == '(' || character == '[') {
+                firstValidOffset++;
+                range.location++;
+                range.length--;
                 continue;
             }
 
-            if (formatFound == Format_Hexadecimal) {
-                switch (character) {
-                    case 'A':
-                    case 'B':
-                    case 'C':
-                    case 'D':
-                    case 'E':
-                    case 'F':
-                        offset++;
-                        continue;
-
-                    default:
-                        // Non-hexadecimal digit found, mark and exit.
-                        [clone setAttributes:numberFormattingAttributes
-                                       range:NSMakeRange(componentStart, offset - componentStart)];
-                        numberFound = NO;
-                        negativeMarkerFound = NO;
-                        asciiFound = NO;
-                        formatFound = Format_Default;
-                }
-            }
-
-            if (character == 'o' && formatFound != Format_Binary &&
-                formatFound != Format_Hexadecimal && numberFound) {
-
-                // Octal end marker found, mark and exit.
-                offset++;
-                [clone setAttributes:numberFormattingAttributes
-                               range:NSMakeRange(componentStart, offset - componentStart)];
-                numberFound = NO;
-                negativeMarkerFound = NO;
-                asciiFound = NO;
-                formatFound = Format_Default;
-            }
-
-            if (numberFound && !asciiFound) {
-                // Non-digit marker found, mark and exit.
-
-                offset++;
-                [clone setAttributes:numberFormattingAttributes
-                               range:NSMakeRange(componentStart, offset - componentStart)];
-                numberFound = NO;
-                negativeMarkerFound = NO;
-                asciiFound = NO;
-                formatFound = Format_Default;
-            }
-
-            if (!asciiFound && isalnum(character)) {
-                // Identifier found
-
-                asciiFound = YES;
-                componentStart = offset;
-            }
-
-            if (character == ',' || character == '(' || character == ')') {
-                // New parameter, reset state
-
-                numberFound = NO;
-                negativeMarkerFound = NO;
-                asciiFound = NO;
-                formatFound = Format_Default;
-            }
-
-            // Nothing found yet, keep on iterating.
-            offset++;
+            done = true;
         }
 
-        if ((numberFound || asciiFound) && componentStart != NSNotFound) {
-            // Reached EOL whilst scanning for a number, mark and exit.
-            [clone setAttributes:numberFormattingAttributes
-                           range:NSMakeRange(componentStart, offset - componentStart)];
+        done = NO;
+        NSUInteger lastValidOffset = range.location + range.length - 1;
+        while (lastValidOffset != range.location && !done) {
+            unichar character = [rawString characterAtIndex:lastValidOffset];
+
+            if (!isspace(character) && character != ')' && character != ']') {
+                done = true;
+                continue;
+            }
+
+            range.length--;
+            lastValidOffset--;
         }
+
+        [clone setAttributes:isOpcode ? opcodeFormattingAttributes : numberFormattingAttributes
+                       range:range];
+        isOpcode = NO;
     }
-    
+
     [clone endEditing];
-    
+
     return clone;
 }
 

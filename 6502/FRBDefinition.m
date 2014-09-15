@@ -92,7 +92,7 @@ static const ItFrobHopper6502ModelHandler *kModelHandler;
 }
 
 - (NSString *)pluginName {
-    return @"6502/65c02";
+    return @"6502";
 }
 
 - (NSString *)pluginDescription {
@@ -108,7 +108,7 @@ static const ItFrobHopper6502ModelHandler *kModelHandler;
 }
 
 - (NSString *)pluginVersion {
-    return @"0.1.0";
+    return @"0.1.1";
 }
 
 - (NSArray *)cpuFamilies {

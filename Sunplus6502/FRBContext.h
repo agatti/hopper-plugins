@@ -28,7 +28,7 @@
 
 #import "FRBBaseContext.h"
 
-@interface ItFrobHopperSunplus6502Context : FRBBaseContext
+@interface ItFrobHopperSunplus6502Context : ItFrobHopper65xxCommonBaseContext
 
 /*!
  *	Initialises a CPU context object.
