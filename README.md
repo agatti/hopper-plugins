@@ -3,7 +3,21 @@ Hopper Plugins
 
 Plugins currently available in the repository:
 
-###**6502 CPU Support** - v0.1.1
+**CPU plugins:**
+
+* [65xx](#65xx-cpu-plugin)
+* [65816](#65816-cpu-plugin)
+* [8x300](#8x300-cpu-plugin)
+* [Sunplus](#sunplus-cpu-plugin)
+
+**File loader plugins:**
+
+* [Commodore 8-bit binaries](#c64-file-loader-plugin)
+
+<hr/>
+
+
+###**65xx CPU Plugin** - v0.1.1
 
 This CPU core plugin allows you to disassemble 6502/65C02 code, used in loads of home computers of the 70s, 80s, and early 90s, and in industrial automation or other specialised tasks where a microcontroller is needed.
 
@@ -108,8 +122,9 @@ CPUs currently supported: 6502, 65C02, HuC6280, M50734, R6500, R65C02, R65C19, R
 <tr><td>UM6512</td><td>Generic &rarr; 6502</td><td><a href="http://pdf.datasheetarchive.com/datasheetsmain/Datasheets-39/DSA-774496.pdf">Datasheet</a></td></tr>
 <tr><td rowspan="2">VLSI</td><td>6502A</td><td>Generic &rarr; 6502</td><td>N/A</td></tr>
 <tr><td>VL65NC02</td><td>WDC &rarr; W65C02S</td><td><a href="http://pdf.datasheetarchive.com/indexerfiles/Scans-091/DSAHI000173435.pdf">Datasheet</a></td></tr>
-<tr><td rowspan="2">WDC</td><td>W65C02S</td><td>WDC &rarr; W65C02S</td><td><a href="http://www.6502.org/documents/datasheets/wdc/wdc_w65c02s_oct_19_2010.pdf">Datasheet</a></td></tr>
+<tr><td rowspan="3">WDC</td><td>W65C02S</td><td>WDC &rarr; W65C02S</td><td><a href="http://www.6502.org/documents/datasheets/wdc/wdc_w65c02s_oct_19_2010.pdf">Datasheet</a></td></tr>
 <tr><td>W65C134S</td><td>WDC &rarr; W65C02S</td><td><a href="http://archive.6502.org/datasheets/wdc_w65c134s_aug_31_2010.pdf">Datasheet</a></td></tr>
+<tr><td>W65C02GPMCU</td><td>WDC &rarr; W65C02S</td><td><a href="http://www.westerndesigncenter.com/wdc/documentation/W65C02GPMCU_DS.pdf">Datasheet</a></td></tr>
 </tbody>
 </table>
 
@@ -136,7 +151,9 @@ CPUs currently supported: 6502, 65C02, HuC6280, M50734, R6500, R65C02, R65C19, R
 * Undocumented opcodes are not recognised (and this is not going to change in the near future).
 * Rebuilding the test binaries requires having `xa` installed (available from homebrew via `brew install xa`).
 
-###**Sunplus CPU Support** - 0.0.2
+<hr/>
+
+###**Sunplus CPU Plugin** - 0.0.2
 
 This CPU core plugin allows you to disassemble 6502 code that has been translated for Sunplus microcontrollers, used in some handheld games systems.
 
@@ -209,7 +226,9 @@ CPUs currently supported: 65N02, 65R02, 65S02, SunPlus.
 * Properly relocate files in the entire address space with BSS sections around data segments.
 * Have a customised memory map with named registers for each chip (needs BSS support first).
 
-###**65816 CPU Support** - 0.0.2
+<hr/>
+
+###**65816 CPU Plugin** - 0.0.2
 
 This CPU core plugin allows you to disassemble 65816/65802 code, used in some of home computers of the 80s, and early 90s, for industrial automation or other specialised tasks where a microcontroller is needed, and in the Super Nintendo/Super Famicom games console.
 
@@ -222,9 +241,10 @@ CPUs currently supported: 65816.
 <tbody>
 <tr><td rowspan="2">California Micro Devices</td><td>G65SC816</td><td>Generic &rarr; 65816</td><td><a href="http://pdf.datasheetarchive.com/datasheetsmain/Datasheets-112/DSAP0047321.pdf">Datasheet</a></td></tr>
 <tr><td>G65SC802</td><td>Generic &rarr; 65816</td><td><a href="http://pdf.datasheetarchive.com/datasheetsmain/Datasheets-112/DSAP0047321.pdf">Datasheet</a></td></tr>
-<tr><td rowspan="3">WDC</td><td>W65C816S</td><td>Generic &rarr; 65816</td><td><a href="http://archive.6502.org/datasheets/wdc_w65c816s_aug_4_2008.pdf">Datasheet</a></td></tr>
+<tr><td rowspan="4">WDC</td><td>W65C816S</td><td>Generic &rarr; 65816</td><td><a href="http://archive.6502.org/datasheets/wdc_w65c816s_aug_4_2008.pdf">Datasheet</a></td></tr>
 <tr><td>W65C802S</td><td>Generic &rarr; 65816</td><td><a href="#">N/A</a></td></tr>
-<tr><td>W65C265S</td><td>Generic &rarr; 65816</td><td><a href="#">N/A</a></td></tr>
+<tr><td>W65C265S</td><td>Generic &rarr; 65816</td><td><a href="http://www.westerndesigncenter.com/wdc/documentation/w65c265s.pdf">Datasheet</a></td></tr>
+<tr><td>W65C816GPMCU</td><td>Generic &rarr; 65816</td><td><a href="http://www.westerndesigncenter.com/wdc/documentation/W65C816GPMCU_DS.pdf">Datasheet</a></td></tr>
 </tbody>
 </table>
 
@@ -242,7 +262,9 @@ CPUs currently supported: 65816.
 
 * Rebuilding the test binaries requires having `xa` installed (available from homebrew via `brew install xa`).
 
-###**8x300 CPU Support** - 0.0.1
+<hr/>
+
+###**8x300 CPU Plugin** - 0.0.1
 
 This CPU core plugin allows you to disassemble 8x300 code, used in early signal processing equipment in the 70s and early 80s.
 
@@ -253,8 +275,8 @@ CPUs currently supported: 8x300.
 <tr><th>Manufacturer</th><th>Model</th><th>Provider</th><th>Datasheet</th></tr>
 </thead>
 <tbody>
-<tr><td rowspan="1">Signetics</td><td>G65SC816</td><td>Generic &rarr; 8x300</td><td><a href="#">N/A</a></td></tr>
-<tr><td rowspan="1">Scientific Micro Systems</td><td>SMS300</td><td>Generic &rarr; 8x300</td><td><a href="https://ia601607.us.archive.org/1/items/bitsavers_signetics8ep80_3401307/8x300_Data_Sheet_Sep80.pdf">Datasheet</a></td></tr>
+<tr><td>Scientific Micro Systems</td><td>SMS300</td><td>Generic &rarr; 8x300</td><td><a href="#">N/A</a></td></tr>
+<tr><td>Signetics</td><td>SGS8x300</td><td>Generic &rarr; 8x300</td><td><a href="https://ia601607.us.archive.org/1/items/bitsavers_signetics8ep80_3401307/8x300_Data_Sheet_Sep80.pdf">Datasheet</a></td></tr>
 </tbody>
 </table>
 
@@ -262,8 +284,12 @@ CPUs currently supported: 8x300.
 
 * Simplify opcodes by removing redundant zero rotations and lengths.
 * Create a test suite.
+* Add support for more 8x300 variants if any are found in the wild.
+* Attempt to reject files too big for address-space reduced chip variants.
 
-###**CBM File Loader** - 0.1.0
+<hr/>
+
+###**CBM File Loader Plugin** - 0.1.0
 
 This file loader plugin allows you to load Commodore 16/116/64/+4/VC20/VIC20 binaries to be disassembled.  Commodore 128 files are currently not supported due to the fact that binaries may be bigger than 64k and thus something may need to be rearranged.  _(Please note that the plugin depends on the 6502 CPU core to be installed in order to work properly)_
 
