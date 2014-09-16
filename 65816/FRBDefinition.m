@@ -67,7 +67,7 @@ static ItFrobHopper65816ModelHandler *kModelHandler;
         dispatch_once(&onceToken, ^{
             NSMutableSet *opcodes = [NSMutableSet new];
             for (int index = 0; index < FRBUniqueOpcodesCount; index++) {
-                [opcodes addObject:[[NSString stringWithUTF8String:FRBInstructions[index].name] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+                [opcodes addObject:[[NSString stringWithUTF8String:FRBInstructions[index].name] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]]];
             }
             _colouriser = [[ItFrobHopper65xxCommonInstructionColouriser alloc] initWithOpcodesSet:opcodes
                                                                                       andServices:services];
@@ -85,7 +85,7 @@ static ItFrobHopper65816ModelHandler *kModelHandler;
 }
 
 - (UUID *)pluginUUID {
-    return [_services UUIDWithString:@"18d19920-2858-11e4-8c21-0800200c9a66"];
+    return [_services UUIDWithString:@"18D19920-2858-11E4-8C21-0800200C9A66"];
 }
 
 - (HopperPluginType)pluginType {
@@ -93,7 +93,7 @@ static ItFrobHopper65816ModelHandler *kModelHandler;
 }
 
 - (NSString *)pluginName {
-    return @"65816/65802";
+    return @"65816";
 }
 
 - (NSString *)pluginDescription {

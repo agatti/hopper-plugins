@@ -125,7 +125,7 @@ typedef NS_ENUM(NSUInteger, FRBInstructionParserState) {
                 }
 
                 if (!isalnum(character)) {
-                    if (![self->_validOpcodes containsObject:[rawString substringWithRange:currentRange]]) {
+                    if (![_validOpcodes containsObject:[rawString substringWithRange:currentRange]]) {
                         [clone endEditing];
                         return source;
                     }
@@ -266,7 +266,7 @@ typedef NS_ENUM(NSUInteger, FRBInstructionParserState) {
             lastValidOffset--;
         }
 
-        [clone setAttributes:isOpcode ? self->_opcodeFormattingAttributes : self->_numberFormattingAttributes
+        [clone setAttributes:isOpcode ? _opcodeFormattingAttributes : _numberFormattingAttributes
                        range:range];
         isOpcode = NO;
     }
