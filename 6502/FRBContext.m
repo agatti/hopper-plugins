@@ -29,12 +29,15 @@
 #import "FRBDefinition.h"
 #import "FRBModelHandler.h"
 #import "FRBProvider.h"
+
+// 65xxCommon library imports
+
 #import "FRBCPUSupport.h"
-#import "FRBOperandFormatter.h"
 
 // HopperCommon library imports
 
 #import "FRBHopperCommon.h"
+#import "FRBOperandFormatter.h"
 
 /*!
  *	Opcode instruction string formats.
@@ -125,6 +128,7 @@ static const ItFrobHopper6502ModelHandler *kModelHandler;
 
 - (int)disassembleSingleInstruction:(DisasmStruct *)disasm
                  usingProcessorMode:(NSUInteger)mode {
+    InitialiseDisasmStruct(disasm);
     disasm->instruction.pcRegisterValue = disasm->virtualAddr;
     uint8_t opcodeByte = [_file readUInt8AtVirtualAddress:disasm->virtualAddr];
     const struct FRBOpcode *opcode = [_provider opcodeForByte:opcodeByte];

@@ -26,7 +26,18 @@
 
 #import <Foundation/Foundation.h>
 
-#import "FRBProvider.h"
+@protocol FRBProvider;
 
-@interface ItFrobHopper65816Generic65816 : NSObject<FRBProvider>
+@interface ItFrobHopper8x300ModelHandler : NSObject
+
++ (instancetype)sharedModelHandler;
+
+@property (strong, nonatomic, readonly) NSDictionary *models;
+
+- (void)registerProvider:(Class)provider
+                 forName:(NSString *)name;
+- (NSString *)providerNameForFamily:(NSString *)family
+                       andSubFamily:(NSString *)subFamily;
+- (id<FRBProvider>)providerForName:(NSString *)name;
+
 @end

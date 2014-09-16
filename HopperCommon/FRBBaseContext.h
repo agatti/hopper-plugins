@@ -26,7 +26,9 @@
 
 #import <Foundation/Foundation.h>
 
-#import "FRBProvider.h"
-
-@interface ItFrobHopper65816Generic65816 : NSObject<FRBProvider>
+/*!
+ * Concrete class to derive CPU Context classes from, removing loads
+ * of boilerplate.
+ */
+@interface ItFrobHopperHopperCommonBaseContext : NSObject<CPUContext>
 @end

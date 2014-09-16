@@ -272,7 +272,7 @@ static const ItFrobHopper6502ModelHandler *kModelHandler;
 }
 
 - (NSAttributedString *)colorizeInstructionString:(NSAttributedString *)string {
-    return [self->_colouriser colouriseInstruction:string];
+    return [_colouriser colouriseInstruction:string];
 }
 
 - (NSData *)nopWithSize:(NSUInteger)size

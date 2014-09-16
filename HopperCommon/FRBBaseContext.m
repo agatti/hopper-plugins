@@ -28,11 +28,11 @@
 
 #import "FRBHopperCommon.h"
 
-@implementation ItFrobHopper65xxCommonBaseContext
+@implementation ItFrobHopperHopperCommonBaseContext
 
 - (id<CPUDefinition>)cpuDefinition {
     @throw [NSException exceptionWithName:@"NotImplementedException"
-                                   reason:@"Forgot to override -[ItFrobHopper65xxCommonBaseContext cpuDefinition:]"
+                                   reason:@"Forgot to override -[ItFrobHopperHopperCommonBaseContext cpuDefinition:]"
                                  userInfo:nil];
 }
 
@@ -93,7 +93,7 @@
 - (int)disassembleSingleInstruction:(DisasmStruct *)disasm
                  usingProcessorMode:(NSUInteger)mode {
     @throw [NSException exceptionWithName:@"NotImplementedException"
-                                   reason:@"Forgot to override -[ItFrobHopper65xxCommonBaseContext disassembleSingleInstruction:usingProcessorMode:]"
+                                   reason:@"Forgot to override -[ItFrobHopperHopperCommonBaseContext disassembleSingleInstruction:usingProcessorMode:]"
                                  userInfo:nil];
 }
 
@@ -103,7 +103,7 @@
 
 - (BOOL)instructionHaltsExecutionFlow:(DisasmStruct *)disasm {
     @throw [NSException exceptionWithName:@"NotImplementedException"
-                                   reason:@"Forgot to override -[ItFrobHopper65xxCommonBaseContext instructionHaltsExecutionFlow:]"
+                                   reason:@"Forgot to override -[ItFrobHopperHopperCommonBaseContext instructionHaltsExecutionFlow:]"
                                  userInfo:nil];
 }
 
@@ -138,7 +138,7 @@
                     forSegment:(id<HPSegment>)segment
                 populatingInfo:(id<HPFormattedInstructionInfo>)formattedInstructionInfo {
     @throw [NSException exceptionWithName:@"NotImplementedException"
-                                   reason:@"Forgot to override -[ItFrobHopper65xxCommonBaseContext buildInstructionString:forSegment:populatingInfo:]"
+                                   reason:@"Forgot to override -[ItFrobHopperHopperCommonBaseContext buildInstructionString:forSegment:populatingInfo:]"
                                  userInfo:nil];
 }
 

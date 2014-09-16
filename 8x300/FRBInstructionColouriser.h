@@ -26,7 +26,29 @@
 
 #import <Foundation/Foundation.h>
 
-#import "FRBProvider.h"
+/*!
+ *  The instruction colouriser for the 8x300 plugin.
+ */
+@interface ItFrobHopper8x300InstructionColouriser : NSObject
 
-@interface ItFrobHopper65816Generic65816 : NSObject<FRBProvider>
+/*!
+ *	Initialises an instance of the instruction colouriser with the given data.
+ *
+ *	@param validOpcodes a list of valid opcodes for the CPU in use.
+ *	@param services     a reference to HPHopperService to fetch theme colours.
+ *
+ *	@return an initialised instance of the instruction colouriser.
+ */
+- (instancetype)initWithOpcodesSet:(const NSSet *)validOpcodes
+                       andServices:(id<HPHopperServices>)services;
+
+/*!
+ *	Colourises the given string.
+ *
+ *	@param source an attributed string containing the text to colourise.
+ *
+ *	@return the colourised string, or the original string in case of problems.
+ */
+- (NSAttributedString *)colouriseInstruction:(NSAttributedString *)source;
+
 @end

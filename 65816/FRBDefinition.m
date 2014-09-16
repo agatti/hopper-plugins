@@ -67,7 +67,7 @@ static ItFrobHopper65816ModelHandler *kModelHandler;
         dispatch_once(&onceToken, ^{
             NSMutableSet *opcodes = [NSMutableSet new];
             for (int index = 0; index < FRBUniqueOpcodesCount; index++) {
-                [opcodes addObject:[NSString stringWithUTF8String:FRBInstructions[index].name]];
+                [opcodes addObject:[[NSString stringWithUTF8String:FRBInstructions[index].name] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
             }
             _colouriser = [[ItFrobHopper65xxCommonInstructionColouriser alloc] initWithOpcodesSet:opcodes
                                                                                       andServices:services];
@@ -272,7 +272,7 @@ static ItFrobHopper65816ModelHandler *kModelHandler;
 }
 
 - (NSAttributedString *)colorizeInstructionString:(NSAttributedString *)string {
-    return [self->_colouriser colouriseInstruction:string];
+    return [_colouriser colouriseInstruction:string];
 }
 
 - (NSData *)nopWithSize:(NSUInteger)size

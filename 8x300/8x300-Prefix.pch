@@ -1,5 +1,5 @@
-/*
- Copyright (c) 2014, Alessandro Gatti - frob.it
+/*!
+ Copyright (c) 2014, Alessandro Gatti
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -24,9 +24,8 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import <Foundation/Foundation.h>
+#ifdef __OBJC__
+    #import <Cocoa/Cocoa.h>
+#endif
 
-#import "FRBProvider.h"
-
-@interface ItFrobHopper65816Generic65816 : NSObject<FRBProvider>
-@end
+#import <Hopper/Hopper.h>

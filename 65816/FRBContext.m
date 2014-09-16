@@ -30,11 +30,15 @@
 #import "FRBModelHandler.h"
 #import "FRBProvider.h"
 #import "FRBOperandFormatter.h"
+
+// 65xxCommon library imports
+
 #import "FRBCPUSupport.h"
 
 // HopperCommon library imports
 
 #import "FRBHopperCommon.h"
+#import "FRBOperandFormatter.h"
 
 static const NSArray *kOpcodeFormats;
 static const ItFrobHopper65816ModelHandler *kModelHandler;
@@ -118,14 +122,10 @@ static const ItFrobHopper65816ModelHandler *kModelHandler;
     return _cpu;
 }
 
-- (void)initDisasmStructure:(DisasmStruct *)disasm
-            withSyntaxIndex:(NSUInteger)syntaxIndex {
-    bzero(disasm, sizeof(DisasmStruct));
-}
-
-
 - (int)disassembleSingleInstruction:(DisasmStruct *)disasm
                  usingProcessorMode:(NSUInteger)mode {
+    InitialiseDisasmStruct(disasm);
+
     disasm->instruction.pcRegisterValue = disasm->virtualAddr;
     uint8_t opcodeByte = [_file readUInt8AtVirtualAddress:disasm->virtualAddr];
     const struct FRBOpcode *opcode = [_provider opcodeForByte:opcodeByte];

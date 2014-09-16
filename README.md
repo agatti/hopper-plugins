@@ -222,9 +222,9 @@ CPUs currently supported: 65816.
 <tbody>
 <tr><td rowspan="2">California Micro Devices</td><td>G65SC816</td><td>Generic &rarr; 65816</td><td><a href="http://pdf.datasheetarchive.com/datasheetsmain/Datasheets-112/DSAP0047321.pdf">Datasheet</a></td></tr>
 <tr><td>G65SC802</td><td>Generic &rarr; 65816</td><td><a href="http://pdf.datasheetarchive.com/datasheetsmain/Datasheets-112/DSAP0047321.pdf">Datasheet</a></td></tr>
-<tr><td rowspan="3">WDC</td><td>W65C816S</td><td>Generic &rarr; 65816</td><td><a href="#">Datasheet</a></td></tr>
-<tr><td>W65C802S</td><td>Generic &rarr; 65816</td><td><a href="#">Datasheet</a></td></tr>
-<tr><td>W65C265S</td><td>Generic &rarr; 65816</td><td><a href="#">Datasheet</a></td></tr>
+<tr><td rowspan="3">WDC</td><td>W65C816S</td><td>Generic &rarr; 65816</td><td><a href="http://archive.6502.org/datasheets/wdc_w65c816s_aug_4_2008.pdf">Datasheet</a></td></tr>
+<tr><td>W65C802S</td><td>Generic &rarr; 65816</td><td><a href="#">N/A</a></td></tr>
+<tr><td>W65C265S</td><td>Generic &rarr; 65816</td><td><a href="#">N/A</a></td></tr>
 </tbody>
 </table>
 
@@ -241,6 +241,27 @@ CPUs currently supported: 65816.
 ####Caveats:
 
 * Rebuilding the test binaries requires having `xa` installed (available from homebrew via `brew install xa`).
+
+###**8x300 CPU Support** - 0.0.1
+
+This CPU core plugin allows you to disassemble 8x300 code, used in early signal processing equipment in the 70s and early 80s.
+
+CPUs currently supported: 8x300.
+
+<table>
+<thead>
+<tr><th>Manufacturer</th><th>Model</th><th>Provider</th><th>Datasheet</th></tr>
+</thead>
+<tbody>
+<tr><td rowspan="1">Signetics</td><td>G65SC816</td><td>Generic &rarr; 8x300</td><td><a href="#">N/A</a></td></tr>
+<tr><td rowspan="1">Scientific Micro Systems</td><td>SMS300</td><td>Generic &rarr; 8x300</td><td><a href="https://ia601607.us.archive.org/1/items/bitsavers_signetics8ep80_3401307/8x300_Data_Sheet_Sep80.pdf">Datasheet</a></td></tr>
+</tbody>
+</table>
+
+####TODO for next version:
+
+* Simplify opcodes by removing redundant zero rotations and lengths.
+* Create a test suite.
 
 ###**CBM File Loader** - 0.1.0
 

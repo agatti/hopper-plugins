@@ -26,7 +26,12 @@
 
 #import <Foundation/Foundation.h>
 
-#import "FRBProvider.h"
+#import "FRBBaseContext.h"
 
-@interface ItFrobHopper65816Generic65816 : NSObject<FRBProvider>
+@interface ItFrobHopper8x300Context : ItFrobHopperHopperCommonBaseContext
+
+- (instancetype)initWithCPU:(id<CPUDefinition>)cpu
+                    andFile:(id<HPDisassembledFile>)file
+               withServices:(id<HPHopperServices>)services;
+
 @end

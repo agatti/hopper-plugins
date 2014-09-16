@@ -45,3 +45,14 @@ void InitialiseDisasmStruct(DisasmStruct *disasmStruct);
  *	@return the signed value representation of the given NSNumber instance.
  */
 int64_t SignedValue(NSNumber *value, size_t size);
+
+/*!
+ *	Changes format for the given argument, if it is still set as default.
+ *
+ *	@param file     the file to operate on.
+ *	@param address  the instruction address.
+ *	@param operand  the index of the argument to change.
+ *	@param format   the new format for the argument.
+ */
+void SetDefaultFormatForArgument(id<HPDisassembledFile> file, Address address,
+                                 int argument, ArgFormat format);

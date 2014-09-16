@@ -24,25 +24,18 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#import "FRBBase.h"
 #import "FRBDefinition.h"
 #import "FRBContext.h"
-#import "FRBBase.h"
 #import "FRBModelHandler.h"
-
-// 65xxCommon library imports
-
 #import "FRBInstructionColouriser.h"
 
-// HopperCommon library imports
-
-#import "NSDataHopperAdditions.h"
-
 /*!
- *	CPU type and subtype model handler.
+ *	Backend model handler.
  */
-static const ItFrobHopperSunplus6502ModelHandler *kModelHandler;
+static ItFrobHopper8x300ModelHandler *kModelHandler;
 
-@interface ItFrobHopperSunplus6502Definition () {
+@interface ItFrobHopper8x300Definition () {
 
     /*!
      *  Hopper Services instance.
@@ -52,26 +45,27 @@ static const ItFrobHopperSunplus6502ModelHandler *kModelHandler;
     /*!
      *	Instruction string colouriser.
      */
-    ItFrobHopper65xxCommonInstructionColouriser *_colouriser;
+    ItFrobHopper8x300InstructionColouriser *_colouriser;
 }
 
 @end
 
-@implementation ItFrobHopperSunplus6502Definition
+@implementation ItFrobHopper8x300Definition
 
 - (id<HopperPlugin>)initWithHopperServices:(id<HPHopperServices>)services {
     if (self = [super init]) {
         _services = services;
-
         static dispatch_once_t onceToken;
         dispatch_once(&onceToken, ^{
+            kModelHandler = [ItFrobHopper8x300ModelHandler sharedModelHandler];
+
             NSMutableSet *opcodes = [NSMutableSet new];
-            for (int index = 0; index < FRBUniqueOpcodesCount; index++) {
-                [opcodes addObject:[[NSString stringWithUTF8String:FRBInstructions[index].name] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]]];
+            for (int index = 0; index < FRB8x300OpcodesCount; index++) {
+                [opcodes addObject:[[NSString stringWithUTF8String:kOpcodeNames[index]] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]]];
             }
-            _colouriser = [[ItFrobHopper65xxCommonInstructionColouriser alloc] initWithOpcodesSet:opcodes
-                                                                                      andServices:services];
-            kModelHandler = [ItFrobHopperSunplus6502ModelHandler sharedModelHandler];
+            _colouriser = [[ItFrobHopper8x300InstructionColouriser alloc] initWithOpcodesSet:opcodes
+                                                                                 andServices:services];
+
         });
     }
 
@@ -79,13 +73,13 @@ static const ItFrobHopperSunplus6502ModelHandler *kModelHandler;
 }
 
 - (id<CPUContext>)buildCPUContextForFile:(id<HPDisassembledFile>)file {
-    return [[ItFrobHopperSunplus6502Context alloc] initWithCPU:self
-                                                andFile:file
-                                           withServices:_services];
+    return [[ItFrobHopper8x300Context alloc] initWithCPU:self
+                                                 andFile:file
+                                            withServices:_services];
 }
 
 - (UUID *)pluginUUID {
-    return [_services UUIDWithString:@"5594F950-33F8-11E4-8C21-0800200C9A66"];
+    return [_services UUIDWithString:@"DB4FB6C0-3D2B-11E4-916C-0800200C9A66"];
 }
 
 - (HopperPluginType)pluginType {
@@ -93,11 +87,11 @@ static const ItFrobHopperSunplus6502ModelHandler *kModelHandler;
 }
 
 - (NSString *)pluginName {
-    return @"Sunplus 6502";
+    return @"8x300";
 }
 
 - (NSString *)pluginDescription {
-    return @"Sunplus 6502 CPU support";
+    return @"8x300 CPU support";
 }
 
 - (NSString *)pluginAuthor {
@@ -109,82 +103,37 @@ static const ItFrobHopperSunplus6502ModelHandler *kModelHandler;
 }
 
 - (NSString *)pluginVersion {
-    return @"0.0.2";
+    return @"0.0.1";
 }
 
 - (NSArray *)cpuFamilies {
-    NSMutableArray *remaining = [NSMutableArray arrayWithArray:[kModelHandler.models.allKeys sortedArrayUsingComparator:^NSComparisonResult(id first, id second) {
-        return [first compare:second];
-    }]];
-    [remaining removeObject:kModelHandler.defaultModel];
-
-    NSMutableArray *families = [NSMutableArray new];
-    [families addObject:kModelHandler.defaultModel];
-    if (remaining.count > 0) {
-        [families addObjectsFromArray:remaining];
-    }
-
-    return families;
+    return [kModelHandler.models.allKeys sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        return [obj1 compare:obj2];
+    }];
 }
 
 - (NSArray *)cpuSubFamiliesForFamily:(NSString *)family {
-    return [((NSDictionary *)kModelHandler.models[family]).allKeys sortedArrayUsingComparator:^NSComparisonResult(id first, id second) {
-        return [first compare:second];
+    return [((NSDictionary *)kModelHandler.models[family]).allKeys sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        return [obj1 compare:obj2];
     }];
 }
 
 - (int)addressSpaceWidthInBitsForCPUFamily:(NSString *)family
                               andSubFamily:(NSString *)subFamily {
-    const NSDictionary *subFamilies = kModelHandler.models[family];
-    return subFamilies && subFamilies[subFamily] ? 16 : 0;
+    NSDictionary *subFamilies = kModelHandler.models[family];
+    if (subFamilies && subFamilies[subFamily]) {
+            return 16;
+    }
+
+    return 0;
 }
 
 - (NSString *)registerIndexToString:(int)reg
                             ofClass:(RegClass)reg_class
                         withBitSize:(int)size
                         andPosition:(DisasmPosition)position {
-    switch (reg_class) {
-        case RegClass_PseudoRegisterSTACK:
-            break;
-
-        case RegClass_GeneralPurposeRegister:
-            switch (reg) {
-                case FRBRegisterA:
-                    return @"A";
-
-                case FRBRegisterX:
-                    return @"X";
-
-                case FRBRegisterY:
-                    return @"Y";
-
-                // Until the SDK allows to manipulate the stack pointer
-                // directly, we have to consider the stack pointer as a
-                // general purpose register for the sake of block register
-                // usage markers.
-
-                case FRBRegisterS:
-                    return @"S";
-
-                case FRBRegisterP:
-                    return @"P";
-
-                default:
-                    break;
-            }
-            break;
-
-        case RegClass_CPUState:
-            switch (reg) {
-                case 0:
-                    return @"P";
-
-                default:
-                    break;
-            }
-
-        default:
-            break;
+    if (reg_class == RegClass_GeneralPurposeRegister) {
+        return [NSString stringWithUTF8String:kRegisterNames[reg]];
     }
 
     return nil;
@@ -196,7 +145,7 @@ static const ItFrobHopperSunplus6502ModelHandler *kModelHandler;
 
 - (BOOL)registerIndexIsStackPointer:(uint32_t)reg
                             ofClass:(RegClass)reg_class {
-    return reg == FRBRegisterS && reg_class == RegClass_GeneralPurposeRegister;
+    return NO;
 }
 
 - (BOOL)registerIndexIsFrameBasePointer:(uint32_t)reg
@@ -235,13 +184,13 @@ static const ItFrobHopperSunplus6502ModelHandler *kModelHandler;
 - (NSUInteger)registerCountForClass:(NSUInteger)reg_class {
     switch (reg_class) {
         case RegClass_CPUState:
-            return 1;
+            return 0;
 
         case RegClass_PseudoRegisterSTACK:
             return 0;
 
         case RegClass_GeneralPurposeRegister:
-            return 6;
+            return FRB8x300RegisterCount;
 
         default:
             break;
@@ -270,8 +219,8 @@ static const ItFrobHopperSunplus6502ModelHandler *kModelHandler;
 
 - (NSData *)nopWithSize:(NSUInteger)size
                 andMode:(NSUInteger)cpuMode
-                forFile:(id<HPDisassembledFile>)file {
-    return NSDataWithFiller(0xF2, size);
+                forFile:(NSObject<HPDisassembledFile> *)file {
+    return nil;
 }
 
 - (BOOL)canAssembleInstructionsForCPUFamily:(NSString *)family

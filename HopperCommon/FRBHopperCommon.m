@@ -33,6 +33,8 @@ void InitialiseDisasmStruct(DisasmStruct *disasmStruct) {
         bzero(&disasmStruct->operand[index], sizeof(DisasmOperand));
         disasmStruct->operand[index].type = DISASM_OPERAND_NO_OPERAND;
     }
+    bzero(disasmStruct->implicitlyReadRegisters, sizeof(disasmStruct->implicitlyReadRegisters));
+    bzero(disasmStruct->implicitlyWrittenRegisters, sizeof(disasmStruct->implicitlyWrittenRegisters));
 }
 
 int64_t SignedValue(NSNumber *value, size_t size) {
@@ -47,4 +49,15 @@ int64_t SignedValue(NSNumber *value, size_t size) {
 
     int64_t output = (int64_t)(value.unsignedLongLongValue & sizeMask);
     return (output & negativeBitMask) ? output - (1 << size) : output;
+}
+
+void SetDefaultFormatForArgument(id<HPDisassembledFile> file, Address address,
+                                 int argument, ArgFormat format) {
+    ArgFormat currentArgument = [file formatForArgument:argument
+                                       atVirtualAddress:address];
+    if (currentArgument == Format_Default) {
+        [file setFormat:format
+            forArgument:argument
+       atVirtualAddress:address];
+    }
 }

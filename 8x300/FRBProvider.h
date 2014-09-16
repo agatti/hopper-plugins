@@ -27,9 +27,47 @@
 #import <Foundation/Foundation.h>
 
 /*!
- * Concrete class to derive CPU Context classes from, removing loads
- * of boilerplate.
+ *	Protocol for 8x300 family CPU providers.
  */
-@interface ItFrobHopper65xxCommonBaseContext : NSObject<CPUContext>
+@protocol FRBProvider <NSObject>
+
+/*!
+ * Provider name.
+ */
+@property (strong, nonatomic, readonly) NSString *name;
+
+/*!
+ *	Processes the given disassembly structure.
+ *
+ *	@param structure the structure with the current opcode data, if any.
+ *  @param file      the currently disassembled file.
+ *
+ *	@return how many bytes have been processed, or DISASM_UNKNOWN_OPCODE.
+ */
+- (int)processStructure:(DisasmStruct *)structure
+                 onFile:(id<HPDisassembledFile>)file;
+
+/*!
+ *	Checks if the given disassembly structure content halts execution flow
+ *  or not.
+ *
+ *	@param structure the structure to check.
+ *
+ *	@return YES if the structure content halts execution flow, NO otherwise.
+ */
+- (BOOL)haltsExecutionFlow:(const DisasmStruct *)structure;
+
+/*!
+ *	Creates an assemblable representation of the given disassembly structure.
+ *
+ *	@param structure the structure with the current opcode data, if any.
+ *  @param file      the currently disassembled file.
+ *	@param services  the shared Hopper services instance.
+ *
+ *	@return how many bytes have been processed, or DISASM_UNKNOWN_OPCODE.
+ */
+- (const char *)formatInstruction:(const DisasmStruct *)structure
+                           onFile:(id<HPDisassembledFile>)file
+                     withServices:(id<HPHopperServices>)services;
 
 @end
