@@ -12,12 +12,14 @@ Plugins currently available in the repository:
 
 **File loader plugins:**
 
-* [Commodore 8-bit binaries](#c64-file-loader-plugin)
+* [Commodore 64 binaries](#commodore-64-file-loader-plugin)
 
 <hr/>
 
 
-###**65xx CPU Plugin** - v0.1.1
+###**65xx CPU Plugin**
+
+_version 0.1.1_
 
 This CPU core plugin allows you to disassemble 6502/65C02 code, used in loads of home computers of the 70s, 80s, and early 90s, and in industrial automation or other specialised tasks where a microcontroller is needed.
 
@@ -153,7 +155,9 @@ CPUs currently supported: 6502, 65C02, HuC6280, M50734, R6500, R65C02, R65C19, R
 
 <hr/>
 
-###**Sunplus CPU Plugin** - 0.0.2
+###**Sunplus CPU Plugin**
+
+_version 0.0.2_
 
 This CPU core plugin allows you to disassemble 6502 code that has been translated for Sunplus microcontrollers, used in some handheld games systems.
 
@@ -228,7 +232,9 @@ CPUs currently supported: 65N02, 65R02, 65S02, SunPlus.
 
 <hr/>
 
-###**65816 CPU Plugin** - 0.0.2
+###**65816 CPU Plugin**
+
+_version 0.0.2_
 
 This CPU core plugin allows you to disassemble 65816/65802 code, used in some of home computers of the 80s, and early 90s, for industrial automation or other specialised tasks where a microcontroller is needed, and in the Super Nintendo/Super Famicom games console.
 
@@ -264,7 +270,9 @@ CPUs currently supported: 65816.
 
 <hr/>
 
-###**8x300 CPU Plugin** - 0.0.1
+###**8x300 CPU Plugin**
+
+_version 0.0.1_
 
 This CPU core plugin allows you to disassemble 8x300 code, used in early signal processing equipment in the 70s and early 80s.
 
@@ -289,29 +297,41 @@ CPUs currently supported: 8x300.
 
 <hr/>
 
-###**CBM File Loader Plugin** - 0.1.0
+###**Commodore 64 File Loader Plugin**
 
-This file loader plugin allows you to load Commodore 16/116/64/+4/VC20/VIC20 binaries to be disassembled.  Commodore 128 files are currently not supported due to the fact that binaries may be bigger than 64k and thus something may need to be rearranged.  _(Please note that the plugin depends on the 6502 CPU core to be installed in order to work properly)_
+_version 0.1.1_
+
+This file loader plugin allows you to load Commodore 64 binaries to be disassembled.  Commodore 128 files are currently not supported due to the fact that binaries may be bigger than 64k and thus something may need to be rearranged, whilst the rest of the Commodore 8-bit line uses different BASIC ROM revisions so the tokeniser will need some work.  _(Please note that the plugin depends on the 6502 CPU core to be installed in order to work properly)_
 
 ####TODO for next version:
 
 * Investigate Commodore 128 files support.
+* See how different other BASIC ROM token tables are.
 * Add support for containers (Disk and Tape images).
-* Add support for cartdriges.
+* Add support for cartridges.
 * Add support for BASIC versions different than V2 (the one present in the Commodore 64).
 
 ####Caveats:
 
-* The plugin can also handle BASIC loader stubs if any are present, although the detokenizer for that is quite flaky and barely tested.  Invalid or improper BASIC code **will** crash the plugin, and maybe bring Hopper down with it.
+* The plugin can also handle BASIC loader stubs if any are present, although the detokeniser for that is quite flaky and barely tested.  Invalid or improper BASIC code **will** crash the plugin, and maybe bring Hopper down with it.
 
 ####Future plans (need Hopper SDK changes):
 
 * Properly relocate files in the 64k address space with BSS sections around data segments.
 * Automatically fill labels for audio, video, and zero page locations and automatically create virtual segments for register banking.
 
+####Applescript usage example:
+
+```applescript
+tell application "Hopper Disassembler v3"	activate	open executable "your_binary_file_path_here" with options ¬
+	{{name:"c64", options:{{name:"Contains BASIC code", value:"YES"}}}} ¬
+	without analysis and parse objectivecend tell```
+
+change `value:"YES"` with `value:"NO"` if you don't know if there is a BASIC program stub or if you are sure there is none.
+
 ##Installation instructions:
 
-Checkout from Git, open `HopperPlugins.xcworkspace` in Xcode, select the `Everything` scheme and then rebuild.  Once done, copy the bundles whose name ends in `.hopperLoader` into `~/Library/Application Support/Hopper/PlugIns/Loaders/` and the bundles whose name ends in `.hopperCPU` into `~/Library/Application Support/Hopper/PlugIns/CPUs/`.  Keep in mind that these plugins require **Hopper 3.5.1** or later to work.  They may work on older versions but they are neither tested nor supported on anything older than v3.5.1.
+Checkout from Git, open `HopperPlugins.xcworkspace` in Xcode, select the `Everything` scheme and then rebuild.  Once done, copy the bundles whose name ends in `.hopperLoader` into `~/Library/Application Support/Hopper/PlugIns/Loaders/` and the bundles whose name ends in `.hopperCPU` into `~/Library/Application Support/Hopper/PlugIns/CPUs/`.  Keep in mind that these plugins require **Hopper 3.5.3** or later to work.  They may work on older versions but they are neither tested nor supported on anything older than v3.5.3.
 
 ##Need to get in touch?
 

@@ -85,11 +85,7 @@
 }
 
 - (NSString *)pluginVersion {
-    return @"0.1.0";
-}
-
-- (CPUEndianess)endianess {
-    return CPUEndianess_Little;
+    return @"0.1.1";
 }
 
 - (BOOL)canLoadDebugFiles {
@@ -97,7 +93,7 @@
 }
 
 - (NSArray *)detectedTypesForData:(NSData *)data {
-    id<HPDetectedFileType> detectedType = [_services detectedType];
+    NSObject<HPDetectedFileType> *detectedType = [_services detectedType];
     detectedType.fileDescription = @"C64 Executable code";
     detectedType.addressWidth = AW_16bits;
     detectedType.cpuFamily = @"Generic";
@@ -106,6 +102,12 @@
                                           [_services checkboxComponentWithLabel:@"Contains BASIC code"
                                                                         checked:NO]
                                           ];
+
+    // http://hopperapp.com/bugtracker/index.php?do=details&task_id=64&project=1&status%5B0%5D=#comments
+
+    [detectedType setValue:@"c64"
+                    forKey:@"shortDescriptionString"];
+
     return @[ detectedType ];
 }
 
@@ -160,6 +162,10 @@
             section.fileLength = basicSize;
             section.sectionName = @"basic";
 
+            [file setType:Type_Int8
+         atVirtualAddress:startingAddress
+                forLength:basicSize];
+
             fileOffset += basicSize;
             fileLength -= basicSize;
 
@@ -173,7 +179,9 @@
 
     id<HPSection> section = [segment addSectionAt:(startingAddress + fileOffset - 2)
                                              size:fileLength];
+    section.pureDataSection = NO;
     section.pureCodeSection = NO;
+    section.containsCode = YES;
     section.fileOffset = fileOffset;
     section.fileLength = fileLength;
     section.sectionName = @"code";
@@ -181,7 +189,6 @@
     file.cpuFamily = @"Generic";
     file.cpuSubFamily = @"6502";
     [file setAddressSpaceWidthInBits:16];
-    [file addEntryPoint:section.startAddress];
 
     return DIS_OK;
 }
@@ -211,10 +218,10 @@
     BOOL done = NO;
     while (offset < data.length && !done) {
         uint16_t link = OSReadLittleInt16(buffer, offset);
+        offset += 2;
         if (link == 0 || link < 0x800 || link > 0x9FFF) {
             break;
         }
-        offset += 2;
 
         long linkAddress = link - (NSInteger) address;
         if (linkAddress <= 0 || linkAddress < offset) {
