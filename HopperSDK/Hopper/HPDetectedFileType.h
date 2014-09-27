@@ -18,6 +18,8 @@
 @property (assign) NSUInteger internalId;
 @property (strong) id internalObject;
 
+@property (strong) NSString *shortDescriptionString;    /// This string can be used by the command line tool to select the loader.
+
 @property (assign) BOOL compositeFile;                  /// The loader handles only a container (like a static library, a ZIP file...) and will delegate the loading process of the contained file to another loader.
 
 @property (copy)   NSString *fileDescription;

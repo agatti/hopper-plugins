@@ -323,15 +323,19 @@ This file loader plugin allows you to load Commodore 64 binaries to be disassemb
 ####Applescript usage example:
 
 ```applescript
-tell application "Hopper Disassembler v3"	activate	open executable "your_binary_file_path_here" with options ¬
+tell application "Hopper Disassembler v3"
+	activate
+	open executable "your_binary_file_path_here" with options ¬
 	{{name:"c64", options:{{name:"Contains BASIC code", value:"YES"}}}} ¬
-	without analysis and parse objectivecend tell```
+	without analysis and parse objectivec
+end tell
+```
 
 change `value:"YES"` with `value:"NO"` if you don't know if there is a BASIC program stub or if you are sure there is none.
 
 ##Installation instructions:
 
-Checkout from Git, open `HopperPlugins.xcworkspace` in Xcode, select the `Everything` scheme and then rebuild.  Once done, copy the bundles whose name ends in `.hopperLoader` into `~/Library/Application Support/Hopper/PlugIns/Loaders/` and the bundles whose name ends in `.hopperCPU` into `~/Library/Application Support/Hopper/PlugIns/CPUs/`.  Keep in mind that these plugins require **Hopper 3.5.3** or later to work.  They may work on older versions but they are neither tested nor supported on anything older than v3.5.3.
+Checkout from Git, open `HopperPlugins.xcworkspace` in Xcode, select the `Everything` scheme and then rebuild.  Once done, copy the bundles whose name ends in `.hopperLoader` into `~/Library/Application Support/Hopper/PlugIns/Loaders/` and the bundles whose name ends in `.hopperCPU` into `~/Library/Application Support/Hopper/PlugIns/CPUs/`.  Keep in mind that these plugins require **Hopper 3.5.4** or later to work.  They may work on older versions but they are neither tested nor supported on anything older than v3.5.4.
 
 ##Need to get in touch?
 

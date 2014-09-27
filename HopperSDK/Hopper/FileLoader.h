@@ -33,6 +33,10 @@
 - (FileLoaderLoadingStatus)loadData:(NSData *)data usingDetectedFileType:(DetectedFileType *)fileType options:(FileLoaderOptions)options forFile:(NSObject<HPDisassembledFile> *)file usingCallback:(FileLoadingCallbackInfo)callback;
 - (FileLoaderLoadingStatus)loadDebugData:(NSData *)data forFile:(NSObject<HPDisassembledFile> *)file usingCallback:(FileLoadingCallbackInfo)callback;
 
+/// Hopper changed the base address of the file, and needs help to fix it up.
+/// The address of every segment was shifted of "slide" bytes.
+- (void)fixupRebasedFile:(NSObject<HPDisassembledFile> *)file withSlide:(int64_t)slide originalFileData:(NSData *)fileData;
+
 /// Extract a file
 /// In the case of a "composite loader", extract the NSData object of the selected file.
 - (NSData *)extractFromData:(NSData *)data

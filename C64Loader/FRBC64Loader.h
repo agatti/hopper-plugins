@@ -30,5 +30,4 @@
  *	C64 binary file loader.
  */
 @interface ItFrobHopperC64Loader : NSObject<FileLoader>
-
 @end

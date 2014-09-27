@@ -64,7 +64,7 @@ static const char * const FRBC64BasicTokens[256] = {
     NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
     NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
     NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
-    NULL, NULL, NULL, NULL, "PI",
+    NULL, NULL, NULL, NULL, "PI"
 };
 
 /*!
@@ -101,7 +101,7 @@ static const char * const FRBC64PetsciiCharacters[256] = {
     "{$E7}", "{$E8}", "{$E9}", "{$EA}", "{$EB}", "{$EC}", "{$ED}", "{$EE}",
     "{$EF}", "{$F0}", "{$F1}", "{$F2}", "{$F3}", "{$F4}", "{$F5}", "{$F6}",
     "{$F7}", "{$F8}", "{$F9}", "{$FA}", "{$FB}", "{$FC}", "{$FD}", "{$FE}",
-    "{$FF}",
+    "{$FF}"
 };
 
 #endif

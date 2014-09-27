@@ -29,6 +29,8 @@
 
 - (Address)endAddress;
 
+- (BOOL)hasDataOnDisk;
+
 - (NSObject<HPSegment> *)segment;
 - (NSObject<HPSection> *)previousSection;
 - (NSObject<HPSection> *)nextSection;

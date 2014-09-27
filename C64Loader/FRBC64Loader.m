@@ -27,6 +27,9 @@
 #import "FRBC64Loader.h"
 #import "FRBC64Basic.h"
 
+static NSString *kCPUFamily = @"Generic";
+static NSString *kCPUSubFamily = @"6502";
+
 @interface ItFrobHopperC64Loader() {
 
     /*!
@@ -93,21 +96,16 @@
 }
 
 - (NSArray *)detectedTypesForData:(NSData *)data {
-    NSObject<HPDetectedFileType> *detectedType = [_services detectedType];
+    id<HPDetectedFileType> detectedType = [_services detectedType];
     detectedType.fileDescription = @"C64 Executable code";
     detectedType.addressWidth = AW_16bits;
-    detectedType.cpuFamily = @"Generic";
-    detectedType.cpuSubFamily = @"6502";
+    detectedType.cpuFamily = kCPUFamily;
+    detectedType.cpuSubFamily = kCPUSubFamily;
     detectedType.additionalParameters = @[
                                           [_services checkboxComponentWithLabel:@"Contains BASIC code"
                                                                         checked:NO]
                                           ];
-
-    // http://hopperapp.com/bugtracker/index.php?do=details&task_id=64&project=1&status%5B0%5D=#comments
-
-    [detectedType setValue:@"c64"
-                    forKey:@"shortDescriptionString"];
-
+    detectedType.shortDescriptionString = @"c64";
     return @[ detectedType ];
 }
 
@@ -160,7 +158,7 @@
             section.pureCodeSection = NO;
             section.fileOffset = fileOffset;
             section.fileLength = basicSize;
-            section.sectionName = @"basic";
+            section.sectionName = @"BASIC";
 
             [file setType:Type_Int8
          atVirtualAddress:startingAddress
@@ -169,9 +167,7 @@
             fileOffset += basicSize;
             fileLength -= basicSize;
 
-            // :(
-
-            [file setComment:[NSString stringWithFormat:@"Basic program:\n%@", [lines componentsJoinedByString:@"\n"]]
+            [file setComment:[NSString stringWithFormat:@"Basic program:\n\n%@", [lines componentsJoinedByString:@"\n"]]
             atVirtualAddress:startingAddress
                       reason:CCReason_Script];
         }
@@ -184,10 +180,10 @@
     section.containsCode = YES;
     section.fileOffset = fileOffset;
     section.fileLength = fileLength;
-    section.sectionName = @"code";
+    section.sectionName = @"CODE";
 
-    file.cpuFamily = @"Generic";
-    file.cpuSubFamily = @"6502";
+    file.cpuFamily = kCPUFamily;
+    file.cpuSubFamily = kCPUSubFamily;
     [file setAddressSpaceWidthInBits:16];
 
     return DIS_OK;
@@ -205,9 +201,12 @@
     return nil;
 }
 
-///////////////////////////////////////////////////////////////////////////////
+- (void)fixupRebasedFile:(id<HPDisassembledFile>)file
+               withSlide:(int64_t)slide
+        originalFileData:(NSData *)fileData {
+}
 
-#pragma mark Utility methods
+#pragma mark Private methods
 
 - (NSError *)parseBasicProgram:(NSData *)data
                 atAddress:(NSUInteger)address
@@ -219,13 +218,13 @@
     while (offset < data.length && !done) {
         uint16_t link = OSReadLittleInt16(buffer, offset);
         offset += 2;
-        if (link == 0 || link < 0x800 || link > 0x9FFF) {
+        if (link == 0 || link < 0x0800 || link > 0x9FFF) {
             break;
         }
 
         long linkAddress = link - (NSInteger) address;
         if (linkAddress <= 0 || linkAddress < offset) {
-            return [NSError errorWithDomain:@"C64Loader"
+            return [NSError errorWithDomain:[[NSBundle mainBundle] bundleIdentifier]
                                        code:NSInvalidIndexSpecifierError
                                    userInfo:nil];
         }
@@ -234,12 +233,11 @@
             done = YES;
         }
 
-        NSMutableArray *line = [NSMutableArray new];
+        NSMutableString *line = [NSMutableString new];
 
         uint16_t lineNumber = OSReadLittleInt16(buffer, offset);
         offset += 2;
-        [line addObject:[NSString stringWithFormat:@"%d", lineNumber]];
-        [line addObject:@" "];
+        [line appendFormat:@"%d ", lineNumber];
 
         BOOL quoteMode = NO;
 
@@ -251,22 +249,22 @@
 
             if (byte == 0x34) {
                 quoteMode = !quoteMode;
-                [line addObject:[NSString stringWithFormat:@"%c", byte]];
+                [line appendFormat:@"%c", byte];
             } else {
                 if (!quoteMode && byte >= 0x80) {
                     const char *opcode = FRBC64BasicTokens[byte];
                     if (!opcode) {
-                        [line addObject:@"{UNKNOWN}"];
+                        [line appendString:@"{UNKNOWN}"];
                     } else {
-                        [line addObject:[NSString stringWithUTF8String:opcode]];
+                        [line appendFormat:@"%s", opcode];
                     }
                 } else {
-                    [line addObject:[NSString stringWithUTF8String:FRBC64PetsciiCharacters[byte]]];
+                    [line appendFormat:@"%s", FRBC64PetsciiCharacters[byte]];
                 }
             }
         }
 
-        [array addObject:[line componentsJoinedByString:@""]];
+        [array addObject:line];
     }
 
     *size = offset;

@@ -18,6 +18,7 @@
 @protocol HPSection;
 @protocol HPProcedure;
 @protocol HPTag;
+@protocol CPUContext;
 
 typedef void (^FileLoadingCallbackInfo)(NSString *desc, float progress);
 
@@ -30,11 +31,18 @@ typedef void (^FileLoadingCallbackInfo)(NSString *desc, float progress);
 @property (strong) NSObject<CPUDefinition> *cpuDefinition;
 
 // Methods essentially used by Loader plugin
-- (void)addressSpaceWidthInBits;
-- (void)setAddressSpaceWidthInBits:(int)bits;
+- (NSUInteger)addressSpaceWidthInBits;
+- (void)setAddressSpaceWidthInBits:(NSUInteger)bits;
+
+- (BOOL)is32Bits;
+- (BOOL)is64Bits;
+
+- (Address)fileBaseAddress;
 
 - (void)addEntryPoint:(Address)address;
 - (void)addPotentialProcedure:(Address)address;
+- (Address)firstEntryPoint;
+- (NSArray *)entryPoints;
 
 // Get access to segments and sections
 - (NSArray *)segments; /// An array of NSObject<HPSegment> objects
@@ -56,6 +64,9 @@ typedef void (^FileLoadingCallbackInfo)(NSString *desc, float progress);
 
 - (NSObject<HPSegment> *)previousSegment:(NSObject<HPSegment> *)segment;
 - (NSObject<HPSegment> *)nextSegment:(NSObject<HPSegment> *)segment;
+
+// CPUContext factory
+- (NSObject<CPUContext> *)buildCPUContext;
 
 // Access to the labels
 /// An array of NSString objects, containing all labels.
