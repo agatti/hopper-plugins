@@ -8,7 +8,6 @@ Plugins currently available in the repository:
 * [65xx](#65xx-cpu-plugin)
 * [65816](#65816-cpu-plugin)
 * [8x300](#8x300-cpu-plugin)
-* [Sunplus](#sunplus-cpu-plugin)
 
 **File loader plugins:**
 
@@ -19,11 +18,11 @@ Plugins currently available in the repository:
 
 ###**65xx CPU Plugin**
 
-_version 0.1.1_
+_version 0.1.2_
 
-This CPU core plugin allows you to disassemble 6502/65C02 code, used in loads of home computers of the 70s, 80s, and early 90s, and in industrial automation or other specialised tasks where a microcontroller is needed.
+This CPU core plugin allows you to disassemble 6502/65C02 code, used in loads of home computers of the 70s, 80s, and early 90s, and in industrial automation or other specialised tasks where an MCU is needed.
 
-CPUs currently supported: 6502, 65C02, HuC6280, M50734, R6500, R65C02, R65C19, R65C29, W65C02S.
+CPUs currently supported: 6502, 65C02, 65N02, 65R02, 65S02, HuC6280, M50734, R6500, R65C02, R65C19, R65C29, SunPlus, W65C02S.
 
 <table>
 <thead>
@@ -106,69 +105,7 @@ CPUs currently supported: 6502, 65C02, HuC6280, M50734, R6500, R65C02, R65C19, R
 <tr><td>R65C29</td><td>Rockwell &rarr; R65C29</td><td><a href="http://pdf.datasheetarchive.com/indexerfiles/Scans-055/DSAIH000103824.pdf">Datasheet</a></td></tr>
 <tr><td>R65C102</td><td>Rockwell &rarr; R65C29</td><td><a href="http://6502.org/documents/datasheets/rockwell/rockwell_r65c00_microprocessors.pdf">Datasheet</a></td></tr>
 <tr><td>R65C112</td><td>Rockwell &rarr; R65C29</td><td><a href="http://6502.org/documents/datasheets/rockwell/rockwell_r65c00_microprocessors.pdf">Datasheet</a></td></tr>
-<tr><td rowspan="2">Sunplus</td><td>SPMC65P1504A</td><td>Generic &rarr; 6502</td><td><a href="http://www.chinaeds.com/zl/%B3%A3%D3%C3IC/S%CF%B5%C1%D0/SP/SPmc65p1504_1502_v11_cn.pdf">Datasheet</a></td></tr>
-<tr><td>SPMC65P1502A</td><td>Generic &rarr; 6502</td><td><a href="http://www.chinaeds.com/zl/%B3%A3%D3%C3IC/S%CF%B5%C1%D0/SP/SPmc65p1504_1502_v11_cn.pdf">Datasheet</a></td></tr>
-<tr><td rowspan="11">Synertek</td><td>SY6502</td><td>Generic &rarr; 6502</td><td><a href="http://www.happytrees.org/main-files/datasheets/datasheet-Synertek-SY6500.pdf">Datasheet</a></td></tr>
-<tr><td>SY6503</td><td>Generic &rarr; 6502</td><td><a href="http://www.happytrees.org/main-files/datasheets/datasheet-Synertek-SY6500.pdf">Datasheet</a></td></tr>
-<tr><td>SY6504</td><td>Generic &rarr; 6502</td><td><a href="http://www.happytrees.org/main-files/datasheets/datasheet-Synertek-SY6500.pdf">Datasheet</a></td></tr>
-<tr><td>SY6505</td><td>Generic &rarr; 6502</td><td><a href="http://www.happytrees.org/main-files/datasheets/datasheet-Synertek-SY6500.pdf">Datasheet</a></td></tr>
-<tr><td>SY6506</td><td>Generic &rarr; 6502</td><td><a href="http://www.happytrees.org/main-files/datasheets/datasheet-Synertek-SY6500.pdf">Datasheet</a></td></tr>
-<tr><td>SY6507</td><td>Generic &rarr; 6502</td><td><a href="http://www.happytrees.org/main-files/datasheets/datasheet-Synertek-SY6500.pdf">Datasheet</a></td></tr>
-<tr><td>SY6512</td><td>Generic &rarr; 6502</td><td><a href="http://www.happytrees.org/main-files/datasheets/datasheet-Synertek-SY6500.pdf">Datasheet</a></td></tr>
-<tr><td>SY6513</td><td>Generic &rarr; 6502</td><td><a href="http://www.happytrees.org/main-files/datasheets/datasheet-Synertek-SY6500.pdf">Datasheet</a></td></tr>
-<tr><td>SY6514</td><td>Generic &rarr; 6502</td><td><a href="http://www.happytrees.org/main-files/datasheets/datasheet-Synertek-SY6500.pdf">Datasheet</a></td></tr>
-<tr><td>SY6515</td><td>Generic &rarr; 6502</td><td><a href="http://www.happytrees.org/main-files/datasheets/datasheet-Synertek-SY6500.pdf">Datasheet</a></td></tr>
-<tr><td>SY65C02</td><td>Generic &rarr; 65C02</td><td>N/A</td></tr>
-<tr><td rowspan="3">UMC</td><td>UM6502</td><td>Generic &rarr; 6502</td><td><a href="http://pdf.datasheetarchive.com/datasheetsmain/Datasheets-39/DSA-774496.pdf">Datasheet</a></td></tr>
-<tr><td>UM6507</td><td>Generic &rarr; 6502</td><td><a href="http://pdf.datasheetarchive.com/datasheetsmain/Datasheets-39/DSA-774496.pdf">Datasheet</a></td></tr>
-<tr><td>UM6512</td><td>Generic &rarr; 6502</td><td><a href="http://pdf.datasheetarchive.com/datasheetsmain/Datasheets-39/DSA-774496.pdf">Datasheet</a></td></tr>
-<tr><td rowspan="2">VLSI</td><td>6502A</td><td>Generic &rarr; 6502</td><td>N/A</td></tr>
-<tr><td>VL65NC02</td><td>WDC &rarr; W65C02S</td><td><a href="http://pdf.datasheetarchive.com/indexerfiles/Scans-091/DSAHI000173435.pdf">Datasheet</a></td></tr>
-<tr><td rowspan="3">WDC</td><td>W65C02S</td><td>WDC &rarr; W65C02S</td><td><a href="http://www.6502.org/documents/datasheets/wdc/wdc_w65c02s_oct_19_2010.pdf">Datasheet</a></td></tr>
-<tr><td>W65C134S</td><td>WDC &rarr; W65C02S</td><td><a href="http://archive.6502.org/datasheets/wdc_w65c134s_aug_31_2010.pdf">Datasheet</a></td></tr>
-<tr><td>W65C02GPMCU</td><td>WDC &rarr; W65C02S</td><td><a href="http://www.westerndesigncenter.com/wdc/documentation/W65C02GPMCU_DS.pdf">Datasheet</a></td></tr>
-</tbody>
-</table>
-
-####TODO for next version(s):
-
-* Negation for hexadecimal, decimal, and octal types.
-* Re-test 6502, 65C02, R6500, R65C02, and W65C02 backends.
-* Write tests for the HuC6280 backend.
-* Write tests for the R65C19 backend.
-* Write tests for the R65C29 backend.
-* Write tests for the M50734 backend.
-* Properly handle the extra registers present in the R65C19 variant.
-* Attempt to reject files too big for address-space reduced chip variants.
-* Add support for more 6502 variants if any are found in the wild.
-
-####Future plans (need Hopper SDK changes):
-
-* A way to properly model stack changes (ie. being able to increment and decrement the virtual stack pointer when encountering PHx or PLx instructions).
-* Properly relocate files in the 64k address space with BSS sections around data segments.
-* Have a customised memory map with named registers for each chip (needs BSS support first).
-
-####Caveats:
-
-* Undocumented opcodes are not recognised (and this is not going to change in the near future).
-* Rebuilding the test binaries requires having `xa` installed (available from homebrew via `brew install xa`).
-
-<hr/>
-
-###**Sunplus CPU Plugin**
-
-_version 0.0.2_
-
-This CPU core plugin allows you to disassemble 6502 code that has been translated for Sunplus microcontrollers, used in some handheld games systems.
-
-CPUs currently supported: 65N02, 65R02, 65S02, SunPlus.
-
-<table>
-<thead>
-<tr><th>Manufacturer</th><th>Model</th><th>Provider</th><th>Datasheet</th></tr>
-</thead>
-<tbody>
-<tr><td rowspan="48">Sunplus</td><td>SPL61A</td><td>Sunplus &rarr; 65N02</td><td><a href="http://read.pudn.com/downloads89/ebook/340950/6502%E6%8C%87%E4%BB%A4/sunplus_6502.pdf">Datasheet</a></td></tr>
+<tr><td rowspan="50">Sunplus</td><td>SPL61A</td><td>Sunplus &rarr; 65N02</td><td><a href="http://read.pudn.com/downloads89/ebook/340950/6502%E6%8C%87%E4%BB%A4/sunplus_6502.pdf">Datasheet</a></td></tr>
 <tr><td>SPL130A</td><td>Sunplus &rarr; 65N02</td><td><a href="http://read.pudn.com/downloads89/ebook/340950/6502%E6%8C%87%E4%BB%A4/sunplus_6502.pdf">Datasheet</a></td></tr>
 <tr><td>SPL191A</td><td>Sunplus &rarr; 65N02</td><td><a href="http://read.pudn.com/downloads89/ebook/340950/6502%E6%8C%87%E4%BB%A4/sunplus_6502.pdf">Datasheet</a></td></tr>
 <tr><td>SPL256A</td><td>Sunplus &rarr; 65N02</td><td><a href="http://read.pudn.com/downloads89/ebook/340950/6502%E6%8C%87%E4%BB%A4/sunplus_6502.pdf">Datasheet</a></td></tr>
@@ -216,19 +153,52 @@ CPUs currently supported: 65N02, 65R02, 65S02, SunPlus.
 <tr><td>SPL31A</td><td>Sunplus &rarr; SunPlus</td><td><a href="http://read.pudn.com/downloads89/ebook/340950/6502%E6%8C%87%E4%BB%A4/sunplus_6502.pdf">Datasheet</a></td></tr>
 <tr><td>SPL60A</td><td>Sunplus &rarr; SunPlus</td><td><a href="http://read.pudn.com/downloads89/ebook/340950/6502%E6%8C%87%E4%BB%A4/sunplus_6502.pdf">Datasheet</a></td></tr>
 <tr><td>SPL190A</td><td>Sunplus &rarr; SunPlus</td><td><a href="http://read.pudn.com/downloads89/ebook/340950/6502%E6%8C%87%E4%BB%A4/sunplus_6502.pdf">Datasheet</a></td></tr>
+<td>SPMC65P1504A</td><td>Generic &rarr; 6502</td><td><a href="http://www.chinaeds.com/zl/%B3%A3%D3%C3IC/S%CF%B5%C1%D0/SP/SPmc65p1504_1502_v11_cn.pdf">Datasheet</a></td></tr>
+<tr><td>SPMC65P1502A</td><td>Generic &rarr; 6502</td><td><a href="http://www.chinaeds.com/zl/%B3%A3%D3%C3IC/S%CF%B5%C1%D0/SP/SPmc65p1504_1502_v11_cn.pdf">Datasheet</a></td></tr>
+<tr><td rowspan="11">Synertek</td><td>SY6502</td><td>Generic &rarr; 6502</td><td><a href="http://www.happytrees.org/main-files/datasheets/datasheet-Synertek-SY6500.pdf">Datasheet</a></td></tr>
+<tr><td>SY6503</td><td>Generic &rarr; 6502</td><td><a href="http://www.happytrees.org/main-files/datasheets/datasheet-Synertek-SY6500.pdf">Datasheet</a></td></tr>
+<tr><td>SY6504</td><td>Generic &rarr; 6502</td><td><a href="http://www.happytrees.org/main-files/datasheets/datasheet-Synertek-SY6500.pdf">Datasheet</a></td></tr>
+<tr><td>SY6505</td><td>Generic &rarr; 6502</td><td><a href="http://www.happytrees.org/main-files/datasheets/datasheet-Synertek-SY6500.pdf">Datasheet</a></td></tr>
+<tr><td>SY6506</td><td>Generic &rarr; 6502</td><td><a href="http://www.happytrees.org/main-files/datasheets/datasheet-Synertek-SY6500.pdf">Datasheet</a></td></tr>
+<tr><td>SY6507</td><td>Generic &rarr; 6502</td><td><a href="http://www.happytrees.org/main-files/datasheets/datasheet-Synertek-SY6500.pdf">Datasheet</a></td></tr>
+<tr><td>SY6512</td><td>Generic &rarr; 6502</td><td><a href="http://www.happytrees.org/main-files/datasheets/datasheet-Synertek-SY6500.pdf">Datasheet</a></td></tr>
+<tr><td>SY6513</td><td>Generic &rarr; 6502</td><td><a href="http://www.happytrees.org/main-files/datasheets/datasheet-Synertek-SY6500.pdf">Datasheet</a></td></tr>
+<tr><td>SY6514</td><td>Generic &rarr; 6502</td><td><a href="http://www.happytrees.org/main-files/datasheets/datasheet-Synertek-SY6500.pdf">Datasheet</a></td></tr>
+<tr><td>SY6515</td><td>Generic &rarr; 6502</td><td><a href="http://www.happytrees.org/main-files/datasheets/datasheet-Synertek-SY6500.pdf">Datasheet</a></td></tr>
+<tr><td>SY65C02</td><td>Generic &rarr; 65C02</td><td>N/A</td></tr>
+<tr><td rowspan="3">UMC</td><td>UM6502</td><td>Generic &rarr; 6502</td><td><a href="http://pdf.datasheetarchive.com/datasheetsmain/Datasheets-39/DSA-774496.pdf">Datasheet</a></td></tr>
+<tr><td>UM6507</td><td>Generic &rarr; 6502</td><td><a href="http://pdf.datasheetarchive.com/datasheetsmain/Datasheets-39/DSA-774496.pdf">Datasheet</a></td></tr>
+<tr><td>UM6512</td><td>Generic &rarr; 6502</td><td><a href="http://pdf.datasheetarchive.com/datasheetsmain/Datasheets-39/DSA-774496.pdf">Datasheet</a></td></tr>
+<tr><td rowspan="2">VLSI</td><td>6502A</td><td>Generic &rarr; 6502</td><td>N/A</td></tr>
+<tr><td>VL65NC02</td><td>WDC &rarr; W65C02S</td><td><a href="http://pdf.datasheetarchive.com/indexerfiles/Scans-091/DSAHI000173435.pdf">Datasheet</a></td></tr>
+<tr><td rowspan="3">WDC</td><td>W65C02S</td><td>WDC &rarr; W65C02S</td><td><a href="http://www.6502.org/documents/datasheets/wdc/wdc_w65c02s_oct_19_2010.pdf">Datasheet</a></td></tr>
+<tr><td>W65C134S</td><td>WDC &rarr; W65C02S</td><td><a href="http://archive.6502.org/datasheets/wdc_w65c134s_aug_31_2010.pdf">Datasheet</a></td></tr>
+<tr><td>W65C02GPMCU</td><td>WDC &rarr; W65C02S</td><td><a href="http://www.westerndesigncenter.com/wdc/documentation/W65C02GPMCU_DS.pdf">Datasheet</a></td></tr>
 </tbody>
 </table>
 
-####TODO for next version:
+####TODO for next version(s):
 
-* Add support for more Sunplus variants if any are found in the wild.
+* Negation for hexadecimal, decimal, and octal types.
+* Re-test 6502, 65C02, R6500, R65C02, and W65C02 backends.
+* Write tests for the HuC6280 backend.
+* Write tests for the R65C19 backend.
+* Write tests for the R65C29 backend.
+* Write tests for the M50734 backend.
+* Properly handle the extra registers present in the R65C19 variant.
 * Attempt to reject files too big for address-space reduced chip variants.
+* Add support for more 6502 variants if any are found in the wild.
 
 ####Future plans (need Hopper SDK changes):
 
 * A way to properly model stack changes (ie. being able to increment and decrement the virtual stack pointer when encountering PHx or PLx instructions).
-* Properly relocate files in the entire address space with BSS sections around data segments.
+* Properly relocate files in the 64k address space with BSS sections around data segments.
 * Have a customised memory map with named registers for each chip (needs BSS support first).
+
+####Caveats:
+
+* Undocumented opcodes are not recognised (and this is not going to change in the near future).
+* Rebuilding the test binaries requires having `xa` installed (available from homebrew via `brew install xa`).
 
 <hr/>
 

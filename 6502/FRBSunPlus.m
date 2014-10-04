@@ -45,8 +45,8 @@ static NSString * const kProviderName = @"it.frob.hopper.sunplus";
 }
 
 + (void)load {
-    [[ItFrobHopperSunplus6502ModelHandler sharedModelHandler] registerProvider:[ItFrobHopperSunplus6502SunPlus class]
-                                                                       forName:kProviderName];
+    [[ItFrobHopper6502ModelHandler sharedModelHandler] registerProvider:[ItFrobHopperSunplus6502SunPlus class]
+                                                                forName:kProviderName];
 }
 
 - (const struct FRBOpcode *)opcodeForByte:(uint8_t)byte {

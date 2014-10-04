@@ -145,7 +145,7 @@
 		68259AEE19B710910060713A /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0510;
+				LastUpgradeCheck = 0600;
 				ORGANIZATIONNAME = "Alessandro Gatti - frob.it";
 			};
 			buildConfigurationList = 68259AF119B710910060713A /* Build configuration list for PBXProject "HopperCommon" */;
@@ -263,6 +263,7 @@
 		68259B1B19B710910060713A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "HopperCommon/HopperCommon-Prefix.pch";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -272,6 +273,7 @@
 		68259B1C19B710910060713A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "HopperCommon/HopperCommon-Prefix.pch";
 				PRODUCT_NAME = "$(TARGET_NAME)";

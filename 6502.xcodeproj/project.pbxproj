@@ -24,6 +24,10 @@
 		68BFF68919AC467800025CDE /* FRBR65C29.m in Sources */ = {isa = PBXBuildFile; fileRef = 68BFF68719AC467800025CDE /* FRBR65C29.m */; };
 		68CEFDC6197CB07C0068B320 /* models.plist in Resources */ = {isa = PBXBuildFile; fileRef = 68CEFDC5197CB07C0068B320 /* models.plist */; };
 		68CEFDC9197CB5840068B320 /* FRBModelHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 68CEFDC8197CB5840068B320 /* FRBModelHandler.m */; };
+		68F0A4E219E0645A007037E2 /* FRB65N02.m in Sources */ = {isa = PBXBuildFile; fileRef = 68F0A4DB19E0645A007037E2 /* FRB65N02.m */; };
+		68F0A4E319E0645A007037E2 /* FRB65R02.m in Sources */ = {isa = PBXBuildFile; fileRef = 68F0A4DD19E0645A007037E2 /* FRB65R02.m */; };
+		68F0A4E419E0645A007037E2 /* FRB65S02.m in Sources */ = {isa = PBXBuildFile; fileRef = 68F0A4DF19E0645A007037E2 /* FRB65S02.m */; };
+		68F0A4E519E0645A007037E2 /* FRBSunPlus.m in Sources */ = {isa = PBXBuildFile; fileRef = 68F0A4E119E0645A007037E2 /* FRBSunPlus.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -62,6 +66,14 @@
 		68CEFDC5197CB07C0068B320 /* models.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = models.plist; path = 6502/models.plist; sourceTree = SOURCE_ROOT; };
 		68CEFDC7197CB5840068B320 /* FRBModelHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FRBModelHandler.h; path = 6502/FRBModelHandler.h; sourceTree = SOURCE_ROOT; };
 		68CEFDC8197CB5840068B320 /* FRBModelHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FRBModelHandler.m; path = 6502/FRBModelHandler.m; sourceTree = SOURCE_ROOT; };
+		68F0A4DA19E0645A007037E2 /* FRB65N02.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRB65N02.h; sourceTree = "<group>"; };
+		68F0A4DB19E0645A007037E2 /* FRB65N02.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRB65N02.m; sourceTree = "<group>"; };
+		68F0A4DC19E0645A007037E2 /* FRB65R02.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRB65R02.h; sourceTree = "<group>"; };
+		68F0A4DD19E0645A007037E2 /* FRB65R02.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRB65R02.m; sourceTree = "<group>"; };
+		68F0A4DE19E0645A007037E2 /* FRB65S02.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRB65S02.h; sourceTree = "<group>"; };
+		68F0A4DF19E0645A007037E2 /* FRB65S02.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRB65S02.m; sourceTree = "<group>"; };
+		68F0A4E019E0645A007037E2 /* FRBSunPlus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRBSunPlus.h; sourceTree = "<group>"; };
+		68F0A4E119E0645A007037E2 /* FRBSunPlus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRBSunPlus.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -137,6 +149,14 @@
 		6873AD79197F863400B46DB5 /* Chips */ = {
 			isa = PBXGroup;
 			children = (
+				68F0A4DA19E0645A007037E2 /* FRB65N02.h */,
+				68F0A4DB19E0645A007037E2 /* FRB65N02.m */,
+				68F0A4DC19E0645A007037E2 /* FRB65R02.h */,
+				68F0A4DD19E0645A007037E2 /* FRB65R02.m */,
+				68F0A4DE19E0645A007037E2 /* FRB65S02.h */,
+				68F0A4DF19E0645A007037E2 /* FRB65S02.m */,
+				68F0A4E019E0645A007037E2 /* FRBSunPlus.h */,
+				68F0A4E119E0645A007037E2 /* FRBSunPlus.m */,
 				683A4C20197C8E4700B7F172 /* FRBGeneric6502.h */,
 				683A4C21197C8E4700B7F172 /* FRBGeneric6502.m */,
 				683372E8197C909B002B432E /* FRBGeneric65C02.h */,
@@ -222,14 +242,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				68F0A4E319E0645A007037E2 /* FRB65R02.m in Sources */,
 				68B87E0E19ABD99800BEE286 /* FRBR65C19.m in Sources */,
+				68F0A4E219E0645A007037E2 /* FRB65N02.m in Sources */,
 				683A4C24197C8E4700B7F172 /* FRBContext.m in Sources */,
 				683A4C25197C8E4700B7F172 /* FRBDefinition.m in Sources */,
 				688E0143197C949E00C9DC94 /* FRBW65C02S.m in Sources */,
 				68AE6F0019ACE4370020D445 /* FRBM50734.m in Sources */,
 				6873AD7D197F8E7A00B46DB5 /* FRBHuC6280.m in Sources */,
 				683A4C27197C8E4700B7F172 /* FRBGeneric6502.m in Sources */,
+				68F0A4E419E0645A007037E2 /* FRB65S02.m in Sources */,
 				6873AD77197F810400B46DB5 /* FRBR6500.m in Sources */,
+				68F0A4E519E0645A007037E2 /* FRBSunPlus.m in Sources */,
 				68BFF68919AC467800025CDE /* FRBR65C29.m in Sources */,
 				683372EA197C909B002B432E /* FRBGeneric65C02.m in Sources */,
 				68B87E0A19AB975400BEE286 /* FRBR65C02.m in Sources */,

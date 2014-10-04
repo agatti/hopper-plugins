@@ -110,7 +110,7 @@ static const ItFrobHopper6502ModelHandler *kModelHandler;
 }
 
 - (NSString *)pluginVersion {
-    return @"0.1.1";
+    return @"0.1.2";
 }
 
 - (NSArray *)cpuFamilies {
@@ -278,7 +278,9 @@ static const ItFrobHopper6502ModelHandler *kModelHandler;
 - (NSData *)nopWithSize:(NSUInteger)size
                 andMode:(NSUInteger)cpuMode
                 forFile:(id<HPDisassembledFile>)file {
-    return NSDataWithFiller(0xEA, size);
+
+    uint8_t nop = [file.cpuFamily isEqualToString:@"Sunplus"] ? 0xF2 : 0xEA;
+    return NSDataWithFiller(nop, size);
 }
 
 - (BOOL)canAssembleInstructionsForCPUFamily:(NSString *)family

@@ -135,7 +135,7 @@
 		685736731985708600D790A9 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0510;
+				LastUpgradeCheck = 0600;
 				ORGANIZATIONNAME = frob.it;
 			};
 			buildConfigurationList = 685736761985708600D790A9 /* Build configuration list for PBXProject "65xxCommon" */;
@@ -253,6 +253,7 @@
 		685736A01985708600D790A9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "65xxCommon/FRB65xxCommon-Prefix.pch";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -262,6 +263,7 @@
 		685736A11985708600D790A9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "65xxCommon/FRB65xxCommon-Prefix.pch";
 				PRODUCT_NAME = "$(TARGET_NAME)";

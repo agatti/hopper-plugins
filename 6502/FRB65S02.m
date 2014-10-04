@@ -25,14 +25,14 @@
  */
 
 #import "FRBBase.h"
-#import "FRB65R02.h"
+#import "FRB65S02.h"
 #import "FRBModelHandler.h"
 
 static const struct FRBOpcode kOpcodeTable[256];
 
-@implementation ItFrobHopperSunplus650265R02
+@implementation ItFrobHopperSunplus650265S02
 
-static NSString * const kProviderName = @"it.frob.hopper.65R02";
+static NSString * const kProviderName = @"it.frob.hopper.65S02";
 
 @synthesize name;
 
@@ -45,8 +45,8 @@ static NSString * const kProviderName = @"it.frob.hopper.65R02";
 }
 
 + (void)load {
-    [[ItFrobHopperSunplus6502ModelHandler sharedModelHandler] registerProvider:[ItFrobHopperSunplus650265R02 class]
-                                                                       forName:kProviderName];
+    [[ItFrobHopper6502ModelHandler sharedModelHandler] registerProvider:[ItFrobHopperSunplus650265S02 class]
+                                                                forName:kProviderName];
 }
 
 - (const struct FRBOpcode *)opcodeForByte:(uint8_t)byte {
@@ -80,10 +80,10 @@ static const struct FRBOpcode kOpcodeTable[256] = {
     /* $0C */ { FRBOpcodeTypeUndocumented, FRBAddressModeUnknown,                 0,     0     },
     /* $0D */ { FRBOpcodeTypeUndocumented, FRBAddressModeUnknown,                 0,     0     },
     /* $0E */ { FRBOpcodeTypeUndocumented, FRBAddressModeUnknown,                 0,     0     },
-    /* $0F */ { FRBOpcodeTypeEOR,          FRBAddressModeZeroPageIndexedX,        A | X, A     },
+    /* $0F */ { FRBOpcodeTypeUndocumented, FRBAddressModeUnknown,                 0,     0     },
 
     /* $10 */ { FRBOpcodeTypeJSR,          FRBAddressModeAbsolute,                0,     0     },
-    /* $11 */ { FRBOpcodeTypeBIT,          FRBAddressModeZeroPage,                A,     0     },
+    /* $11 */ { FRBOpcodeTypeUndocumented, FRBAddressModeUnknown,                 0,     0     },
     /* $12 */ { FRBOpcodeTypeRTS,          FRBAddressModeStack,                   0,     0     },
     /* $13 */ { FRBOpcodeTypeUndocumented, FRBAddressModeUnknown,                 0,     0     },
     /* $14 */ { FRBOpcodeTypeUndocumented, FRBAddressModeUnknown,                 0,     0     },
@@ -151,7 +151,7 @@ static const struct FRBOpcode kOpcodeTable[256] = {
     /* $4F */ { FRBOpcodeTypeUndocumented, FRBAddressModeUnknown,                 0,     0     },
 
     /* $50 */ { FRBOpcodeTypePLP,          FRBAddressModeStack,                   S,     P | S },
-    /* $51 */ { FRBOpcodeTypeBIT,          FRBAddressModeAbsolute,                A,     0     },
+    /* $51 */ { FRBOpcodeTypeUndocumented, FRBAddressModeUnknown,                 0,     0     },
     /* $52 */ { FRBOpcodeTypePLA,          FRBAddressModeStack,                   S,     A | S },
     /* $53 */ { FRBOpcodeTypeJMP,          FRBAddressModeAbsoluteIndirect,        0,     0     },
     /* $54 */ { FRBOpcodeTypeAND,          FRBAddressModeImmediate,               A,     A     },
@@ -245,7 +245,7 @@ static const struct FRBOpcode kOpcodeTable[256] = {
     /* $A8 */ { FRBOpcodeTypeUndocumented, FRBAddressModeUnknown,                 0,     0     },
     /* $A9 */ { FRBOpcodeTypeUndocumented, FRBAddressModeUnknown,                 0,     0     },
     /* $AA */ { FRBOpcodeTypeUndocumented, FRBAddressModeUnknown,                 0,     0     },
-    /* $AB */ { FRBOpcodeTypeDEC,          FRBAddressModeZeroPageIndexedX,        X,     0     },
+    /* $AB */ { FRBOpcodeTypeUndocumented, FRBAddressModeUnknown,                 0,     0     },
     /* $AC */ { FRBOpcodeTypeUndocumented, FRBAddressModeUnknown,                 0,     0     },
     /* $AD */ { FRBOpcodeTypeUndocumented, FRBAddressModeUnknown,                 0,     0     },
     /* $AE */ { FRBOpcodeTypeUndocumented, FRBAddressModeUnknown,                 0,     0     },
@@ -302,7 +302,7 @@ static const struct FRBOpcode kOpcodeTable[256] = {
     /* $DE */ { FRBOpcodeTypeUndocumented, FRBAddressModeUnknown,                 0,     0     },
     /* $DF */ { FRBOpcodeTypeUndocumented, FRBAddressModeUnknown,                 0,     0     },
 
-    /* $E0 */ { FRBOpcodeTypeTXA,          FRBAddressModeImplied,                 A | X, A | X },
+    /* $E0 */ { FRBOpcodeTypeUndocumented, FRBAddressModeUnknown,                 0,     0     },
     /* $E1 */ { FRBOpcodeTypeSTX,          FRBAddressModeAbsolute,                X,     0     },
     /* $E2 */ { FRBOpcodeTypeDEX,          FRBAddressModeImplied,                 X,     X     },
     /* $E3 */ { FRBOpcodeTypeUndocumented, FRBAddressModeUnknown,                 0,     0     },
@@ -319,7 +319,7 @@ static const struct FRBOpcode kOpcodeTable[256] = {
     /* $EE */ { FRBOpcodeTypeUndocumented, FRBAddressModeUnknown,                 0,     0     },
     /* $EF */ { FRBOpcodeTypeUndocumented, FRBAddressModeUnknown,                 0,     0     },
 
-    /* $F0 */ { FRBOpcodeTypeTAX,          FRBAddressModeImplied,                 A | X, A | X },
+    /* $F0 */ { FRBOpcodeTypeUndocumented, FRBAddressModeUnknown,                 0,     0     },
     /* $F1 */ { FRBOpcodeTypeUndocumented, FRBAddressModeUnknown,                 0,     0     },
     /* $F2 */ { FRBOpcodeTypeNOP,          FRBAddressModeImplied,                 0,     0     },
     /* $F3 */ { FRBOpcodeTypeUndocumented, FRBAddressModeUnknown,                 0,     0     },
