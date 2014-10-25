@@ -39,7 +39,7 @@ void InitialiseDisasmStruct(DisasmStruct *disasmStruct) {
 
 int64_t SignedValue(NSNumber *value, size_t size) {
     if (size > 32) {
-        @throw [NSException exceptionWithName:@"InternalErrorExcepton"
+        @throw [NSException exceptionWithName:FRBHopperExceptionName
                                        reason:[NSString stringWithFormat:@"Internal error: invalid signed value size %zu", size]
                                      userInfo:nil];
     }

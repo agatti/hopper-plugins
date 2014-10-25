@@ -313,7 +313,7 @@ static const ItFrobHopper65816ModelHandler *kModelHandler;
             break;
 
         default:
-            @throw [NSException exceptionWithName:@"InternalErrorExcepton"
+            @throw [NSException exceptionWithName:FRBHopperExceptionName
                                            reason:[NSString stringWithFormat:@"Internal error: non-branch opcode with address mode %lu found", opcode->addressMode]
                                          userInfo:nil];
     }
@@ -383,7 +383,7 @@ static const ItFrobHopper65816ModelHandler *kModelHandler;
             break;
 
         default:
-            @throw [NSException exceptionWithName:@"InternalErrorExcepton"
+            @throw [NSException exceptionWithName:FRBHopperExceptionName
                                            reason:[NSString stringWithFormat:@"Internal error: branch opcode with address mode %lu found", opcode->addressMode]
                                          userInfo:nil];
     }

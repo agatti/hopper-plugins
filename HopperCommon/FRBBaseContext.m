@@ -31,8 +31,8 @@
 @implementation ItFrobHopperHopperCommonBaseContext
 
 - (id<CPUDefinition>)cpuDefinition {
-    @throw [NSException exceptionWithName:@"NotImplementedException"
-                                   reason:@"Forgot to override -[ItFrobHopperHopperCommonBaseContext cpuDefinition:]"
+    @throw [NSException exceptionWithName:FRBHopperExceptionName
+                                   reason:[NSString stringWithFormat:@"Forgot to override %s", __PRETTY_FUNCTION__]
                                  userInfo:nil];
 }
 
@@ -92,8 +92,8 @@
 
 - (int)disassembleSingleInstruction:(DisasmStruct *)disasm
                  usingProcessorMode:(NSUInteger)mode {
-    @throw [NSException exceptionWithName:@"NotImplementedException"
-                                   reason:@"Forgot to override -[ItFrobHopperHopperCommonBaseContext disassembleSingleInstruction:usingProcessorMode:]"
+    @throw [NSException exceptionWithName:FRBHopperExceptionName
+                                   reason:[NSString stringWithFormat:@"Forgot to override %s", __PRETTY_FUNCTION__]
                                  userInfo:nil];
 }
 
@@ -102,8 +102,8 @@
 }
 
 - (BOOL)instructionHaltsExecutionFlow:(DisasmStruct *)disasm {
-    @throw [NSException exceptionWithName:@"NotImplementedException"
-                                   reason:@"Forgot to override -[ItFrobHopperHopperCommonBaseContext instructionHaltsExecutionFlow:]"
+    @throw [NSException exceptionWithName:FRBHopperExceptionName
+                                   reason:[NSString stringWithFormat:@"Forgot to override %s", __PRETTY_FUNCTION__]
                                  userInfo:nil];
 }
 
@@ -137,8 +137,8 @@
 - (void)buildInstructionString:(DisasmStruct *)disasm
                     forSegment:(id<HPSegment>)segment
                 populatingInfo:(id<HPFormattedInstructionInfo>)formattedInstructionInfo {
-    @throw [NSException exceptionWithName:@"NotImplementedException"
-                                   reason:@"Forgot to override -[ItFrobHopperHopperCommonBaseContext buildInstructionString:forSegment:populatingInfo:]"
+    @throw [NSException exceptionWithName:FRBHopperExceptionName
+                                   reason:[NSString stringWithFormat:@"Forgot to override %s", __PRETTY_FUNCTION__]
                                  userInfo:nil];
 }
 

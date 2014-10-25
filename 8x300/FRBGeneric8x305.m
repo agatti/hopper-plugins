@@ -27,8 +27,6 @@
 #import "FRBBase.h"
 #import "FRBGeneric8x305.h"
 #import "FRBModelHandler.h"
-#import "FRBOperandFormatter.h"
-#import "FRBHopperCommon.h"
 
 @interface ItFrobHopper8x300Generic8x305 ()
 

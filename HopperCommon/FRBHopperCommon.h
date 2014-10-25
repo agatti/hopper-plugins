@@ -26,6 +26,8 @@
 
 #import <Foundation/Foundation.h>
 
+static NSString *FRBHopperExceptionName = @"it.frob.hopper.internalexception";
+
 /*!
  *	Initialises the given DisasmStruct structure.
  *

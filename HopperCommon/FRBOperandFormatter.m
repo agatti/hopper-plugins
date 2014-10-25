@@ -130,7 +130,7 @@ NSString *FormatBinary(NSNumber *value, size_t size, BOOL fillZeroes,
             break;
 
         default:
-            @throw [NSException exceptionWithName:@"InternalErrorExcepton"
+            @throw [NSException exceptionWithName:FRBHopperExceptionName
                                            reason:[NSString stringWithFormat:@"Internal error: invalid binary value size %zu", size]
                                          userInfo:nil];
     }
@@ -169,7 +169,7 @@ NSString *FormatCharacters(NSNumber *value, size_t size) {
             break;
 
         default:
-            @throw [NSException exceptionWithName:@"InternalErrorExcepton"
+            @throw [NSException exceptionWithName:FRBHopperExceptionName
                                            reason:[NSString stringWithFormat:@"Internal error: invalid character value size %zu", size]
                                          userInfo:nil];
     }

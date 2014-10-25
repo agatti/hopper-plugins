@@ -25,6 +25,7 @@
  */
 
 #import "FRBCPUSupport.h"
+#import "FRBHopperCommon.h"
 
 #import <Hopper/Hopper.h>
 
@@ -35,13 +36,13 @@ Address SetAddressOperand(id<HPDisassembledFile> file, DisasmStruct *disasm,
                           uint32_t offset, uint32_t indexRegisters) {
 
     if (!IsBitsSizeValid(size)) {
-        @throw [NSException exceptionWithName:@"InternalErrorExcepton"
+        @throw [NSException exceptionWithName:FRBHopperExceptionName
                                        reason:[NSString stringWithFormat:@"Internal error: invalid size for SetAddressOperand(): %d", size]
                                      userInfo:nil];
     }
 
     if (!IsBitsSizeValid(effectiveSize)) {
-        @throw [NSException exceptionWithName:@"InternalErrorExcepton"
+        @throw [NSException exceptionWithName:FRBHopperExceptionName
                                        reason:[NSString stringWithFormat:@"Internal error: invalid effectiveSize for SetAddressOperand(): %d", effectiveSize]
                                      userInfo:nil];
     }
@@ -90,13 +91,13 @@ Address SetRelativeAddressOperand(id<HPDisassembledFile> file,
                                   uint32_t offset) {
 
     if (!IsBitsSizeValid(size)) {
-        @throw [NSException exceptionWithName:@"InternalErrorExcepton"
+        @throw [NSException exceptionWithName:FRBHopperExceptionName
                                        reason:[NSString stringWithFormat:@"Internal error: invalid size for SetRelativeAddressOperand(): %d", size]
                                      userInfo:nil];
     }
 
     if (!IsBitsSizeValid(effectiveSize)) {
-        @throw [NSException exceptionWithName:@"InternalErrorExcepton"
+        @throw [NSException exceptionWithName:FRBHopperExceptionName
                                        reason:[NSString stringWithFormat:@"Internal error: invalid effectiveSize for SetRelativeAddressOperand(): %d", effectiveSize]
                                      userInfo:nil];
     }
@@ -162,7 +163,7 @@ void SetConstantOperand(id<HPDisassembledFile> file, DisasmStruct *disasm,
             break;
 
         default:
-            @throw [NSException exceptionWithName:@"InternalErrorExcepton"
+            @throw [NSException exceptionWithName:FRBHopperExceptionName
                                            reason:[NSString stringWithFormat:@"Internal error: invalid size for SetConstantOperand(): %d", size]
                                          userInfo:nil];
             
