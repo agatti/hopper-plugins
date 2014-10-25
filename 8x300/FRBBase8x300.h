@@ -26,7 +26,33 @@
 
 #import <Foundation/Foundation.h>
 
-#import "FRBBase8x300.h"
+#import "FRBProvider.h"
 
-@interface ItFrobHopper8x300Generic8x300 : ItFrobHopper8x300Base8x300
+@interface ItFrobHopper8x300Base8x300 : NSObject<FRBProvider>
+
+- (BOOL)handleMOVEOpcode:(uint16_t)opcode
+            forStructure:(DisasmStruct *)structure
+                  onFile:(id<HPDisassembledFile>)file;
+- (BOOL)handleADDOpcode:(uint16_t)opcode
+           forStructure:(DisasmStruct *)structure
+                 onFile:(id<HPDisassembledFile>)file;
+- (BOOL)handleANDOpcode:(uint16_t)opcode
+           forStructure:(DisasmStruct *)structure
+                 onFile:(id<HPDisassembledFile>)file;
+- (BOOL)handleXOROpcode:(uint16_t)opcode
+           forStructure:(DisasmStruct *)structure
+                 onFile:(id<HPDisassembledFile>)file;
+- (BOOL)handleXECOpcode:(uint16_t)opcode
+           forStructure:(DisasmStruct *)structure
+                 onFile:(id<HPDisassembledFile>)file;
+- (BOOL)handleNZTOpcode:(uint16_t)opcode
+           forStructure:(DisasmStruct *)structure
+                 onFile:(id<HPDisassembledFile>)file;
+- (BOOL)handleXMITOpcode:(uint16_t)opcode
+            forStructure:(DisasmStruct *)structure
+                  onFile:(id<HPDisassembledFile>)file;
+- (BOOL)handleJMPOpcode:(uint16_t)opcode
+           forStructure:(DisasmStruct *)structure
+                 onFile:(id<HPDisassembledFile>)file;
+
 @end

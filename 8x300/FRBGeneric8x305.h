@@ -28,5 +28,5 @@
 
 #import "FRBBase8x300.h"
 
-@interface ItFrobHopper8x300Generic8x300 : ItFrobHopper8x300Base8x300
+@interface ItFrobHopper8x300Generic8x305 : ItFrobHopper8x300Base8x300
 @end

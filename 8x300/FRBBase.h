@@ -27,7 +27,6 @@
 #ifndef FRBBase_h
 #define FRBBase_h
 
-
 /*!
  *	Assembler syntax variant.
  */
@@ -65,7 +64,7 @@ static const NSUInteger FRB8x300OpcodesCount = FRBOpcodeLast;
  */
 static const char *kRegisterNames[32] = {
     "AUX",    "R1",   "R2",   "R3",   "R4",   "R5",   "R6",  "IVL",
-    "OVF",   "R11",   NULL,   NULL,   NULL,   NULL,   NULL,  "IVR",
+    "OVF",   "R11",  "R12",  "R13",  "R14",  "R15",  "R16",  "IVR",
     "LIV0", "LIV1", "LIV2", "LIV3", "LIV4", "LIV5", "LIV6", "LIV7",
     "RIV0", "RIV1", "RIV2", "RIV3", "RIV4", "RIV5", "RIV6", "RIV7",
 };
@@ -81,7 +80,12 @@ typedef NS_ENUM(NSUInteger, FRB8x300Register) {
     FRB8x300RegisterIVL,
     FRB8x300RegisterOVF,
     FRB8x300RegisterR11,
-    FRB8x300RegisterIVR = 15,
+    FRB8x300RegisterR12,
+    FRB8x300RegisterR13,
+    FRB8x300RegisterR14,
+    FRB8x300RegisterR15,
+    FRB8x300RegisterR16,
+    FRB8x300RegisterIVR,
     FRB8x300RegisterLIV0,
     FRB8x300RegisterLIV1,
     FRB8x300RegisterLIV2,
@@ -115,6 +119,11 @@ typedef NS_OPTIONS(NSUInteger, FRB8x300RegisterFlags) {
     FRB8x300RegisterFlagIVL  = 1 << FRB8x300RegisterIVL,
     FRB8x300RegisterFlagOVF  = 1 << FRB8x300RegisterOVF,
     FRB8x300RegisterFlagR11  = 1 << FRB8x300RegisterR11,
+    FRB8x300RegisterFlagR12  = 1 << FRB8x300RegisterR12,
+    FRB8x300RegisterFlagR13  = 1 << FRB8x300RegisterR13,
+    FRB8x300RegisterFlagR14  = 1 << FRB8x300RegisterR14,
+    FRB8x300RegisterFlagR15  = 1 << FRB8x300RegisterR15,
+    FRB8x300RegisterFlagR16  = 1 << FRB8x300RegisterR16,
     FRB8x300RegisterFlagIVR  = 1 << FRB8x300RegisterIVR,
     FRB8x300RegisterFlagLIV0 = 1 << FRB8x300RegisterLIV0,
     FRB8x300RegisterFlagLIV1 = 1 << FRB8x300RegisterLIV1,

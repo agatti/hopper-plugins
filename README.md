@@ -242,20 +242,28 @@ CPUs currently supported: 65816.
 
 ###**8x300 CPU Plugin**
 
-_version 0.0.1_
+_version 0.0.2_
 
 This CPU core plugin allows you to disassemble 8x300 code, used in early signal processing equipment in the 70s and early 80s.
 
-CPUs currently supported: 8x300.
+CPUs currently supported: 8x300, 8x305.
 
 <table>
 <thead>
 <tr><th>Manufacturer</th><th>Model</th><th>Provider</th><th>Datasheet</th></tr>
 </thead>
 <tbody>
+<tr><td rowspan="2">AMD</td><td>AM29x305</td><td>Generic &rarr; 8x305</td><td><a href="http://pdf.datasheetarchive.com/datasheetsmain/Datasheets-115/DSAP00756.pdf">Datasheet</td></tr>
+<tr><td>AM29x305A</td><td>Generic &rarr; 8x305</td><td><a href="http://pdf.datasheetarchive.com/datasheetsmain/Datasheets-115/DSAP00756.pdf">Datasheet</a></td></tr>
+<tr><td>Lansdale</td><td>SL8X305</td><td>Generic &rarr; 8x305</td><td><a href="http://www.lansdale.com/datasheets/sl8x305_rev0.pdf">Datasheet</a></td></tr>
+<tr><td>Philips</td><td>S8X305I</td><td>Generic &rarr; 8x305</td><td><a href="#">N/A</a></td></tr>
 <tr><td>Scientific Micro Systems</td><td>SMS300</td><td>Generic &rarr; 8x300</td><td><a href="#">N/A</a></td></tr>
-<tr><td>Signetics</td><td>SGS8x300</td><td>Generic &rarr; 8x300</td><td><a href="https://ia601607.us.archive.org/1/items/bitsavers_signetics8ep80_3401307/8x300_Data_Sheet_Sep80.pdf">Datasheet</a></td></tr>
-</tbody>
+<tr><td rowspan="6">Signetics</td><td>N8X300I</td><td>Generic &rarr; 8x300</td><td><a href="https://ia601607.us.archive.org/1/items/bitsavers_signetics8ep80_3401307/8x300_Data_Sheet_Sep80.pdf">Datasheet</a></td></tr>
+<tr><td>S8X300-1</td><td>Generic &rarr; 8x300</td><td><a href="https://ia601607.us.archive.org/1/items/bitsavers_signetics8ep80_3401307/8x300_Data_Sheet_Sep80.pdf">Datasheet</a></td></tr>
+<tr><td>S8X300-2</td><td>Generic &rarr; 8x300</td><td><a href="https://ia601607.us.archive.org/1/items/bitsavers_signetics8ep80_3401307/8x300_Data_Sheet_Sep80.pdf">Datasheet</a></td></tr>
+<tr><td>N8X305A</td><td>Generic &rarr; 8x305</td><td><a href="http://pdf.datasheetarchive.com/indexerfiles/Scans-063/DSA2IH00137808.pdf">Datasheet</a></td></tr>
+<tr><td>N8X305I</td><td>Generic &rarr; 8x305</td><td><a href="http://pdf.datasheetarchive.com/indexerfiles/Scans-063/DSA2IH00137808.pdf">Datasheet</a></td></tr>
+<tr><td>N8X305N</td><td>Generic &rarr; 8x305</td><td><a href="http://pdf.datasheetarchive.com/indexerfiles/Scans-063/DSA2IH00137808.pdf">Datasheet</a></td></tr>
 </table>
 
 ####TODO for next version:

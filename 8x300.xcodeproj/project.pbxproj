@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		683CF0AB19FB89E700CCABAE /* FRBGeneric8x305.m in Sources */ = {isa = PBXBuildFile; fileRef = 683CF0AA19FB89E700CCABAE /* FRBGeneric8x305.m */; };
+		683CF0AE19FB8AF500CCABAE /* FRBBase8x300.m in Sources */ = {isa = PBXBuildFile; fileRef = 683CF0AD19FB8AF500CCABAE /* FRBBase8x300.m */; };
 		68C0457D19C82D8A005E1B4D /* FRBContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 68C0457719C82D8A005E1B4D /* FRBContext.m */; };
 		68C0457E19C82D8A005E1B4D /* FRBDefinition.m in Sources */ = {isa = PBXBuildFile; fileRef = 68C0457919C82D8A005E1B4D /* FRBDefinition.m */; };
 		68C0457F19C82D8A005E1B4D /* FRBModelHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 68C0457B19C82D8A005E1B4D /* FRBModelHandler.m */; };
@@ -19,6 +21,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		683CF0A919FB89E700CCABAE /* FRBGeneric8x305.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRBGeneric8x305.h; sourceTree = "<group>"; };
+		683CF0AA19FB89E700CCABAE /* FRBGeneric8x305.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRBGeneric8x305.m; sourceTree = "<group>"; };
+		683CF0AC19FB8AF500CCABAE /* FRBBase8x300.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRBBase8x300.h; sourceTree = "<group>"; };
+		683CF0AD19FB8AF500CCABAE /* FRBBase8x300.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRBBase8x300.m; sourceTree = "<group>"; };
 		68C0457619C82D8A005E1B4D /* FRBContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRBContext.h; sourceTree = "<group>"; };
 		68C0457719C82D8A005E1B4D /* FRBContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRBContext.m; sourceTree = "<group>"; };
 		68C0457819C82D8A005E1B4D /* FRBDefinition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRBDefinition.h; sourceTree = "<group>"; };
@@ -56,6 +62,10 @@
 		68C0458219C82EE4005E1B4D /* Chips */ = {
 			isa = PBXGroup;
 			children = (
+				683CF0AC19FB8AF500CCABAE /* FRBBase8x300.h */,
+				683CF0AD19FB8AF500CCABAE /* FRBBase8x300.m */,
+				683CF0A919FB89E700CCABAE /* FRBGeneric8x305.h */,
+				683CF0AA19FB89E700CCABAE /* FRBGeneric8x305.m */,
 				68C0458519C832F6005E1B4D /* FRBGeneric8x300.h */,
 				68C0458619C832F6005E1B4D /* FRBGeneric8x300.m */,
 			);
@@ -182,7 +192,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				68C0457D19C82D8A005E1B4D /* FRBContext.m in Sources */,
+				683CF0AB19FB89E700CCABAE /* FRBGeneric8x305.m in Sources */,
 				68C0457E19C82D8A005E1B4D /* FRBDefinition.m in Sources */,
+				683CF0AE19FB8AF500CCABAE /* FRBBase8x300.m in Sources */,
 				68C0458719C832F6005E1B4D /* FRBGeneric8x300.m in Sources */,
 				68C0457F19C82D8A005E1B4D /* FRBModelHandler.m in Sources */,
 				68C0458F19C8C259005E1B4D /* FRBInstructionColouriser.m in Sources */,

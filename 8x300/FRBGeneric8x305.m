@@ -25,22 +25,20 @@
  */
 
 #import "FRBBase.h"
-#import "FRBGeneric8x300.h"
+#import "FRBGeneric8x305.h"
 #import "FRBModelHandler.h"
 #import "FRBOperandFormatter.h"
 #import "FRBHopperCommon.h"
 
-@interface ItFrobHopper8x300Generic8x300 ()
+@interface ItFrobHopper8x300Generic8x305 ()
 
-- (BOOL)isRegisterValid:(uint)registerNumber;
 - (BOOL)isValidALUOpcode:(uint16_t)opcode;
-- (BOOL)isValidTargetOpcode:(uint16_t)opcode;
 
 @end
 
-@implementation ItFrobHopper8x300Generic8x300
+@implementation ItFrobHopper8x300Generic8x305
 
-static NSString * const kProviderName = @"it.frob.hopper.generic8x300";
+static NSString * const kProviderName = @"it.frob.hopper.generic8x305";
 
 @synthesize name;
 
@@ -53,55 +51,21 @@ static NSString * const kProviderName = @"it.frob.hopper.generic8x300";
 }
 
 + (void)load {
-    [[ItFrobHopper8x300ModelHandler sharedModelHandler] registerProvider:[ItFrobHopper8x300Generic8x300 class]
+    [[ItFrobHopper8x300ModelHandler sharedModelHandler] registerProvider:[ItFrobHopper8x300Generic8x305 class]
                                                                  forName:kProviderName];
 }
 
 #pragma mark - Private methods
 
-- (BOOL)isRegisterValid:(uint)registerNumber {
-    switch (registerNumber) {
-        case FRB8x300RegisterR12:
-        case FRB8x300RegisterR13:
-        case FRB8x300RegisterR14:
-        case FRB8x300RegisterR15:
-        case FRB8x300RegisterR16:
-            return NO;
-
-        default:
-            return YES;
-    }
-}
-
 - (BOOL)isValidALUOpcode:(uint16_t)opcode {
-    int sourceRegister = (opcode >> 8) & 0x001F;
     int destinationRegister = opcode & 0x001F;
-
-    if (![self isRegisterValid:sourceRegister] ||
-        ![self isRegisterValid:destinationRegister]) {
-        return NO;
-    }
 
     switch (opcode & 0x1010) {
         case 0x0000:
 
             // Register to Register
 
-            if (sourceRegister == FRB8x300RegisterIVL ||
-                sourceRegister == FRB8x300RegisterIVR ||
-                destinationRegister == FRB8x300RegisterOVF) {
-
-                return NO;
-            }
-            break;
-
-        case 0x0010:
-
-            // Register to I/O bus
-
-            if (sourceRegister == FRB8x300RegisterIVL ||
-                sourceRegister == FRB8x300RegisterIVR) {
-
+            if (destinationRegister == FRB8x300RegisterOVF) {
                 return NO;
             }
             break;
@@ -118,23 +82,9 @@ static NSString * const kProviderName = @"it.frob.hopper.generic8x300";
         default:
             break;
     }
-
+    
     return YES;
-}
 
-- (BOOL)isValidTargetOpcode:(uint16_t)opcode {
-    uint registerId = (opcode >> 8) & 0x001F;
-
-    if (![self isRegisterValid:registerId]) {
-        return NO;
-    }
-
-    if (((opcode & 0x1000) == 0x0000) && (registerId == FRB8x300RegisterIVL ||
-                                          registerId == FRB8x300RegisterIVR)) {
-        return NO;
-    }
-
-    return YES;
 }
 
 #pragma mark - Opcode handlers
@@ -185,44 +135,6 @@ static NSString * const kProviderName = @"it.frob.hopper.generic8x300";
     return [super handleXOROpcode:opcode
                      forStructure:structure
                            onFile:file];
-}
-
-- (BOOL)handleXECOpcode:(uint16_t)opcode
-           forStructure:(DisasmStruct *)structure
-                 onFile:(id<HPDisassembledFile>)file {
-    if (![self isValidTargetOpcode:opcode]) {
-        return NO;
-    }
-
-    return [super handleXECOpcode:opcode
-                     forStructure:structure
-                           onFile:file];
-}
-
-- (BOOL)handleNZTOpcode:(uint16_t)opcode
-           forStructure:(DisasmStruct *)structure
-                 onFile:(id<HPDisassembledFile>)file {
-    if (![self isValidTargetOpcode:opcode]) {
-        return NO;
-    }
-
-    return [super handleNZTOpcode:opcode
-                     forStructure:structure
-                           onFile:file];
-}
-
-- (BOOL)handleXMITOpcode:(uint16_t)opcode
-            forStructure:(DisasmStruct *)structure
-                  onFile:(id<HPDisassembledFile>)file {
-    uint registerId = (opcode >> 8) & 0x001F;
-    if (![self isRegisterValid:registerId] || (((opcode & 0x1000) == 0x0000) &&
-                                               (registerId == FRB8x300RegisterIVL))) {
-        return NO;
-    }
-
-    return [super handleXMITOpcode:opcode
-                      forStructure:structure
-                            onFile:file];
 }
 
 @end

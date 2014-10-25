@@ -6,6 +6,8 @@
 	<dict>
 		<key>8x300</key>
 		<string>it.frob.hopper.generic8x300</string>
+		<key>8x305</key>
+		<string>it.frob.hopper.generic8x305</string>
 	</dict>
 </dict>
 </plist>
