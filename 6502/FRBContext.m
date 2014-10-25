@@ -64,7 +64,7 @@ static const ItFrobHopper6502ModelHandler *kModelHandler;
 - (void)setMemoryFlags:(DisasmStruct *)disasm
         forInstruction:(const struct FRBInstruction *)instruction;
 - (NSString *)format:(FRBAddressMode)addressMode
-              opcode:(NSString *)opcode
+              opcode:(const char *)opcode
             operands:(NSArray *)operands;
 @end
 
@@ -81,31 +81,31 @@ static const ItFrobHopper6502ModelHandler *kModelHandler;
         static dispatch_once_t onceToken;
         dispatch_once(&onceToken, ^{
             kOpcodeFormats = [NSArray arrayWithObjects:
-                              @"%@    %@",       // FRBAddressModeAbsolute
-                              @"%@    %@,X",     // FRBAddressModeAbsoluteIndexedX
-                              @"%@    %@,Y",     // FRBAddressModeAbsoluteIndexedY
-                              @"%@    #%@",      // FRBAddressModeImmediate
-                              @"%@    A",        // FRBAddressModeAccumulator
-                              @"%@",             // FRBAddressModeImplied
-                              @"%@",             // FRBAddressModeStack
-                              @"%@    (%@)",     // FRBAddressModeAbsoluteIndirect
-                              @"%@    %@",       // FRBAddressModeProgramCounterRelative
-                              @"%@    %@",       // FRBAddressModeZeroPage
-                              @"%@    %@,X",     // FRBAddressModeZeroPageIndexedX
-                              @"%@    %@,Y",     // FRBAddressModeZeroPageIndexedY
-                              @"%@    (%@,X)",   // FRBAddressModeZeroPageIndexedIndirect
-                              @"%@    (%@),Y",   // FRBAddressModeZeroPageIndirectIndexedY
-                              @"%@    (%@)",     // FRBAddressModeZeroPageIndirect
-                              @"%@    (%@,X)",   // FRBAddressModeAbsoluteIndexedIndirect
-                              @"%@    %@,%@",    // FRBAddressModeZeroPageProgramCounterRelative
-                              @"%@    %@,%@,%@", // FRBAddressModeBlockTransfer
-                              @"%@    %@,%@",    // FRBAddressModeImmediateZeroPage
-                              @"%@    %@,%@,X",  // FRBAddressModeImmediateZeroPageX
-                              @"%@    %@,%@",    // FRBAddressModeImmediateAbsolute
-                              @"%@    %@,%@,X",  // FRBAddressModeImmediateAbsoluteX
-                              @"%@    (%@),X",   // FRBAddressModeZeroPageIndirectIndexedX
-                              @"%@    %@,%@,%@", // FRBAddressModeBitsProgramCounterAbsolute
-                              @"%@    \\%@",     // FRBAddressModeSpecialPage
+                              @"%s    %@",       // FRBAddressModeAbsolute
+                              @"%s    %@,X",     // FRBAddressModeAbsoluteIndexedX
+                              @"%s    %@,Y",     // FRBAddressModeAbsoluteIndexedY
+                              @"%s    #%@",      // FRBAddressModeImmediate
+                              @"%s    A",        // FRBAddressModeAccumulator
+                              @"%s",             // FRBAddressModeImplied
+                              @"%s",             // FRBAddressModeStack
+                              @"%s    (%@)",     // FRBAddressModeAbsoluteIndirect
+                              @"%s    %@",       // FRBAddressModeProgramCounterRelative
+                              @"%s    %@",       // FRBAddressModeZeroPage
+                              @"%s    %@,X",     // FRBAddressModeZeroPageIndexedX
+                              @"%s    %@,Y",     // FRBAddressModeZeroPageIndexedY
+                              @"%s    (%@,X)",   // FRBAddressModeZeroPageIndexedIndirect
+                              @"%s    (%@),Y",   // FRBAddressModeZeroPageIndirectIndexedY
+                              @"%s    (%@)",     // FRBAddressModeZeroPageIndirect
+                              @"%s    (%@,X)",   // FRBAddressModeAbsoluteIndexedIndirect
+                              @"%s    %@,%@",    // FRBAddressModeZeroPageProgramCounterRelative
+                              @"%s    %@,%@,%@", // FRBAddressModeBlockTransfer
+                              @"%s    %@,%@",    // FRBAddressModeImmediateZeroPage
+                              @"%s    %@,%@,X",  // FRBAddressModeImmediateZeroPageX
+                              @"%s    %@,%@",    // FRBAddressModeImmediateAbsolute
+                              @"%s    %@,%@,X",  // FRBAddressModeImmediateAbsoluteX
+                              @"%s    (%@),X",   // FRBAddressModeZeroPageIndirectIndexedX
+                              @"%s    %@,%@,%@", // FRBAddressModeBitsProgramCounterAbsolute
+                              @"%s    \\%@",     // FRBAddressModeSpecialPage
                               nil];
             kModelHandler = [ItFrobHopper6502ModelHandler sharedModelHandler];
         });
@@ -362,7 +362,7 @@ static const ItFrobHopper6502ModelHandler *kModelHandler;
 
     const struct FRBOpcode *opcode = [_provider opcodeForByte:source->instruction.userData];
     return [self format:opcode->addressMode
-                 opcode:[NSString stringWithUTF8String:FRBInstructions[opcode->type].name]
+                 opcode:FRBInstructions[opcode->type].name
                operands:strings];
 }
 
@@ -394,7 +394,7 @@ static const ItFrobHopper6502ModelHandler *kModelHandler;
 }
 
 - (NSString *)format:(FRBAddressMode)addressMode
-              opcode:(NSString *)opcode
+              opcode:(const char *)opcode
             operands:(NSArray *)operands {
 
     NSString *format = kOpcodeFormats[addressMode];

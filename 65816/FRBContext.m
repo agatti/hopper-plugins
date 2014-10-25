@@ -58,7 +58,7 @@ static const ItFrobHopper65816ModelHandler *kModelHandler;
 - (void)setMemoryFlags:(DisasmStruct *)disasm
         forInstruction:(const struct FRBInstruction *)instruction;
 - (NSString *)format:(FRBAddressMode)addressMode
-              opcode:(NSString *)opcode
+              opcode:(const char *)opcode
             operands:(NSArray *)operands;
 - (void)updateShifts:(DisasmStruct *)disasm
            forOpcode:(const struct FRBOpcode *)opcode;
@@ -78,30 +78,30 @@ static const ItFrobHopper65816ModelHandler *kModelHandler;
         static dispatch_once_t onceToken;
         dispatch_once(&onceToken, ^{
             kOpcodeFormats = [NSArray arrayWithObjects:
-                              @"%@    %@",       // FRBAddressModeAbsolute
-                              @"%@    %@,X",     // FRBAddressModeAbsoluteIndexedX
-                              @"%@    %@,Y",     // FRBAddressModeAbsoluteIndexedY
-                              @"%@    %@",       // FRBAddressModeAbsoluteLong
-                              @"%@    %@,X",     // FRBAddressModeAbsoluteLongIndexed
-                              @"%@    #%@",      // FRBAddressModeImmediate
-                              @"%@    A",        // FRBAddressModeAccumulator
-                              @"%@",             // FRBAddressModeImplied
-                              @"%@",             // FRBAddressModeStack
-                              @"%@    (%@)",     // FRBAddressModeAbsoluteIndirect
-                              @"%@    %@",       // FRBAddressModeProgramCounterRelative
-                              @"%@    %@",       // FRBAddressModeProgramCounterRelativeLong
-                              @"%@    %@",       // FRBAddressModeDirect
-                              @"%@    %@,X",     // FRBAddressModeDirectIndexedX
-                              @"%@    %@,Y",     // FRBAddressModeDirectIndexedY
-                              @"%@    (%@,X)",   // FRBAddressModeDirectIndexedIndirect
-                              @"%@    (%@,Y)",   // FRBAddressModeDirectIndirectIndexedY
-                              @"%@    (%@)",     // FRBAddressModeDirectIndirect
-                              @"%@    [%@]",     // FRBAddressModeDirectIndirectLong
-                              @"%@    [%@],Y",   // FRBAddressModeDirectIndirectLongIndexed
-                              @"%@    (%@,X)",   // FRBAddressModeAbsoluteIndexedIndirect
-                              @"%@    %@,S",     // FRBAddressModeStackRelative
-                              @"%@    (%@,S),Y", // FRBAddressModeStackRelativeIndirectIndexed
-                              @"%@    %@,%@",    // FRBAddressModeBlockMove
+                              @"%s    %@",       // FRBAddressModeAbsolute
+                              @"%s    %@,X",     // FRBAddressModeAbsoluteIndexedX
+                              @"%s    %@,Y",     // FRBAddressModeAbsoluteIndexedY
+                              @"%s    %@",       // FRBAddressModeAbsoluteLong
+                              @"%s    %@,X",     // FRBAddressModeAbsoluteLongIndexed
+                              @"%s    #%@",      // FRBAddressModeImmediate
+                              @"%s    A",        // FRBAddressModeAccumulator
+                              @"%s",             // FRBAddressModeImplied
+                              @"%s",             // FRBAddressModeStack
+                              @"%s    (%@)",     // FRBAddressModeAbsoluteIndirect
+                              @"%s    %@",       // FRBAddressModeProgramCounterRelative
+                              @"%s    %@",       // FRBAddressModeProgramCounterRelativeLong
+                              @"%s    %@",       // FRBAddressModeDirect
+                              @"%s    %@,X",     // FRBAddressModeDirectIndexedX
+                              @"%s    %@,Y",     // FRBAddressModeDirectIndexedY
+                              @"%s    (%@,X)",   // FRBAddressModeDirectIndexedIndirect
+                              @"%s    (%@,Y)",   // FRBAddressModeDirectIndirectIndexedY
+                              @"%s    (%@)",     // FRBAddressModeDirectIndirect
+                              @"%s    [%@]",     // FRBAddressModeDirectIndirectLong
+                              @"%s    [%@],Y",   // FRBAddressModeDirectIndirectLongIndexed
+                              @"%s    (%@,X)",   // FRBAddressModeAbsoluteIndexedIndirect
+                              @"%s    %@,S",     // FRBAddressModeStackRelative
+                              @"%s    (%@,S),Y", // FRBAddressModeStackRelativeIndirectIndexed
+                              @"%s    %@,%@",    // FRBAddressModeBlockMove
                               nil
                               ];
             kModelHandler = [ItFrobHopper65816ModelHandler sharedModelHandler];
@@ -413,7 +413,7 @@ static const ItFrobHopper65816ModelHandler *kModelHandler;
 
     const struct FRBOpcode *opcode = [_provider opcodeForByte:source->instruction.userData];
     return [self format:opcode->addressMode
-                 opcode:[NSString stringWithUTF8String:FRBInstructions[opcode->type].name]
+                 opcode:FRBInstructions[opcode->type].name
                operands:strings];
 }
 
@@ -447,7 +447,7 @@ static const ItFrobHopper65816ModelHandler *kModelHandler;
 }
 
 - (NSString *)format:(FRBAddressMode)addressMode
-              opcode:(NSString *)opcode
+              opcode:(const char *)opcode
             operands:(NSArray *)operands {
 
     NSString *format = kOpcodeFormats[addressMode];
