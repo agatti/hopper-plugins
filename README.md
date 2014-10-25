@@ -22,7 +22,7 @@ _version 0.1.2_
 
 This CPU core plugin allows you to disassemble 6502/65C02 code, used in loads of home computers of the 70s, 80s, and early 90s, and in industrial automation or other specialised tasks where an MCU is needed.
 
-CPUs currently supported: 6502, 65C02, 65N02, 65R02, 65S02, HuC6280, M50734, R6500, R65C02, R65C19, R65C29, SunPlus, W65C02S.
+CPUs currently supported: 6502, 65C02, 65N02, 65R02, 65S02, HuC6280, M740, R6500, R65C02, R65C19, R65C29, SunPlus, W65C02S.
 
 <table>
 <thead>
@@ -47,20 +47,20 @@ CPUs currently supported: 6502, 65C02, 65N02, 65R02, 65S02, HuC6280, M50734, R65
 <tr><td>HKE65SC105</td><td>Generic &rarr; 65C02</td><td><a href="http://pdf.datasheetarchive.com/datasheetsmain/Datasheets-112/DSAP0049001.pdf">Datasheet</a></td></tr>
 <tr><td rowspan="2">HudsonSoft</td><td>HuC6280</td><td>HudsonSoft &rarr; HuC6280</td><td>N/A</td></tr>
 <tr><td>HuC6280A</td><td>HudsonSoft &rarr; HuC6280</td><td>N/A</td></tr>
-<tr><td rowspan="14">Mitsubishi</td><td>M37408</td><td>Mitsubishi &rarr; M50734</td><td><a href="http://pdf.datasheetarchive.com/indexerfiles/Datasheet-03/DSA0039232.pdf">Datasheet</a></td></tr>
-<tr><td>M37409</td><td>Mitsubishi &rarr; M50734</td><td><a href="http://pdf.datasheetarchive.com/indexerfiles/Datasheet-03/DSA0039232.pdf">Datasheet</a></td></tr>
-<tr><td>M37410</td><td>Mitsubishi &rarr; M50734</td><td><a href="http://pdf.datasheetarchive.com/indexerfiles/Datasheet-03/DSA0039232.pdf">Datasheet</a></td></tr>
-<tr><td>M37412</td><td>Mitsubishi &rarr; M50734</td><td><a href="http://pdf.datasheetarchive.com/indexerfiles/Datasheet-03/DSA0039232.pdf">Datasheet</a></td></tr>
-<tr><td>M37413</td><td>Mitsubishi &rarr; M50734</td><td><a href="http://pdf.datasheetarchive.com/indexerfiles/Datasheet-03/DSA0039232.pdf">Datasheet</a></td></tr>
-<tr><td>M37414</td><td>Mitsubishi &rarr; M50734</td><td><a href="http://pdf.datasheetarchive.com/indexerfiles/Datasheet-03/DSA0039232.pdf">Datasheet</a></td></tr>
-<tr><td>M37415</td><td>Mitsubishi &rarr; M50734</td><td><a href="http://pdf.datasheetarchive.com/indexerfiles/Datasheet-03/DSA0039232.pdf">Datasheet</a></td></tr>
-<tr><td>M37416</td><td>Mitsubishi &rarr; M50734</td><td><a href="http://pdf.datasheetarchive.com/indexerfiles/Datasheet-03/DSA0039232.pdf">Datasheet</a></td></tr>
-<tr><td>M37417</td><td>Mitsubishi &rarr; M50734</td><td><a href="http://pdf.datasheetarchive.com/indexerfiles/Datasheet-03/DSA0039232.pdf">Datasheet</a></td></tr>
-<tr><td>M37418</td><td>Mitsubishi &rarr; M50734</td><td><a href="http://pdf.datasheetarchive.com/indexerfiles/Datasheet-03/DSA0039232.pdf">Datasheet</a></td></tr>
-<tr><td>M37420</td><td>Mitsubishi &rarr; M50734</td><td><a href="http://pdf.datasheetarchive.com/indexerfiles/Datasheet-03/DSA0039232.pdf">Datasheet</a></td></tr>
-<tr><td>M37421</td><td>Mitsubishi &rarr; M50734</td><td><a href="http://pdf.datasheetarchive.com/indexerfiles/Datasheet-03/DSA0039232.pdf">Datasheet</a></td></tr>
-<tr><td>M37424</td><td>Mitsubishi &rarr; M50734</td><td><a href="http://pdf.datasheetarchive.com/indexerfiles/Datasheet-03/DSA0039232.pdf">Datasheet</a></td></tr>
-<tr><td>M37524</td><td>Mitsubishi &rarr; M50734</td><td><a href="http://pdf.datasheetarchive.com/indexerfiles/Datasheet-03/DSA0039232.pdf">Datasheet</a></td></tr>
+<tr><td rowspan="14">Mitsubishi</td><td>M37408</td><td>Mitsubishi &rarr; M740</td><td><a href="http://pdf.datasheetarchive.com/indexerfiles/Datasheet-03/DSA0039232.pdf">Datasheet</a></td></tr>
+<tr><td>M37409</td><td>Mitsubishi &rarr; M740</td><td><a href="http://pdf.datasheetarchive.com/indexerfiles/Datasheet-03/DSA0039232.pdf">Datasheet</a></td></tr>
+<tr><td>M37410</td><td>Mitsubishi &rarr; M740</td><td><a href="http://pdf.datasheetarchive.com/indexerfiles/Datasheet-03/DSA0039232.pdf">Datasheet</a></td></tr>
+<tr><td>M37412</td><td>Mitsubishi &rarr; M740</td><td><a href="http://pdf.datasheetarchive.com/indexerfiles/Datasheet-03/DSA0039232.pdf">Datasheet</a></td></tr>
+<tr><td>M37413</td><td>Mitsubishi &rarr; M740</td><td><a href="http://pdf.datasheetarchive.com/indexerfiles/Datasheet-03/DSA0039232.pdf">Datasheet</a></td></tr>
+<tr><td>M37414</td><td>Mitsubishi &rarr; M740</td><td><a href="http://pdf.datasheetarchive.com/indexerfiles/Datasheet-03/DSA0039232.pdf">Datasheet</a></td></tr>
+<tr><td>M37415</td><td>Mitsubishi &rarr; M740</td><td><a href="http://pdf.datasheetarchive.com/indexerfiles/Datasheet-03/DSA0039232.pdf">Datasheet</a></td></tr>
+<tr><td>M37416</td><td>Mitsubishi &rarr; M740</td><td><a href="http://pdf.datasheetarchive.com/indexerfiles/Datasheet-03/DSA0039232.pdf">Datasheet</a></td></tr>
+<tr><td>M37417</td><td>Mitsubishi &rarr; M740</td><td><a href="http://pdf.datasheetarchive.com/indexerfiles/Datasheet-03/DSA0039232.pdf">Datasheet</a></td></tr>
+<tr><td>M37418</td><td>Mitsubishi &rarr; M740</td><td><a href="http://pdf.datasheetarchive.com/indexerfiles/Datasheet-03/DSA0039232.pdf">Datasheet</a></td></tr>
+<tr><td>M37420</td><td>Mitsubishi &rarr; M740</td><td><a href="http://pdf.datasheetarchive.com/indexerfiles/Datasheet-03/DSA0039232.pdf">Datasheet</a></td></tr>
+<tr><td>M37421</td><td>Mitsubishi &rarr; M740</td><td><a href="http://pdf.datasheetarchive.com/indexerfiles/Datasheet-03/DSA0039232.pdf">Datasheet</a></td></tr>
+<tr><td>M37424</td><td>Mitsubishi &rarr; M740</td><td><a href="http://pdf.datasheetarchive.com/indexerfiles/Datasheet-03/DSA0039232.pdf">Datasheet</a></td></tr>
+<tr><td>M37524</td><td>Mitsubishi &rarr; M740</td><td><a href="http://pdf.datasheetarchive.com/indexerfiles/Datasheet-03/DSA0039232.pdf">Datasheet</a></td></tr>
 <tr><td rowspan="18">MOS</td><td>6502</td><td>Generic &rarr; 6502</td><td><a href="http://archive.6502.org/datasheets/mos_6500_mpu_nov_1985.pdf">Datasheet</a></td></tr>
 <tr><td>6503</td><td>Generic &rarr; 6502</td><td><a href="http://archive.6502.org/datasheets/mos_6500_mpu_nov_1985.pdf">Datasheet</a></td></tr>
 <tr><td>6504</td><td>Generic &rarr; 6502</td><td><a href="http://archive.6502.org/datasheets/mos_6500_mpu_nov_1985.pdf">Datasheet</a></td></tr>
@@ -184,7 +184,7 @@ CPUs currently supported: 6502, 65C02, 65N02, 65R02, 65S02, HuC6280, M50734, R65
 * Write tests for the HuC6280 backend.
 * Write tests for the R65C19 backend.
 * Write tests for the R65C29 backend.
-* Write tests for the M50734 backend.
+* Write tests for the M740 backend.
 * Properly handle the extra registers present in the R65C19 variant.
 * Attempt to reject files too big for address-space reduced chip variants.
 * Add support for more 6502 variants if any are found in the wild.

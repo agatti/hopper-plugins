@@ -25,14 +25,14 @@
  */
 
 #import "FRBBase.h"
-#import "FRBM50734.h"
+#import "FRBM740.h"
 #import "FRBModelHandler.h"
 
 static const struct FRBOpcode kOpcodeTable[256];
 
-@implementation ItFrobHopper6502M50734
+@implementation ItFrobHopper6502M740
 
-static NSString * const kProviderName = @"it.frob.hopper.m50734";
+static NSString * const kProviderName = @"it.frob.hopper.m740";
 
 @synthesize name;
 
@@ -45,7 +45,7 @@ static NSString * const kProviderName = @"it.frob.hopper.m50734";
 }
 
 + (void)load {
-    [[ItFrobHopper6502ModelHandler sharedModelHandler] registerProvider:[ItFrobHopper6502M50734 class]
+    [[ItFrobHopper6502ModelHandler sharedModelHandler] registerProvider:[ItFrobHopper6502M740 class]
                                                                 forName:kProviderName];
 }
 

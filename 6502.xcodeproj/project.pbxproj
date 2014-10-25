@@ -18,7 +18,7 @@
 		6873AD77197F810400B46DB5 /* FRBR6500.m in Sources */ = {isa = PBXBuildFile; fileRef = 6873AD76197F810400B46DB5 /* FRBR6500.m */; };
 		6873AD7D197F8E7A00B46DB5 /* FRBHuC6280.m in Sources */ = {isa = PBXBuildFile; fileRef = 6873AD7C197F8E7A00B46DB5 /* FRBHuC6280.m */; };
 		688E0143197C949E00C9DC94 /* FRBW65C02S.m in Sources */ = {isa = PBXBuildFile; fileRef = 688E0142197C949E00C9DC94 /* FRBW65C02S.m */; };
-		68AE6F0019ACE4370020D445 /* FRBM50734.m in Sources */ = {isa = PBXBuildFile; fileRef = 68AE6EFE19ACE4370020D445 /* FRBM50734.m */; };
+		68AE6F0019ACE4370020D445 /* FRBM740.m in Sources */ = {isa = PBXBuildFile; fileRef = 68AE6EFE19ACE4370020D445 /* FRBM740.m */; };
 		68B87E0A19AB975400BEE286 /* FRBR65C02.m in Sources */ = {isa = PBXBuildFile; fileRef = 68B87E0819AB975400BEE286 /* FRBR65C02.m */; };
 		68B87E0E19ABD99800BEE286 /* FRBR65C19.m in Sources */ = {isa = PBXBuildFile; fileRef = 68B87E0C19ABD99800BEE286 /* FRBR65C19.m */; };
 		68BFF68919AC467800025CDE /* FRBR65C29.m in Sources */ = {isa = PBXBuildFile; fileRef = 68BFF68719AC467800025CDE /* FRBR65C29.m */; };
@@ -55,8 +55,8 @@
 		6873AD7C197F8E7A00B46DB5 /* FRBHuC6280.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRBHuC6280.m; sourceTree = "<group>"; };
 		688E0141197C949E00C9DC94 /* FRBW65C02S.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FRBW65C02S.h; path = 6502/FRBW65C02S.h; sourceTree = SOURCE_ROOT; };
 		688E0142197C949E00C9DC94 /* FRBW65C02S.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FRBW65C02S.m; path = 6502/FRBW65C02S.m; sourceTree = SOURCE_ROOT; };
-		68AE6EFD19ACE4370020D445 /* FRBM50734.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRBM50734.h; sourceTree = "<group>"; };
-		68AE6EFE19ACE4370020D445 /* FRBM50734.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRBM50734.m; sourceTree = "<group>"; };
+		68AE6EFD19ACE4370020D445 /* FRBM740.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRBM740.h; sourceTree = "<group>"; };
+		68AE6EFE19ACE4370020D445 /* FRBM740.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRBM740.m; sourceTree = "<group>"; };
 		68B87E0719AB975400BEE286 /* FRBR65C02.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRBR65C02.h; sourceTree = "<group>"; };
 		68B87E0819AB975400BEE286 /* FRBR65C02.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRBR65C02.m; sourceTree = "<group>"; };
 		68B87E0B19ABD99800BEE286 /* FRBR65C19.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRBR65C19.h; sourceTree = "<group>"; };
@@ -163,8 +163,8 @@
 				683372E9197C909B002B432E /* FRBGeneric65C02.m */,
 				6873AD7B197F8E7A00B46DB5 /* FRBHuC6280.h */,
 				6873AD7C197F8E7A00B46DB5 /* FRBHuC6280.m */,
-				68AE6EFD19ACE4370020D445 /* FRBM50734.h */,
-				68AE6EFE19ACE4370020D445 /* FRBM50734.m */,
+				68AE6EFD19ACE4370020D445 /* FRBM740.h */,
+				68AE6EFE19ACE4370020D445 /* FRBM740.m */,
 				6873AD75197F810400B46DB5 /* FRBR6500.h */,
 				6873AD76197F810400B46DB5 /* FRBR6500.m */,
 				68B87E0719AB975400BEE286 /* FRBR65C02.h */,
@@ -248,7 +248,7 @@
 				683A4C24197C8E4700B7F172 /* FRBContext.m in Sources */,
 				683A4C25197C8E4700B7F172 /* FRBDefinition.m in Sources */,
 				688E0143197C949E00C9DC94 /* FRBW65C02S.m in Sources */,
-				68AE6F0019ACE4370020D445 /* FRBM50734.m in Sources */,
+				68AE6F0019ACE4370020D445 /* FRBM740.m in Sources */,
 				6873AD7D197F8E7A00B46DB5 /* FRBHuC6280.m in Sources */,
 				683A4C27197C8E4700B7F172 /* FRBGeneric6502.m in Sources */,
 				68F0A4E419E0645A007037E2 /* FRB65S02.m in Sources */,

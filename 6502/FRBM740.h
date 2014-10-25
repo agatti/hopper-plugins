@@ -28,6 +28,6 @@
 
 #import "FRBProvider.h"
 
-@interface ItFrobHopper6502M50734 : NSObject<FRBProvider>
+@interface ItFrobHopper6502M740 : NSObject<FRBProvider>
 
 @end
