@@ -22,7 +22,7 @@ _version 0.1.2_
 
 This CPU core plugin allows you to disassemble 6502/65C02 code, used in loads of home computers of the 70s, 80s, and early 90s, and in industrial automation or other specialised tasks where an MCU is needed.
 
-CPUs currently supported: 6502, 65C02, 65N02, 65R02, 65S02, HuC6280, M740, R6500, R65C02, R65C19, R65C29, SunPlus, W65C02S.
+CPU backends currently supported: 6502, 65C02, 65N02, 65R02, 65S02, HuC6280, M740, R6500, R65C02, R65C19, R65C29, SunPlus, W65C02S.
 
 <table>
 <thead>
@@ -80,8 +80,9 @@ CPUs currently supported: 6502, 65C02, 65N02, 65R02, 65S02, HuC6280, M740, R6500
 <tr><td>8502</td><td>Generic &rarr; 6502</td><td>N/A</td></tr>
 <tr><td>8510</td><td>Generic &rarr; 6502</td><td>N/A</td></tr>
 <tr><td>NCR</td><td>NCR65C02</td><td>Generic &rarr; 65C02</td><td><a href="pdf.datasheetarchive.com/datasheetsmain/Datasheets-110/DSAP0017899.pdf">Datasheet</a></td></tr>
-<tr><td rowspan="2">Ricoh</td><td>RP2A03</td><td>Generic &rarr; 6502</td><td>N/A</td></tr>
+<tr><td rowspan="3">Ricoh</td><td>RP2A03</td><td>Generic &rarr; 6502</td><td>N/A</td></tr>
 <tr><td>RP2A07</td><td>Generic &rarr; 6502</td><td>N/A</td></tr>
+<tr><td>RP65C02</td><td>Generic &rarr; 65C02</td><td>N/A</td></tr>
 <tr><td rowspan="23">Rockwell</td><td>R6500/11</td><td>Rockwell &rarr; R6500</td><td><a href="http://www.buchty.net/ensoniq/files/r6500.pdf">Datasheet</a></td></tr>
 <tr><td>R6500/12</td><td>Rockwell &rarr; R6500</td><td><a href="http://www.buchty.net/ensoniq/files/r6500.pdf">Datasheet</a></td></tr>
 <tr><td>R6500/13</td><td>Rockwell &rarr; R6500</td><td><a href="http://archive.6502.org/datasheets/rockwell_r6511q_r6500-13.pdf">Datasheet</a></td></tr>
@@ -208,7 +209,7 @@ _version 0.0.2_
 
 This CPU core plugin allows you to disassemble 65816/65802 code, used in some of home computers of the 80s, and early 90s, for industrial automation or other specialised tasks where a microcontroller is needed, and in the Super Nintendo/Super Famicom games console.
 
-CPUs currently supported: 65816.
+CPU backends currently supported: 65816.
 
 <table>
 <thead>
@@ -246,7 +247,7 @@ _version 0.0.2_
 
 This CPU core plugin allows you to disassemble 8x300 code, used in early signal processing equipment in the 70s and early 80s.
 
-CPUs currently supported: 8x300, 8x305.
+CPU backends currently supported: 8x300, 8x305.
 
 <table>
 <thead>
