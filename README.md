@@ -314,7 +314,7 @@ change `value:"YES"` with `value:"NO"` if you don't know if there is a BASIC pro
 
 ##Installation instructions:
 
-Checkout from Git, open `HopperPlugins.xcworkspace` in Xcode, select the `Everything` scheme and then rebuild.  Once done, copy the bundles whose name ends in `.hopperLoader` into `~/Library/Application Support/Hopper/PlugIns/Loaders/` and the bundles whose name ends in `.hopperCPU` into `~/Library/Application Support/Hopper/PlugIns/CPUs/`.  Keep in mind that these plugins require **Hopper 3.5.4** or later to work.  They may work on older versions but they are neither tested nor supported on anything older than v3.5.4.
+Checkout from Git, open `HopperPlugins.xcworkspace` in Xcode, select the `Everything` scheme and then rebuild.  Once done, copy the bundles whose name ends in `.hopperLoader` into `~/Library/Application Support/Hopper/PlugIns/Loaders/` and the bundles whose name ends in `.hopperCPU` into `~/Library/Application Support/Hopper/PlugIns/CPUs/`.  Keep in mind that these plugins require **Hopper 3.6.3** or later to work.  They may work on older versions but they are neither tested nor supported on anything older than v3.6.3.
 
 ##Need to get in touch?
 
