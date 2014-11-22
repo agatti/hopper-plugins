@@ -13,8 +13,11 @@ Plugins currently available in the repository:
 
 * [Commodore 64 binaries](#commodore-64-file-loader-plugin)
 
-<hr/>
+**Tool plugins:**
 
+* [Address space tools](#address-space-tools)
+
+<hr/>
 
 ###**65xx CPU Plugin**
 
@@ -189,11 +192,11 @@ CPU backends currently supported: 6502, 65C02, 65N02, 65R02, 65S02, HuC6280, M74
 * Properly handle the extra registers present in the R65C19 variant.
 * Attempt to reject files too big for address-space reduced chip variants.
 * Add support for more 6502 variants if any are found in the wild.
+* Properly relocate files in the 64k address space with BSS sections around data segments.
 
 ####Future plans (need Hopper SDK changes):
 
 * A way to properly model stack changes (ie. being able to increment and decrement the virtual stack pointer when encountering PHx or PLx instructions).
-* Properly relocate files in the 64k address space with BSS sections around data segments.
 * Have a customised memory map with named registers for each chip (needs BSS support first).
 
 ####Caveats:
@@ -229,11 +232,11 @@ CPU backends currently supported: 65816.
 
 * Add support for more 65816 variants if any are found in the wild.
 * Attempt to reject files too big for address-space reduced chip variants.
+* Properly relocate files in the entire address space with BSS sections around data segments.
 
 ####Future plans (need Hopper SDK changes):
 
 * A way to properly model stack changes (ie. being able to increment and decrement the virtual stack pointer when encountering PHx or PLx instructions).
-* Properly relocate files in the entire address space with BSS sections around data segments.
 
 ####Caveats:
 
@@ -312,9 +315,23 @@ end tell
 
 change `value:"YES"` with `value:"NO"` if you don't know if there is a BASIC program stub or if you are sure there is none.
 
+<hr/>
+
+###**Address space tools**
+
+_version 0.0.1_
+
+This tool plugin currently allows to map the full address space of the CPU chosen for the currently loaded file.  When dealing with firmware images and the like, especially on older architectures, the code already assumes a certain memory layout and memory amount.  If a block of code is loaded at a particular address and points to absolute memory locations it is a bit of a pain to handle the situation in Hopper since there is no way (that I know of) to create a segment from the UI.  This plugin solves this very specific situation.
+
+####Caveats:
+
+* Mapping the full address space of a 32 or 64 binary is **not recommended**, as the UI will act as if you have loaded a 4 GB/2 EB file.
+
+<hr/>
+
 ##Installation instructions:
 
-Checkout from Git, open `HopperPlugins.xcworkspace` in Xcode, select the `Everything` scheme and then rebuild.  Once done, copy the bundles whose name ends in `.hopperLoader` into `~/Library/Application Support/Hopper/PlugIns/Loaders/` and the bundles whose name ends in `.hopperCPU` into `~/Library/Application Support/Hopper/PlugIns/CPUs/`.  Keep in mind that these plugins require **Hopper 3.6.3** or later to work.  They may work on older versions but they are neither tested nor supported on anything older than v3.6.3.
+Checkout from Git, open `HopperPlugins.xcworkspace` in Xcode, select the `Everything` scheme and then rebuild.  Once done, copy the bundles whose name ends in `.hopperLoader` into `~/Library/Application Support/Hopper/PlugIns/Loaders/`, the bundles whose name ends in `.hopperCPU` into `~/Library/Application Support/Hopper/PlugIns/CPUs/`, and the bundle whose name ends in `.hopperTool` into `~/Library/Application Support/Hopper/PlugIns/Tools/`.  Keep in mind that these plugins require **Hopper 3.6.3** or later to work.  They may work on older versions but they are neither tested nor supported on anything older than v3.6.3.
 
 ##Need to get in touch?
 
