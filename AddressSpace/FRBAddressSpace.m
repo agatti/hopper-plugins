@@ -98,16 +98,15 @@ static NSString *kUnmappedSectionName = @"BSS";
 
 - (void)mapWholeAddressSpace:(id)sender {
     NSObject<HPDocument> *document = [_services currentDocument];
-    NSObject<HPDisassembledFile> *file = document.disassembledFile;
 
     // Tool plugins can still be invoked with no file being loaded.
 
-    if (file.segments.count == 0) {
+    if (!document) {
         return;
     }
 
-    NSUInteger addressBits = document.disassembledFile.addressSpaceWidthInBits;
-    NSUInteger addressSpaceEnd = 1 << addressBits;
+    NSObject<HPDisassembledFile> *file = document.disassembledFile;
+    NSUInteger addressSpaceEnd = 1 << file.addressSpaceWidthInBits;
     [document beginToWait:[NSString stringWithFormat:@"Mapping address space (%ld bytes)...", addressSpaceEnd]];
 
     NSUInteger currentAddress = 0;
