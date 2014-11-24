@@ -26,7 +26,7 @@
 
 #import <Foundation/Foundation.h>
 
-@protocol FRBProvider;
+@protocol FRBCPUProvider;
 
 @interface ItFrobHopper6502ModelHandler : NSObject
 
@@ -39,6 +39,6 @@
                  forName:(NSString *)name;
 - (NSString *)providerNameForFamily:(NSString *)family
                        andSubFamily:(NSString *)subFamily;
-- (id<FRBProvider>)providerForName:(NSString *)name;
+- (id<FRBCPUProvider>)providerForName:(NSString *)name;
 
 @end

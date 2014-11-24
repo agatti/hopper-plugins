@@ -68,7 +68,7 @@ static const ItFrobHopper6502ModelHandler *kModelHandler;
         dispatch_once(&onceToken, ^{
             NSMutableSet *opcodes = [NSMutableSet new];
             for (int index = 0; index < FRBUniqueOpcodesCount; index++) {
-                [opcodes addObject:[[NSString stringWithUTF8String:FRBInstructions[index].name] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]]];
+                [opcodes addObject:[[NSString stringWithUTF8String:FRBMnemonics[index].name] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]]];
             }
             _colouriser = [[ItFrobHopper65xxCommonInstructionColouriser alloc] initWithOpcodesSet:opcodes
                                                                                       andServices:services];
@@ -98,7 +98,7 @@ static const ItFrobHopper6502ModelHandler *kModelHandler;
 }
 
 - (NSString *)pluginDescription {
-    return @"65xx-family CPU support";
+    return @"6502-family CPU support";
 }
 
 - (NSString *)pluginAuthor {
@@ -110,7 +110,7 @@ static const ItFrobHopper6502ModelHandler *kModelHandler;
 }
 
 - (NSString *)pluginVersion {
-    return @"0.1.2";
+    return @"0.1.3";
 }
 
 - (NSArray *)cpuFamilies {

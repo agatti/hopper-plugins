@@ -26,11 +26,10 @@
 
 #import <Foundation/Foundation.h>
 
-#import "FRBProvider.h"
+#import "FRBBase6502.h"
 
 /*!
- *	CPU Backend for Sunplus 65N02 chip family.
+ *	CPU Backend for the Sunplus 65N02 chip family.
  */
-@interface ItFrobHopperSunplus650265N02 : NSObject<FRBProvider>
-
+@interface ItFrobHopperSunplus650265N02 : ItFrobHopper6502Base6502
 @end

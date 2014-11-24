@@ -49,17 +49,8 @@ static NSString * const kProviderName = @"it.frob.hopper.generic6502";
                                                                 forName:kProviderName];
 }
 
-- (const struct FRBOpcode *)opcodeForByte:(uint8_t)byte {
+- (const FRBOpcode *)opcodeForByte:(uint8_t)byte {
     return &kOpcodeTable[byte];
-}
-
-- (BOOL)processOpcode:(const struct FRBOpcode *)opcode
-            forDisasm:(DisasmStruct *)disasm {
-    return NO;
-}
-
-- (BOOL)haltsExecutionFlow:(const struct FRBOpcode *)opcode {
-    return opcode->type == FRBOpcodeTypeBRK;
 }
 
 @end

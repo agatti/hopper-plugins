@@ -26,7 +26,24 @@
 
 #import <Foundation/Foundation.h>
 
-#import "FRBBase6502.h"
+#import "FRBCPUProvider.h"
 
-@interface ItFrobHopper6502R65C19 : ItFrobHopper6502Base6502
+#import "FRBBase.h"
+
+@interface ItFrobHopper6502Base6502 : NSObject<FRBCPUProvider>
+
+- (FRBInstruction)instructionForByte:(uint8_t)byte;
+
+- (const FRBOpcode *)opcodeForByte:(uint8_t)byte;
+- (void)updateFlags:(DisasmStruct *)structure
+     forInstruction:(const FRBInstruction *)instruction;
+- (void)decodeNonBranch:(DisasmStruct *)structure
+      forInstruction:(const FRBInstruction *)instruction
+              inFile:(id<HPDisassembledFile>)file;
+- (void)decodeBranch:(DisasmStruct *)structure
+      forInstruction:(const FRBInstruction *)instruction
+              inFile:(id<HPDisassembledFile>)file;
+- (void)setMemoryFlags:(DisasmStruct *)structure
+        forInstruction:(const FRBInstruction *)instruction;
+
 @end

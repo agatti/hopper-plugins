@@ -24,7 +24,7 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import "FRBProvider.h"
+#import "FRBCPUProvider.h"
 #import "FRBModelHandler.h"
 
 @interface ItFrobHopper6502ModelHandler () {
@@ -100,7 +100,7 @@ static NSString * const kPluginBundleName = @"it.frob.hopper.-502"; // :(
 
 - (void)registerProvider:(Class)provider
                  forName:(NSString *)name {
-    if ([provider conformsToProtocol:@protocol(FRBProvider)]) {
+    if ([provider conformsToProtocol:@protocol(FRBCPUProvider)]) {
         _providers[name] = provider;
     }
 }
@@ -115,7 +115,7 @@ static NSString * const kPluginBundleName = @"it.frob.hopper.-502"; // :(
     return nil;
 }
 
-- (id<FRBProvider>)providerForName:(NSString *)name {
+- (id<FRBCPUProvider>)providerForName:(NSString *)name {
     Class providerClass = _providers[name];
     if (!providerClass) {
         return nil;

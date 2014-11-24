@@ -26,8 +26,10 @@
 
 #import <Foundation/Foundation.h>
 
-#import "FRBProvider.h"
+#import "FRBBase6502.h"
 
-@interface ItFrobHopper6502M740 : NSObject<FRBProvider>
-
+/*!
+ *	CPU Backend for the M740 chip family.
+ */
+@interface ItFrobHopper6502M740 : ItFrobHopper6502Base6502
 @end

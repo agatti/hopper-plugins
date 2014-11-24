@@ -26,11 +26,10 @@
 
 #import <Foundation/Foundation.h>
 
-#import "FRBProvider.h"
+#import "FRBBase6502.h"
 
 /*!
  *	CPU Backend for the generic 65C02 chip family.
  */
-@interface ItFrobHopper6502Generic65C02 : NSObject<FRBProvider>
-
+@interface ItFrobHopper6502Generic65C02 : ItFrobHopper6502Base6502
 @end

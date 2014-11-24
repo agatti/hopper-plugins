@@ -5,7 +5,7 @@ Plugins currently available in the repository:
 
 **CPU plugins:**
 
-* [65xx](#65xx-cpu-plugin)
+* [6502](#6502-cpu-plugin)
 * [65816](#65816-cpu-plugin)
 * [8x300](#8x300-cpu-plugin)
 
@@ -19,9 +19,9 @@ Plugins currently available in the repository:
 
 <hr/>
 
-###**65xx CPU Plugin**
+###**6502 CPU Plugin**
 
-_version 0.1.2_
+_version 0.1.3_
 
 This CPU core plugin allows you to disassemble 6502/65C02 code, used in loads of home computers of the 70s, 80s, and early 90s, and in industrial automation or other specialised tasks where an MCU is needed.
 

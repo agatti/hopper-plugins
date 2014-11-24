@@ -49,8 +49,8 @@ static NSString * const kProviderName = @"it.frob.hopper.huc6280";
                                                                 forName:kProviderName];
 }
 
-- (BOOL)processOpcode:(const struct FRBOpcode *)opcode
-            forDisasm:(DisasmStruct *)disasm {
+- (void)updateFlags:(DisasmStruct *)structure
+     forInstruction:(const FRBInstruction *)instruction {
 
     /*
      * This is a hack for the HuC6280, which has an extra flag.  Currently Hopper
@@ -59,22 +59,12 @@ static NSString * const kProviderName = @"it.frob.hopper.huc6280";
      * backends (although it really shouldn't).
      */
 
-    disasm->instruction.eflags.TF_flag = opcode->type == FRBOpcodeTypeSET ?
+    structure->instruction.eflags.TF_flag = instruction->opcode->type == FRBOpcodeTypeSET ?
         DISASM_EFLAGS_SET : DISASM_EFLAGS_RESET;
-
-    disasm->implicitlyReadRegisters[DISASM_OPERAND_GENERAL_REG_INDEX] = opcode->readRegisters;
-    disasm->implicitlyWrittenRegisters[DISASM_OPERAND_GENERAL_REG_INDEX] = opcode->writtenRegisters;
-    disasm->instruction.length = FRBOpcodeLength[opcode->addressMode];
-
-    return YES;
 }
 
-- (const struct FRBOpcode *)opcodeForByte:(uint8_t)byte {
+- (const FRBOpcode *)opcodeForByte:(uint8_t)byte {
     return &kOpcodeTable[byte];
-}
-
-- (BOOL)haltsExecutionFlow:(const struct FRBOpcode *)opcode {
-    return opcode->type == FRBOpcodeTypeBRK;
 }
 
 @end

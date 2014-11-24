@@ -49,47 +49,36 @@ static NSString * const kProviderName = @"it.frob.hopper.m740";
                                                                 forName:kProviderName];
 }
 
-- (BOOL)processOpcode:(const struct FRBOpcode *)opcode
-            forDisasm:(DisasmStruct *)disasm {
+- (void)updateFlags:(DisasmStruct *)structure
+     forInstruction:(const FRBInstruction *)instruction {
 
     /*
-     * This is a hack for the M50734, which has an extra flag and two extra
-     * registers.  Currently Hopper does not allow to add or remove custom CPU
-     * flags so we have to piggyback on the ARM/Thumb register switcher which
-     * is still available on non-ARM CPU backends (although it really
-     * shouldn't).
+     * This is a hack for the M740, which has an extra flag.  Currently Hopper
+     * does not allow to add or remove custom CPU flags so we have to piggyback
+     * on the ARM/Thumb register switcher which is still available on non-ARM CPU
+     * backends (although it really shouldn't).
      */
 
-    switch (opcode->type) {
+    switch (instruction->opcode->type) {
         case FRBOpcodeTypeSET:
-            disasm->instruction.eflags.TF_flag = DISASM_EFLAGS_SET;
+            structure->instruction.eflags.TF_flag = DISASM_EFLAGS_SET;
             break;
 
         case FRBOpcodeTypeCLT:
-            disasm->instruction.eflags.TF_flag = DISASM_EFLAGS_RESET;
+            structure->instruction.eflags.TF_flag = DISASM_EFLAGS_RESET;
             break;
 
         case FRBOpcodeTypeCLW:
-            disasm->instruction.eflags.OF_flag = DISASM_EFLAGS_RESET;
+            structure->instruction.eflags.OF_flag = DISASM_EFLAGS_RESET;
             break;
 
         default:
             break;
     }
-
-    disasm->implicitlyReadRegisters[DISASM_OPERAND_GENERAL_REG_INDEX] = opcode->readRegisters;
-    disasm->implicitlyWrittenRegisters[DISASM_OPERAND_GENERAL_REG_INDEX] = opcode->writtenRegisters;
-    disasm->instruction.length = FRBOpcodeLength[opcode->addressMode];
-
-    return YES;
 }
 
-- (const struct FRBOpcode *)opcodeForByte:(uint8_t)byte {
+- (const FRBOpcode *)opcodeForByte:(uint8_t)byte {
     return &kOpcodeTable[byte];
-}
-
-- (BOOL)haltsExecutionFlow:(const struct FRBOpcode *)opcode {
-    return opcode->type == FRBOpcodeTypeBRK || opcode->type == FRBOpcodeTypeSTP || opcode->type == FRBOpcodeTypeWIT;
 }
 
 @end

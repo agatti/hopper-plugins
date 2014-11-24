@@ -26,8 +26,7 @@
 
 #import <Foundation/Foundation.h>
 
-#import "FRBProvider.h"
+#import "FRBBase6502.h"
 
-@interface ItFrobHopper6502R65C02 : NSObject<FRBProvider>
-
+@interface ItFrobHopper6502R65C02 : ItFrobHopper6502Base6502
 @end

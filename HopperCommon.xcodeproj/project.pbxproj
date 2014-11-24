@@ -11,6 +11,7 @@
 		68259B0419B710910060713A /* FRBHopperCommon.m in Sources */ = {isa = PBXBuildFile; fileRef = 68259B0319B710910060713A /* FRBHopperCommon.m */; };
 		68259B2419B713170060713A /* NSDataHopperAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 68259B2219B713170060713A /* NSDataHopperAdditions.h */; };
 		68259B2519B713170060713A /* NSDataHopperAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 68259B2319B713170060713A /* NSDataHopperAdditions.m */; };
+		6828704A1A22EECA005B5412 /* FRBCPUProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 682870491A22EECA005B5412 /* FRBCPUProvider.h */; };
 		682E8A3C19C7AA4800E2BDC8 /* FRBBaseContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 682E8A3A19C7AA4800E2BDC8 /* FRBBaseContext.h */; };
 		682E8A3D19C7AA4800E2BDC8 /* FRBBaseContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 682E8A3B19C7AA4800E2BDC8 /* FRBBaseContext.m */; };
 		68C0458B19C8706E005E1B4D /* FRBOperandFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = 68C0458919C8706E005E1B4D /* FRBOperandFormatter.h */; };
@@ -28,6 +29,7 @@
 		68259B0319B710910060713A /* FRBHopperCommon.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FRBHopperCommon.m; sourceTree = "<group>"; };
 		68259B2219B713170060713A /* NSDataHopperAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDataHopperAdditions.h; sourceTree = "<group>"; };
 		68259B2319B713170060713A /* NSDataHopperAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDataHopperAdditions.m; sourceTree = "<group>"; };
+		682870491A22EECA005B5412 /* FRBCPUProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRBCPUProvider.h; sourceTree = "<group>"; };
 		682E8A3A19C7AA4800E2BDC8 /* FRBBaseContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRBBaseContext.h; sourceTree = "<group>"; };
 		682E8A3B19C7AA4800E2BDC8 /* FRBBaseContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRBBaseContext.m; sourceTree = "<group>"; };
 		68C0458919C8706E005E1B4D /* FRBOperandFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRBOperandFormatter.h; sourceTree = "<group>"; };
@@ -93,6 +95,7 @@
 				682E8A3B19C7AA4800E2BDC8 /* FRBBaseContext.m */,
 				68C0458919C8706E005E1B4D /* FRBOperandFormatter.h */,
 				68C0458A19C8706E005E1B4D /* FRBOperandFormatter.m */,
+				682870491A22EECA005B5412 /* FRBCPUProvider.h */,
 				68259B0019B710910060713A /* Supporting Files */,
 			);
 			path = HopperCommon;
@@ -116,6 +119,7 @@
 				682E8A3C19C7AA4800E2BDC8 /* FRBBaseContext.h in Headers */,
 				68259B2419B713170060713A /* NSDataHopperAdditions.h in Headers */,
 				68C0458B19C8706E005E1B4D /* FRBOperandFormatter.h in Headers */,
+				6828704A1A22EECA005B5412 /* FRBCPUProvider.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

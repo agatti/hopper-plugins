@@ -26,8 +26,10 @@
 
 #import <Foundation/Foundation.h>
 
-#import "FRBProvider.h"
+#import "FRBBase6502.h"
 
-@interface ItFrobHopper6502HuC6280 : NSObject<FRBProvider>
-
+/*!
+ *	CPU Backend for the HuC6280 chip.
+ */
+@interface ItFrobHopper6502HuC6280 : ItFrobHopper6502Base6502
 @end

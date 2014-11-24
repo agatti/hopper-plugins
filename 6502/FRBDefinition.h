@@ -27,5 +27,4 @@
 #import <Foundation/Foundation.h>
 
 @interface ItFrobHopper6502Definition : NSObject<CPUDefinition>
-
 @end

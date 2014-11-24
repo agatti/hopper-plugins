@@ -26,12 +26,10 @@
 
 #import <Foundation/Foundation.h>
 
-#import "FRBBase.h"
-
 /*!
  *	Protocol for CPU providers.
  */
-@protocol FRBProvider <NSObject>
+@protocol FRBCPUProvider <NSObject>
 
 /*!
  * Provider name.
@@ -39,32 +37,34 @@
 @property (strong, nonatomic, readonly) NSString *name;
 
 /*!
- *	Looks up the opcode mapped to the tiven byte.
+ *	Processes the given disassembly structure.
  *
- *	@param byte the byte to get an opcode for.
+ *	@param structure the structure with the current opcode data, if any.
+ *  @param file      the currently disassembled file.
  *
- *	@return the mapped opcode structure.
+ *	@return how many bytes have been processed, or DISASM_UNKNOWN_OPCODE.
  */
-- (const struct FRBOpcode *)opcodeForByte:(uint8_t)byte;
+- (int)processStructure:(DisasmStruct *)structure
+                 onFile:(id<HPDisassembledFile>)file;
 
 /*!
- *	Performs some additional or alternative processing of the given opcode.
+ *	Checks if the given disassembly structure content halts execution flow
+ *  or not.
  *
- *	@param opcode the opcode to process.
- *	@param disasm the instruction details.
+ *	@param structure the structure to check.
  *
- *	@return YES if no more processing must be performed, NO otherwise.
+ *	@return YES if the structure content halts execution flow, NO otherwise.
  */
-- (BOOL)processOpcode:(const struct FRBOpcode *)opcode
-            forDisasm:(DisasmStruct *)disasm;
+- (BOOL)haltsExecutionFlow:(const DisasmStruct *)structure;
 
 /*!
- *	Checks if the given opcode halts execution flow or not.
+ *	Creates an assemblable representation of the given disassembly structure.
  *
- *	@param opcode the opcode to check.
- *
- *	@return YES if the opcode halts the execution flow, NO otherwise.
+ *	@param structure the structure with the current opcode data, if any.
+ *  @param file      the currently disassembled file.
+ *	@param services  the shared Hopper services instance.
  */
-- (BOOL)haltsExecutionFlow:(const struct FRBOpcode *)opcode;
-
+- (void)formatInstruction:(DisasmStruct *)structure
+                   onFile:(id<HPDisassembledFile>)file
+             withServices:(id<HPHopperServices>)services;
 @end
