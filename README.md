@@ -83,6 +83,9 @@ CPU backends currently supported: 6502, 65C02, 65N02, 65R02, 65S02, HuC6280, M74
 <tr><td>8502</td><td>Generic &rarr; 6502</td><td>N/A</td></tr>
 <tr><td>8510</td><td>Generic &rarr; 6502</td><td>N/A</td></tr>
 <tr><td>NCR</td><td>NCR65C02</td><td>Generic &rarr; 65C02</td><td><a href="pdf.datasheetarchive.com/datasheetsmain/Datasheets-110/DSAP0017899.pdf">Datasheet</a></td></tr>
+<tr><td rowspan="3">Novatek</td><td>NT6880</td><td>Generic &rarr; 6502</td><td><a href="http://pdf.datasheetarchive.com/indexerfiles/Datasheet-022/DSA00385399.pdf">Datasheet</td></tr>
+<tr><td>NT6881</td><td>Generic &rarr; 6502</td><td><a href="http://pdf.datasheetarchive.com/indexerfiles/Datasheet-06/DSA0092333.pdf">Datasheet</td></tr>
+<tr><td>NT68P1</td><td>Generic &rarr; 6502</td><td><a href="http://pdf.datasheetarchive.com/indexerfiles/Datasheet-015/DSA00259184.pdf">Datasheet</td></tr>
 <tr><td rowspan="3">Ricoh</td><td>RP2A03</td><td>Generic &rarr; 6502</td><td>N/A</td></tr>
 <tr><td>RP2A07</td><td>Generic &rarr; 6502</td><td>N/A</td></tr>
 <tr><td>RP65C02</td><td>Generic &rarr; 65C02</td><td>N/A</td></tr>
@@ -178,6 +181,16 @@ CPU backends currently supported: 6502, 65C02, 65N02, 65R02, 65S02, HuC6280, M74
 <tr><td rowspan="3">WDC</td><td>W65C02S</td><td>WDC &rarr; W65C02S</td><td><a href="http://www.6502.org/documents/datasheets/wdc/wdc_w65c02s_oct_19_2010.pdf">Datasheet</a></td></tr>
 <tr><td>W65C134S</td><td>WDC &rarr; W65C02S</td><td><a href="http://archive.6502.org/datasheets/wdc_w65c134s_aug_31_2010.pdf">Datasheet</a></td></tr>
 <tr><td>W65C02GPMCU</td><td>WDC &rarr; W65C02S</td><td><a href="http://www.westerndesigncenter.com/wdc/documentation/W65C02GPMCU_DS.pdf">Datasheet</a></td></tr>
+<tr><td rowspan="10">Weltrend</td><td>WT5090</td><td>Generic &rarr; 6502</td><td><a href="#">N/A</a></td></tr>
+<tr><td>WT5091</td><td>Generic &rarr; 6502</td><td><a href="#">N/A</a></td></tr>
+<tr><td>WT50P6</td><td>Generic &rarr; 6502</td><td><a href="#">N/A</a></td></tr>
+<tr><td>WT6148</td><td>Generic &rarr; 6502</td><td><a href="http://pdf.datasheetarchive.com/indexerfiles/Datasheet-03/DSA0041318.pdf">Datasheet</a></td></tr>
+<tr><td>WT6160</td><td>Generic &rarr; 6502</td><td><a href="http://pdf.datasheetarchive.com/indexerfiles/Datasheet-03/DSA0041318.pdf">Datasheet</a></td></tr>
+<tr><td>WT62P2</td><td>Generic &rarr; 6502</td><td><a href="http://pdf.datasheetarchive.com/indexerfiles/Datasheet-05/DSA0078955.pdf">Datasheet</a></td></tr>
+<tr><td>WT65F1</td><td>Generic &rarr; 6502</td><td><a href="http://pdf.datasheetarchive.com/datasheetsmain/Datasheets-35/DSA-696231.pdf">Datasheet</td></tr>
+<tr><td>WT6511</td><td>Generic &rarr; 6502</td><td><a href="#">N/A</td></tr>
+<tr><td>WT6512</td><td>Generic &rarr; 6502</td><td><a href="#">N/A</td></tr>
+<tr><td>WT6512F</td><td>Generic &rarr; 6502</td><td><a href="#">N/A</td></tr>
 </tbody>
 </table>
 
