@@ -25,6 +25,8 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
+from __future__ import print_function
+
 import argparse
 import sys
 
@@ -63,12 +65,12 @@ def print_line(strip_spaces, offset, endian, *data):
     output = '{:08X}: '.format(offset)
 
     if endian == BIG_ENDIAN:
-        print print_big_endian(strip_spaces, *data)
+        print(print_big_endian(strip_spaces, *data))
     elif endian == LITTLE_ENDIAN:
-        print print_little_endian(strip_spaces, *data)
+        print(print_little_endian(strip_spaces, *data))
     elif endian == BOTH_ENDIAN:
-        print '%s | %s' % (print_big_endian(strip_spaces, *data),
-                           print_little_endian(strip_spaces, *data))
+        print('%s | %s' % (print_big_endian(strip_spaces, *data),
+                           print_little_endian(strip_spaces, *data)))
 
 
 def dump_byte(input_file):
