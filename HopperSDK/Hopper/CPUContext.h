@@ -102,8 +102,9 @@
 /// The "*next" value is already set to the address which follows the instruction if the jump does not occurs.
 /// The "branches" array is filled by NSNumber objects. The values are the addresses where the instruction can jump. Only the
 /// jumps that occur in the same procedure are put here (for instance, CALL instruction targets are not put in this array).
-/// The "callSitesAddresses" array is filled by NSNumber objects of addresses that are the target of a "CALL like" instruction, ie
+/// The "calledAddresses" array is filled by NSNumber objects of addresses that are the target of a "CALL like" instruction, ie
 /// all the jumps which go outside of the procedure.
+/// The "callSiteAddresses" contains NSNumber of the addresses of the "CALL" instructions.
 /// The purpose of this method is to compute additional destinations.
 /// Most of the time, Hopper already found the destinations, so there is no need to do more.
 /// This is used by the Intel CPU plugin to compute the destinations of switch/case constructions when it found a "JMP register" instruction.
@@ -113,12 +114,17 @@
                    forProcedure:(NSObject<HPProcedure> *)procedure
                      basicBlock:(NSObject<HPBasicBlock> *)basicBlock
                       ofSegment:(NSObject<HPSegment> *)segment
+                calledAddresses:(NSMutableArray *)calledAddresses
                       callsites:(NSMutableArray *)callSitesAddresses;
 
 /// If you need a specific analysis, this method will be called once the previous branch analysis is performed.
 /// For instance, this is used by the ARM CPU plugin to set the type of the destination of an LDR instruction to
 /// an int of the correct size.
 - (void)performInstructionSpecificAnalysis:(DisasmStruct *)disasm forProcedure:(NSObject<HPProcedure> *)procedure inSegment:(NSObject<HPSegment> *)segment;
+
+/// Returns the destination address if the function starting at the given address is a thunk (ie: a direct jump to another method)
+/// Returns BAD_ADDRESS is the instruction is not a thunk.
+- (Address)getThunkDestinationForInstructionAt:(Address)address;
 
 ////////////////////////////////////////////////////////////////////////////////
 //

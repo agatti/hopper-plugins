@@ -113,6 +113,7 @@
                    forProcedure:(id<HPProcedure>)procedure
                      basicBlock:(id<HPBasicBlock>)basicBlock
                       ofSegment:(id<HPSegment>)segment
+                calledAddresses:(NSMutableArray *)calledAddresses
                       callsites:(NSMutableArray *)callSitesAddresses {
 }
 
@@ -201,6 +202,10 @@
 
 - (BOOL)instructionMayBeASwitchStatement:(DisasmStruct *)disasmStruct {
     return NO;
+}
+
+- (Address)getThunkDestinationForInstructionAt:(Address)address {
+    return BAD_ADDRESS;
 }
 
 @end

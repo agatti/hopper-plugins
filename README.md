@@ -344,7 +344,7 @@ This tool plugin currently allows to map the full address space of the CPU chose
 
 ##Installation instructions:
 
-Checkout from Git, open `HopperPlugins.xcworkspace` in Xcode, select the `Everything` scheme and then rebuild.  Once done, copy the bundles whose name ends in `.hopperLoader` into `~/Library/Application Support/Hopper/PlugIns/Loaders/`, the bundles whose name ends in `.hopperCPU` into `~/Library/Application Support/Hopper/PlugIns/CPUs/`, and the bundle whose name ends in `.hopperTool` into `~/Library/Application Support/Hopper/PlugIns/Tools/`.  Keep in mind that these plugins require **Hopper 3.6.3** or later to work.  They may work on older versions but they are neither tested nor supported on anything older than v3.6.3.
+Checkout from Git, open `HopperPlugins.xcworkspace` in Xcode, select the `Everything` scheme and then rebuild.  Once done, copy the bundles whose name ends in `.hopperLoader` into `~/Library/Application Support/Hopper/PlugIns/Loaders/`, the bundles whose name ends in `.hopperCPU` into `~/Library/Application Support/Hopper/PlugIns/CPUs/`, and the bundle whose name ends in `.hopperTool` into `~/Library/Application Support/Hopper/PlugIns/Tools/`.  Keep in mind that these plugins require **Hopper 3.6.7** or later to work.  They may work on older versions but they are neither tested nor supported on anything older than v3.6.7.
 
 ##Need to get in touch?
 
