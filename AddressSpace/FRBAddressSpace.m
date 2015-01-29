@@ -68,7 +68,7 @@ static NSString *kUnmappedSectionName = @"BSS";
              ];
 }
 
-- (UUID *)pluginUUID {
+- (HopperUUID *)pluginUUID {
     return [_services UUIDWithString:@"FD1B7A50-7264-11E4-82F8-0800200C9A66"];
 }
 

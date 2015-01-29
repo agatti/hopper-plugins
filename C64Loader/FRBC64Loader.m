@@ -63,7 +63,7 @@ static NSString *kCPUSubFamily = @"6502";
     return self;
 }
 
-- (UUID *)pluginUUID {
+- (HopperUUID *)pluginUUID {
     return [_services UUIDWithString:@"92AF9450-09AD-11E4-9191-0800200C9A66"];
 }
 

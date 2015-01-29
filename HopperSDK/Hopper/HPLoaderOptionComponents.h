@@ -12,7 +12,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class UUID;
+@class HopperUUID;
 
 @protocol HPLoaderOptionComponents <NSObject>
 
@@ -20,7 +20,7 @@
 
 @property (assign) BOOL isChecked;
 
-@property (strong) UUID *cpuUUID;
+@property (strong) HopperUUID *cpuUUID;
 @property (strong) NSString *cpuFamily;
 @property (strong) NSString *cpuSubFamily;
 

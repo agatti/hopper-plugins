@@ -39,7 +39,7 @@
 - (NSArray *)cpuModeNames;
 
 - (NSUInteger)registerClassCount;
-- (NSUInteger)registerCountForClass:(NSUInteger)reg_class;
+- (NSUInteger)registerCountForClass:(RegClass)reg_class;
 - (NSString *)registerIndexToString:(int)reg ofClass:(RegClass)reg_class withBitSize:(int)size andPosition:(DisasmPosition)position;
 - (NSString *)cpuRegisterStateMaskToString:(uint32_t)cpuState;
 - (BOOL)registerIndexIsStackPointer:(uint32_t)reg ofClass:(RegClass)reg_class;

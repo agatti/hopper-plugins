@@ -13,14 +13,14 @@
 #import <Foundation/Foundation.h>
 #import "CommonTypes.h"
 
-@class UUID;
+@class HopperUUID;
 @protocol HPHopperServices;
 
 @protocol HopperPlugin <NSObject>
 
 - (instancetype)initWithHopperServices:(NSObject<HPHopperServices> *)services;
 
-- (UUID *)pluginUUID;
+- (HopperUUID *)pluginUUID;
 - (HopperPluginType)pluginType;
 
 - (NSString *)pluginName;

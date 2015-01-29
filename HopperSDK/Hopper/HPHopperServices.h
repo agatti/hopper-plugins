@@ -12,7 +12,7 @@
 
 #import "CommonTypes.h"
 
-@class UUID;
+@class HopperUUID;
 
 @protocol HPDocument;
 @protocol HPDetectedFileType;
@@ -30,7 +30,7 @@
 - (void)logMessage:(NSString *)message;
 
 // Build an UUID object
-- (UUID *)UUIDWithString:(NSString *)uuidString;
+- (HopperUUID *)UUIDWithString:(NSString *)uuidString;
 
 // New detected type
 - (NSObject<HPDetectedFileType> *)detectedType;

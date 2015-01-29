@@ -84,7 +84,7 @@ static ItFrobHopper65816ModelHandler *kModelHandler;
                                             withServices:_services];
 }
 
-- (UUID *)pluginUUID {
+- (HopperUUID *)pluginUUID {
     return [_services UUIDWithString:@"18D19920-2858-11E4-8C21-0800200C9A66"];
 }
 
@@ -239,7 +239,7 @@ static ItFrobHopper65816ModelHandler *kModelHandler;
     return RegClass_FirstUserClass;
 }
 
-- (NSUInteger)registerCountForClass:(NSUInteger)reg_class {
+- (NSUInteger)registerCountForClass:(RegClass)reg_class {
     switch (reg_class) {
         case RegClass_CPUState:
             return 1;

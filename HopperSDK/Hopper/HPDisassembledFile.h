@@ -12,7 +12,7 @@
 
 #import "CommonTypes.h"
 
-@class UUID;
+@class HopperUUID;
 @protocol CPUDefinition;
 @protocol HPSegment;
 @protocol HPSection;
@@ -24,7 +24,7 @@ typedef void (^FileLoadingCallbackInfo)(NSString *desc, float progress);
 
 @protocol HPDisassembledFile
 
-@property (copy) UUID *fileUUID;
+@property (copy) HopperUUID *fileUUID;
 
 @property (copy) NSString *cpuFamily;
 @property (copy) NSString *cpuSubFamily;
