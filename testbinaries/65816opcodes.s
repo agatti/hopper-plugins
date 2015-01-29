@@ -118,7 +118,7 @@ row4		RTI
  		EOR (ZEROPAGE_4,X)
 		.byte $42 ; WDM
 		EOR ZEROPAGE_3,S
-		MVP $4444 ; Should be $44, $44 instead
+		MVP $44, $44
 		EOR ZEROPAGE_4
  		LSR ZEROPAGE_4
 		EOR [ZEROPAGE_4]
@@ -136,7 +136,7 @@ row5		BVC row5_target
  		EOR (ZEROPAGE_5),Y
 row5_target	EOR (ZEROPAGE_5)
 		EOR (ZEROPAGE_5,S),Y
-		MVN $5555 ; Should be $55, $55 instead
+		MVN $55, $55
 		EOR ZEROPAGE_5,X
  		LSR ZEROPAGE_5,X
 		EOR [ZEROPAGE_5],Y
