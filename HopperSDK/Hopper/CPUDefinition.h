@@ -45,6 +45,8 @@
 - (BOOL)registerIndexIsStackPointer:(uint32_t)reg ofClass:(RegClass)reg_class;
 - (BOOL)registerIndexIsFrameBasePointer:(uint32_t)reg ofClass:(RegClass)reg_class;
 - (BOOL)registerIndexIsProgramCounter:(uint32_t)reg;
+// Returns the name of the frame pointer register, ie, "bp" for x86, or "r7" for ARM.
+- (NSString *)framePointerRegisterNameForFile:(NSObject<HPDisassembledFile>*)file;
 
 /// A weirdness of the Hopper internals. You'll usually simply need to return the "index" argument.
 /// This is used by Hopper to handle the fact that operands in Intel and AT&T syntaxes are inverted.

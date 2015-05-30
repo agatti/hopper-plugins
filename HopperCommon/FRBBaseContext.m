@@ -58,6 +58,10 @@
     return address + 1;
 }
 
+- (int)isNopAt:(Address)address {
+    return 0;
+}
+
 - (BOOL)hasProcedurePrologAt:(Address)address {
     return NO;
 }
@@ -157,20 +161,8 @@
     return basicBlock.to;
 }
 
-- (ASTNode *)rawDecodeArgumentIndex:(int)argIndex
-                           ofDisasm:(DisasmStruct *)disasm
-                  ignoringWriteMode:(BOOL)ignoreWrite
-                    usingDecompiler:(Decompiler *)decompiler {
-    return nil;
-}
-
 - (ASTNode *)decompileInstructionAtAddress:(Address)a
                                     disasm:(DisasmStruct)d
-                                    length:(int)instrLength
-                                      arg1:(ASTNode *)arg1
-                                      arg2:(ASTNode *)arg2
-                                      arg3:(ASTNode *)arg3
-                                      dest:(ASTNode *)dest
                                  addNode_p:(BOOL *)addNode_p
                            usingDecompiler:(Decompiler *)decompiler {
     return nil;

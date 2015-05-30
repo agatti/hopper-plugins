@@ -37,6 +37,9 @@
 #define DISASM_OPERAND_REGISTER_TYPE                    0x1000000000000000llu
 #define DISASM_OPERAND_ABSOLUTE                         0x0800000000000000llu
 #define DISASM_OPERAND_RELATIVE                         0x0400000000000000llu
+#define DISASM_OPERAND_OTHER                            0x0200000000000000llu
+
+#define DISASM_EXTRACT_REGISTER_CLASS(TYPE)             ((RegClass)(((TYPE) & DISASM_OPERAND_REG_CLASS_MASK) >> DISASM_MAX_REG_INDEX))
 
 #define DISASM_BUILD_REGISTER_CLS_MASK(CLS)             (0x100000000llu << (CLS))
 #define DISASM_BUILD_REGISTER_INDEX_MASK(INDEX)         (1llu << (INDEX))
@@ -155,7 +158,10 @@ typedef enum {
 
     DISASM_BRANCH_JMP = 11,
     DISASM_BRANCH_CALL = 12,
-    DISASM_BRANCH_RET = 13
+    DISASM_BRANCH_RET = 13,
+
+    DISASM_BRANCH_JCXZ = 14,
+    DISASM_BRANCH_JRCXZ = 15
 } DisasmBranchType;
 
 typedef enum {
@@ -244,7 +250,7 @@ typedef struct  {
     char                unconditionalMnemonic[16];  /// Mnemonic string without the conditional part.
     DisasmCondition     condition;                  /// Condition to be met to execute instruction.
 
-    uint32_t            userData;                   /// A field that you can use internally to keep information on the instruction. Hopper don't need it.
+    uintptr_t           userData;                   /// A field that you can use internally to keep information on the instruction. Hopper don't need it.
 
     uint8_t             length;                     /// Length in bytes of the instruction encoding.
 

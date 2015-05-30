@@ -73,10 +73,22 @@ HP_BEGIN_DECL_ENUM(uint8_t, ProcedureCreationReason) {
 }
 HP_END_DECL_ENUM(ProcedureCreationReason);
 
+HP_BEGIN_DECL_ENUM(uint8_t, SignatureCreationReason) {
+    SCReason_None,
+    SCReason_Unknown,                   // Unknown reason
+    SCReason_GuessedFromDecompilation,  // Signature built during the decompilation process
+    SCReason_GuessedFromDataFlow,       // Signature built from the data flow analysis.
+    SCReason_Called,                    // Signature built from a method call
+    SCReason_Database,                  // A known signature, from the embedded database
+    SCReason_Demangling,                // From demangling, or decoding a signature string
+    SCReason_User                       // Defined by the user
+}
+HP_END_DECL_ENUM(SignatureCreationReason);
+
 HP_BEGIN_DECL_ENUM(uint8_t, CommentCreationReason) {
     CCReason_None,
     CCReason_Unknown,       // Unknown reason
-    CCReason_User,          // Created by the used
+    CCReason_User,          // Created by the user
     CCReason_Script,        // A Python script created the comment
     CCReason_Automatic,     // Automatic comment, like XREF comments, values found during the analysis...
     CCReason_Dynamic        // A dynamic comment. Its content depends on another MBI (the anchor).
@@ -86,7 +98,7 @@ HP_END_DECL_ENUM(CommentCreationReason);
 HP_BEGIN_DECL_ENUM(uint8_t, NameCreationReason) {
     NCReason_None,
     NCReason_Unknown,       // Unknown reason
-    NCReason_User,          // Created by the used
+    NCReason_User,          // Created by the user
     NCReason_Script,        // A Python script created the name
     NCReason_Import,        // The name was read from the executable file
     NCReason_Metadata,      // The name was derived from metadata (like Objective-C)
@@ -211,9 +223,43 @@ HP_BEGIN_DECL_ENUM(NSUInteger, RegClass) {
     RegClass_ARM_VFP_Single = RegClass_FirstUserClass,
     RegClass_ARM_VFP_Double,
     RegClass_ARM_VFP_Quad,
-    RegClass_ARM_Media
+    RegClass_ARM_Media,
+
+    RegClass_LastUserClass = MAX_REGISTER_CLASS,
+
+    RegClass_Variable = 100,
+    RegClass_Argument = 101,
+    RegClass_Temporaries = 102,
+    RegClass_Special = 103
 }
 HP_END_DECL_ENUM(RegClass);
+
+HP_BEGIN_DECL_ENUM(NSUInteger, CPUStateFieldIndexes) {
+    CSF_FlagIndexC =  0,
+    CSF_FlagIndexP =  2,
+    CSF_FlagIndexA =  4,
+    CSF_FlagIndexZ =  6,
+    CSF_FlagIndexS =  7,
+    CSF_FlagIndexT =  8,
+    CSF_FlagIndexI =  9,
+    CSF_FlagIndexD = 10,
+    CSF_FlagIndexO = 11
+}
+HP_END_DECL_ENUM(CPUStateFieldIndexes);
+
+HP_BEGIN_DECL_OPTIONS(NSUInteger, CPUStateFieldMasks) {
+    CSF_FlagMaskNone = 0,
+    CSF_FlagMaskC = (1 <<  0),
+    CSF_FlagMaskP = (1 <<  2),
+    CSF_FlagMaskA = (1 <<  4),
+    CSF_FlagMaskZ = (1 <<  6),
+    CSF_FlagMaskS = (1 <<  7),
+    CSF_FlagMaskT = (1 <<  8),
+    CSF_FlagMaskI = (1 <<  9),
+    CSF_FlagMaskD = (1 << 10),
+    CSF_FlagMaskO = (1 << 11)
+}
+HP_END_DECL_OPTIONS(CPUStateFieldMasks);
 
 // Calling Conventions
 
@@ -263,9 +309,28 @@ HP_BEGIN_DECL_ENUM(NSUInteger, DFTAddressWidth) {
 HP_END_DECL_ENUM(DFTAddressWidth);
 
 HP_BEGIN_DECL_OPTIONS(NSUInteger, FileLoaderOptions) {
+    FLS_None = 0,
     FLS_ParseObjectiveC = 1
 }
 HP_END_DECL_OPTIONS(FileLoaderOptions);
+
+HP_BEGIN_DECL_OPTIONS(NSUInteger, AnalysisOptions) {
+    AO_None                     = 0,
+    AO_PureProcedureTextSection = (1 << 0)
+}
+HP_END_DECL_OPTIONS(AnalysisOptions);
+#define DEFAULT_ANALYSIS_OPTIONS    AO_None
+
+// Disassembler
+
+HP_BEGIN_DECL_OPTIONS(NSUInteger, DisassembleOptions) {
+    DO_None               = 0,
+    DO_FollowCode         = (1 << 0),
+    DO_ProcedureMode      = (1 << 1),
+    DO_ProceedToAnalysis  = (1 << 2),
+    DO_PropagateSignature = (1 << 3)
+}
+HP_END_DECL_OPTIONS(DisassembleOptions);
 
 // Debugger
 
@@ -278,5 +343,24 @@ HP_BEGIN_DECL_ENUM(NSUInteger, DebuggerState) {
     STATE_Exited
 }
 HP_END_DECL_ENUM(DebuggerState);
+
+HP_BEGIN_DECL_ENUM(NSUInteger, DebuggerType) {
+    Debugger_None,
+    Debugger_Local,
+    Debugger_HopperDebuggerServer,
+    Debugger_GDBRemote,
+    Debugger_DebugServer
+}
+HP_END_DECL_ENUM(DebuggerType);
+
+// Decompiler
+#define DECOMPILER_DEFAULT_OPTIONS (Decompiler_RemoveDeadCode | Decompiler_RemoveMacros)
+
+HP_BEGIN_DECL_OPTIONS(NSUInteger, DecompilerOptions) {
+    Decompiler_None = 0,
+    Decompiler_RemoveDeadCode = 1,
+    Decompiler_RemoveMacros = 2
+}
+HP_END_DECL_OPTIONS(DecompilerOptions);
 
 #endif

@@ -51,6 +51,10 @@
 
 - (Address)nextAddressToTryIfInstructionFailedToDecodeAt:(Address)address forCPUMode:(uint8_t)mode;
 
+/// Return 0 if the instruction at this address doesn't represent a NOP instruction (or any padding instruction), or the insturction length if any.
+- (int)isNopAt:(Address)address;
+
+/// Returns YES if a procedure prolog has been detected at this address.
 - (BOOL)hasProcedurePrologAt:(Address)address;
 
 /// Notify the plugin that an analysisbegan from an entry point.
@@ -162,19 +166,10 @@
 /// Return the address of the last instruction of the procedure, before its epilog.
 - (Address)skipFooter:(NSObject<HPBasicBlock> *)basicBlock ofProcedure:(NSObject<HPProcedure> *)procedure;
 
-/// Returns an AST representation of an operand of an instruction.
-/// Note: ASTNode is not publicly exposed yet. You cannot write a decompiler at the moment.
-- (ASTNode *)rawDecodeArgumentIndex:(int)argIndex ofDisasm:(DisasmStruct *)disasm ignoringWriteMode:(BOOL)ignoreWrite usingDecompiler:(Decompiler *)decompiler;
-
 /// Decompile an assembly instruction.
 /// Note: ASTNode is not publicly exposed yet. You cannot write a decompiler at the moment.
 - (ASTNode *)decompileInstructionAtAddress:(Address)a
                                     disasm:(DisasmStruct)d
-                                    length:(int)instrLength
-                                      arg1:(ASTNode *)arg1
-                                      arg2:(ASTNode *)arg2
-                                      arg3:(ASTNode *)arg3
-                                      dest:(ASTNode *)dest
                                  addNode_p:(BOOL *)addNode_p
                            usingDecompiler:(Decompiler *)decompiler;
 

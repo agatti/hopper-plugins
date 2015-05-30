@@ -29,7 +29,7 @@
 - (NSObject<HPDocument> *)currentDocument;
 - (void)logMessage:(NSString *)message;
 
-// Build an UUID object
+// Build an UUID object from a string like XXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
 - (HopperUUID *)UUIDWithString:(NSString *)uuidString;
 
 // New detected type

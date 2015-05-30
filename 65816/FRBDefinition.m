@@ -265,6 +265,10 @@ static ItFrobHopper65816ModelHandler *kModelHandler;
     return NO;
 }
 
+- (NSString *)framePointerRegisterNameForFile:(NSObject<HPDisassembledFile>*)file {
+    return nil;
+}
+
 - (NSUInteger)translateOperandIndex:(NSUInteger)index
                        operandCount:(NSUInteger)count
                   accordingToSyntax:(uint8_t)syntaxIndex {
