@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2014, Alessandro Gatti - frob.it
+ Copyright (c) 2014-2015, Alessandro Gatti - frob.it
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -24,26 +24,21 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifdef __OBJC__
-    #import <Cocoa/Cocoa.h>
-#endif
-
 #import "FRBAddressSpace.h"
 
 static NSString *kUnmappedSectionName = @"BSS";
 
 @interface ItFrobHopperAddressSpace () {
-
     /*!
-     *  Hopper Services instance.
+     * Hopper Services instance.
      */
     id<HPHopperServices> _services;
 }
 
 /*!
- *	Adds extra segments to cover the whole address space.
+ * Adds extra segments to cover the whole address space.
  *
- *	@param sender the selector sender, ignored.
+ * @param sender the selector sender, ignored.
  */
 - (void)mapWholeAddressSpace:(id)sender;
 
@@ -61,11 +56,11 @@ static NSString *kUnmappedSectionName = @"BSS";
 
 - (NSArray *)toolMenuDescription {
     return @[
-             @{
-                 HPM_TITLE: @"Map whole address space",
-                 HPM_SELECTOR: NSStringFromSelector(@selector(mapWholeAddressSpace:))
-                 }
-             ];
+        @{
+            HPM_TITLE : @"Map whole address space",
+            HPM_SELECTOR : NSStringFromSelector(@selector(mapWholeAddressSpace:))
+        }
+    ];
 }
 
 - (HopperUUID *)pluginUUID {
@@ -89,7 +84,7 @@ static NSString *kUnmappedSectionName = @"BSS";
 }
 
 - (NSString *)pluginCopyright {
-    return @"©2014 Alessandro Gatti";
+    return @"©2014-2015 Alessandro Gatti";
 }
 
 - (NSString *)pluginVersion {
@@ -115,18 +110,16 @@ static NSString *kUnmappedSectionName = @"BSS";
 
     for (NSObject<HPSegment> *segment in existingSegments) {
         if (segment.startAddress > currentAddress) {
-            NSObject<HPSegment> *bss = [file addSegmentAt:currentAddress
-                                        toExcludedAddress:segment.startAddress];
-            bss.segmentName = kUnmappedSectionName;
+            [file addSegmentAt:currentAddress
+             toExcludedAddress:segment.startAddress].segmentName = kUnmappedSectionName;
         }
 
         currentAddress = segment.endAddress;
     }
 
     if (currentAddress < addressSpaceEnd) {
-        NSObject<HPSegment> *bss = [file addSegmentAt:currentAddress
-                                    toExcludedAddress:addressSpaceEnd];
-        bss.segmentName = kUnmappedSectionName;
+        [file addSegmentAt:currentAddress
+         toExcludedAddress:addressSpaceEnd].segmentName = kUnmappedSectionName;
     }
 
     [document endWaiting];
