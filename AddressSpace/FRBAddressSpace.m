@@ -28,7 +28,7 @@
 
 static NSString *kUnmappedSectionName = @"BSS";
 
-@interface ItFrobHopperAddressSpace () {
+@interface NAMESPACE(AddressSpace) () {
     /*!
      * Hopper Services instance.
      */
@@ -44,7 +44,7 @@ static NSString *kUnmappedSectionName = @"BSS";
 
 @end
 
-@implementation ItFrobHopperAddressSpace
+@implementation NAMESPACE(AddressSpace)
 
 - (id<HopperPlugin>)initWithHopperServices:(id<HPHopperServices>)services {
     if (self = [super init]) {

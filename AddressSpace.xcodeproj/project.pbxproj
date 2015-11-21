@@ -229,6 +229,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "it.frob.hopper.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/HopperCommon";
 				WRAPPER_EXTENSION = hopperTool;
 			};
 			name = Debug;
@@ -242,6 +243,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "it.frob.hopper.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/HopperCommon";
 				WRAPPER_EXTENSION = hopperTool;
 			};
 			name = Release;

@@ -27,5 +27,7 @@
 #import <Foundation/Foundation.h>
 #import <Hopper/Hopper.h>
 
-@interface ItFrobHopperAddressSpace : NSObject <HopperTool>
+#import "FRBHopperCommon.h"
+
+@interface NAMESPACE(AddressSpace) : NSObject <HopperTool>
 @end
