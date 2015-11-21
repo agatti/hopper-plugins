@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2014, Alessandro Gatti - frob.it
+ Copyright (c) 2014-2015, Alessandro Gatti - frob.it
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -31,39 +31,41 @@
 @implementation ItFrobHopperHopperCommonBaseContext
 
 - (id<CPUDefinition>)cpuDefinition {
-    @throw [NSException exceptionWithName:FRBHopperExceptionName
-                                   reason:[NSString stringWithFormat:@"Forgot to override %s", __PRETTY_FUNCTION__]
-                                 userInfo:nil];
+  @throw [NSException
+      exceptionWithName:FRBHopperExceptionName
+                 reason:[NSString stringWithFormat:@"Forgot to override %s",
+                                                   __PRETTY_FUNCTION__]
+               userInfo:nil];
 }
 
 - (void)initDisasmStructure:(DisasmStruct *)disasm
             withSyntaxIndex:(NSUInteger)syntaxIndex {
-    InitialiseDisasmStruct(disasm);
+  InitialiseDisasmStruct(disasm);
 }
 
 - (Address)adjustCodeAddress:(Address)address {
-    return address;
+  return address;
 }
 
 - (uint8_t)cpuModeFromAddress:(Address)address {
-    return 0;
+  return 0;
 }
 
 - (BOOL)addressForcesACPUMode:(Address)address {
-    return NO;
+  return NO;
 }
 
 - (Address)nextAddressToTryIfInstructionFailedToDecodeAt:(Address)address
                                               forCPUMode:(uint8_t)mode {
-    return address + 1;
+  return address + 1;
 }
 
 - (int)isNopAt:(Address)address {
-    return 0;
+  return 0;
 }
 
 - (BOOL)hasProcedurePrologAt:(Address)address {
-    return NO;
+  return NO;
 }
 
 - (void)analysisBeginsAt:(Address)entryPoint {
@@ -91,24 +93,29 @@
 }
 
 - (uint8_t)estimateCPUModeAtVirtualAddress:(Address)address {
-    return 0;
+  return 0;
 }
 
 - (int)disassembleSingleInstruction:(DisasmStruct *)disasm
                  usingProcessorMode:(NSUInteger)mode {
-    @throw [NSException exceptionWithName:FRBHopperExceptionName
-                                   reason:[NSString stringWithFormat:@"Forgot to override %s", __PRETTY_FUNCTION__]
-                                 userInfo:nil];
+  @throw [NSException
+      exceptionWithName:FRBHopperExceptionName
+                 reason:[NSString stringWithFormat:@"Forgot to override %s",
+                                                   __PRETTY_FUNCTION__]
+               userInfo:nil];
 }
 
-- (BOOL)instructionCanBeUsedToExtractDirectMemoryReferences:(DisasmStruct *)disasmStruct {
-    return YES;
+- (BOOL)instructionCanBeUsedToExtractDirectMemoryReferences:
+    (DisasmStruct *)disasmStruct {
+  return YES;
 }
 
 - (BOOL)instructionHaltsExecutionFlow:(DisasmStruct *)disasm {
-    @throw [NSException exceptionWithName:FRBHopperExceptionName
-                                   reason:[NSString stringWithFormat:@"Forgot to override %s", __PRETTY_FUNCTION__]
-                                 userInfo:nil];
+  @throw [NSException
+      exceptionWithName:FRBHopperExceptionName
+                 reason:[NSString stringWithFormat:@"Forgot to override %s",
+                                                   __PRETTY_FUNCTION__]
+               userInfo:nil];
 }
 
 - (void)performBranchesAnalysis:(DisasmStruct *)disasm
@@ -135,37 +142,41 @@
 }
 
 - (NSString *)defaultFormattedVariableNameForDisplacement:(int64_t)displacement
-                                              inProcedure:(id<HPProcedure>)procedure {
-    return [NSString stringWithFormat:@"var%lld", displacement];
+                                              inProcedure:
+                                                  (id<HPProcedure>)procedure {
+  return [NSString stringWithFormat:@"var%lld", displacement];
 }
 
 - (void)buildInstructionString:(DisasmStruct *)disasm
                     forSegment:(id<HPSegment>)segment
-                populatingInfo:(id<HPFormattedInstructionInfo>)formattedInstructionInfo {
-    @throw [NSException exceptionWithName:FRBHopperExceptionName
-                                   reason:[NSString stringWithFormat:@"Forgot to override %s", __PRETTY_FUNCTION__]
-                                 userInfo:nil];
+                populatingInfo:
+                    (id<HPFormattedInstructionInfo>)formattedInstructionInfo {
+  @throw [NSException
+      exceptionWithName:FRBHopperExceptionName
+                 reason:[NSString stringWithFormat:@"Forgot to override %s",
+                                                   __PRETTY_FUNCTION__]
+               userInfo:nil];
 }
 
 - (BOOL)canDecompileProcedure:(id<HPProcedure>)procedure {
-    return NO;
+  return NO;
 }
 
 - (Address)skipHeader:(id<HPBasicBlock>)basicBlock
           ofProcedure:(id<HPProcedure>)procedure {
-    return basicBlock.from;
+  return basicBlock.from;
 }
 
 - (Address)skipFooter:(id<HPBasicBlock>)basicBlock
           ofProcedure:(id<HPProcedure>)procedure {
-    return basicBlock.to;
+  return basicBlock.to;
 }
 
 - (ASTNode *)decompileInstructionAtAddress:(Address)a
                                     disasm:(DisasmStruct)d
                                  addNode_p:(BOOL *)addNode_p
                            usingDecompiler:(Decompiler *)decompiler {
-    return nil;
+  return nil;
 }
 
 - (NSData *)assembleRawInstruction:(NSString *)instr
@@ -174,30 +185,30 @@
                        withCPUMode:(uint8_t)cpuMode
                 usingSyntaxVariant:(NSUInteger)syntax
                              error:(NSError **)error {
-    return nil;
+  return nil;
 }
 
 - (BOOL)displacementIsAnArgument:(int64_t)displacement
                     forProcedure:(id<HPProcedure>)procedure {
-    return NO;
+  return NO;
 }
 
 - (NSUInteger)stackArgumentSlotForDisplacement:(int64_t)displacement
                                    inProcedure:(id<HPProcedure>)procedure {
-    return -1;
+  return -1;
 }
 
 - (int64_t)displacementForStackSlotIndex:(NSUInteger)slot
                              inProcedure:(id<HPProcedure>)procedure {
-    return 0;
+  return 0;
 }
 
 - (BOOL)instructionMayBeASwitchStatement:(DisasmStruct *)disasmStruct {
-    return NO;
+  return NO;
 }
 
 - (Address)getThunkDestinationForInstructionAt:(Address)address {
-    return BAD_ADDRESS;
+  return BAD_ADDRESS;
 }
 
 @end

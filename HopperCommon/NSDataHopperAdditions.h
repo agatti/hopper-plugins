@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2014, Alessandro Gatti - frob.it
+ Copyright (c) 2014-2015, Alessandro Gatti - frob.it
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -28,7 +28,7 @@
 
 /*
  According to Apple documentation ("Code Loading Programming Topics"):
- 
+
  <quote>
  Categories
 
@@ -37,29 +37,29 @@
  same method of the same class, only one override takes effect, leading to
  unpredictable behavior.
  </quote>
- 
+
  Therefore, the functions located here are not in a NSData/NSMutableData
  category of their own.
  */
 
 /*!
- *	Returns a NSData object with the given size and filled with the chosen
- *  filler byte.
+ * Returns a NSData object with the given size and filled with the chosen
+ * filler byte.
  *
- *	@param filler the filler byte.
- *	@param length the length.
+ * @param filler the filler byte.
+ * @param length the length.
  *
- *	@return a NSData instance using the given filler.
+ * @return a NSData instance using the given filler.
  */
 NSData *NSDataWithFiller(const uint8_t filler, NSUInteger length);
 
 /*!
- *	Returns a NSMutableData object with the given size and filled with the
- *  chosen filler byte.
+ * Returns a NSMutableData object with the given size and filled with the
+ * chosen filler byte.
  *
- *	@param filler the filler byte.
- *	@param length the length.
+ * @param filler the filler byte.
+ * @param length the length.
  *
- *	@return a NSMutableData instance using the given filler.
+ * @return a NSMutableData instance using the given filler.
  */
 NSMutableData *NSMutableDataWithFiller(const uint8_t filler, NSUInteger length);

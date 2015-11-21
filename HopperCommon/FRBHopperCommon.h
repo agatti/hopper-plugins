@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2014, Alessandro Gatti - frob.it
+ Copyright (c) 2014-2015, Alessandro Gatti - frob.it
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -25,36 +25,37 @@
  */
 
 #import <Foundation/Foundation.h>
+#import <Hopper/Hopper.h>
 
 static NSString *FRBHopperExceptionName = @"it.frob.hopper.internalexception";
 
 /*!
- *	Initialises the given DisasmStruct structure.
+ * Initialises the given DisasmStruct structure.
  *
- *	@param disasmStruct the structure to initialise.
+ * @param disasmStruct the structure to initialise.
  */
 void InitialiseDisasmStruct(DisasmStruct *disasmStruct);
 
 /*!
- *	Extracts a signed value out of the given NSNumber instance.
+ * Extracts a signed value out of the given NSNumber instance.
  *
- *  A value is assumed as negative if and only if the value returned by
- *  NSNumber has the most significant bit set to 1.
+ * A value is assumed as negative if and only if the value returned by
+ * NSNumber has the most significant bit set to 1.
  *
- *	@param value the number to get a signed representation of.
- *	@param size  the size of the value in bits.
+ * @param value the number to get a signed representation of.
+ * @param size  the size of the value in bits.
  *
- *	@return the signed value representation of the given NSNumber instance.
+ * @return the signed value representation of the given NSNumber instance.
  */
 int64_t SignedValue(NSNumber *value, size_t size);
 
 /*!
- *	Changes format for the given argument, if it is still set as default.
+ * Changes format for the given argument, if it is still set as default.
  *
- *	@param file     the file to operate on.
- *	@param address  the instruction address.
- *	@param operand  the index of the argument to change.
- *	@param format   the new format for the argument.
+ * @param file    the file to operate on.
+ * @param address the instruction address.
+ * @param operand the index of the argument to change.
+ * @param format  the new format for the argument.
  */
 void SetDefaultFormatForArgument(id<HPDisassembledFile> file, Address address,
                                  int argument, ArgFormat format);

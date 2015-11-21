@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2014, Alessandro Gatti - frob.it
+ Copyright (c) 2014-2015, Alessandro Gatti - frob.it
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -27,37 +27,41 @@
 #import "FRBHopperCommon.h"
 
 void InitialiseDisasmStruct(DisasmStruct *disasmStruct) {
-    bzero(disasmStruct->completeInstructionString, sizeof(disasmStruct->completeInstructionString));
-    bzero(&disasmStruct->instruction, sizeof(DisasmInstruction));
-    for (int index = 0; index < DISASM_MAX_OPERANDS; index++) {
-        bzero(&disasmStruct->operand[index], sizeof(DisasmOperand));
-        disasmStruct->operand[index].type = DISASM_OPERAND_NO_OPERAND;
-    }
-    bzero(disasmStruct->implicitlyReadRegisters, sizeof(disasmStruct->implicitlyReadRegisters));
-    bzero(disasmStruct->implicitlyWrittenRegisters, sizeof(disasmStruct->implicitlyWrittenRegisters));
+  bzero(disasmStruct->completeInstructionString,
+        sizeof(disasmStruct->completeInstructionString));
+  bzero(&disasmStruct->instruction, sizeof(DisasmInstruction));
+  for (int index = 0; index < DISASM_MAX_OPERANDS; index++) {
+    bzero(&disasmStruct->operand[index], sizeof(DisasmOperand));
+    disasmStruct->operand[index].type = DISASM_OPERAND_NO_OPERAND;
+  }
+  bzero(disasmStruct->implicitlyReadRegisters,
+        sizeof(disasmStruct->implicitlyReadRegisters));
+  bzero(disasmStruct->implicitlyWrittenRegisters,
+        sizeof(disasmStruct->implicitlyWrittenRegisters));
 }
 
 int64_t SignedValue(NSNumber *value, size_t size) {
-    if (size > 32) {
-        @throw [NSException exceptionWithName:FRBHopperExceptionName
-                                       reason:[NSString stringWithFormat:@"Internal error: invalid signed value size %zu", size]
-                                     userInfo:nil];
-    }
+  if (size > 32) {
+    @throw [NSException
+        exceptionWithName:FRBHopperExceptionName
+                   reason:[NSString stringWithFormat:@"Internal error: invalid "
+                                                     @"signed value size %zu",
+                                                     size]
+                 userInfo:nil];
+  }
 
-    uint32_t sizeMask = (1 << size) - 1;
-    uint32_t negativeBitMask = 1 << (size - 1);
+  uint32_t sizeMask = (1 << size) - 1;
+  uint32_t negativeBitMask = 1 << (size - 1);
 
-    int64_t output = (int64_t)(value.unsignedLongLongValue & sizeMask);
-    return (output & negativeBitMask) ? output - (1 << size) : output;
+  int64_t output = (int64_t)(value.unsignedLongLongValue & sizeMask);
+  return (output & negativeBitMask) ? output - (1 << size) : output;
 }
 
 void SetDefaultFormatForArgument(id<HPDisassembledFile> file, Address address,
                                  int argument, ArgFormat format) {
-    ArgFormat currentArgument = [file formatForArgument:argument
-                                       atVirtualAddress:address];
-    if (currentArgument == Format_Default) {
-        [file setFormat:format
-            forArgument:argument
-       atVirtualAddress:address];
-    }
+  ArgFormat currentArgument =
+      [file formatForArgument:argument atVirtualAddress:address];
+  if (currentArgument == Format_Default) {
+    [file setFormat:format forArgument:argument atVirtualAddress:address];
+  }
 }

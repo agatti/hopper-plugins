@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2014, Alessandro Gatti - frob.it
+ Copyright (c) 2014-2015, Alessandro Gatti - frob.it
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -29,15 +29,15 @@
 #import <Hopper/Hopper.h>
 
 /*!
- *	Formats the given value using the given information.
+ * Formats the given value using the given information.
  *
- *	@param value    the value to format.
- *	@param source   the disassembled instruction source information.
- *	@param format   the output format.
- *	@param size     the size of the value in bits.
- *	@param services a reference to HPHopperService for resolving addresses.
+ * @param value    the value to format.
+ * @param source   the disassembled instruction source information.
+ * @param format   the output format.
+ * @param size     the size of the value in bits.
+ * @param services a reference to HPHopperService for resolving addresses.
  *
- *	@return the formatted value.
+ * @return the formatted value.
  */
 NSString *FormatValue(NSNumber *value, const DisasmStruct *source,
                       ArgFormat format, size_t size,
@@ -49,8 +49,7 @@ NSString *FormatHexadecimal(NSNumber *value, size_t size, BOOL isSigned,
 NSString *FormatDecimal(NSNumber *value, size_t size, BOOL isSigned,
                         BOOL negate);
 
-NSString *FormatOctal(NSNumber *value, size_t size, BOOL isSigned,
-                      BOOL negate);
+NSString *FormatOctal(NSNumber *value, size_t size, BOOL isSigned, BOOL negate);
 
 NSString *FormatBinary(NSNumber *value, size_t size, BOOL fillZeroes,
                        BOOL negate);
