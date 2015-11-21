@@ -7,20 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		683C9F77197141C80005973C /* FRBC64Loader.m in Sources */ = {isa = PBXBuildFile; fileRef = 683C9F76197141C80005973C /* FRBC64Loader.m */; };
+		683C9F77197141C80005973C /* FRBCBMLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 683C9F76197141C80005973C /* FRBCBMLoader.m */; };
 		68C7B37B1971407D0067434B /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 68C7B37A1971407D0067434B /* CoreFoundation.framework */; };
 		68C7B3811971407D0067434B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 68C7B37F1971407D0067434B /* InfoPlist.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		683C9F75197141C80005973C /* FRBC64Loader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRBC64Loader.h; sourceTree = "<group>"; };
-		683C9F76197141C80005973C /* FRBC64Loader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRBC64Loader.m; sourceTree = "<group>"; };
-		683C9F78197148220005973C /* FRBC64Basic.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FRBC64Basic.h; sourceTree = "<group>"; };
-		68C7B3771971407D0067434B /* C64Loader.hopperLoader */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = C64Loader.hopperLoader; sourceTree = BUILT_PRODUCTS_DIR; };
+		683C9F75197141C80005973C /* FRBCBMLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRBCBMLoader.h; sourceTree = "<group>"; };
+		683C9F76197141C80005973C /* FRBCBMLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRBCBMLoader.m; sourceTree = "<group>"; };
+		683C9F78197148220005973C /* FRBBasicTokens.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FRBBasicTokens.h; sourceTree = "<group>"; };
+		68C7B3771971407D0067434B /* CBMLoader.hopperLoader */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CBMLoader.hopperLoader; sourceTree = BUILT_PRODUCTS_DIR; };
 		68C7B37A1971407D0067434B /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
-		68C7B37E1971407D0067434B /* FRBC64Loader-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "FRBC64Loader-Info.plist"; sourceTree = "<group>"; };
+		68C7B37E1971407D0067434B /* FRBCBMLoader-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "FRBCBMLoader-Info.plist"; sourceTree = "<group>"; };
 		68C7B3801971407D0067434B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		68C7B3821971407D0067434B /* FRBC64Loader-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "FRBC64Loader-Prefix.pch"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -38,7 +37,7 @@
 		68C7B36E1971407D0067434B = {
 			isa = PBXGroup;
 			children = (
-				68C7B37C1971407D0067434B /* C64Loader */,
+				68C7B37C1971407D0067434B /* CBMLoader */,
 				68C7B3791971407D0067434B /* Frameworks */,
 				68C7B3781971407D0067434B /* Products */,
 			);
@@ -47,7 +46,7 @@
 		68C7B3781971407D0067434B /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				68C7B3771971407D0067434B /* C64Loader.hopperLoader */,
+				68C7B3771971407D0067434B /* CBMLoader.hopperLoader */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -60,23 +59,22 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		68C7B37C1971407D0067434B /* C64Loader */ = {
+		68C7B37C1971407D0067434B /* CBMLoader */ = {
 			isa = PBXGroup;
 			children = (
 				68C7B37D1971407D0067434B /* Supporting Files */,
-				683C9F75197141C80005973C /* FRBC64Loader.h */,
-				683C9F76197141C80005973C /* FRBC64Loader.m */,
-				683C9F78197148220005973C /* FRBC64Basic.h */,
+				683C9F75197141C80005973C /* FRBCBMLoader.h */,
+				683C9F76197141C80005973C /* FRBCBMLoader.m */,
+				683C9F78197148220005973C /* FRBBasicTokens.h */,
 			);
-			path = C64Loader;
+			path = CBMLoader;
 			sourceTree = "<group>";
 		};
 		68C7B37D1971407D0067434B /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				68C7B37E1971407D0067434B /* FRBC64Loader-Info.plist */,
+				68C7B37E1971407D0067434B /* FRBCBMLoader-Info.plist */,
 				68C7B37F1971407D0067434B /* InfoPlist.strings */,
-				68C7B3821971407D0067434B /* FRBC64Loader-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -84,9 +82,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		68C7B3761971407D0067434B /* C64Loader */ = {
+		68C7B3761971407D0067434B /* CBMLoader */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 68C7B3851971407D0067434B /* Build configuration list for PBXNativeTarget "C64Loader" */;
+			buildConfigurationList = 68C7B3851971407D0067434B /* Build configuration list for PBXNativeTarget "CBMLoader" */;
 			buildPhases = (
 				68C7B3731971407D0067434B /* Sources */,
 				68C7B3741971407D0067434B /* Frameworks */,
@@ -96,9 +94,9 @@
 			);
 			dependencies = (
 			);
-			name = C64Loader;
-			productName = C64Loader;
-			productReference = 68C7B3771971407D0067434B /* C64Loader.hopperLoader */;
+			name = CBMLoader;
+			productName = CBMLoader;
+			productReference = 68C7B3771971407D0067434B /* CBMLoader.hopperLoader */;
 			productType = "com.apple.product-type.bundle";
 		};
 /* End PBXNativeTarget section */
@@ -110,7 +108,7 @@
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = frob.it;
 			};
-			buildConfigurationList = 68C7B3721971407D0067434B /* Build configuration list for PBXProject "C64Loader" */;
+			buildConfigurationList = 68C7B3721971407D0067434B /* Build configuration list for PBXProject "CBMLoader" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -122,7 +120,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				68C7B3761971407D0067434B /* C64Loader */,
+				68C7B3761971407D0067434B /* CBMLoader */,
 			);
 		};
 /* End PBXProject section */
@@ -143,7 +141,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				683C9F77197141C80005973C /* FRBC64Loader.m in Sources */,
+				683C9F77197141C80005973C /* FRBCBMLoader.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -164,7 +162,7 @@
 		68C7B3831971407D0067434B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -207,7 +205,7 @@
 		68C7B3841971407D0067434B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -245,11 +243,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "C64Loader/FRBC64Loader-Prefix.pch";
-				INFOPLIST_FILE = "C64Loader/FRBC64Loader-Info.plist";
+				GCC_PREFIX_HEADER = "";
+				INFOPLIST_FILE = "CBMLoader/FRBCBMLoader-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = CBMLoader;
 				WRAPPER_EXTENSION = hopperLoader;
 			};
 			name = Debug;
@@ -258,11 +255,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "C64Loader/FRBC64Loader-Prefix.pch";
-				INFOPLIST_FILE = "C64Loader/FRBC64Loader-Info.plist";
+				GCC_PREFIX_HEADER = "";
+				INFOPLIST_FILE = "CBMLoader/FRBCBMLoader-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = CBMLoader;
 				WRAPPER_EXTENSION = hopperLoader;
 			};
 			name = Release;
@@ -270,7 +266,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		68C7B3721971407D0067434B /* Build configuration list for PBXProject "C64Loader" */ = {
+		68C7B3721971407D0067434B /* Build configuration list for PBXProject "CBMLoader" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				68C7B3831971407D0067434B /* Debug */,
@@ -279,7 +275,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		68C7B3851971407D0067434B /* Build configuration list for PBXNativeTarget "C64Loader" */ = {
+		68C7B3851971407D0067434B /* Build configuration list for PBXNativeTarget "CBMLoader" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				68C7B3861971407D0067434B /* Debug */,

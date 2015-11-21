@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2014, Alessandro Gatti
+ Copyright (c) 2014-2015, Alessandro Gatti
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -24,10 +24,12 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#import <AppKit/AppKit.h>
 #import <Foundation/Foundation.h>
+#import <Hopper/Hopper.h>
 
 /*!
- *	C64 binary file loader.
+ * Commodore 8-bits binary file loader.
  */
-@interface ItFrobHopperC64Loader : NSObject<FileLoader>
+@interface ItFrobHopperCBMLoader : NSObject <FileLoader>
 @end

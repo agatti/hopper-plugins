@@ -20,7 +20,7 @@
       location = "group:6502.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:C64Loader.xcodeproj">
+      location = "group:/Users/agatti/src/hopper-plugins/CBMLoader.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:LICENSE">

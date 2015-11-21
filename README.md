@@ -11,7 +11,7 @@ Plugins currently available in the repository:
 
 **File loader plugins:**
 
-* [Commodore 64 binaries](#commodore-64-file-loader-plugin)
+* [Commodore binaries](#commodore-file-loader-plugin)
 
 **Tool plugins:**
 
@@ -292,19 +292,16 @@ CPU backends currently supported: 8x300, 8x305.
 
 <hr/>
 
-###**Commodore 64 File Loader Plugin**
+###**Commodore File Loader Plugin**
 
-_version 0.1.1_
+_version 0.2.0_
 
-This file loader plugin allows you to load Commodore 64 binaries to be disassembled.  Commodore 128 files are currently not supported due to the fact that binaries may be bigger than 64k and thus something may need to be rearranged, whilst the rest of the Commodore 8-bit line uses different BASIC ROM revisions so the tokeniser will need some work.  _(Please note that the plugin depends on the 6502 CPU core to be installed in order to work properly)_
+This file loader plugin allows you to load Commodore binaries in PRG format to be disassembled.  _(Please note that the plugin depends on the 6502 CPU core to be installed in order to work properly)_
 
 ####TODO for next version:
 
-* Investigate Commodore 128 files support.
-* See how different other BASIC ROM token tables are.
 * Add support for containers (Disk and Tape images).
 * Add support for cartridges.
-* Add support for BASIC versions different than V2 (the one present in the Commodore 64).
 
 ####Caveats:
 
@@ -314,19 +311,6 @@ This file loader plugin allows you to load Commodore 64 binaries to be disassemb
 
 * Properly relocate files in the 64k address space with BSS sections around data segments.
 * Automatically fill labels for audio, video, and zero page locations and automatically create virtual segments for register banking.
-
-####Applescript usage example:
-
-```applescript
-tell application "Hopper Disassembler v3"
-	activate
-	open executable "your_binary_file_path_here" with options ¬
-	{{name:"c64", options:{{name:"Contains BASIC code", value:"YES"}}}} ¬
-	without analysis and parse objectivec
-end tell
-```
-
-change `value:"YES"` with `value:"NO"` if you don't know if there is a BASIC program stub or if you are sure there is none.
 
 <hr/>
 
