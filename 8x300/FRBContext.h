@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2014, Alessandro Gatti - frob.it
+ Copyright (c) 2014-2015, Alessandro Gatti - frob.it
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -26,9 +26,10 @@
 
 #import <Foundation/Foundation.h>
 
+#import "FRBHopperCommon.h"
 #import "FRBBaseContext.h"
 
-@interface ItFrobHopper8x300Context : ItFrobHopperHopperCommonBaseContext
+@interface NAMESPACE(8x300Context) : NAMESPACE(HopperCommonBaseContext)
 
 - (instancetype)initWithCPU:(id<CPUDefinition>)cpu
                     andFile:(id<HPDisassembledFile>)file

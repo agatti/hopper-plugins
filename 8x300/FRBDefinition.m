@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2014, Alessandro Gatti - frob.it
+ Copyright (c) 2014-2015, Alessandro Gatti - frob.it
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -33,9 +33,9 @@
 /*!
  *	Backend model handler.
  */
-static ItFrobHopper8x300ModelHandler *kModelHandler;
+static NAMESPACE(8x300ModelHandler) *kModelHandler;
 
-@interface ItFrobHopper8x300Definition () {
+@interface NAMESPACE(8x300Definition) () {
 
     /*!
      *  Hopper Services instance.
@@ -45,25 +45,25 @@ static ItFrobHopper8x300ModelHandler *kModelHandler;
     /*!
      *	Instruction string colouriser.
      */
-    ItFrobHopper8x300InstructionColouriser *_colouriser;
+    NAMESPACE(8x300InstructionColouriser) *_colouriser;
 }
 
 @end
 
-@implementation ItFrobHopper8x300Definition
+@implementation NAMESPACE(8x300Definition)
 
 - (id<HopperPlugin>)initWithHopperServices:(id<HPHopperServices>)services {
     if (self = [super init]) {
         _services = services;
         static dispatch_once_t onceToken;
         dispatch_once(&onceToken, ^{
-            kModelHandler = [ItFrobHopper8x300ModelHandler sharedModelHandler];
+            kModelHandler = [NAMESPACE(8x300ModelHandler) sharedModelHandler];
 
             NSMutableSet *opcodes = [NSMutableSet new];
             for (int index = 0; index < FRB8x300OpcodesCount; index++) {
                 [opcodes addObject:[[NSString stringWithUTF8String:kOpcodeNames[index]] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]]];
             }
-            _colouriser = [[ItFrobHopper8x300InstructionColouriser alloc] initWithOpcodesSet:opcodes
+            _colouriser = [[NAMESPACE(8x300InstructionColouriser) alloc] initWithOpcodesSet:opcodes
                                                                                  andServices:services];
 
         });
@@ -73,7 +73,7 @@ static ItFrobHopper8x300ModelHandler *kModelHandler;
 }
 
 - (id<CPUContext>)buildCPUContextForFile:(id<HPDisassembledFile>)file {
-    return [[ItFrobHopper8x300Context alloc] initWithCPU:self
+    return [[NAMESPACE(8x300Context) alloc] initWithCPU:self
                                                  andFile:file
                                             withServices:_services];
 }
@@ -99,7 +99,7 @@ static ItFrobHopper8x300ModelHandler *kModelHandler;
 }
 
 - (NSString *)pluginCopyright {
-    return @"©2014 Alessandro Gatti";
+    return @"©2014-2015 Alessandro Gatti";
 }
 
 - (NSString *)pluginVersion {

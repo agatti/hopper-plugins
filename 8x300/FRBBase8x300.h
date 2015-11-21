@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2014, Alessandro Gatti - frob.it
+ Copyright (c) 2014-2015, Alessandro Gatti - frob.it
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -27,8 +27,9 @@
 #import <Foundation/Foundation.h>
 
 #import "FRBProvider.h"
+#import "FRBHopperCommon.h"
 
-@interface ItFrobHopper8x300Base8x300 : NSObject<FRBProvider>
+@interface NAMESPACE(8x300Base8x300) : NSObject<FRBProvider>
 
 - (BOOL)handleMOVEOpcode:(uint16_t)opcode
             forStructure:(DisasmStruct *)structure

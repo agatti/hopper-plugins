@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2014, Alessandro Gatti - frob.it
+ Copyright (c) 2014-2015, Alessandro Gatti - frob.it
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -27,7 +27,7 @@
 #import <Foundation/Foundation.h>
 
 /*!
- *	Protocol for 8x300 family CPU providers.
+ * Protocol for 8x300 family CPU providers.
  */
 @protocol FRBProvider <NSObject>
 
@@ -37,34 +37,34 @@
 @property (strong, nonatomic, readonly) NSString *name;
 
 /*!
- *	Processes the given disassembly structure.
+ * Processes the given disassembly structure.
  *
- *	@param structure the structure with the current opcode data, if any.
- *  @param file      the currently disassembled file.
+ * @param structure the structure with the current opcode data, if any.
+ * @param file      the currently disassembled file.
  *
- *	@return how many bytes have been processed, or DISASM_UNKNOWN_OPCODE.
+ * @return how many bytes have been processed, or DISASM_UNKNOWN_OPCODE.
  */
 - (int)processStructure:(DisasmStruct *)structure
                  onFile:(id<HPDisassembledFile>)file;
 
 /*!
- *	Checks if the given disassembly structure content halts execution flow
- *  or not.
+ * Checks if the given disassembly structure content halts execution flow
+ * or not.
  *
- *	@param structure the structure to check.
+ * @param structure the structure to check.
  *
- *	@return YES if the structure content halts execution flow, NO otherwise.
+ * @return YES if the structure content halts execution flow, NO otherwise.
  */
 - (BOOL)haltsExecutionFlow:(const DisasmStruct *)structure;
 
 /*!
- *	Creates an assemblable representation of the given disassembly structure.
+ * Creates an assemblable representation of the given disassembly structure.
  *
- *	@param structure the structure with the current opcode data, if any.
- *  @param file      the currently disassembled file.
- *	@param services  the shared Hopper services instance.
+ * @param structure the structure with the current opcode data, if any.
+ * @param file      the currently disassembled file.
+ * @param services  the shared Hopper services instance.
  *
- *	@return how many bytes have been processed, or DISASM_UNKNOWN_OPCODE.
+ * @return how many bytes have been processed, or DISASM_UNKNOWN_OPCODE.
  */
 - (const char *)formatInstruction:(const DisasmStruct *)structure
                            onFile:(id<HPDisassembledFile>)file

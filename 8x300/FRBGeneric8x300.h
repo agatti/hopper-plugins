@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2014, Alessandro Gatti - frob.it
+ Copyright (c) 2014-2015, Alessandro Gatti - frob.it
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -26,7 +26,8 @@
 
 #import <Foundation/Foundation.h>
 
+#import "FRBHopperCommon.h"
 #import "FRBBase8x300.h"
 
-@interface ItFrobHopper8x300Generic8x300 : ItFrobHopper8x300Base8x300
+@interface NAMESPACE(8x300Generic8x300) : NAMESPACE(8x300Base8x300)
 @end

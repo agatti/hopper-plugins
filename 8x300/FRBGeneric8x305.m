@@ -1,16 +1,16 @@
 /*
- Copyright (c) 2014, Alessandro Gatti - frob.it
+ Copyright (c) 2014-2015, Alessandro Gatti - frob.it
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
  modification, are permitted provided that the following conditions are met:
 
  1. Redistributions of source code must retain the above copyright notice, this
- list of conditions and the following disclaimer.
+    list of conditions and the following disclaimer.
 
  2. Redistributions in binary form must reproduce the above copyright notice,
- this list of conditions and the following disclaimer in the documentation
- and/or other materials provided with the distribution.
+    this list of conditions and the following disclaimer in the documentation
+    and/or other materials provided with the distribution.
 
  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
@@ -28,13 +28,13 @@
 #import "FRBGeneric8x305.h"
 #import "FRBModelHandler.h"
 
-@interface ItFrobHopper8x300Generic8x305 ()
+@interface NAMESPACE(8x300Generic8x305) ()
 
 - (BOOL)isValidALUOpcode:(uint16_t)opcode;
 
 @end
 
-@implementation ItFrobHopper8x300Generic8x305
+@implementation NAMESPACE(8x300Generic8x305)
 
 static NSString * const kProviderName = @"it.frob.hopper.generic8x305";
 
@@ -49,7 +49,7 @@ static NSString * const kProviderName = @"it.frob.hopper.generic8x305";
 }
 
 + (void)load {
-    [[ItFrobHopper8x300ModelHandler sharedModelHandler] registerProvider:[ItFrobHopper8x300Generic8x305 class]
+    [[NAMESPACE(8x300ModelHandler) sharedModelHandler] registerProvider:[NAMESPACE(8x300Generic8x305) class]
                                                                  forName:kProviderName];
 }
 

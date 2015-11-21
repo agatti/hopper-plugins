@@ -1,16 +1,16 @@
 /*
- Copyright (c) 2014, Alessandro Gatti - frob.it
+ Copyright (c) 2014-2015, Alessandro Gatti - frob.it
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
  modification, are permitted provided that the following conditions are met:
 
  1. Redistributions of source code must retain the above copyright notice, this
- list of conditions and the following disclaimer.
+    list of conditions and the following disclaimer.
 
  2. Redistributions in binary form must reproduce the above copyright notice,
- this list of conditions and the following disclaimer in the documentation
- and/or other materials provided with the distribution.
+    this list of conditions and the following disclaimer in the documentation
+    and/or other materials provided with the distribution.
 
  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
@@ -30,7 +30,7 @@
 #import "FRBOperandFormatter.h"
 #import "FRBHopperCommon.h"
 
-typedef NS_ENUM(uint32_t, FRB8x300EncodingType) {
+typedef NS_ENUM(uint32_t, EncodingType) {
     FRB8x300EncodingTypeSingle = 0,
     FRB8x300EncodingTypeWithRotation,
     FRB8x300EncodingTypeWithLength,
@@ -39,7 +39,7 @@ typedef NS_ENUM(uint32_t, FRB8x300EncodingType) {
     FRB8x300EncodingTypeOffsetWithLength,
 };
 
-@interface ItFrobHopper8x300Base8x300 () {
+@interface NAMESPACE(8x300Base8x300) () {
     NSArray *_instructionFormats;
 }
 
@@ -61,7 +61,7 @@ typedef NS_ENUM(uint32_t, FRB8x300EncodingType) {
 
 @end
 
-@implementation ItFrobHopper8x300Base8x300
+@implementation NAMESPACE(8x300Base8x300)
 
 static NSString * const kProviderName = @"it.frob.hopper.generic8x300";
 

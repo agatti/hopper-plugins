@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2014, Alessandro Gatti - frob.it
+ Copyright (c) 2014-2015, Alessandro Gatti - frob.it
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -27,7 +27,7 @@
 #import "FRBProvider.h"
 #import "FRBModelHandler.h"
 
-@interface ItFrobHopper8x300ModelHandler () {
+@interface NAMESPACE(8x300ModelHandler) () {
     NSMutableDictionary *_providers;
 }
 
@@ -35,16 +35,16 @@
 
 @end
 
-@implementation ItFrobHopper8x300ModelHandler
+@implementation NAMESPACE(8x300ModelHandler)
 
 static NSString * const kModelsFileName = @"models.plist";
 static NSString * const kPluginBundleName = @"it.frob.hopper.-x300";
 
 + (instancetype)sharedModelHandler {
-    static ItFrobHopper8x300ModelHandler *sharedModelHandler = nil;
+    static NAMESPACE(8x300ModelHandler) *sharedModelHandler = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        sharedModelHandler = [[ItFrobHopper8x300ModelHandler alloc] initWithModels:kModelsFileName];
+        sharedModelHandler = [[NAMESPACE(8x300ModelHandler) alloc] initWithModels:kModelsFileName];
     });
     return sharedModelHandler;
 }

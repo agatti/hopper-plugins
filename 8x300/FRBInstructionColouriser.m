@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2014, Alessandro Gatti - frob.it
+ Copyright (c) 2014-2015, Alessandro Gatti - frob.it
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -27,59 +27,59 @@
 #import "FRBInstructionColouriser.h"
 
 /*!
- *	Instruction parser states.
+ * Instruction parser states.
  */
 typedef NS_ENUM(NSUInteger, FRBInstructionParserState) {
     /*!
-     *	Looking for the beginning of the opcode.
+     * Looking for the beginning of the opcode.
      */
     FRBInstructionParserStateLookingForOpcode = 0,
 
     /*!
-     *	Parsing the opcode characters.
+     * Parsing the opcode characters.
      */
     FRBInstructionParserStateParsingOpcode,
 
     /*!
-     *	Skipping whitespace.
+     * Skipping whitespace.
      */
     FRBInstructionParserStateSkippingSpace,
 
     /*!
-     *	Parsing the operand characters.
+     * Parsing the operand characters.
      */
     FRBInstructionParserStateParsingOperand,
 
     /*!
-     *	Inside a double-quoted operand.
+     * Inside a double-quoted operand.
      */
     FRBInstructionParserStateInsideOperandDoubleQuote,
 
     /*!
-     *	Inside a single-quoted operand.
+     * Inside a single-quoted operand.
      */
     FRBInstructionParserStateInsideOperandSingleQuote
 };
 
 @interface ItFrobHopper8x300InstructionColouriser () {
     /*!
-     *	A list of valid opcodes for the CPU in use.
+     * A list of valid opcodes for the CPU in use.
      */
     const NSSet *_validOpcodes;
 
     /*!
-     *	The formatting attributes for opcodes.
+     * The formatting attributes for opcodes.
      */
     NSDictionary *_opcodeFormattingAttributes;
 
     /*!
-     *	The formatting attributes for operands.
+     * The formatting attributes for operands.
      */
     NSDictionary *_numberFormattingAttributes;
 }
 @end
 
-@implementation ItFrobHopper8x300InstructionColouriser
+@implementation NAMESPACE(8x300InstructionColouriser)
 
 - (instancetype)initWithOpcodesSet:(const NSSet *)validOpcodes
                        andServices:(id<HPHopperServices>)services {

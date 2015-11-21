@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2014, Alessandro Gatti - frob.it
+ Copyright (c) 2014-2015, Alessandro Gatti - frob.it
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -26,6 +26,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface ItFrobHopper8x300Definition : NSObject<CPUDefinition>
+#import "FRBHopperCommon.h"
 
+@interface NAMESPACE(8x300Definition) : NSObject<CPUDefinition>
 @end

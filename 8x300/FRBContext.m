@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2014, Alessandro Gatti - frob.it
+ Copyright (c) 2014-2015, Alessandro Gatti - frob.it
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -33,9 +33,9 @@
 
 #import "FRBHopperCommon.h"
 
-static const ItFrobHopper8x300ModelHandler *kModelHandler;
+static const NAMESPACE(8x300ModelHandler) *kModelHandler;
 
-@interface ItFrobHopper8x300Context () {
+@interface NAMESPACE(8x300Context) () {
     id<CPUDefinition> _cpu;
     id<HPDisassembledFile> _file;
     id<HPHopperServices> _services;
@@ -43,7 +43,7 @@ static const ItFrobHopper8x300ModelHandler *kModelHandler;
 }
 @end
 
-@implementation ItFrobHopper8x300Context
+@implementation NAMESPACE(8x300Context)
 
 - (instancetype)initWithCPU:(id<CPUDefinition>)cpu
                     andFile:(id<HPDisassembledFile>)file
@@ -55,7 +55,7 @@ static const ItFrobHopper8x300ModelHandler *kModelHandler;
 
         static dispatch_once_t onceToken;
         dispatch_once(&onceToken, ^{
-            kModelHandler = [ItFrobHopper8x300ModelHandler sharedModelHandler];
+            kModelHandler = [NAMESPACE(8x300ModelHandler) sharedModelHandler];
         });
 
         NSString *providerName = [kModelHandler providerNameForFamily:file.cpuFamily
