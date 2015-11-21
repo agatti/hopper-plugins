@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2014, Alessandro Gatti - frob.it
+ Copyright (c) 2014-2015, Alessandro Gatti - frob.it
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -25,12 +25,12 @@
  */
 
 #import <Foundation/Foundation.h>
+#import <Hopper/Hopper.h>
 
 @protocol HPHopperServices;
 
-void SetOperandType(DisasmStruct *disasm, int operand,
-                    DisasmOperandType type, uint32_t size,
-                    int64_t immediate);
+void SetOperandType(DisasmStruct *disasm, int operand, DisasmOperandType type,
+                    uint32_t size, int64_t immediate);
 Address SetAddressOperand(id<HPDisassembledFile> file, DisasmStruct *disasm,
                           int operand, uint32_t size, uint32_t effectiveSize,
                           uint32_t offset, uint32_t indexRegisters);
@@ -43,10 +43,10 @@ void SetConstantOperand(id<HPDisassembledFile> file, DisasmStruct *disasm,
 BOOL CanReadBytes(id<HPDisassembledFile> file, Address address, size_t bytes);
 
 /*!
- *	Calculates the signed displacement for the given branch target value.
+ * Calculates the signed displacement for the given branch target value.
  *
- *	@param target the branch target value extracted from the opcode.
+ * @param target the branch target value extracted from the opcode.
  *
- *	@return the calculated relative displacement.
+ * @return the calculated relative displacement.
  */
 int64_t CalculateRelativeJumpTarget(int64_t target);

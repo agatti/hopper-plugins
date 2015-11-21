@@ -10,7 +10,6 @@
 		6857367F1985708600D790A9 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6857367E1985708600D790A9 /* Cocoa.framework */; };
 		685736A71985715E00D790A9 /* FRBCPUSupport.h in Headers */ = {isa = PBXBuildFile; fileRef = 685736A51985715E00D790A9 /* FRBCPUSupport.h */; };
 		685736A81985715E00D790A9 /* FRBCPUSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 685736A61985715E00D790A9 /* FRBCPUSupport.m */; };
-		685736AC198573CF00D790A9 /* FRB65xxCommon-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 685736AB198573CF00D790A9 /* FRB65xxCommon-Prefix.pch */; };
 		689BC5FD19C79E2700A8B6E2 /* FRBInstructionColouriser.h in Headers */ = {isa = PBXBuildFile; fileRef = 689BC5FB19C79E2700A8B6E2 /* FRBInstructionColouriser.h */; };
 		689BC5FE19C79E2700A8B6E2 /* FRBInstructionColouriser.m in Sources */ = {isa = PBXBuildFile; fileRef = 689BC5FC19C79E2700A8B6E2 /* FRBInstructionColouriser.m */; };
 /* End PBXBuildFile section */
@@ -23,7 +22,6 @@
 		685736831985708600D790A9 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		685736A51985715E00D790A9 /* FRBCPUSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRBCPUSupport.h; sourceTree = "<group>"; };
 		685736A61985715E00D790A9 /* FRBCPUSupport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRBCPUSupport.m; sourceTree = "<group>"; };
-		685736AB198573CF00D790A9 /* FRB65xxCommon-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "FRB65xxCommon-Prefix.pch"; sourceTree = "<group>"; };
 		689BC5FB19C79E2700A8B6E2 /* FRBInstructionColouriser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRBInstructionColouriser.h; sourceTree = "<group>"; };
 		689BC5FC19C79E2700A8B6E2 /* FRBInstructionColouriser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRBInstructionColouriser.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -79,21 +77,12 @@
 		685736841985708600D790A9 /* 65xxCommon */ = {
 			isa = PBXGroup;
 			children = (
-				685736851985708600D790A9 /* Supporting Files */,
 				685736A51985715E00D790A9 /* FRBCPUSupport.h */,
 				685736A61985715E00D790A9 /* FRBCPUSupport.m */,
 				689BC5FB19C79E2700A8B6E2 /* FRBInstructionColouriser.h */,
 				689BC5FC19C79E2700A8B6E2 /* FRBInstructionColouriser.m */,
 			);
 			path = 65xxCommon;
-			sourceTree = "<group>";
-		};
-		685736851985708600D790A9 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				685736AB198573CF00D790A9 /* FRB65xxCommon-Prefix.pch */,
-			);
-			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -103,7 +92,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				685736AC198573CF00D790A9 /* FRB65xxCommon-Prefix.pch in Headers */,
 				685736A71985715E00D790A9 /* FRBCPUSupport.h in Headers */,
 				689BC5FD19C79E2700A8B6E2 /* FRBInstructionColouriser.h in Headers */,
 			);
@@ -254,8 +242,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "65xxCommon/FRB65xxCommon-Prefix.pch";
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -264,8 +251,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "65xxCommon/FRB65xxCommon-Prefix.pch";
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

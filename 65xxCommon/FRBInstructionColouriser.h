@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2014, Alessandro Gatti - frob.it
+ Copyright (c) 2014-2015, Alessandro Gatti - frob.it
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -25,29 +25,33 @@
  */
 
 #import <Foundation/Foundation.h>
+#import <Hopper/Hopper.h>
 
 /*!
- *  The instruction colouriser shared amongst all 65xx plugins.
+ * The instruction colouriser shared amongst all 65xx plugins.
  */
 @interface ItFrobHopper65xxCommonInstructionColouriser : NSObject
 
 /*!
- *	Initialises an instance of the instruction colouriser with the given data.
+ * Initialises an instance of the instruction colouriser with the given
+ * data.
  *
- *	@param validOpcodes a list of valid opcodes for the CPU in use.
- *	@param services     a reference to HPHopperService to fetch theme colours.
+ * @param validOpcodes a list of valid opcodes for the CPU in use.
+ * @param services     a reference to HPHopperService to fetch theme
+ *                     colours.
  *
- *	@return an initialised instance of the instruction colouriser.
+ * @return an initialised instance of the instruction colouriser.
  */
 - (instancetype)initWithOpcodesSet:(const NSSet *)validOpcodes
                        andServices:(id<HPHopperServices>)services;
 
 /*!
- *	Colourises the given string.
+ * Colourises the given string.
  *
- *	@param source an attributed string containing the text to colourise.
+ * @param source an attributed string containing the text to colourise.
  *
- *	@return the colourised string, or the original string in case of problems.
+ * @return the colourised string, or the original string in case of
+ *         problems.
  */
 - (NSAttributedString *)colouriseInstruction:(NSAttributedString *)source;
 
