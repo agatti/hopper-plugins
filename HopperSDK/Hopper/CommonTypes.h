@@ -13,6 +13,7 @@
 #ifndef _HOPPER_COMMONTYPES_H_
 #define _HOPPER_COMMONTYPES_H_
 
+
 // Addresses
 
 typedef uint64_t Address;
@@ -29,15 +30,25 @@ typedef uint32_t Color;
 #define NO_COLOR 0
 
 #if defined(__OBJC__)
-#define HP_BEGIN_DECL_ENUM(BASE,TYPE) typedef NS_ENUM(BASE,TYPE)
-#define HP_END_DECL_ENUM(TYPE)
-#define HP_BEGIN_DECL_OPTIONS(BASE,TYPE) typedef NS_OPTIONS(BASE,TYPE)
-#define HP_END_DECL_OPTIONS(TYPE)
+# if defined(NS_ENUM)
+#  define HP_BEGIN_DECL_ENUM(BASE,TYPE) typedef NS_ENUM(BASE,TYPE)
+#  define HP_END_DECL_ENUM(TYPE)
+# else
+#  define HP_BEGIN_DECL_ENUM(BASE,TYPE) typedef enum TYPE : BASE TYPE; enum TYPE : BASE
+#  define HP_END_DECL_ENUM(TYPE)
+# endif
+# if defined(NS_OPTIONS)
+#  define HP_BEGIN_DECL_OPTIONS(BASE,TYPE) typedef NS_OPTIONS(BASE,TYPE)
+#  define HP_END_DECL_OPTIONS(TYPE)
+# else
+#  define HP_BEGIN_DECL_OPTIONS(BASE,TYPE) typedef enum TYPE : BASE TYPE; enum TYPE : BASE
+#  define HP_END_DECL_OPTIONS(TYPE)
+# endif
 #else
-#define HP_BEGIN_DECL_ENUM(BASE,TYPE) typedef enum
-#define HP_END_DECL_ENUM(TYPE) TYPE
-#define HP_BEGIN_DECL_OPTIONS(BASE,TYPE) typedef enum
-#define HP_END_DECL_OPTIONS(TYPE) TYPE
+#  define HP_BEGIN_DECL_ENUM(BASE,TYPE) typedef enum
+#  define HP_END_DECL_ENUM(TYPE) TYPE
+#  define HP_BEGIN_DECL_OPTIONS(BASE,TYPE) typedef enum
+#  define HP_END_DECL_OPTIONS(TYPE) TYPE
 #endif
 
 HP_BEGIN_DECL_ENUM(uint8_t, ByteType) {
@@ -297,7 +308,8 @@ HP_BEGIN_DECL_ENUM(NSUInteger, LOCKind) {
     LOC_Address,
     LOC_Checkbox,
     LOC_CPU,
-    LOC_StringList
+    LOC_StringList,
+    LOC_ComboxBox
 }
 HP_END_DECL_ENUM(LOCKind);
 

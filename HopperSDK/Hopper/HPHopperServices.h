@@ -53,5 +53,7 @@
 - (NSObject<HPLoaderOptionComponents> *)cpuComponentWithLabel:(NSString *)label;
 - (NSObject<HPLoaderOptionComponents> *)addressComponentWithLabel:(NSString *)label andValue:(Address)value;
 - (NSObject<HPLoaderOptionComponents> *)checkboxComponentWithLabel:(NSString *)label checked:(BOOL)checked;
+- (NSObject<HPLoaderOptionComponents> *)stringListComponentWithLabel:(NSString *)label andList:(NSArray *)strings;
+- (NSObject<HPLoaderOptionComponents> *)comboBoxComponentWithLabel:(NSString *)label andList:(NSArray *)strings;
 
 @end
