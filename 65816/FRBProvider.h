@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2014, Alessandro Gatti - frob.it
+ Copyright (c) 2014-2015, Alessandro Gatti - frob.it
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -29,7 +29,7 @@
 #import "FRBBase.h"
 
 /*!
- *	Protocol for CPU providers.
+ * Protocol for CPU providers.
  */
 @protocol FRBProvider <NSObject>
 
@@ -39,31 +39,31 @@
 @property (strong, nonatomic, readonly) NSString *name;
 
 /*!
- *	Looks up the opcode mapped to the tiven byte.
+ * Looks up the opcode mapped to the tiven byte.
  *
- *	@param byte the byte to get an opcode for.
+ * @param byte the byte to get an opcode for.
  *
- *	@return the mapped opcode structure.
+ * @return the mapped opcode structure.
  */
 - (const struct FRBOpcode *)opcodeForByte:(uint8_t)byte;
 
 /*!
- *	Performs some additional or alternative processing of the given opcode.
+ * Performs some additional or alternative processing of the given opcode.
  *
- *	@param opcode the opcode to process.
- *	@param disasm the instruction details.
+ * @param opcode the opcode to process.
+ * @param disasm the instruction details.
  *
- *	@return YES if no more processing must be performed, NO otherwise.
+ * @return YES if no more processing must be performed, NO otherwise.
  */
 - (BOOL)processOpcode:(const struct FRBOpcode *)opcode
             forDisasm:(DisasmStruct *)disasm;
 
 /*!
- *	Checks if the given opcode halts execution flow or not.
+ * Checks if the given opcode halts execution flow or not.
  *
- *	@param opcode the opcode to check.
+ * @param opcode the opcode to check.
  *
- *	@return YES if the opcode halts the execution flow, NO otherwise.
+ * @return YES if the opcode halts the execution flow, NO otherwise.
  */
 - (BOOL)haltsExecutionFlow:(const struct FRBOpcode *)opcode;
 

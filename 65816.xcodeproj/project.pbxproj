@@ -23,9 +23,8 @@
 		68259B2D19B738E00060713A /* libHopperCommon.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libHopperCommon.a; path = "../../Library/Developer/Xcode/DerivedData/HopperPlugins-fzslwhyufvevicghqykcwcprlbow/Build/Products/Debug/libHopperCommon.a"; sourceTree = "<group>"; };
 		684A723F198568DC00955AF5 /* 65816.hopperCPU */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = 65816.hopperCPU; sourceTree = BUILT_PRODUCTS_DIR; };
 		684A7242198568DC00955AF5 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
-		684A7246198568DC00955AF5 /* FRB65816-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "FRB65816-Info.plist"; sourceTree = "<group>"; };
+		684A7246198568DC00955AF5 /* 65816-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "65816-Info.plist"; sourceTree = "<group>"; };
 		684A7248198568DC00955AF5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		684A724A198568DC00955AF5 /* FRB65816-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "FRB65816-Prefix.pch"; sourceTree = "<group>"; };
 		684A72501985692100955AF5 /* FRBBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRBBase.h; sourceTree = "<group>"; };
 		684A72511985692100955AF5 /* FRBContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRBContext.h; sourceTree = "<group>"; };
 		684A72521985692100955AF5 /* FRBContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRBContext.m; sourceTree = "<group>"; };
@@ -110,9 +109,8 @@
 			isa = PBXGroup;
 			children = (
 				684A726A1985692100955AF5 /* models.plist */,
-				684A7246198568DC00955AF5 /* FRB65816-Info.plist */,
+				684A7246198568DC00955AF5 /* 65816-Info.plist */,
 				684A7247198568DC00955AF5 /* InfoPlist.strings */,
-				684A724A198568DC00955AF5 /* FRB65816-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -289,9 +287,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "65816/FRB65816-Prefix.pch";
-				INFOPLIST_FILE = "65816/FRB65816-Info.plist";
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				INFOPLIST_FILE = "65816/65816-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -307,9 +304,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "65816/FRB65816-Prefix.pch";
-				INFOPLIST_FILE = "65816/FRB65816-Info.plist";
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				INFOPLIST_FILE = "65816/65816-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",

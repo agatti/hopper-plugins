@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2014, Alessandro Gatti - frob.it
+ Copyright (c) 2014-2015, Alessandro Gatti - frob.it
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -57,7 +57,7 @@ static const ItFrobHopper65816ModelHandler *kModelHandler;
 - (NSString *)formatInstruction:(DisasmStruct *)source;
 - (void)setMemoryFlags:(DisasmStruct *)disasm
         forInstruction:(const struct FRBInstruction *)instruction;
-- (NSString *)format:(FRBAddressMode)addressMode
+- (NSString *)format:(Mode)addressMode
               opcode:(const char *)opcode
             operands:(NSArray *)operands;
 - (void)updateShifts:(DisasmStruct *)disasm
@@ -78,30 +78,30 @@ static const ItFrobHopper65816ModelHandler *kModelHandler;
         static dispatch_once_t onceToken;
         dispatch_once(&onceToken, ^{
             kOpcodeFormats = [NSArray arrayWithObjects:
-                              @"%s    %@",       // FRBAddressModeAbsolute
-                              @"%s    %@,X",     // FRBAddressModeAbsoluteIndexedX
-                              @"%s    %@,Y",     // FRBAddressModeAbsoluteIndexedY
-                              @"%s    %@",       // FRBAddressModeAbsoluteLong
-                              @"%s    %@,X",     // FRBAddressModeAbsoluteLongIndexed
-                              @"%s    #%@",      // FRBAddressModeImmediate
-                              @"%s    A",        // FRBAddressModeAccumulator
-                              @"%s",             // FRBAddressModeImplied
-                              @"%s",             // FRBAddressModeStack
-                              @"%s    (%@)",     // FRBAddressModeAbsoluteIndirect
-                              @"%s    %@",       // FRBAddressModeProgramCounterRelative
-                              @"%s    %@",       // FRBAddressModeProgramCounterRelativeLong
-                              @"%s    %@",       // FRBAddressModeDirect
-                              @"%s    %@,X",     // FRBAddressModeDirectIndexedX
-                              @"%s    %@,Y",     // FRBAddressModeDirectIndexedY
-                              @"%s    (%@,X)",   // FRBAddressModeDirectIndexedIndirect
-                              @"%s    (%@,Y)",   // FRBAddressModeDirectIndirectIndexedY
-                              @"%s    (%@)",     // FRBAddressModeDirectIndirect
-                              @"%s    [%@]",     // FRBAddressModeDirectIndirectLong
-                              @"%s    [%@],Y",   // FRBAddressModeDirectIndirectLongIndexed
-                              @"%s    (%@,X)",   // FRBAddressModeAbsoluteIndexedIndirect
-                              @"%s    %@,S",     // FRBAddressModeStackRelative
-                              @"%s    (%@,S),Y", // FRBAddressModeStackRelativeIndirectIndexed
-                              @"%s    %@,%@",    // FRBAddressModeBlockMove
+                              @"%s    %@",       // ModeAbsolute
+                              @"%s    %@,X",     // ModeAbsoluteIndexedX
+                              @"%s    %@,Y",     // ModeAbsoluteIndexedY
+                              @"%s    %@",       // ModeAbsoluteLong
+                              @"%s    %@,X",     // ModeAbsoluteLongIndexed
+                              @"%s    #%@",      // ModeImmediate
+                              @"%s    A",        // ModeAccumulator
+                              @"%s",             // ModeImplied
+                              @"%s",             // ModeStack
+                              @"%s    (%@)",     // ModeAbsoluteIndirect
+                              @"%s    %@",       // ModeProgramCounterRelative
+                              @"%s    %@",       // ModeProgramCounterRelativeLong
+                              @"%s    %@",       // ModeDirect
+                              @"%s    %@,X",     // ModeDirectIndexedX
+                              @"%s    %@,Y",     // ModeDirectIndexedY
+                              @"%s    (%@,X)",   // ModeDirectIndexedIndirect
+                              @"%s    (%@,Y)",   // ModeDirectIndirectIndexedY
+                              @"%s    (%@)",     // ModeDirectIndirect
+                              @"%s    [%@]",     // ModeDirectIndirectLong
+                              @"%s    [%@],Y",   // ModeDirectIndirectLongIndexed
+                              @"%s    (%@,X)",   // ModeAbsoluteIndexedIndirect
+                              @"%s    %@,S",     // ModeStackRelative
+                              @"%s    (%@,S),Y", // ModeStackRelativeIndirectIndexed
+                              @"%s    %@,%@",    // ModeBlockMove
                               nil
                               ];
             kModelHandler = [ItFrobHopper65816ModelHandler sharedModelHandler];
@@ -131,7 +131,7 @@ static const ItFrobHopper65816ModelHandler *kModelHandler;
     const struct FRBOpcode *opcode = [_provider opcodeForByte:opcodeByte];
     struct FRBInstruction instruction = FRBInstructions[opcode->type];
     disasm->instruction.userData = opcodeByte;
-    if (opcode->addressMode == FRBAddressModeUnknown) {
+    if (opcode->addressMode == ModeUnknown) {
         return DISASM_UNKNOWN_OPCODE;
     }
 
@@ -140,33 +140,33 @@ static const ItFrobHopper65816ModelHandler *kModelHandler;
     strcpy(disasm->instruction.mnemonic, instruction.name);
     strcpy(disasm->instruction.unconditionalMnemonic, instruction.name);
 
-    if (instruction.category == FRBOpcodeCategoryStatusFlagChanges) {
+    if (instruction.category == CategoryStatusFlagChanges) {
         switch (opcode->type) {
-            case FRBOpcodeTypeCLC:
+            case OpcodeCLC:
                 disasm->instruction.eflags.CF_flag = DISASM_EFLAGS_RESET;
                 break;
 
-            case FRBOpcodeTypeCLD:
+            case OpcodeCLD:
                 disasm->instruction.eflags.DF_flag = DISASM_EFLAGS_RESET;
                 break;
 
-            case FRBOpcodeTypeCLI:
+            case OpcodeCLI:
                 disasm->instruction.eflags.IF_flag = DISASM_EFLAGS_RESET;
                 break;
 
-            case FRBOpcodeTypeCLV:
+            case OpcodeCLV:
                 disasm->instruction.eflags.OF_flag = DISASM_EFLAGS_RESET;
                 break;
 
-            case FRBOpcodeTypeSEC:
+            case OpcodeSEC:
                 disasm->instruction.eflags.CF_flag = DISASM_EFLAGS_SET;
                 break;
 
-            case FRBOpcodeTypeSED:
+            case OpcodeSED:
                 disasm->instruction.eflags.DF_flag = DISASM_EFLAGS_SET;
                 break;
 
-            case FRBOpcodeTypeSEI:
+            case OpcodeSEI:
                 disasm->instruction.eflags.IF_flag = DISASM_EFLAGS_SET;
                 break;
 
@@ -174,7 +174,7 @@ static const ItFrobHopper65816ModelHandler *kModelHandler;
                 break;
         }
     } else {
-        if (opcode->type == FRBOpcodeTypeCOP) {
+        if (opcode->type == OpcodeCOP) {
             disasm->instruction.eflags.DF_flag = DISASM_EFLAGS_RESET;
         }
     }
@@ -213,27 +213,25 @@ static const ItFrobHopper65816ModelHandler *kModelHandler;
            forOpcode:(const struct FRBOpcode *)opcode {
 
     switch (opcode->type) {
-        case FRBOpcodeTypeASL:
+        case OpcodeASL:
             disasm->operand[0].shiftMode = DISASM_SHIFT_LSL;
             disasm->operand[0].shiftAmount = 1;
             break;
 
-        case FRBOpcodeTypeLSR:
+        case OpcodeLSR:
             disasm->operand[0].shiftMode = DISASM_SHIFT_LSR;
             disasm->operand[0].shiftAmount = 1;
             break;
+            
+        case OpcodeROL:
+            disasm->operand[0].shiftMode = DISASM_SHIFT_ROR;
+            disasm->operand[0].shiftMode = -1;
+            break;
 
-//        case FRBOpcodeTypeROL:
-//            disasm->operand[0].shiftMode = DISASM_SHIFT_ROL;
-//            disasm->operand[0].shiftAmount = 1;
-//            break;
-
-        case FRBOpcodeTypeROR:
+        case OpcodeROR:
             disasm->operand[0].shiftMode = DISASM_SHIFT_ROR;
             disasm->operand[0].shiftAmount = 1;
             break;
-
-    
 
         default:
             break;
@@ -244,12 +242,12 @@ static const ItFrobHopper65816ModelHandler *kModelHandler;
                     forDisasm:(DisasmStruct *)disasm {
 
     switch (opcode->addressMode) {
-        case FRBAddressModeAbsolute:
-        case FRBAddressModeAbsoluteIndirect:
+        case ModeAbsolute:
+        case ModeAbsoluteIndirect:
             SetAddressOperand(_file, disasm, 0, 16, 24, 1, 0);
             break;
 
-        case FRBAddressModeProgramCounterRelativeLong: {
+        case ModeProgramCounterRelativeLong: {
             Address address = SignedValue(@([_file readUInt16AtVirtualAddress:disasm->virtualAddr + 1]), 16);
             address += disasm->instruction.pcRegisterValue + disasm->instruction.length;
 
@@ -266,50 +264,50 @@ static const ItFrobHopper65816ModelHandler *kModelHandler;
             break;
         }
 
-        case FRBAddressModeAbsoluteLong:
-        case FRBAddressModeAbsoluteLongIndexed:
+        case ModeAbsoluteLong:
+        case ModeAbsoluteLongIndexed:
             SetAddressOperand(_file, disasm, 0, 24, 24, 1, 0);
             break;
 
-        case FRBAddressModeAbsoluteIndexedX:
-            SetAddressOperand(_file, disasm, 0, 16, 24, 1, FRBRegisterX);
+        case ModeAbsoluteIndexedX:
+            SetAddressOperand(_file, disasm, 0, 16, 24, 1, RegisterX);
             break;
 
-        case FRBAddressModeAbsoluteIndexedY:
-            SetAddressOperand(_file, disasm, 0, 16, 24, 1, FRBRegisterY);
+        case ModeAbsoluteIndexedY:
+            SetAddressOperand(_file, disasm, 0, 16, 24, 1, RegisterY);
             break;
 
-        case FRBAddressModeImmediate:
+        case ModeImmediate:
             SetConstantOperand(_file, disasm, 0, 8, 1);
             break;
 
-        case FRBAddressModeDirectIndexedX:
-        case FRBAddressModeDirectIndexedIndirect:
-            SetAddressOperand(_file, disasm, 0, 8, 24, 1, FRBRegisterX);
+        case ModeDirectIndexedX:
+        case ModeDirectIndexedIndirect:
+            SetAddressOperand(_file, disasm, 0, 8, 24, 1, RegisterX);
             break;
 
-        case FRBAddressModeDirect:
-        case FRBAddressModeDirectIndirect:
-        case FRBAddressModeStackRelative:
-        case FRBAddressModeStackRelativeIndirectIndexed:
-        case FRBAddressModeDirectIndirectLong:
-        case FRBAddressModeDirectIndirectLongIndexed:
+        case ModeDirect:
+        case ModeDirectIndirect:
+        case ModeStackRelative:
+        case ModeStackRelativeIndirectIndexed:
+        case ModeDirectIndirectLong:
+        case ModeDirectIndirectLongIndexed:
             SetAddressOperand(_file, disasm, 0, 8, 24, 1, 0);
             break;
 
-        case FRBAddressModeDirectIndexedY:
-        case FRBAddressModeDirectIndirectIndexedY:
-            SetAddressOperand(_file, disasm, 0, 8, 24, 1, FRBRegisterY);
+        case ModeDirectIndexedY:
+        case ModeDirectIndirectIndexedY:
+            SetAddressOperand(_file, disasm, 0, 8, 24, 1, RegisterY);
             break;
 
-        case FRBAddressModeBlockMove:
+        case ModeBlockMove:
             SetConstantOperand(_file, disasm, 0, 8, 1);
             SetConstantOperand(_file, disasm, 1, 8, 1 + sizeof(uint8_t));
             break;
 
-        case FRBAddressModeAccumulator:
-        case FRBAddressModeImplied:
-        case FRBAddressModeStack:
+        case ModeAccumulator:
+        case ModeImplied:
+        case ModeStack:
             break;
 
         default:
@@ -322,11 +320,11 @@ static const ItFrobHopper65816ModelHandler *kModelHandler;
     const struct FRBInstruction instruction = FRBInstructions[opcode->type];
 
     switch (opcode->addressMode) {
-        case FRBAddressModeImmediate:
-        case FRBAddressModeProgramCounterRelative:
-        case FRBAddressModeAccumulator:
-        case FRBAddressModeImplied:
-        case FRBAddressModeStack:
+        case ModeImmediate:
+        case ModeProgramCounterRelative:
+        case ModeAccumulator:
+        case ModeImplied:
+        case ModeStack:
             break;
 
         default: {
@@ -339,31 +337,29 @@ static const ItFrobHopper65816ModelHandler *kModelHandler;
 
 - (void)handleBranchOpcode:(const struct FRBOpcode *)opcode
                  forDisasm:(DisasmStruct *)disasm {
-    //uint16_t operand = 0;
-
     switch (opcode->addressMode) {
 
-        case FRBAddressModeAbsoluteLong:
+        case ModeAbsoluteLong:
             disasm->instruction.addressValue = SetAddressOperand(_file, disasm, 0, 24, 24, 1, 0);
             break;
 
-        case FRBAddressModeDirectIndirect:
+        case ModeDirectIndirect:
             disasm->instruction.addressValue = SetAddressOperand(_file, disasm, 0, 8, 24, 1, 0);
             break;
 
-        case FRBAddressModeAbsolute:
-        case FRBAddressModeAbsoluteIndirect:
-        case FRBAddressModeAbsoluteIndexedIndirect:
+        case ModeAbsolute:
+        case ModeAbsoluteIndirect:
+        case ModeAbsoluteIndexedIndirect:
             disasm->instruction.addressValue = SetAddressOperand(_file, disasm, 0, 16, 24, 1, 0);
             break;
 
-        case FRBAddressModeProgramCounterRelative:
+        case ModeProgramCounterRelative:
             disasm->instruction.addressValue = SetRelativeAddressOperand(_file, disasm, 0, 8, 24, 1);
             break;
 
-        case FRBAddressModeProgramCounterRelativeLong: {
-            Address address = SignedValue(@([_file readUInt16AtVirtualAddress:disasm->virtualAddr + 1]), 16);
-            address += disasm->instruction.pcRegisterValue + disasm->instruction.length;
+        case ModeProgramCounterRelativeLong: {
+            Address address = SignedValue(@([_file readUInt16AtVirtualAddress:disasm->virtualAddr + 1]), 16) +
+                disasm->instruction.pcRegisterValue + disasm->instruction.length;
 
             disasm->operand[0].memory.baseRegister = 0;
             disasm->operand[0].memory.indexRegister = 0;
@@ -378,8 +374,8 @@ static const ItFrobHopper65816ModelHandler *kModelHandler;
             break;
         }
 
-        case FRBAddressModeImplied:
-        case FRBAddressModeStack:
+        case ModeImplied:
+        case ModeStack:
             break;
 
         default:
@@ -421,70 +417,70 @@ static const ItFrobHopper65816ModelHandler *kModelHandler;
         forInstruction:(const struct FRBInstruction *)instruction {
 
     switch (instruction->category) {
-        case FRBOpcodeCategoryLoad:
-        case FRBOpcodeCategoryComparison:
-        case FRBOpcodeCategoryLogical:
-        case FRBOpcodeCategoryArithmetic:
+        case CategoryLoad:
+        case CategoryComparison:
+        case CategoryLogical:
+        case CategoryArithmetic:
             disasm->operand[0].accessMode = DISASM_ACCESS_READ;
             break;
 
-        case FRBOpcodeCategoryStore:
-        case FRBOpcodeCategoryIncrementDecrement:
-        case FRBOpcodeCategoryShifts:
+        case CategoryStore:
+        case CategoryIncrementDecrement:
+        case CategoryShifts:
             disasm->operand[0].accessMode = DISASM_ACCESS_WRITE;
             break;
 
-        case FRBOpcodeCategoryBlockTransfer:
-        case FRBOpcodeCategoryJumps:
-        case FRBOpcodeCategoryStack:
-        case FRBOpcodeCategorySystem:
-        case FRBOpcodeCategoryBranches:
-        case FRBOpcodeCategoryRegisterTransfers:
-        case FRBOpcodeCategoryStatusFlagChanges:
-        case FRBOpcodeCategoryUnknown:
+        case CategoryBlockTransfer:
+        case CategoryJumps:
+        case CategoryStack:
+        case CategorySystem:
+        case CategoryBranches:
+        case CategoryRegisterTransfers:
+        case CategoryStatusFlagChanges:
+        case CategoryUnknown:
             break;
     }
 }
 
-- (NSString *)format:(FRBAddressMode)addressMode
+- (NSString *)format:(Mode)addressMode
               opcode:(const char *)opcode
             operands:(NSArray *)operands {
 
     NSString *format = kOpcodeFormats[addressMode];
 
     switch (addressMode) {
-        case FRBAddressModeAbsolute:
-        case FRBAddressModeAbsoluteIndexedX:
-        case FRBAddressModeAbsoluteLongIndexed:
-        case FRBAddressModeAbsoluteLong:
-        case FRBAddressModeAbsoluteIndexedY:
-        case FRBAddressModeImmediate:
-        case FRBAddressModeDirect:
-        case FRBAddressModeDirectIndirectLong:
-        case FRBAddressModeDirectIndexedIndirect:
-        case FRBAddressModeAbsoluteIndirect:
-        case FRBAddressModeStackRelative:
-        case FRBAddressModeProgramCounterRelative:
-        case FRBAddressModeProgramCounterRelativeLong:
-        case FRBAddressModeDirectIndexedX:
-        case FRBAddressModeDirectIndexedY:
-        case FRBAddressModeDirectIndirectIndexedY:
-        case FRBAddressModeDirectIndirect:
-        case FRBAddressModeDirectIndirectLongIndexed:
-        case FRBAddressModeStackRelativeIndirectIndexed:
-        case FRBAddressModeAbsoluteIndexedIndirect:
+        case ModeAbsolute:
+        case ModeAbsoluteIndexedX:
+        case ModeAbsoluteLongIndexed:
+        case ModeAbsoluteLong:
+        case ModeAbsoluteIndexedY:
+        case ModeImmediate:
+        case ModeDirect:
+        case ModeDirectIndirectLong:
+        case ModeDirectIndexedIndirect:
+        case ModeAbsoluteIndirect:
+        case ModeStackRelative:
+        case ModeProgramCounterRelative:
+        case ModeProgramCounterRelativeLong:
+        case ModeDirectIndexedX:
+        case ModeDirectIndexedY:
+        case ModeDirectIndirectIndexedY:
+        case ModeDirectIndirect:
+        case ModeDirectIndirectLongIndexed:
+        case ModeStackRelativeIndirectIndexed:
+        case ModeAbsoluteIndexedIndirect:
             return [NSString stringWithFormat:format, opcode, operands[0]];
 
-        case FRBAddressModeAccumulator:
-        case FRBAddressModeImplied:
-        case FRBAddressModeStack:
+        case ModeAccumulator:
+        case ModeImplied:
+        case ModeStack:
             return [NSString stringWithFormat:format, opcode];
 
-        case FRBAddressModeBlockMove:
+        case ModeBlockMove:
             return [NSString stringWithFormat:format, opcode, operands[0],
                     operands[1]];
 
-        case FRBAddressModeUnknown:
+        case ModeUnknown:
         default:
             return nil;
     }

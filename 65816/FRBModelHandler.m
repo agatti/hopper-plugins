@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2014, Alessandro Gatti - frob.it
+ Copyright (c) 2014-2015, Alessandro Gatti - frob.it
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -118,7 +118,7 @@ static NSString * const kPluginBundleName = @"it.frob.hopper.-5816"; // :(
         return nil;
     }
 
-    return [[providerClass alloc] init];
+    return [providerClass new];
 }
 
 @end

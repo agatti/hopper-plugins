@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2014, Alessandro Gatti - frob.it
+ Copyright (c) 2014-2015, Alessandro Gatti - frob.it
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -39,19 +39,19 @@
 #import "NSDataHopperAdditions.h"
 
 /*!
- *	Backend model handler.
+ * Backend model handler.
  */
 static ItFrobHopper65816ModelHandler *kModelHandler;
 
 @interface ItFrobHopper65816Definition () {
 
     /*!
-     *  Hopper Services instance.
+     * Hopper Services instance.
      */
     id<HPHopperServices> _services;
 
     /*!
-     *	Instruction string colouriser.
+     * Instruction string colouriser.
      */
     ItFrobHopper65xxCommonInstructionColouriser *_colouriser;
 }
@@ -203,7 +203,7 @@ static ItFrobHopper65816ModelHandler *kModelHandler;
 
 - (BOOL)registerIndexIsStackPointer:(uint32_t)reg
                             ofClass:(RegClass)reg_class {
-    return reg == FRBRegisterS && reg_class == RegClass_GeneralPurposeRegister;
+    return reg == RegisterS && reg_class == RegClass_GeneralPurposeRegister;
 }
 
 - (BOOL)registerIndexIsFrameBasePointer:(uint32_t)reg
