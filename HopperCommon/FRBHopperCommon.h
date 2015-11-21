@@ -27,6 +27,8 @@
 #import <Foundation/Foundation.h>
 #import <Hopper/Hopper.h>
 
+#define NAMESPACE(entity) ItFrobHopper ## entity
+
 static NSString *FRBHopperExceptionName = @"it.frob.hopper.internalexception";
 
 /*!
