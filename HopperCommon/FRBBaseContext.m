@@ -82,6 +82,10 @@
                                  atEntryPoint:(Address)entryPoint {
 }
 
+- (void)procedureAnalysisOfEpilogForProcedure:(NSObject<HPProcedure> *)procedure
+                                 atEntryPoint:(Address)entryPoint {
+}
+
 - (void)procedureAnalysisEndedForProcedure:(id<HPProcedure>)procedure
                               atEntryPoint:(Address)entryPoint {
 }
@@ -141,12 +145,6 @@
 - (void)updateProcedureAnalysis:(DisasmStruct *)disasm {
 }
 
-- (NSString *)defaultFormattedVariableNameForDisplacement:(int64_t)displacement
-                                              inProcedure:
-                                                  (id<HPProcedure>)procedure {
-  return [NSString stringWithFormat:@"var%lld", displacement];
-}
-
 - (void)buildInstructionString:(DisasmStruct *)disasm
                     forSegment:(id<HPSegment>)segment
                 populatingInfo:
@@ -186,21 +184,6 @@
                 usingSyntaxVariant:(NSUInteger)syntax
                              error:(NSError **)error {
   return nil;
-}
-
-- (BOOL)displacementIsAnArgument:(int64_t)displacement
-                    forProcedure:(id<HPProcedure>)procedure {
-  return NO;
-}
-
-- (NSUInteger)stackArgumentSlotForDisplacement:(int64_t)displacement
-                                   inProcedure:(id<HPProcedure>)procedure {
-  return -1;
-}
-
-- (int64_t)displacementForStackSlotIndex:(NSUInteger)slot
-                             inProcedure:(id<HPProcedure>)procedure {
-  return 0;
 }
 
 - (BOOL)instructionMayBeASwitchStatement:(DisasmStruct *)disasmStruct {

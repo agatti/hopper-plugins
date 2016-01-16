@@ -10,14 +10,18 @@
 // PARTICULAR PURPOSE.
 //
 
-@protocol HPBasicBlock;
 @protocol HPTag;
+@protocol HPBasicBlock;
+@protocol HPSegment;
 @protocol CPUContext;
 
 @protocol HPProcedure
 
 - (BOOL)bpBasedFrame;
-- (int32_t)stackOffset;
+- (int32_t)savedRegistersSize;
+- (int32_t)framePointerOffset;
+- (int32_t)purgedBytes;
+- (int32_t)localsSize;
 
 - (NSUInteger)basicBlockCount;
 - (NSObject<HPBasicBlock> *)firstBasicBlock;
@@ -25,7 +29,13 @@
 - (NSObject<HPBasicBlock> *)basicBlockContainingInstructionAt:(Address)address;
 - (NSObject<HPBasicBlock> *)basicBlockAtIndex:(NSUInteger)index;
 
+- (NSObject<HPSegment> *)segment;
+
 - (Address)entryPoint;
+- (NSArray *)allExitBlocks; // Array of BasicBlock
+
+// Stack
+- (int16_t)stackPointerOffsetAt:(Address)address;
 
 // Variables
 - (NSString *)variableNameForDisplacement:(int64_t)disp;

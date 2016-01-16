@@ -70,6 +70,7 @@
 /// Warning: this method is not called at the begining of the procedure creation, but once all basic blocks
 /// have been created.
 - (void)procedureAnalysisOfPrologForProcedure:(NSObject<HPProcedure> *)procedure atEntryPoint:(Address)entryPoint;
+- (void)procedureAnalysisOfEpilogForProcedure:(NSObject<HPProcedure> *)procedure atEntryPoint:(Address)entryPoint;
 - (void)procedureAnalysisEndedForProcedure:(NSObject<HPProcedure> *)procedure atEntryPoint:(Address)entryPoint;
 
 /// A new basic bloc is created
@@ -135,18 +136,6 @@
 // Printing instruction
 //
 ////////////////////////////////////////////////////////////////////////////////
-
-/// The method should return a default name for a local variable at a given displacement on stack.
-- (NSString *)defaultFormattedVariableNameForDisplacement:(int64_t)displacement inProcedure:(NSObject<HPProcedure> *)procedure;
-
-/// Returns YES if the displacement correcponds to an argument of the procedure.
-- (BOOL)displacementIsAnArgument:(int64_t)displacement forProcedure:(NSObject<HPProcedure> *)procedure;
-
-/// If the displacement is an access to a stack argument, returns the slot index.
-- (NSUInteger)stackArgumentSlotForDisplacement:(int64_t)displacement inProcedure:(NSObject<HPProcedure> *)procedure;
-
-/// Return a displacement for a stack slot index
-- (int64_t)displacementForStackSlotIndex:(NSUInteger)slot inProcedure:(NSObject<HPProcedure> *)procedure;
 
 /// Build the complete instruction string in the DisasmStruct structure.
 /// This is the string to be displayed in Hopper.
