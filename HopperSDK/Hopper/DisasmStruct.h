@@ -26,8 +26,8 @@
 #define DISASM_MAX_REG_CLASSES                          16
 
 #define DISASM_OPERAND_REGISTER_INDEX_MASK              0x00000000FFFFFFFFllu
-#define DISASM_OPERAND_TYPE_MASK                        0xFFFFFFE000000000llu
-#define DISASM_OPERAND_REG_CLASS_MASK                   0x0000001F00000000llu
+#define DISASM_OPERAND_TYPE_MASK                        0xFFFF000000000000llu
+#define DISASM_OPERAND_REG_CLASS_MASK                   0x0000FFFF00000000llu
 #define DISASM_OPERAND_TYPE_AND_REG_CLASS_MASK          0xFFFFFFFF00000000llu
 
 // Type
@@ -179,7 +179,9 @@ typedef enum {
     DISASM_INST_COND_GE,
     DISASM_INST_COND_LT,
     DISASM_INST_COND_GT,
-    DISASM_INST_COND_LE
+    DISASM_INST_COND_LE,
+
+    DISASM_INST_COND_NEVER
 } DisasmCondition;
 
 typedef enum {
