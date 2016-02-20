@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2014-2015, Alessandro Gatti - frob.it
+ Copyright (c) 2014-2016, Alessandro Gatti - frob.it
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -27,17 +27,17 @@
 #import "FRBHopperCommon.h"
 
 void InitialiseDisasmStruct(DisasmStruct *disasmStruct) {
-  bzero(disasmStruct->completeInstructionString,
-        sizeof(disasmStruct->completeInstructionString));
-  bzero(&disasmStruct->instruction, sizeof(DisasmInstruction));
+  memset(disasmStruct->completeInstructionString, 0x00,
+         sizeof(disasmStruct->completeInstructionString));
+  memset(&disasmStruct->instruction, 0x00, sizeof(DisasmInstruction));
   for (int index = 0; index < DISASM_MAX_OPERANDS; index++) {
-    bzero(&disasmStruct->operand[index], sizeof(DisasmOperand));
+    memset(&disasmStruct->operand[index], 0x00, sizeof(DisasmOperand));
     disasmStruct->operand[index].type = DISASM_OPERAND_NO_OPERAND;
   }
-  bzero(disasmStruct->implicitlyReadRegisters,
-        sizeof(disasmStruct->implicitlyReadRegisters));
-  bzero(disasmStruct->implicitlyWrittenRegisters,
-        sizeof(disasmStruct->implicitlyWrittenRegisters));
+  memset(disasmStruct->implicitlyReadRegisters, 0x00,
+         sizeof(disasmStruct->implicitlyReadRegisters));
+  memset(disasmStruct->implicitlyWrittenRegisters, 0x00,
+         sizeof(disasmStruct->implicitlyWrittenRegisters));
 }
 
 int64_t SignedValue(NSNumber *value, size_t size) {
