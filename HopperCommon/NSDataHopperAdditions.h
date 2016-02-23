@@ -49,7 +49,8 @@
  * @param filler the filler byte.
  * @param length the length.
  *
- * @return a NSData instance using the given filler.
+ * @return a NSData instance using the given filler or nil if there is no
+ *         memory.
  */
 NSData *NSDataWithFiller(const uint8_t filler, NSUInteger length);
 
@@ -60,6 +61,7 @@ NSData *NSDataWithFiller(const uint8_t filler, NSUInteger length);
  * @param filler the filler byte.
  * @param length the length.
  *
- * @return a NSMutableData instance using the given filler.
+ * @return a NSMutableData instance using the given filler or nil if there is
+ *         no memory.
  */
 NSMutableData *NSMutableDataWithFiller(const uint8_t filler, NSUInteger length);

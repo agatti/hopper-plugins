@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2014-2015, Alessandro Gatti - frob.it
+ Copyright (c) 2014-2016, Alessandro Gatti - frob.it
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -26,15 +26,21 @@
 
 #import "NSDataHopperAdditions.h"
 
+static NSMutableData *newData(const uint8_t filler, NSUInteger length);
+
 NSData *NSDataWithFiller(const uint8_t filler, NSUInteger length) {
-  NSMutableData *data = [[NSMutableData alloc] initWithCapacity:length];
-  memset(data.mutableBytes, filler, length);
-  return data;
+    return newData(filler, length);
 }
 
 NSMutableData *NSMutableDataWithFiller(const uint8_t filler,
                                        NSUInteger length) {
-  NSMutableData *data = [[NSMutableData alloc] initWithCapacity:length];
-  memset(data.mutableBytes, filler, length);
-  return data;
+    return newData(filler, length);
+}
+
+NSMutableData *newData(const uint8_t filler, NSUInteger length) {
+    NSMutableData *data = [[NSMutableData alloc] initWithCapacity:length];
+    if (data) {
+        memset(data.mutableBytes, filler, length);
+    }
+    return data;
 }
