@@ -13,7 +13,7 @@
 		684A726B1985692100955AF5 /* FRBContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 684A72521985692100955AF5 /* FRBContext.m */; };
 		684A726C1985692100955AF5 /* FRBDefinition.m in Sources */ = {isa = PBXBuildFile; fileRef = 684A72541985692100955AF5 /* FRBDefinition.m */; };
 		684A72711985692100955AF5 /* FRBModelHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 684A72611985692100955AF5 /* FRBModelHandler.m */; };
-		684A72731985692100955AF5 /* FRBGeneric65186.m in Sources */ = {isa = PBXBuildFile; fileRef = 684A72671985692100955AF5 /* FRBGeneric65186.m */; };
+		684A72731985692100955AF5 /* FRBGeneric65816.m in Sources */ = {isa = PBXBuildFile; fileRef = 684A72671985692100955AF5 /* FRBGeneric65816.m */; };
 		684A72741985692100955AF5 /* models.plist in Resources */ = {isa = PBXBuildFile; fileRef = 684A726A1985692100955AF5 /* models.plist */; };
 		68AD4F1819A4B3AA00E0EBE2 /* lib65xxCommon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 68AD4F1719A4B3AA00E0EBE2 /* lib65xxCommon.a */; };
 /* End PBXBuildFile section */
@@ -33,7 +33,7 @@
 		684A72601985692100955AF5 /* FRBModelHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRBModelHandler.h; sourceTree = "<group>"; };
 		684A72611985692100955AF5 /* FRBModelHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRBModelHandler.m; sourceTree = "<group>"; };
 		684A72661985692100955AF5 /* FRBGeneric65816.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRBGeneric65816.h; sourceTree = "<group>"; };
-		684A72671985692100955AF5 /* FRBGeneric65186.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRBGeneric65186.m; sourceTree = "<group>"; };
+		684A72671985692100955AF5 /* FRBGeneric65816.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRBGeneric65816.m; sourceTree = "<group>"; };
 		684A726A1985692100955AF5 /* models.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = models.plist; sourceTree = "<group>"; };
 		68AD4F1719A4B3AA00E0EBE2 /* lib65xxCommon.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = lib65xxCommon.a; path = "../../Library/Developer/Xcode/DerivedData/HopperPlugins-fzslwhyufvevicghqykcwcprlbow/Build/Products/Debug/lib65xxCommon.a"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -56,7 +56,7 @@
 			isa = PBXGroup;
 			children = (
 				684A72661985692100955AF5 /* FRBGeneric65816.h */,
-				684A72671985692100955AF5 /* FRBGeneric65186.m */,
+				684A72671985692100955AF5 /* FRBGeneric65816.m */,
 			);
 			name = Chips;
 			sourceTree = "<group>";
@@ -178,7 +178,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				684A72731985692100955AF5 /* FRBGeneric65186.m in Sources */,
+				684A72731985692100955AF5 /* FRBGeneric65816.m in Sources */,
 				684A726B1985692100955AF5 /* FRBContext.m in Sources */,
 				684A72711985692100955AF5 /* FRBModelHandler.m in Sources */,
 				684A726C1985692100955AF5 /* FRBDefinition.m in Sources */,
