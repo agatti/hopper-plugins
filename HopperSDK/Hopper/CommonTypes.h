@@ -296,6 +296,7 @@ HP_END_DECL_ENUM(CallingConvention);
 
 HP_BEGIN_DECL_ENUM(NSUInteger, FileLoaderLoadingStatus) {
     DIS_OK,
+    DIS_InvalidArguments,
     DIS_BadFormat,
     DIS_DebugMismatch,
     DIS_DebugUUIDMismatch,
