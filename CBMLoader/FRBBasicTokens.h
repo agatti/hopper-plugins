@@ -1,5 +1,5 @@
-/*!
- Copyright (c) 2014-2015, Alessandro Gatti
+/*
+ Copyright (c) 2014-2017, Alessandro Gatti
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -24,7 +24,7 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-/*!
+/**
  * BASIC 1.0 tokens lookup table.
  */
 static const char *const Basic10Tokens[256] = {
@@ -61,7 +61,7 @@ static const char *const Basic10Tokens[256] = {
     NULL,     NULL,     NULL,   NULL,   NULL,      NULL,     NULL,     NULL,
     NULL,     NULL,     NULL,   NULL,   NULL,      NULL,     NULL,     "PI"};
 
-/*!
+/**
  * BASIC 2.0 tokens lookup table.
  */
 static const char *const Basic20Tokens[256] = {
@@ -98,7 +98,7 @@ static const char *const Basic20Tokens[256] = {
     NULL,     NULL,     NULL,   NULL,   NULL,      NULL,     NULL,     NULL,
     NULL,     NULL,     NULL,   NULL,   NULL,      NULL,     NULL,     "PI"};
 
-/*!
+/**
  * BASIC 2.0 with Turtle Basic 1.0 extension tokens lookup table.
  */
 static const char *const Basic20TurtleBasic10Tokens[256] = {
@@ -140,7 +140,7 @@ static const char *const Basic20TurtleBasic10Tokens[256] = {
     NULL,      NULL,      NULL,     NULL,     NULL,     NULL,     NULL,
     NULL,      NULL,      NULL,     "PI"};
 
-/*!
+/**
  * BASIC 2.0 with BASIC 4.0 expansion tokens lookup table (C64).
  */
 static const char *const Basic20Basic40C64ExpansionTokens[256] = {
@@ -182,7 +182,7 @@ static const char *const Basic20Basic40C64ExpansionTokens[256] = {
     NULL,      NULL,        NULL,     NULL,      NULL,     NULL,      NULL,
     NULL,      NULL,        NULL,     "PI"};
 
-/*!
+/**
  * BASIC 2.0 with BASIC 4.0 expansion tokens lookup table (VIC-20).
  */
 static const char *const Basic20Basic40VIC20ExpansionTokens[256] = {
@@ -230,7 +230,7 @@ static const char *const Basic20Basic40VIC20ExpansionTokens[256] = {
     NULL,      NULL,      NULL,        NULL,     NULL,     NULL,
     NULL,      NULL,      NULL,        "PI"};
 
-/*!
+/**
  * BASIC 2.0 with BASIC 5.0 expansion tokens lookup table (VIC-20).
  */
 static const char *const Basic20Basic50ExpansionTokens[256] = {
@@ -278,7 +278,7 @@ static const char *const Basic20Basic50ExpansionTokens[256] = {
     NULL,     NULL,       NULL,        NULL,      NULL,      NULL,
     NULL,     NULL,       NULL,        "PI"};
 
-/*!
+/**
  * BASIC 2.0 with Speech Basic 2.7 extension tokens lookup table.
  */
 static const char *const Basic20SpeechBasic27Tokens[256] = {
@@ -320,7 +320,7 @@ static const char *const Basic20SpeechBasic27Tokens[256] = {
     NULL,      NULL,     NULL,     NULL,     NULL,     NULL,     NULL,
     NULL,      NULL,     NULL,     "PI"};
 
-/*!
+/**
  * BASIC 2.0 with @Basic extension tokens lookup table.
  */
 static const char *const Basic20AtbasicTokens[256] = {
@@ -368,7 +368,7 @@ static const char *const Basic20AtbasicTokens[256] = {
     "ALARM",    NULL,      NULL,      NULL,      NULL,        NULL,
     NULL,       NULL,      NULL,      "PI"};
 
-/*!
+/**
  * BASIC 2.0 with Final Cartdrige 3 extension tokens lookup table.
  */
 static const char *const Basic20FC3Tokens[256] = {
@@ -410,7 +410,7 @@ static const char *const Basic20FC3Tokens[256] = {
     NULL,      NULL,     NULL,      NULL,      NULL,     NULL,      NULL,
     NULL,      NULL,     NULL,      "PI"};
 
-/*!
+/**
  * BASIC 2.0 with Ultrabasic-64 extension tokens lookup table.
  */
 static const char *const Basic20Ultrabasic64Tokens[256] = {
@@ -452,7 +452,7 @@ static const char *const Basic20Ultrabasic64Tokens[256] = {
     "MOVE",    "BYE",    "ROTATE", "TPOS",  "CTR",   "SCTR",   "[",
     "]",       "HARD",   "EXIT",   "PI"};
 
-/*!
+/**
  * BASIC 2.0 with GraphicsBasic extension tokens lookup table.
  */
 static const char *const Basic20GraphicsBasicTokens[256] = {
@@ -500,7 +500,7 @@ static const char *const Basic20GraphicsBasicTokens[256] = {
     "VOICE",      "ADSR",      "WAVE",      "NE",      "VOLUME", "PLAY",
     "YPOS",       "SOUND",     "JOY",       "PI"};
 
-/*!
+/**
  * BASIC 2.0 with WS Basic extension tokens lookup table.
  */
 static const char *const Basic20WSBasicTokens[256] = {
@@ -542,7 +542,7 @@ static const char *const Basic20WSBasicTokens[256] = {
     "RSM",     "DEC",    "HEX$",   "HI",    "LO",    "DS$",    "LINE",
     "VPEEK",   "ROW",    "JOY",    "PI"};
 
-/*!
+/**
  * BASIC 2.0 with WS Basic Final extension tokens lookup table.
  */
 static const char *const Basic20WSBasicFinalTokens[256] = {
@@ -584,7 +584,7 @@ static const char *const Basic20WSBasicFinalTokens[256] = {
     "RSM",     "DEC",    "HEX$",   "HI",    "LO",    "DS$",     "LINE",
     "BNK",     "YPOS",   "JOY",    "PI"};
 
-/*!
+/**
  * BASIC 2.0 with Pegasus Basic 4.0 extension tokens lookup table.
  */
 static const char *const Basic20Pegasus40Tokens[256] = {
@@ -632,7 +632,7 @@ static const char *const Basic20Pegasus40Tokens[256] = {
     NULL,       NULL,       NULL,       NULL,       NULL,         NULL,
     NULL,       NULL,       NULL,       "PI"};
 
-/*!
+/**
  * BASIC 2.0 with Xbasic extension tokens lookup table.
  */
 static const char *const Basic20XBasicTokens[256] = {
@@ -674,7 +674,7 @@ static const char *const Basic20XBasicTokens[256] = {
     NULL,      NULL,      NULL,      NULL,     NULL,       NULL,      NULL,
     NULL,      NULL,      NULL,      "PI"};
 
-/*!
+/**
  * BASIC 2.0 with Drago Basic 2.2 extension tokens lookup table.
  */
 static const char *const Basic20DragoBasic22Tokens[256] = {
@@ -716,7 +716,7 @@ static const char *const Basic20DragoBasic22Tokens[256] = {
     NULL,      NULL,    NULL,      NULL,     NULL,    NULL,     NULL,
     NULL,      NULL,    NULL,      "PI"};
 
-/*!
+/**
  * BASIC 2.0 with REU-Basic extension tokens lookup table.
  */
 static const char *const Basic20REUBasicTokens[256] = {
@@ -753,7 +753,7 @@ static const char *const Basic20REUBasicTokens[256] = {
     NULL,     NULL,     NULL,   NULL,   NULL,      NULL,     NULL,     NULL,
     NULL,     NULL,     NULL,   NULL,   NULL,      NULL,     NULL,     "PI"};
 
-/*!
+/**
  * BASIC 2.0 with Basic Lightning extension tokens lookup table.
  */
 static const char *const Basic20BasicLightningTokens[256] = {
@@ -795,7 +795,7 @@ static const char *const Basic20BasicLightningTokens[256] = {
     "DSAVE",   "VAR",   "LOCAL",  "PROCEND",  "PROC",    "CASEND",  "OF",
     "CASE",    "RPT",   "SETATR", "PI"};
 
-/*!
+/**
  * BASIC 2.0 with Magic Basic extension tokens lookup table.
  */
 static const char *const Basic20MagicBasicTokens[256] = {
@@ -837,7 +837,7 @@ static const char *const Basic20MagicBasicTokens[256] = {
     "GLOAD",   "FRAME",     "HPRINT", "VPRINT", "BLOCK",   "FILL",    NULL,
     "REPLACE", "LRUN",      NULL,     "PI"};
 
-/*!
+/**
  * BASIC 2.0 with Blarg extension tokens lookup table.
  */
 static const char *const Basic20BlargTokens[256] = {
@@ -879,7 +879,7 @@ static const char *const Basic20BlargTokens[256] = {
     NULL,      NULL,     NULL,     NULL,    NULL,    NULL,     NULL,
     NULL,      NULL,     NULL,     "PI"};
 
-/*!
+/**
  * BASIC 2.0 with Game Basic extension tokens lookup table.
  */
 static const char *const Basic20GameBasicTokens[256] = {
@@ -921,7 +921,7 @@ static const char *const Basic20GameBasicTokens[256] = {
     NULL,      NULL,     NULL,      NULL,      NULL,      NULL,     NULL,
     NULL,      NULL,     NULL,      "PI"};
 
-/*!
+/**
  * BASIC 2.0 with Basex extension tokens lookup table.
  */
 static const char *const Basic20BasexTokens[256] = {
@@ -963,7 +963,7 @@ static const char *const Basic20BasexTokens[256] = {
     NULL,      NULL,       NULL,     NULL,     NULL,     NULL,       NULL,
     NULL,      NULL,       NULL,     "PI"};
 
-/*!
+/**
  * BASIC 2.0 with Super Basic extension tokens lookup table.
  */
 static const char *const Basic20SuperBasicTokens[256] = {
@@ -1011,7 +1011,7 @@ static const char *const Basic20SuperBasicTokens[256] = {
     "CEEK",      "MIN",    "MAX",     "VARPTR",  "FRAC",   "ODD",
     "DEC",       "HEX$",   "EVAL",    "PI"};
 
-/*!
+/**
  * BASIC 2.0 with Expanded Basic extension tokens lookup table.
  */
 static const char *const Basic20ExpandedBasicC64Tokens[256] = {
@@ -1059,7 +1059,7 @@ static const char *const Basic20ExpandedBasicC64Tokens[256] = {
     NULL,       NULL,       NULL,       NULL,     NULL,       NULL,
     NULL,       NULL,       NULL,       "PI"};
 
-/*!
+/**
  * BASIC 2.0 with Warsaw Basic extension tokens lookup table.
  */
 static const char *const Basic20WarsawBasicTokens[256] = {
@@ -1101,7 +1101,7 @@ static const char *const Basic20WarsawBasicTokens[256] = {
     NULL,      "POUND",  "MIN",    "MAX",   NULL,     "FRAC",   "ODD",
     NULL,      "HEEK",   "EVAL",   "PI"};
 
-/*!
+/**
  * BASIC 2.0 with VIC Super Expander extension tokens lookup table.
  */
 static const char *const Basic20VicSuperExpanderTokens[256] = {
@@ -1143,7 +1143,7 @@ static const char *const Basic20VicSuperExpanderTokens[256] = {
     NULL,      NULL,    NULL,      NULL,     NULL,     NULL,     NULL,
     NULL,      NULL,    NULL,      "PI"};
 
-/*!
+/**
  * BASIC 2.0 with Mighty Basic extension tokens lookup table.
  */
 static const char *const Basic20MightyBasicTokens[256] = {
@@ -1191,7 +1191,7 @@ static const char *const Basic20MightyBasicTokens[256] = {
     "RTIME",   "MSB",     "LSB",       "VECTOR", "JOY",    "DEC",
     "HEX$",    "GRAB",    "DS$",       "PI"};
 
-/*!
+/**
  * BASIC 2.0 with Easy Basic extension tokens lookup table.
  */
 static const char *const Basic20EasyBasicTokens[256] = {
@@ -1239,7 +1239,7 @@ static const char *const Basic20EasyBasicTokens[256] = {
     "JOY",    "MSB",     "LSB",       "VECTOR", "RKEY",   "DEC",
     "HEX$",   "GRAB",    "DS$",       "PI"};
 
-/*!
+/**
  * BASIC 2.0 with Expanded Basic extension tokens lookup table.
  */
 static const char *const Basic20ExpandedBasicVIC20Tokens[256] = {
@@ -1276,7 +1276,7 @@ static const char *const Basic20ExpandedBasicVIC20Tokens[256] = {
     NULL,     NULL,     NULL,    NULL,   NULL,      NULL,     NULL,     NULL,
     NULL,     NULL,     NULL,    NULL,   NULL,      NULL,     NULL,     "PI"};
 
-/*!
+/**
  * BASIC 3.5 tokens lookup table.
  */
 static const char *const Basic35Tokens[256] = {
@@ -1318,7 +1318,7 @@ static const char *const Basic35Tokens[256] = {
     "RENAME",    "BACKUP", "DELETE", "RENUMBER", "KEY",     "MONITOR", "USING",
     "UNTIL",     "WHILE",  NULL,     "PI"};
 
-/*!
+/**
  * BASIC 3.6 tokens lookup table.
  */
 static const char *const Basic36Tokens[256] = {
@@ -1360,7 +1360,7 @@ static const char *const Basic36Tokens[256] = {
     "RENAME",    "BACKUP", "DELETE", "RENUMBER", "KEY",     "MONITOR", "USING",
     "UNTIL",     "WHILE",  NULL,     "PI"};
 
-/*!
+/**
  * BASIC 4.0 tokens lookup table.
  */
 static const char *const Basic40Tokens[256] = {
@@ -1402,7 +1402,7 @@ static const char *const Basic40Tokens[256] = {
     NULL,      NULL,        NULL,     NULL,     NULL,     NULL,      NULL,
     NULL,      NULL,        NULL,     "PI"};
 
-/*!
+/**
  * BASIC 4.7 tokens lookup table.
  */
 static const char *const Basic47Tokens[256] = {
@@ -1444,7 +1444,7 @@ static const char *const Basic47Tokens[256] = {
     NULL,      NULL,        NULL,     NULL,     NULL,      NULL,      NULL,
     NULL,      NULL,        NULL,     "PI"};
 
-/*!
+/**
  * BASIC 7.0 tokens lookup table.
  */
 static const char *const Basic70Tokens[256] = {
@@ -1486,7 +1486,7 @@ static const char *const Basic70Tokens[256] = {
     "RENAME",    "BACKUP", "DELETE", "RENUMBER", "KEY",     "MONITOR", "USING",
     "UNTIL",     "WHILE",  NULL,     "PI"};
 
-/*!
+/**
  * BASIC 10.0 tokens lookup table.
  */
 static const char *const Basic100Tokens[256] = {
@@ -1528,7 +1528,7 @@ static const char *const Basic100Tokens[256] = {
     "RENAME",  "BACKUP", "DELETE", "RENUMBER", "KEY",     "MONITOR", "USING",
     "UNTIL",   "WHILE",  NULL,     "PI"};
 
-/*!
+/**
  * Simons' Basic prefix lookup table.
  */
 static const char *const SimonsBasicPrefixLookupTable[256] = {
@@ -1576,7 +1576,7 @@ static const char *const SimonsBasicPrefixLookupTable[256] = {
     NULL,       NULL,       NULL,       NULL,      NULL,       NULL,
     NULL,       NULL,       NULL,       NULL};
 
-/*!
+/**
  * BASIC 3.6 / 7.0 / 10.0 $CE prefix lookup table.
  */
 static const char *const Basic3670100CEPrefixLookupTable[256] = {
@@ -1613,7 +1613,7 @@ static const char *const Basic3670100CEPrefixLookupTable[256] = {
     NULL,  NULL,      NULL,      NULL,   NULL,  NULL,     NULL,      NULL,
     NULL,  NULL,      NULL,      NULL,   NULL,  NULL,     NULL,      NULL};
 
-/*!
+/**
  * BASIC 2.0 with Super Expander Chip $FE prefix lookup table.
  */
 static const char *const Basic20SuperExpanderChipFEPrefixLookupTable[256] = {
@@ -1655,7 +1655,7 @@ static const char *const Basic20SuperExpanderChipFEPrefixLookupTable[256] = {
     NULL,     NULL,     NULL,      NULL,     NULL,     NULL,     NULL,
     NULL,     NULL,     NULL,      NULL};
 
-/*!
+/**
  * BASIC 3.6 $FE prefix lookup table.
  */
 static const char *const Basic36FEPrefixLookupTable[256] = {
@@ -1703,7 +1703,7 @@ static const char *const Basic36FEPrefixLookupTable[256] = {
     NULL,      NULL,     NULL,       NULL,     NULL,       NULL,
     NULL,      NULL,     NULL,       NULL};
 
-/*!
+/**
  * BASIC 7.0 $FE prefix lookup table.
  */
 static const char *const Basic70FEPrefixLookupTable[256] = {
@@ -1751,7 +1751,7 @@ static const char *const Basic70FEPrefixLookupTable[256] = {
     NULL,      NULL,     NULL,       NULL,     NULL,       NULL,
     NULL,      NULL,     NULL,       NULL};
 
-/*!
+/**
  * BASIC 7.1 $FE prefix lookup table.
  */
 static const char *const Basic71FEPrefixLookupTable[256] = {
@@ -1799,7 +1799,7 @@ static const char *const Basic71FEPrefixLookupTable[256] = {
     NULL,      NULL,     NULL,       NULL,     NULL,       NULL,
     NULL,      NULL,     NULL,       NULL};
 
-/*!
+/**
  * BASIC 10.0 $FE prefix lookup table.
  */
 static const char *const Basic100FEPrefixLookupTable[256] = {
@@ -1847,7 +1847,7 @@ static const char *const Basic100FEPrefixLookupTable[256] = {
     NULL,      NULL,        NULL,       NULL,         NULL,       NULL,
     NULL,      NULL,        NULL,       NULL};
 
-/*!
+/**
  * CBM PETSCII character lookup table.
  */
 static const char *const PetsciiCharacters[256] = {"{$00}",

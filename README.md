@@ -294,7 +294,7 @@ CPU backends currently supported: 8x300, 8x305.
 
 ###**Commodore File Loader Plugin**
 
-_version 0.2.0_
+_version 0.2.1_
 
 This file loader plugin allows you to load Commodore binaries in PRG format to be disassembled.  _(Please note that the plugin depends on the 6502 CPU core to be installed in order to work properly)_
 

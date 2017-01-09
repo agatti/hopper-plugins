@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2014-2015, Alessandro Gatti
+ Copyright (c) 2014-2017, Alessandro Gatti
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -79,13 +79,13 @@ typedef NS_ENUM(NSUInteger, BasicVersion) {
 
 @interface ItFrobHopperCBMLoader () {
 
-  /*!
+  /**
    * Hopper Services provider instance.
    */
   id<HPHopperServices> _services;
 }
 
-/*!
+/**
  * Attempts to parse a CBM BASIC program into a human-readable form.
  *
  * @param data    the BASIC token stream.
@@ -133,11 +133,11 @@ typedef NS_ENUM(NSUInteger, BasicVersion) {
 }
 
 - (NSString *)pluginCopyright {
-  return @"©2014-2015 Alessandro Gatti";
+  return @"©2014-2017 Alessandro Gatti";
 }
 
 - (NSString *)pluginVersion {
-  return @"0.2.0";
+  return @"0.2.1";
 }
 
 - (BOOL)canLoadDebugFiles {
@@ -419,15 +419,15 @@ typedef NS_ENUM(NSUInteger, BasicVersion) {
     break;
 
   case BasicVersion20VicSuperExpander:
-    basicTokenTable = (const char *)BasicVersion20VicSuperExpander;
+    basicTokenTable = (const char *)Basic20VicSuperExpanderTokens;
     break;
 
   case BasicVersion20MightyBasic:
-    basicTokenTable = (const char *)BasicVersion20MightyBasic;
+    basicTokenTable = (const char *)Basic20MightyBasicTokens;
     break;
 
   case BasicVersion20EasyBasic:
-    basicTokenTable = (const char *)BasicVersion20EasyBasic;
+    basicTokenTable = (const char *)Basic20EasyBasicTokens;
     break;
 
   case BasicVersion35:
