@@ -106,7 +106,7 @@ static const struct FRBOpcode kOpcodeTable[256] = {
 
     /* $20 */ { FRBOpcodeTypeJSR,          FRBAddressModeAbsolute,                       0,     0     },
     /* $21 */ { FRBOpcodeTypeAND,          FRBAddressModeZeroPageIndexedIndirect,        A | X, A     },
-    /* $22 */ { FRBOpcodeTypeUndocumented, FRBAddressModeUnknown,                        0,     0     },
+    /* $22 */ { FRBOpcodeTypeSAX,          FRBAddressModeImplied,                        A | X, A | X },
     /* $23 */ { FRBOpcodeTypeST2,          FRBAddressModeImmediate,                      0,     0     },
     /* $24 */ { FRBOpcodeTypeBIT,          FRBAddressModeZeroPage,                       A,     0     },
     /* $25 */ { FRBOpcodeTypeAND,          FRBAddressModeZeroPage,                       A,     A     },
@@ -140,7 +140,7 @@ static const struct FRBOpcode kOpcodeTable[256] = {
 
     /* $40 */ { FRBOpcodeTypeRTI,          FRBAddressModeStack,                          0,     0     },
     /* $41 */ { FRBOpcodeTypeEOR,          FRBAddressModeZeroPageIndexedIndirect,        A | X, A     },
-    /* $42 */ { FRBOpcodeTypeUndocumented, FRBAddressModeUnknown,                        0,     0     },
+    /* $42 */ { FRBOpcodeTypeSAY,          FRBAddressModeImplied,                        A | Y, A | Y },
     /* $43 */ { FRBOpcodeTypeTMA,          FRBAddressModeImmediate,                      0,     A     },
     /* $44 */ { FRBOpcodeTypeUndocumented, FRBAddressModeUnknown,                        0,     0     },
     /* $45 */ { FRBOpcodeTypeEOR,          FRBAddressModeZeroPage,                       A,     A     },
