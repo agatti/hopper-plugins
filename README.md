@@ -19,7 +19,7 @@ Plugins currently available in the repository:
 
 <hr/>
 
-###**6502 CPU Plugin**
+### **6502 CPU Plugin**
 
 _version 0.1.3_
 
@@ -194,7 +194,7 @@ CPU backends currently supported: 6502, 65C02, 65N02, 65R02, 65S02, HuC6280, M74
 </tbody>
 </table>
 
-####TODO for next version(s):
+#### TODO for next version(s):
 
 * Negation for hexadecimal, decimal, and octal types.
 * Re-test 6502, 65C02, R6500, R65C02, and W65C02 backends.
@@ -207,19 +207,19 @@ CPU backends currently supported: 6502, 65C02, 65N02, 65R02, 65S02, HuC6280, M74
 * Add support for more 6502 variants if any are found in the wild.
 * Properly relocate files in the 64k address space with BSS sections around data segments.
 
-####Future plans (need Hopper SDK changes):
+#### Future plans (need Hopper SDK changes):
 
 * A way to properly model stack changes (ie. being able to increment and decrement the virtual stack pointer when encountering PHx or PLx instructions).
 * Have a customised memory map with named registers for each chip (needs BSS support first).
 
-####Caveats:
+#### Caveats:
 
 * Undocumented opcodes are not recognised (and this is not going to change in the near future).
 * Rebuilding the test binaries requires having `xa` installed (available from homebrew via `brew install xa`).
 
 <hr/>
 
-###**65816 CPU Plugin**
+### **65816 CPU Plugin**
 
 _version 0.0.2_
 
@@ -241,23 +241,23 @@ CPU backends currently supported: 65816.
 </tbody>
 </table>
 
-####TODO for next version:
+#### TODO for next version:
 
 * Add support for more 65816 variants if any are found in the wild.
 * Attempt to reject files too big for address-space reduced chip variants.
 * Properly relocate files in the entire address space with BSS sections around data segments.
 
-####Future plans (need Hopper SDK changes):
+#### Future plans (need Hopper SDK changes):
 
 * A way to properly model stack changes (ie. being able to increment and decrement the virtual stack pointer when encountering PHx or PLx instructions).
 
-####Caveats:
+#### Caveats:
 
 * Rebuilding the test binaries requires having `xa` installed (available from homebrew via `brew install xa`).
 
 <hr/>
 
-###**8x300 CPU Plugin**
+### **8x300 CPU Plugin**
 
 _version 0.0.2_
 
@@ -283,7 +283,7 @@ CPU backends currently supported: 8x300, 8x305.
 <tr><td>N8X305N</td><td>Generic &rarr; 8x305</td><td><a href="http://pdf.datasheetarchive.com/indexerfiles/Scans-063/DSA2IH00137808.pdf">Datasheet</a></td></tr>
 </table>
 
-####TODO for next version:
+#### TODO for next version:
 
 * Simplify opcodes by removing redundant zero rotations and lengths.
 * Create a test suite.
@@ -292,45 +292,45 @@ CPU backends currently supported: 8x300, 8x305.
 
 <hr/>
 
-###**Commodore File Loader Plugin**
+### **Commodore File Loader Plugin**
 
 _version 0.2.1_
 
 This file loader plugin allows you to load Commodore binaries in PRG format to be disassembled.  _(Please note that the plugin depends on the 6502 CPU core to be installed in order to work properly)_
 
-####TODO for next version:
+#### TODO for next version:
 
 * Add support for containers (Disk and Tape images).
 * Add support for cartridges.
 
-####Caveats:
+#### Caveats:
 
 * The plugin can also handle BASIC loader stubs if any are present, although the detokeniser for that is quite flaky and barely tested.  Invalid or improper BASIC code **will** crash the plugin, and maybe bring Hopper down with it.
 
-####Future plans (need Hopper SDK changes):
+#### Future plans (need Hopper SDK changes):
 
 * Properly relocate files in the 64k address space with BSS sections around data segments.
 * Automatically fill labels for audio, video, and zero page locations and automatically create virtual segments for register banking.
 
 <hr/>
 
-###**Address space tools**
+### **Address space tools**
 
 _version 0.0.1_
 
 This tool plugin currently allows to map the full address space of the CPU chosen for the currently loaded file.  When dealing with firmware images and the like, especially on older architectures, the code already assumes a certain memory layout and memory amount.  If a block of code is loaded at a particular address and points to absolute memory locations it is a bit of a pain to handle the situation in Hopper since there is no way (that I know of) to create a segment from the UI.  This plugin solves this very specific situation.
 
-####Caveats:
+#### Caveats:
 
 * Mapping the full address space of a 32 or 64 binary is **not recommended**, as the UI will act as if you have loaded a 4 GB/2 EB file.
 
 <hr/>
 
-##Installation instructions:
+## Installation instructions:
 
 Checkout from Git, open `HopperPlugins.xcworkspace` in Xcode, select the `Everything` scheme and then rebuild.  Once done, copy the bundles whose name ends in `.hopperLoader` into `~/Library/Application Support/Hopper/PlugIns/Loaders/`, the bundles whose name ends in `.hopperCPU` into `~/Library/Application Support/Hopper/PlugIns/CPUs/`, and the bundle whose name ends in `.hopperTool` into `~/Library/Application Support/Hopper/PlugIns/Tools/`.  Keep in mind that these plugins require **Hopper 3.11.7** or later to work.  They may work on older versions but they are neither tested nor supported on anything older than v3.11.7.
 
-##Need to get in touch?
+## Need to get in touch?
 
 Send an email to `a.gatti * frob.it` (yep, replace the asterisk, you know what to do), or try sending a message to `agatti@jabber.ccc.de` on Jabber if you so fancy.
 
