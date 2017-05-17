@@ -56,7 +56,13 @@
          location = "group:HopperSDK/Hopper/HopperTool.h">
       </FileRef>
       <FileRef
+         location = "group:HopperSDK/Hopper/HPASMLine.h">
+      </FileRef>
+      <FileRef
          location = "group:HopperSDK/Hopper/HPBasicBlock.h">
+      </FileRef>
+      <FileRef
+         location = "group:HopperSDK/Hopper/HPCallReference.h">
       </FileRef>
       <FileRef
          location = "group:HopperSDK/Hopper/HPDetectedFileType.h">
@@ -66,9 +72,6 @@
       </FileRef>
       <FileRef
          location = "group:HopperSDK/Hopper/HPDocument.h">
-      </FileRef>
-      <FileRef
-         location = "group:HopperSDK/Hopper/HPFormattedInstructionInfo.h">
       </FileRef>
       <FileRef
          location = "group:HopperSDK/Hopper/HPHopperServices.h">

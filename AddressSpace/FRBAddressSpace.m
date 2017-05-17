@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2014-2015, Alessandro Gatti - frob.it
+ Copyright (c) 2014-2017, Alessandro Gatti - frob.it
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -26,16 +26,19 @@
 
 #import "FRBAddressSpace.h"
 
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "OCUnusedClassInspection"
+
 static NSString *kUnmappedSectionName = @"BSS";
 
-@interface NAMESPACE(AddressSpace) () {
-    /*!
-     * Hopper Services instance.
-     */
-    id<HPHopperServices> _services;
-}
+@interface ItFrobHopperAddressSpace ()
 
-/*!
+/**
+ * Hopper Services instance.
+ */
+@property(strong, nonatomic, nonnull) NSObject<HPHopperServices> *services;
+
+/**
  * Adds extra segments to cover the whole address space.
  *
  * @param sender the selector sender, ignored.
@@ -44,85 +47,88 @@ static NSString *kUnmappedSectionName = @"BSS";
 
 @end
 
-@implementation NAMESPACE(AddressSpace)
+@implementation ItFrobHopperAddressSpace
 
-- (id<HopperPlugin>)initWithHopperServices:(id<HPHopperServices>)services {
-    if (self = [super init]) {
-        _services = services;
-    }
+- (instancetype)initWithHopperServices:(NSObject<HPHopperServices> *)services {
+  if (self = [super init]) {
+    _services = services;
+  }
 
-    return self;
+  return self;
 }
 
 - (NSArray *)toolMenuDescription {
-    return @[
-        @{
-            HPM_TITLE : @"Map whole address space",
-            HPM_SELECTOR : NSStringFromSelector(@selector(mapWholeAddressSpace:))
-        }
-    ];
+  return @[ @{
+    HPM_TITLE : @"Map whole address space",
+    HPM_SELECTOR : NSStringFromSelector(@selector(mapWholeAddressSpace:))
+  } ];
 }
 
 - (HopperUUID *)pluginUUID {
-    return [_services UUIDWithString:@"FD1B7A50-7264-11E4-82F8-0800200C9A66"];
+  return [self.services UUIDWithString:@"FD1B7A50-7264-11E4-82F8-0800200C9A66"];
 }
 
 - (HopperPluginType)pluginType {
-    return Plugin_Tool;
+  return Plugin_Tool;
 }
 
 - (NSString *)pluginName {
-    return @"Address Space";
+  return @"Address Space";
 }
 
 - (NSString *)pluginDescription {
-    return @"Address space manipulation tools";
+  return @"Address space manipulation tools";
 }
 
 - (NSString *)pluginAuthor {
-    return @"Alessandro Gatti";
+  return @"Alessandro Gatti";
 }
 
 - (NSString *)pluginCopyright {
-    return @"©2014-2015 Alessandro Gatti";
+  return @"©2014-2017 Alessandro Gatti";
 }
 
 - (NSString *)pluginVersion {
-    return @"0.0.1";
+  return @"0.0.2";
 }
 
 - (void)mapWholeAddressSpace:(id)sender {
-    NSObject<HPDocument> *document = [_services currentDocument];
+  NSObject<HPDocument> *document = self.services.currentDocument;
 
-    // Tool plugins can still be invoked with no file being loaded.
+  // Tool plugins can still be invoked with no file being loaded.
 
-    if (!document) {
-        return;
+  if (!document) {
+    return;
+  }
+
+  NSObject<HPDisassembledFile> *file = document.disassembledFile;
+  NSUInteger addressSpaceEnd = (NSUInteger)(1 << file.addressSpaceWidthInBits);
+  [document
+      beginToWait:[NSString
+                      stringWithFormat:@"Mapping address space (%ld bytes)...",
+                                       addressSpaceEnd]];
+
+  NSUInteger currentAddress = 0;
+
+  NSArray *existingSegments = [file.segments copy];
+
+  for (NSObject<HPSegment> *segment in existingSegments) {
+    if (segment.startAddress > currentAddress) {
+      [file addSegmentAt:currentAddress toExcludedAddress:segment.startAddress]
+          .segmentName = kUnmappedSectionName;
     }
 
-    NSObject<HPDisassembledFile> *file = document.disassembledFile;
-    NSUInteger addressSpaceEnd = 1 << file.addressSpaceWidthInBits;
-    [document beginToWait:[NSString stringWithFormat:@"Mapping address space (%ld bytes)...", addressSpaceEnd]];
+    currentAddress = segment.endAddress;
+  }
 
-    NSUInteger currentAddress = 0;
+  if (currentAddress < addressSpaceEnd) {
+    [file addSegmentAt:currentAddress toExcludedAddress:addressSpaceEnd]
+        .segmentName = kUnmappedSectionName;
+  }
 
-    NSArray *existingSegments = [file.segments copy];
-
-    for (NSObject<HPSegment> *segment in existingSegments) {
-        if (segment.startAddress > currentAddress) {
-            [file addSegmentAt:currentAddress
-             toExcludedAddress:segment.startAddress].segmentName = kUnmappedSectionName;
-        }
-
-        currentAddress = segment.endAddress;
-    }
-
-    if (currentAddress < addressSpaceEnd) {
-        [file addSegmentAt:currentAddress
-         toExcludedAddress:addressSpaceEnd].segmentName = kUnmappedSectionName;
-    }
-
-    [document endWaiting];
+  [document endWaiting];
 }
 
 @end
+
+#pragma clang diagnostic pop

@@ -316,7 +316,7 @@ This file loader plugin allows you to load Commodore binaries in PRG format to b
 
 ### **Address space tools**
 
-_version 0.0.1_
+_version 0.0.2_
 
 This tool plugin currently allows to map the full address space of the CPU chosen for the currently loaded file.  When dealing with firmware images and the like, especially on older architectures, the code already assumes a certain memory layout and memory amount.  If a block of code is loaded at a particular address and points to absolute memory locations it is a bit of a pain to handle the situation in Hopper since there is no way (that I know of) to create a segment from the UI.  This plugin solves this very specific situation.
 

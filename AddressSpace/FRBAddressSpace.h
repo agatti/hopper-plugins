@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2014-2015, Alessandro Gatti - frob.it
+ Copyright (c) 2014-2017, Alessandro Gatti - frob.it
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -24,10 +24,26 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import <Foundation/Foundation.h>
+@import Foundation;
+
 #import <Hopper/Hopper.h>
 
-#import "FRBHopperCommon.h"
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "OCUnusedClassInspection"
 
-@interface NAMESPACE(AddressSpace) : NSObject <HopperTool>
+/**
+ * Address Space Management tool plugin.
+ *
+ * This tool plugin currently allows to map the full address space of the CPU
+ * chosen for the currently loaded file.  When dealing with firmware images and
+ * the like, especially on older architectures, the code already assumes a
+ * certain memory layout and memory amount.  If a block of code is loaded at a
+ * particular address and points to absolute memory locations it is a bit of a
+ * pain to handle the situation in Hopper since there is no way (that I know of)
+ * to create a segment from the UI.  This plugin solves this very specific
+ * situation.
+ */
+@interface ItFrobHopperAddressSpace : NSObject <HopperTool>
 @end
+
+#pragma clang diagnostic pop
