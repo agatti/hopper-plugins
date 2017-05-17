@@ -12,26 +12,10 @@
 
 #import "CommonTypes.h"
 
-@protocol HPProcedure;
-@protocol HPTag;
+@protocol HPCallReference
 
-@protocol HPBasicBlock
-
+- (CallReferenceType)type;
 - (Address)from;
 - (Address)to;
-
-- (NSObject<HPProcedure> *)procedure;
-- (NSUInteger)index;
-
-- (BOOL)hasSuccessors;
-- (BOOL)hasPredecessors;
-
-- (NSArray<NSObject<HPBasicBlock> *> *)predecessors;
-- (NSArray<NSObject<HPBasicBlock> *> *)successors;
-
-// Tags
-- (void)addTag:(NSObject<HPTag> *)tag;
-- (void)removeTag:(NSObject<HPTag> *)tag;
-- (BOOL)hasTag:(NSObject<HPTag> *)tag;
 
 @end

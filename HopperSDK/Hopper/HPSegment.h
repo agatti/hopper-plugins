@@ -1,8 +1,8 @@
 //
 // Hopper Disassembler SDK
 //
-// (c)2014 - Cryptic Apps SARL. All Rights Reserved.
-// http://www.hopperapp.com
+// (c)2016 - Cryptic Apps SARL. All Rights Reserved.
+// https://www.hopperapp.com
 //
 // THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY
 // KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
@@ -10,7 +10,10 @@
 // PARTICULAR PURPOSE.
 //
 
+#import "CommonTypes.h"
+
 @protocol HPSection;
+@protocol HPProcedure;
 
 @protocol HPSegment
 
@@ -29,7 +32,7 @@
 
 - (BOOL)containsVirtualAddress:(Address)virtualAddress;
 
-- (NSArray *)sections; /// An array of NSObject<HPSection> objects
+- (NSArray<NSObject<HPSection> *> *)sections;
 - (NSUInteger)sectionCount;
 
 - (NSObject<HPSegment> *)nextSegment;
@@ -42,9 +45,16 @@
 - (NSObject<HPSection> *)lastSection;
 - (NSObject<HPSection> *)sectionNamed:(NSString *)name;
 
+- (NSUInteger)procedureCount;
+- (BOOL)hasProcedureAt:(Address)virtualAddress;
+- (NSObject<HPProcedure> *)procedureAt:(Address)virtualAddress;
+- (NSObject<HPProcedure> *)procedureAtIndex:(NSUInteger)index;
+- (NSInteger)procedureIndex:(NSObject<HPProcedure> *)procedure;
+- (NSArray<NSObject<HPProcedure> *> *)procedures;
+
 // XREFs
-- (NSArray *)referencesToAddress:(Address)virtualAddress;
-- (NSArray *)referencesFromAddress:(Address)virtualAddress;
+- (NSArray<NSNumber *> *)referencesToAddress:(Address)virtualAddress;
+- (NSArray<NSNumber *> *)referencesFromAddress:(Address)virtualAddress;
 - (void)removeReferencesOfAddress:(Address)referenced fromAddress:(Address)origin;
 - (void)addReferencesToAddress:(Address)referenced fromAddress:(Address)origin;
 

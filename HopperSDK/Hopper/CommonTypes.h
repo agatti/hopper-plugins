@@ -1,8 +1,8 @@
 //
 // Hopper Disassembler SDK
 //
-// (c)2014 - Cryptic Apps SARL. All Rights Reserved.
-// http://www.hopperapp.com
+// (c)2016 - Cryptic Apps SARL. All Rights Reserved.
+// https://www.hopperapp.com
 //
 // THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY
 // KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
@@ -13,6 +13,9 @@
 #ifndef _HOPPER_COMMONTYPES_H_
 #define _HOPPER_COMMONTYPES_H_
 
+#ifdef __OBJC__
+    #import <Foundation/Foundation.h>
+#endif
 
 // Addresses
 
@@ -45,17 +48,17 @@ typedef uint32_t Color;
 #  define HP_END_DECL_OPTIONS(TYPE)
 # endif
 #else
-#  define HP_BEGIN_DECL_ENUM(BASE,TYPE) typedef enum
+#  define HP_BEGIN_DECL_ENUM(BASE,TYPE) typedef enum : BASE
 #  define HP_END_DECL_ENUM(TYPE) TYPE
-#  define HP_BEGIN_DECL_OPTIONS(BASE,TYPE) typedef enum
+#  define HP_BEGIN_DECL_OPTIONS(BASE,TYPE) typedef enum : BASE
 #  define HP_END_DECL_OPTIONS(TYPE) TYPE
 #endif
 
 HP_BEGIN_DECL_ENUM(uint8_t, ByteType) {
-	Type_Undefined,
-	Type_Outside,
+    Type_Undefined,
+    Type_Outside,
 
-	Type_Next,      /// This memory block info is part of the previous bloc
+    Type_Next,      /// This memory block info is part of the previous bloc
 
     Type_Int8,
     Type_Int16,
@@ -67,12 +70,19 @@ HP_BEGIN_DECL_ENUM(uint8_t, ByteType) {
 
     Type_Data,      /// METATYPE : Only used for searching, no bytes have this type!
     
-	Type_Code,
-	Type_Procedure,
+    Type_Code,
+    Type_Procedure,
 
     Type_Structure
 }
 HP_END_DECL_ENUM(ByteType);
+
+HP_BEGIN_DECL_ENUM(uint8_t, PrologHeuristic) {
+    PH_UseHeuristic,
+    PH_ForceProlog,
+    PH_ForceNoProlog
+}
+HP_END_DECL_ENUM(PrologHeuristic);
 
 HP_BEGIN_DECL_ENUM(uint8_t, ProcedureCreationReason) {
     PCReason_None,
@@ -80,7 +90,8 @@ HP_BEGIN_DECL_ENUM(uint8_t, ProcedureCreationReason) {
     PCReason_User,          // Created by the used
     PCReason_Script,        // A Python script created the procedure
     PCReason_Called,        // A call statement has been found somewhere
-    PCReason_Prolog         // A procedure prolog was detected during the analysis
+    PCReason_Prolog,        // A procedure prolog was detected during the analysis
+    PCReason_Pointer        // A pointer has been found
 }
 HP_END_DECL_ENUM(ProcedureCreationReason);
 
@@ -156,7 +167,9 @@ HP_BEGIN_DECL_ENUM(NSUInteger, TypeDescType) {
     TypeDesc_Short,
     TypeDesc_UShort,
 
-    TypeDesc_FunctionPointer
+    TypeDesc_FunctionPointer,
+
+    TypeDesc_Enum
 }
 HP_END_DECL_ENUM(TypeDescType);
 
@@ -177,6 +190,7 @@ HP_BEGIN_DECL_ENUM(NSUInteger, ArgFormat) {
     Format_Binary,
 
     Format_Structured,
+    Format_Enum,
 
     Format_Negate = 0x20,
     Format_LeadingZeroes = 0x40,
@@ -229,12 +243,14 @@ HP_BEGIN_DECL_ENUM(NSUInteger, RegClass) {
     RegClass_X86_MMX,
     RegClass_X86_SSE,
     RegClass_X86_AVX,
+    RegClass_X86_SEG,
 
     // ARM
     RegClass_ARM_VFP_Single = RegClass_FirstUserClass,
     RegClass_ARM_VFP_Double,
     RegClass_ARM_VFP_Quad,
     RegClass_ARM_Media,
+    RegClass_ARM_Special,
 
     RegClass_LastUserClass = MAX_REGISTER_CLASS,
 
@@ -362,18 +378,78 @@ HP_BEGIN_DECL_ENUM(NSUInteger, DebuggerType) {
     Debugger_Local,
     Debugger_HopperDebuggerServer,
     Debugger_GDBRemote,
-    Debugger_DebugServer
+    Debugger_DebugServer,
+    Debugger_KDP
 }
 HP_END_DECL_ENUM(DebuggerType);
 
+// Call Reference
+
+HP_BEGIN_DECL_ENUM(NSUInteger, CallReferenceType) {
+    Call_None,
+    Call_Unknown,
+    Call_Direct,            // A direct call, like JMP, CALL, etc.
+    Call_ObjectiveC         // A call through objc_msgSend
+}
+HP_END_DECL_ENUM(CallReferenceType);
+
 // Decompiler
-#define DECOMPILER_DEFAULT_OPTIONS (Decompiler_RemoveDeadCode | Decompiler_RemoveMacros)
+#define DECOMPILER_DEFAULT_OPTIONS (Decompiler_RemoveDeadCode | Decompiler_RemoveMacros | Decompiler_RemoveNops)
 
 HP_BEGIN_DECL_OPTIONS(NSUInteger, DecompilerOptions) {
     Decompiler_None = 0,
     Decompiler_RemoveDeadCode = 1,
-    Decompiler_RemoveMacros = 2
+    Decompiler_RemoveMacros = 2,
+    Decompiler_RemoveNops = 4
 }
 HP_END_DECL_OPTIONS(DecompilerOptions);
+
+// CFG Mode
+
+HP_BEGIN_DECL_ENUM(uint8_t, CFGEdgeType) {
+    CFG_ConditionalJumpTrue,
+    CFG_ConditionalJumpFalse,
+    CFG_Jump
+}
+HP_END_DECL_ENUM(CFGEdgeType);
+
+HP_BEGIN_DECL_ENUM(uint8_t, CFGEdgePortLocation) {
+    CFG_PortTop,
+    CFG_PortBottom,
+    CFG_PortLeft,
+    CFG_PortRight
+}
+HP_END_DECL_ENUM(CFGEdgePortLocation);
+
+// Saving, and loading status
+
+HP_BEGIN_DECL_ENUM(NSInteger, FileLoadingStatus) {
+    FPS_NotLoaded,
+    FPS_CannotRead,
+    FPS_NotAHopperDB,
+    FPS_BadVersion,
+    FPS_Corrupted,
+    FPS_BAD_CRC,
+    FPS_MissingPlugin,
+    FPS_Loaded
+}
+HP_END_DECL_ENUM(FileLoadingStatus);
+
+HP_BEGIN_DECL_ENUM(NSInteger, FileSavingStatus) {
+    FPS_NotSaved,
+    FPS_CannotWrite,
+    FPS_Saved
+}
+HP_END_DECL_ENUM(FileSavingStatus);
+
+// View Modes
+
+HP_BEGIN_DECL_ENUM(NSUInteger, AssemblyViewMode) {
+    ASMVMode_Assembly,
+    ASMVMode_CFG,
+    ASMVMode_PseudoCode,
+    ASMVMode_Hex
+}
+HP_END_DECL_ENUM(AssemblyViewMode);
 
 #endif

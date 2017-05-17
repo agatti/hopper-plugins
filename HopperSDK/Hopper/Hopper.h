@@ -1,8 +1,8 @@
 //
 // Hopper Disassembler SDK
 //
-// (c)2014 - Cryptic Apps SARL. All Rights Reserved.
-// http://www.hopperapp.com
+// (c)2016 - Cryptic Apps SARL. All Rights Reserved.
+// https://www.hopperapp.com
 //
 // THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY
 // KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
@@ -21,9 +21,10 @@
 #import "HPSection.h"
 #import "HPProcedure.h"
 #import "HPBasicBlock.h"
-#import "HPFormattedInstructionInfo.h"
 #import "HPTag.h"
 #import "DisasmStruct.h"
+#import "HPASMLine.h"
+#import "HPCallReference.h"
 
 // Loader
 #import "HPLoaderOptionComponents.h"
@@ -36,3 +37,4 @@
 
 // Tool
 #import "HopperTool.h"
+

@@ -1,8 +1,8 @@
 //
 // Hopper Disassembler SDK
 //
-// (c)2014 - Cryptic Apps SARL. All Rights Reserved.
-// http://www.hopperapp.com
+// (c)2016 - Cryptic Apps SARL. All Rights Reserved.
+// https://www.hopperapp.com
 //
 // THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY
 // KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
@@ -16,8 +16,8 @@
 @protocol HPSegment;
 @protocol HPProcedure;
 @protocol HPBasicBlock;
-@protocol HPFormattedInstructionInfo;
 @protocol HPDisassembledFile;
+@protocol HPASMLine;
 @protocol CPUDefinition;
 
 @class Decompiler;
@@ -57,6 +57,11 @@
 /// Returns YES if a procedure prolog has been detected at this address.
 - (BOOL)hasProcedurePrologAt:(Address)address;
 
+/// Returns the padding size, if any, detected at this address.
+/// For instance, on Windows, somes files contains padding between procedures, made of 0xCC bytes (int 3).
+/// This method returns the longuest run of 0xCC in that case.
+- (NSUInteger)detectedPaddingLengthAt:(Address)address;
+
 /// Notify the plugin that an analysisbegan from an entry point.
 /// This could be either a simple disassembling, or a procedure creation.
 /// In the latter case, another method will be called to notify the plugin (see below).
@@ -93,10 +98,14 @@
 - (void)performProcedureAnalysis:(NSObject<HPProcedure> *)procedure basicBlock:(NSObject<HPBasicBlock> *)basicBlock disasm:(DisasmStruct *)disasm;
 - (void)updateProcedureAnalysis:(DisasmStruct *)disasm;
 
-/// Return YES if the provided DisasmStruct represents an instruction that cand directly reference a memory address.
+/// Return YES if the provided DisasmStruct represents an instruction that can directly reference a memory address.
 /// Ususally, this methods returns YES. This is used by the ARM plugin to avoid false references on "MOVW" instruction
 /// for instance.
 - (BOOL)instructionCanBeUsedToExtractDirectMemoryReferences:(DisasmStruct *)disasmStruct;
+
+/// Return YES if the instruction is used to load an address, but will not read, or write at this address.
+/// Example: the "LEA" x86 instruction.
+- (BOOL)instructionOnlyLoadsAddress:(DisasmStruct *)disasmStruct;
 
 /// Return YES if the instruction may be used to build a switch/case statement.
 /// For instance, for the Intel processor, it returns YES for the "JMP reg" and the "JMP [xxx+reg*4]" instructions,
@@ -115,12 +124,12 @@
 /// This is used by the Intel CPU plugin to compute the destinations of switch/case constructions when it found a "JMP register" instruction.
 - (void)performBranchesAnalysis:(DisasmStruct *)disasm
            computingNextAddress:(Address *)next
-                    andBranches:(NSMutableArray *)branches
+                    andBranches:(NSMutableArray<NSNumber *> *)branches
                    forProcedure:(NSObject<HPProcedure> *)procedure
                      basicBlock:(NSObject<HPBasicBlock> *)basicBlock
                       ofSegment:(NSObject<HPSegment> *)segment
-                calledAddresses:(NSMutableArray *)calledAddresses
-                      callsites:(NSMutableArray *)callSitesAddresses;
+                calledAddresses:(NSMutableArray<NSNumber *> *)calledAddresses
+                      callsites:(NSMutableArray<NSNumber *> *)callSitesAddresses;
 
 /// If you need a specific analysis, this method will be called once the previous branch analysis is performed.
 /// For instance, this is used by the ARM CPU plugin to set the type of the destination of an LDR instruction to
@@ -139,7 +148,9 @@
 
 /// Build the complete instruction string in the DisasmStruct structure.
 /// This is the string to be displayed in Hopper.
-- (void)buildInstructionString:(DisasmStruct *)disasm forSegment:(NSObject<HPSegment> *)segment populatingInfo:(NSObject<HPFormattedInstructionInfo> *)formattedInstructionInfo;
+- (NSObject<HPASMLine> *)buildMnemonicString:(DisasmStruct *)disasm inFile:(NSObject<HPDisassembledFile> *)file;
+- (NSObject<HPASMLine> *)buildOperandString:(DisasmStruct *)disasm forOperandIndex:(NSUInteger)operandIndex inFile:(NSObject<HPDisassembledFile> *)file raw:(BOOL)raw;
+- (NSObject<HPASMLine> *)buildCompleteOperandString:(DisasmStruct *)disasm inFile:(NSObject<HPDisassembledFile> *)file raw:(BOOL)raw;
 
 ////////////////////////////////////////////////////////////////////////////////
 //
@@ -158,7 +169,7 @@
 /// Decompile an assembly instruction.
 /// Note: ASTNode is not publicly exposed yet. You cannot write a decompiler at the moment.
 - (ASTNode *)decompileInstructionAtAddress:(Address)a
-                                    disasm:(DisasmStruct)d
+                                    disasm:(DisasmStruct *)d
                                  addNode_p:(BOOL *)addNode_p
                            usingDecompiler:(Decompiler *)decompiler;
 

@@ -1,8 +1,8 @@
 //
 // Hopper Disassembler SDK
 //
-// (c)2014 - Cryptic Apps SARL. All Rights Reserved.
-// http://www.hopperapp.com
+// (c)2016 - Cryptic Apps SARL. All Rights Reserved.
+// https://www.hopperapp.com
 //
 // THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY
 // KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
@@ -17,13 +17,13 @@
 #include "CommonTypes.h"
 
 #define DISASM_INSTRUCTION_MAX_LENGTH 2048
-#define DISASM_OPERAND_MNEMONIC_MAX_LENGTH 1024
 
 #define DISASM_UNKNOWN_OPCODE -1
 
 #define DISASM_MAX_OPERANDS                             6
 #define DISASM_MAX_REG_INDEX                            32
 #define DISASM_MAX_REG_CLASSES                          16
+#define DISASM_MAX_USER_DATA                            32
 
 #define DISASM_OPERAND_REGISTER_INDEX_MASK              0x00000000FFFFFFFFllu
 #define DISASM_OPERAND_TYPE_MASK                        0xFFFF000000000000llu
@@ -39,11 +39,12 @@
 #define DISASM_OPERAND_RELATIVE                         0x0400000000000000llu
 #define DISASM_OPERAND_OTHER                            0x0200000000000000llu
 
-#define DISASM_EXTRACT_REGISTER_CLASS(TYPE)             ((RegClass)(((TYPE) & DISASM_OPERAND_REG_CLASS_MASK) >> DISASM_MAX_REG_INDEX))
-
 #define DISASM_BUILD_REGISTER_CLS_MASK(CLS)             (0x100000000llu << (CLS))
 #define DISASM_BUILD_REGISTER_INDEX_MASK(INDEX)         (1llu << (INDEX))
 #define DISASM_BUILD_REGISTER_MASK(CLS,INDEX)           (DISASM_BUILD_REGISTER_CLS_MASK(CLS) | DISASM_BUILD_REGISTER_INDEX_MASK(INDEX))
+
+#define DISASM_GET_REGISTER_CLS_MASK(TYPE)              (((TYPE) & DISASM_OPERAND_REG_CLASS_MASK) >> DISASM_MAX_REG_INDEX)
+#define DISASM_GET_REGISTER_INDEX_MASK(TYPE)            ((TYPE) & DISASM_OPERAND_REGISTER_INDEX_MASK)
 
 #define DISASM_OPERAND_GENERAL_REG_INDEX                2
 
@@ -74,11 +75,13 @@
 #define DISASM_OPERAND_ARM_VFP_DOUBLE_REG_INDEX         4
 #define DISASM_OPERAND_ARM_VFP_QUAD_REG_INDEX           5
 #define DISASM_OPERAND_ARM_MEDIA_REG_INDEX              6
+#define DISASM_OPERAND_ARM_SPECIAL_REG_INDEX            7
 
 #define DISASM_OPERAND_ARM_VFP_SINGLE_REG               DISASM_BUILD_REGISTER_CLS_MASK(DISASM_OPERAND_ARM_VFP_SINGLE_REG_INDEX)
 #define DISASM_OPERAND_ARM_VFP_DOUBLE_REG               DISASM_BUILD_REGISTER_CLS_MASK(DISASM_OPERAND_ARM_VFP_DOUBLE_REG_INDEX)
 #define DISASM_OPERAND_ARM_VFP_QUAD_REG                 DISASM_BUILD_REGISTER_CLS_MASK(DISASM_OPERAND_ARM_VFP_QUAD_REG_INDEX)
 #define DISASM_OPERAND_ARM_MEDIA_REG                    DISASM_BUILD_REGISTER_CLS_MASK(DISASM_OPERAND_ARM_MEDIA_REG_INDEX)
+#define DISASM_OPERAND_ARM_SPECIAL_REG                  DISASM_BUILD_REGISTER_CLS_MASK(DISASM_OPERAND_ARM_SPECIAL_REG_INDEX)
 
 #define DISASM_REG0  DISASM_BUILD_REGISTER_INDEX_MASK(0)
 #define DISASM_REG1  DISASM_BUILD_REGISTER_INDEX_MASK(1)
@@ -190,8 +193,21 @@ typedef enum {
     DISASM_SHIFT_LSR,
     DISASM_SHIFT_ASR,
     DISASM_SHIFT_ROR,
-    DISASM_SHIFT_RRX
+    DISASM_SHIFT_RRX,
+    DISASM_SHIFT_MSL
 } DisasmShiftMode;
+
+typedef enum {
+    DISASM_EXT_NONE,
+    DISASM_EXT_UXTB,
+    DISASM_EXT_UXTH,
+    DISASM_EXT_UXTW,
+    DISASM_EXT_UXTX,
+    DISASM_EXT_SXTB,
+    DISASM_EXT_SXTH,
+    DISASM_EXT_SXTW,
+    DISASM_EXT_SXTX
+} DisasmExtMode;
 
 typedef enum {
     DISASM_ACCESS_NONE  =  0x0,
@@ -218,10 +234,9 @@ typedef enum {
 
 typedef struct {
     uint8_t lockPrefix;
-    uint8_t operandSize;
-    uint8_t addressSize;
     uint8_t repnePrefix;
     uint8_t repPrefix;
+    uint8_t segmentOverride;
 } DisasmPrefix;
 
 typedef struct {
@@ -240,16 +255,16 @@ typedef struct {
 
 /// Define a memory access in the form [BASE_REGISTERS + (INDEX_REGISTERS) * SCALE + DISPLACEMENT]
 typedef struct {
-    uint32_t    baseRegister;                       /// Base registers mask
-    uint32_t    indexRegister;                      /// Index registers mask
-    int32_t     scale;                              /// Scale (1, 2, 4, 8)
+    uint64_t    baseRegistersMask;                  /// Mask of the base registers used
+    uint64_t    indexRegistersMask;                 /// Mask of the index registers used
+    int32_t     scale;                              /// Scale (1, 2, 4, 8, ...)
     int64_t     displacement;                       /// Displacement
 } DisasmMemoryAccess;
 
 typedef struct  {
-    char                mnemonic[20];               /// Instruction mnemonic, with its optional condition.
+    char                mnemonic[32];               /// Instruction mnemonic, with its optional condition.
 
-    char                unconditionalMnemonic[16];  /// Mnemonic string without the conditional part.
+    char                unconditionalMnemonic[32];  /// Mnemonic string without the conditional part.
     DisasmCondition     condition;                  /// Condition to be met to execute instruction.
 
     uintptr_t           userData;                   /// A field that you can use internally to keep information on the instruction. Hopper don't need it.
@@ -273,23 +288,29 @@ typedef struct  {
 } DisasmInstruction;
 
 typedef struct {
-    char               mnemonic[DISASM_OPERAND_MNEMONIC_MAX_LENGTH];
-    DisasmOperandType  type;                /// Mask of DISASM_OPERAND_* values.
-    uint32_t           size;                /// Argument size in bits. In the case of a memory access, this is the size of the read or written value.
-    DisasmAccessMode   accessMode;          /// Whether the operand is accessed for reading or writing. DISASM_ACCESS_READ / DISASM_ACCESS_WRITE
+    DisasmOperandType  type;                            /// Mask of DISASM_OPERAND_* values.
+    uint32_t           size;                            /// Argument size in bits. In the case of a memory access, this is the size of the read or written value.
+    DisasmAccessMode   accessMode;                      /// Whether the operand is accessed for reading or writing. DISASM_ACCESS_READ / DISASM_ACCESS_WRITE
 
-    DisasmPosition     position;            /// DISASM_HIGHPOSITION / DISASM_LOWPOSITION: high position if for 8bits registers AH, BH, CH, DH
+    DisasmPosition     position;                        /// DISASM_HIGHPOSITION / DISASM_LOWPOSITION: high position if for 8bits registers AH, BH, CH, DH
 
-    DisasmSegmentReg   segmentReg;          /// X86 specific: the segment register used for the memory access.
-    DisasmMemoryAccess memory;              /// Description of the memory indirection.
-    int8_t             memoryDecoration;    /// Used for decoration on memory operands, like "dword ptr"… This is a plugin specific value, Hopper don't need it.
+    DisasmSegmentReg   segmentReg;                      /// X86 specific: the segment register used for the memory access.
+    DisasmMemoryAccess memory;                          /// Description of the memory indirection.
+    int8_t             memoryDecoration;                /// Used for decoration on memory operands, like "dword ptr"… This is a plugin specific value, Hopper don't need it.
 
     /// Shifting used when the type is DISASM_OPERAND_REGISTER_TYPE
-    DisasmShiftMode    shiftMode;           /// Shifting mode
-    int32_t            shiftAmount;         /// Shifting amount (if not shifted by a register)
-    int32_t            shiftByReg;          /// Shifting register
+    DisasmShiftMode    shiftMode;                       /// Shifting mode
+    DisasmExtMode      extMode;                         /// Extension mode
+    int32_t            shiftAmount;                     /// Shifting amount (if not shifted by a register)
+    int32_t            shiftByReg;                      /// Shifting register
 
-    int64_t            immediateValue;      /// The immediate value for this operand, if known.
+    int64_t            immediateValue;                  /// The immediate value for this operand, if known.
+    uint8_t            isBranchDestination;             /// A value different from 0 if the operand is used to compute a destination address for a branch instruction
+
+    union {
+        uint64_t       userData[DISASM_MAX_USER_DATA];  /// You can use this field to store important informations, Hopper will not use it.
+        char           userString[DISASM_MAX_USER_DATA * 8];
+    };
 } DisasmOperand;
 
 typedef struct {
@@ -302,13 +323,11 @@ typedef struct {
     /// Syntax to be used when building the various mnemonics.
     uint8_t           syntaxIndex;
 
-    /// Formatted instruction string, directly displayed in Hopper.
-    char              completeInstructionString[DISASM_INSTRUCTION_MAX_LENGTH];
-
     /// You can set the CPU, CPUSubType to any value during the initialization of the structure.
     /// These values are only used by plugins for their own purpose. Hopper don't need them.
     int32_t           CPU;
     int32_t           CPUSubType;
+    CPUEndianess      endianess;
 
     /// Fields to be set by the plugin.
     DisasmPrefix      prefix;

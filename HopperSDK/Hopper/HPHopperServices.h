@@ -1,8 +1,8 @@
 //
 // Hopper Disassembler SDK
 //
-// (c)2014 - Cryptic Apps SARL. All Rights Reserved.
-// http://www.hopperapp.com
+// (c)2016 - Cryptic Apps SARL. All Rights Reserved.
+// https://www.hopperapp.com
 //
 // THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY
 // KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
@@ -14,6 +14,7 @@
 
 @class HopperUUID;
 
+@protocol HPASMLine;
 @protocol HPDocument;
 @protocol HPDetectedFileType;
 @protocol HPLoaderOptionComponents;
@@ -35,17 +36,20 @@
 // New detected type
 - (NSObject<HPDetectedFileType> *)detectedType;
 
-// Information about attributes used in the ASM view
-- (NSDictionary *)ASMOperatorAttributes;
-- (NSDictionary *)ASMNumberAttributes;
-- (NSDictionary *)ASMLanguageAttributes;
-- (NSDictionary *)ASMSubLanguageAttributes;
-- (NSDictionary *)ASMCommentAttributes;
+// ASMLine Constructors
+- (NSObject<HPASMLine> *)blankASMLine;
 
-- (void)colorizeASMString:(NSMutableAttributedString *)string
-        operatorPredicate:(BOOL(^)(unichar c))operatorPredicate
-    languageWordPredicate:(BOOL(^)(NSString * s))languageWordPredicate
- subLanguageWordPredicate:(BOOL(^)(NSString * s))subLanguageWordPredicate;
+- (NSObject<HPASMLine> *)lineForFileHeader:(NSString *)fileHeader;
+- (NSObject<HPASMLine> *)lineForSegmentHeader:(NSString *)segmentHeader;
+- (NSObject<HPASMLine> *)lineForSectionHeader:(NSString *)sectionHeader;
+- (NSObject<HPASMLine> *)lineForProcedureInfo:(NSString *)procedureInfo;
+- (NSObject<HPASMLine> *)lineForSuffix:(NSString *)suffix;
+- (NSObject<HPASMLine> *)lineWithRawString:(NSString *)string;
+- (NSObject<HPASMLine> *)lineWithString:(NSString *)string;
+- (NSObject<HPASMLine> *)lineWithName:(NSString *)name atAddress:(Address)address;
+- (NSObject<HPASMLine> *)lineWithLocalName:(NSString *)name atAddress:(Address)address;
+- (NSObject<HPASMLine> *)lineWithFormattedNumber:(NSString *)string withValue:(NSNumber *)number;
+- (NSObject<HPASMLine> *)lineWithFormattedAddress:(NSString *)string withValue:(Address)address;
 
 // Options for loaders
 - (NSObject<HPLoaderOptionComponents> *)addressComponentWithLabel:(NSString *)label;
@@ -53,7 +57,7 @@
 - (NSObject<HPLoaderOptionComponents> *)cpuComponentWithLabel:(NSString *)label;
 - (NSObject<HPLoaderOptionComponents> *)addressComponentWithLabel:(NSString *)label andValue:(Address)value;
 - (NSObject<HPLoaderOptionComponents> *)checkboxComponentWithLabel:(NSString *)label checked:(BOOL)checked;
-- (NSObject<HPLoaderOptionComponents> *)stringListComponentWithLabel:(NSString *)label andList:(NSArray *)strings;
-- (NSObject<HPLoaderOptionComponents> *)comboBoxComponentWithLabel:(NSString *)label andList:(NSArray *)strings;
+- (NSObject<HPLoaderOptionComponents> *)stringListComponentWithLabel:(NSString *)label andList:(NSArray<NSString *> *)strings;
+- (NSObject<HPLoaderOptionComponents> *)comboBoxComponentWithLabel:(NSString *)label andList:(NSArray<NSString *> *)strings;
 
 @end

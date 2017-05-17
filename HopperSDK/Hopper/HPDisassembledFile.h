@@ -1,8 +1,8 @@
 //
 // Hopper Disassembler SDK
 //
-// (c)2014 - Cryptic Apps SARL. All Rights Reserved.
-// http://www.hopperapp.com
+// (c)2016 - Cryptic Apps SARL. All Rights Reserved.
+// https://www.hopperapp.com
 //
 // THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY
 // KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
@@ -19,6 +19,7 @@
 @protocol HPProcedure;
 @protocol HPTag;
 @protocol CPUContext;
+@protocol HPASMLine;
 
 typedef void (^FileLoadingCallbackInfo)(NSString *desc, float progress);
 
@@ -29,6 +30,7 @@ typedef void (^FileLoadingCallbackInfo)(NSString *desc, float progress);
 @property (copy) NSString *cpuFamily;
 @property (copy) NSString *cpuSubFamily;
 @property (strong) NSObject<CPUDefinition> *cpuDefinition;
+@property (readonly) NSUInteger userRequestedSyntaxIndex;
 
 // Methods essentially used by Loader plugin
 - (NSUInteger)addressSpaceWidthInBits;
@@ -42,10 +44,10 @@ typedef void (^FileLoadingCallbackInfo)(NSString *desc, float progress);
 - (void)addEntryPoint:(Address)address;
 - (void)addPotentialProcedure:(Address)address;
 - (Address)firstEntryPoint;
-- (NSArray *)entryPoints;
+- (NSArray<NSNumber *> *)entryPoints;
 
 // Get access to segments and sections
-- (NSArray *)segments; /// An array of NSObject<HPSegment> objects
+- (NSArray<NSObject<HPSegment> *> *)segments;
 - (NSUInteger)segmentCount;
 
 - (NSObject<HPSegment> *)segmentForVirtualAddress:(Address)virtualAddress;
@@ -70,9 +72,9 @@ typedef void (^FileLoadingCallbackInfo)(NSString *desc, float progress);
 
 // Access to the labels
 /// An array of NSString objects, containing all labels.
-- (NSArray *)allNames;
+- (NSArray<NSString *> *)allNames;
 /// An array of NSNumber objects, representing the address of memory locations that was named.
-- (NSArray *)allNamedAddresses;
+- (NSArray<NSNumber *> *)allNamedAddresses;
 - (NSString *)nameForVirtualAddress:(Address)virtualAddress;
 - (NSString *)nearestNameBeforeVirtualAddress:(Address)virtualAddress;
 - (void)setName:(NSString *)name forVirtualAddress:(Address)virtualAddress reason:(NameCreationReason)reason;
@@ -97,8 +99,11 @@ typedef void (^FileLoadingCallbackInfo)(NSString *desc, float progress);
 - (Address)findNextAddress:(Address)address ofTypeOrMetaType:(ByteType)typeOrMetaType wrapping:(BOOL)wrapping;
 
 // Instruction Operand Format
-- (ArgFormat)formatForArgument:(int)argIndex atVirtualAddress:(Address)virtualAddress;
-- (void)setFormat:(ArgFormat)format forArgument:(int)argIndex atVirtualAddress:(Address)virtualAddress;
+- (ArgFormat)formatForArgument:(NSUInteger)argIndex atVirtualAddress:(Address)virtualAddress;
+- (void)setFormat:(ArgFormat)format forArgument:(NSUInteger)argIndex atVirtualAddress:(Address)virtualAddress;
+
+// Format a number
+- (NSObject<HPASMLine> *)formatNumber:(uint64_t)immediate at:(Address)address usingFormat:(ArgFormat)format andBitSize:(uint64_t)bitSize;
 
 // Procedures
 - (BOOL)hasProcedureAt:(Address)address;
@@ -122,7 +127,7 @@ typedef void (^FileLoadingCallbackInfo)(NSString *desc, float progress);
 
 - (void)addTag:(NSObject<HPTag> *)tag at:(Address)address;
 - (void)removeTag:(NSObject<HPTag> *)tag at:(Address)address;
-- (NSArray *)tagsAt:(Address)virtualAddress;
+- (NSArray<NSObject<HPTag> *> *)tagsAt:(Address)virtualAddress;
 - (BOOL)hasTag:(NSObject<HPTag> *)tag at:(Address)virtualAddress;
 
 // Problem list
