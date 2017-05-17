@@ -27,6 +27,9 @@
 #import "FRBCBMLoader.h"
 #import "FRBBasicTokens.h"
 
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "OCUnusedClassInspection"
+
 static NSString *kCPUFamily = @"Generic";
 static NSString *kCPUSubFamily = @"6502";
 
@@ -77,13 +80,12 @@ typedef NS_ENUM(NSUInteger, BasicVersion) {
   BasicVersion100
 };
 
-@interface ItFrobHopperCBMLoader () {
+@interface ItFrobHopperCBMLoader ()
 
-  /**
-   * Hopper Services provider instance.
-   */
-  id<HPHopperServices> _services;
-}
+/**
+ * Hopper Services instance.
+ */
+@property(strong, nonatomic, nonnull) NSObject<HPHopperServices> *services;
 
 /**
  * Attempts to parse a CBM BASIC program into a human-readable form.
@@ -105,15 +107,16 @@ typedef NS_ENUM(NSUInteger, BasicVersion) {
 
 @implementation ItFrobHopperCBMLoader
 
-- (instancetype)initWithHopperServices:(id<HPHopperServices>)services {
+- (instancetype)initWithHopperServices:(NSObject<HPHopperServices> *)services {
   if (self = [super init]) {
     _services = services;
   }
+
   return self;
 }
 
 - (HopperUUID *)pluginUUID {
-  return [_services UUIDWithString:@"92AF9450-09AD-11E4-9191-0800200C9A66"];
+  return [self.services UUIDWithString:@"92AF9450-09AD-11E4-9191-0800200C9A66"];
 }
 
 - (HopperPluginType)pluginType {
@@ -137,7 +140,7 @@ typedef NS_ENUM(NSUInteger, BasicVersion) {
 }
 
 - (NSString *)pluginVersion {
-  return @"0.2.1";
+  return @"0.2.2";
 }
 
 - (BOOL)canLoadDebugFiles {
@@ -145,14 +148,15 @@ typedef NS_ENUM(NSUInteger, BasicVersion) {
 }
 
 - (NSArray *)detectedTypesForData:(NSData *)data {
-  id<HPDetectedFileType> detectedType = [_services detectedType];
+  NSObject<HPDetectedFileType> *detectedType = self.services.detectedType;
   detectedType.fileDescription = @"CBM Executable code";
   detectedType.addressWidth = AW_16bits;
   detectedType.cpuFamily = kCPUFamily;
   detectedType.cpuSubFamily = kCPUSubFamily;
   detectedType.additionalParameters = @[
-    [_services checkboxComponentWithLabel:@"Contains BASIC code" checked:NO],
-    [_services
+    [self.services checkboxComponentWithLabel:@"Contains BASIC code"
+                                      checked:NO],
+    [self.services
         stringListComponentWithLabel:@"BASIC version"
                              andList:@[
                                @"v1.0 (PET 2001)",
@@ -200,19 +204,19 @@ typedef NS_ENUM(NSUInteger, BasicVersion) {
 }
 
 - (FileLoaderLoadingStatus)loadData:(NSData *)data
-              usingDetectedFileType:(DetectedFileType *)fileType
+              usingDetectedFileType:(NSObject<HPDetectedFileType> *)fileType
                             options:(FileLoaderOptions)options
-                            forFile:(id<HPDisassembledFile>)file
+                            forFile:(NSObject<HPDisassembledFile> *)file
                       usingCallback:(FileLoadingCallbackInfo)callback {
-
-  id<HPDetectedFileType> detectedType = (id<HPDetectedFileType>)fileType; // :(
-  id<HPLoaderOptionComponents> hasBasic = detectedType.additionalParameters[0];
-  id<HPLoaderOptionComponents> basicVersion =
-      detectedType.additionalParameters[1];
+  NSObject<HPLoaderOptionComponents> *hasBasic =
+      fileType.additionalParameters[0];
+  NSObject<HPLoaderOptionComponents> *basicVersion =
+      fileType.additionalParameters[1];
 
   if (data.length > 65538) {
-    [_services logMessage:[NSString stringWithFormat:@"File too big: %lu bytes",
-                                                     data.length]];
+    [self.services
+        logMessage:[NSString stringWithFormat:@"File too big: %lu bytes",
+                                              data.length]];
     return DIS_BadFormat;
   }
 
@@ -221,14 +225,15 @@ typedef NS_ENUM(NSUInteger, BasicVersion) {
   uint16 endingAddress = (uint16)((startingAddress + size) & 0xFFFF);
 
   if (endingAddress > 65535) {
-    [_services logMessage:[NSString stringWithFormat:@"File too big: %lu bytes",
-                                                     data.length]];
+    [self.services
+        logMessage:[NSString stringWithFormat:@"File too big: %lu bytes",
+                                              data.length]];
     return DIS_BadFormat;
   }
 
   NSData *fileData = [NSData dataWithBytes:data.bytes + 2 length:size];
 
-  id<HPSegment> segment = [file addSegmentAt:startingAddress size:size];
+  NSObject<HPSegment> *segment = [file addSegmentAt:startingAddress size:size];
   segment.mappedData = fileData;
   segment.segmentName = @"CODE";
   segment.fileOffset = 2;
@@ -247,7 +252,7 @@ typedef NS_ENUM(NSUInteger, BasicVersion) {
                                         size:&basicSize
                                      version:version];
     if (!error) {
-      id<HPSection> section =
+      NSObject<HPSection> *section =
           [segment addSectionAt:startingAddress size:basicSize];
       section.pureCodeSection = NO;
       section.fileOffset = fileOffset;
@@ -270,7 +275,7 @@ typedef NS_ENUM(NSUInteger, BasicVersion) {
     }
   }
 
-  id<HPSection> section =
+  NSObject<HPSection> *section =
       [segment addSectionAt:(startingAddress + fileOffset - 2) size:fileLength];
   section.pureDataSection = NO;
   section.pureCodeSection = NO;
@@ -293,12 +298,12 @@ typedef NS_ENUM(NSUInteger, BasicVersion) {
 }
 
 - (NSData *)extractFromData:(NSData *)data
-      usingDetectedFileType:(DetectedFileType *)fileType
+      usingDetectedFileType:(NSObject<HPDetectedFileType> *)fileType
          returnAdjustOffset:(uint64_t *)adjustOffset {
   return nil;
 }
 
-- (void)fixupRebasedFile:(id<HPDisassembledFile>)file
+- (void)fixupRebasedFile:(NSObject<HPDisassembledFile> *)file
                withSlide:(int64_t)slide
         originalFileData:(NSData *)fileData {
 }
@@ -551,6 +556,9 @@ typedef NS_ENUM(NSUInteger, BasicVersion) {
                     break;
                   }
                   break;
+
+                default:
+                  break;
                 }
               }
               break;
@@ -579,3 +587,5 @@ typedef NS_ENUM(NSUInteger, BasicVersion) {
 }
 
 @end
+
+#pragma clang diagnostic pop

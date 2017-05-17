@@ -24,12 +24,21 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import <AppKit/AppKit.h>
-#import <Foundation/Foundation.h>
+@import Foundation;
+
 #import <Hopper/Hopper.h>
 
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "OCUnusedClassInspection"
+
 /**
- * Commodore 8-bits binary file loader.
+ * CBM Program Files loader plugin.
+ *
+ * This file loader plugin allows you to load Commodore binaries in PRG format
+ * to be disassembled.  Please note that the plugin depends on the 6502 CPU
+ * core to be installed in order to work properly.
  */
 @interface ItFrobHopperCBMLoader : NSObject <FileLoader>
 @end
+
+#pragma clang diagnostic pop

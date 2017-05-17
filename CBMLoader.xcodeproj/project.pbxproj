@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		683C9F77197141C80005973C /* FRBCBMLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 683C9F76197141C80005973C /* FRBCBMLoader.m */; };
-		68C7B37B1971407D0067434B /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 68C7B37A1971407D0067434B /* CoreFoundation.framework */; };
-		68C7B3811971407D0067434B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 68C7B37F1971407D0067434B /* InfoPlist.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -18,8 +16,7 @@
 		683C9F78197148220005973C /* FRBBasicTokens.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FRBBasicTokens.h; sourceTree = "<group>"; };
 		68C7B3771971407D0067434B /* CBMLoader.hopperLoader */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CBMLoader.hopperLoader; sourceTree = BUILT_PRODUCTS_DIR; };
 		68C7B37A1971407D0067434B /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
-		68C7B37E1971407D0067434B /* FRBCBMLoader-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "FRBCBMLoader-Info.plist"; sourceTree = "<group>"; };
-		68C7B3801971407D0067434B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		68C7B37E1971407D0067434B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -27,7 +24,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				68C7B37B1971407D0067434B /* CoreFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -73,8 +69,7 @@
 		68C7B37D1971407D0067434B /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				68C7B37E1971407D0067434B /* FRBCBMLoader-Info.plist */,
-				68C7B37F1971407D0067434B /* InfoPlist.strings */,
+				68C7B37E1971407D0067434B /* Info.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -89,6 +84,7 @@
 				68C7B3731971407D0067434B /* Sources */,
 				68C7B3741971407D0067434B /* Frameworks */,
 				68C7B3751971407D0067434B /* Resources */,
+				6848F81F1EDB33DB00EE6BE7 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -130,11 +126,26 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				68C7B3811971407D0067434B /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		6848F81F1EDB33DB00EE6BE7 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "rm -rf \"${INSTALL_PATH}/CBMLoader.hopperLoader\"\nmkdir -p \"${INSTALL_PATH}\"\ncp -rf \"${BUILT_PRODUCTS_DIR}/CBMLoader.hopperLoader\" \"${INSTALL_PATH}\"";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		68C7B3731971407D0067434B /* Sources */ = {
@@ -146,17 +157,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXVariantGroup section */
-		68C7B37F1971407D0067434B /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				68C7B3801971407D0067434B /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		68C7B3831971407D0067434B /* Debug */ = {
@@ -202,7 +202,7 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SRCROOT)/HopperSDK",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 			};
@@ -245,7 +245,7 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SRCROOT)/HopperSDK",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				SDKROOT = macosx;
 			};
 			name = Release;
@@ -255,8 +255,8 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREFIX_HEADER = "";
-				INFOPLIST_FILE = "CBMLoader/FRBCBMLoader-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				INFOPLIST_FILE = CBMLoader/Info.plist;
+				INSTALL_PATH = "$(USER_LIBRARY_DIR)/Application Support/Hopper/PlugIns/V4/Loaders";
 				PRODUCT_BUNDLE_IDENTIFIER = "it.frob.hopper.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = CBMLoader;
 				WRAPPER_EXTENSION = hopperLoader;
@@ -268,8 +268,8 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PREFIX_HEADER = "";
-				INFOPLIST_FILE = "CBMLoader/FRBCBMLoader-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				INFOPLIST_FILE = CBMLoader/Info.plist;
+				INSTALL_PATH = "$(USER_LIBRARY_DIR)/Application Support/Hopper/PlugIns/V4/Loaders";
 				PRODUCT_BUNDLE_IDENTIFIER = "it.frob.hopper.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = CBMLoader;
 				WRAPPER_EXTENSION = hopperLoader;
