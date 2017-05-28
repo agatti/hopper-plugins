@@ -11,13 +11,10 @@
 		683CF0AE19FB8AF500CCABAE /* FRBBase8x300.m in Sources */ = {isa = PBXBuildFile; fileRef = 683CF0AD19FB8AF500CCABAE /* FRBBase8x300.m */; };
 		68C0457D19C82D8A005E1B4D /* FRBContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 68C0457719C82D8A005E1B4D /* FRBContext.m */; };
 		68C0457E19C82D8A005E1B4D /* FRBDefinition.m in Sources */ = {isa = PBXBuildFile; fileRef = 68C0457919C82D8A005E1B4D /* FRBDefinition.m */; };
-		68C0457F19C82D8A005E1B4D /* FRBModelHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 68C0457B19C82D8A005E1B4D /* FRBModelHandler.m */; };
-		68C0458119C82D94005E1B4D /* models.plist in Resources */ = {isa = PBXBuildFile; fileRef = 68C0458019C82D94005E1B4D /* models.plist */; };
 		68C0458419C83279005E1B4D /* libHopperCommon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 68C0458319C83279005E1B4D /* libHopperCommon.a */; };
 		68C0458719C832F6005E1B4D /* FRBGeneric8x300.m in Sources */ = {isa = PBXBuildFile; fileRef = 68C0458619C832F6005E1B4D /* FRBGeneric8x300.m */; };
-		68C0458F19C8C259005E1B4D /* FRBInstructionColouriser.m in Sources */ = {isa = PBXBuildFile; fileRef = 68C0458E19C8C259005E1B4D /* FRBInstructionColouriser.m */; };
-		68F19B0D19C82CFE008F6CEA /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 68F19B0C19C82CFE008F6CEA /* CoreFoundation.framework */; };
-		68F19B1319C82CFE008F6CEA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 68F19B1119C82CFE008F6CEA /* InfoPlist.strings */; };
+		AB5F60CFFE8515C416AD5D23 /* FRBMCCAPFormat.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5F6E83D9E0C6728163EBAB /* FRBMCCAPFormat.m */; };
+		AB5F698BB1D86F60C87314DD /* FRBASFormat.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5F6ECA39ACB2E064486C1A /* FRBASFormat.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,21 +26,17 @@
 		68C0457719C82D8A005E1B4D /* FRBContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRBContext.m; sourceTree = "<group>"; };
 		68C0457819C82D8A005E1B4D /* FRBDefinition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRBDefinition.h; sourceTree = "<group>"; };
 		68C0457919C82D8A005E1B4D /* FRBDefinition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRBDefinition.m; sourceTree = "<group>"; };
-		68C0457A19C82D8A005E1B4D /* FRBModelHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRBModelHandler.h; sourceTree = "<group>"; };
-		68C0457B19C82D8A005E1B4D /* FRBModelHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRBModelHandler.m; sourceTree = "<group>"; };
-		68C0457C19C82D8A005E1B4D /* FRBProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRBProvider.h; sourceTree = "<group>"; };
-		68C0458019C82D94005E1B4D /* models.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = models.plist; sourceTree = "<group>"; };
 		68C0458319C83279005E1B4D /* libHopperCommon.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libHopperCommon.a; path = "../../Library/Developer/Xcode/DerivedData/HopperPlugins-fzslwhyufvevicghqykcwcprlbow/Build/Products/Debug/libHopperCommon.a"; sourceTree = "<group>"; };
 		68C0458519C832F6005E1B4D /* FRBGeneric8x300.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRBGeneric8x300.h; sourceTree = "<group>"; };
 		68C0458619C832F6005E1B4D /* FRBGeneric8x300.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRBGeneric8x300.m; sourceTree = "<group>"; };
-		68C0458819C8612F005E1B4D /* FRBBase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FRBBase.h; sourceTree = "<group>"; };
-		68C0458D19C8C259005E1B4D /* FRBInstructionColouriser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRBInstructionColouriser.h; sourceTree = "<group>"; };
-		68C0458E19C8C259005E1B4D /* FRBInstructionColouriser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRBInstructionColouriser.m; sourceTree = "<group>"; };
 		68F19B0919C82CFE008F6CEA /* 8x300.hopperCPU */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = 8x300.hopperCPU; sourceTree = BUILT_PRODUCTS_DIR; };
 		68F19B0C19C82CFE008F6CEA /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
-		68F19B1019C82CFE008F6CEA /* 8x300-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "8x300-Info.plist"; sourceTree = "<group>"; };
-		68F19B1219C82CFE008F6CEA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		68F19B1419C82CFE008F6CEA /* 8x300-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "8x300-Prefix.pch"; sourceTree = "<group>"; };
+		68F19B1019C82CFE008F6CEA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AB5F61CC2680600E4DC96E64 /* FRBASFormat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRBASFormat.h; sourceTree = "<group>"; };
+		AB5F625295A26BD84C050121 /* FRBInstructionFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRBInstructionFormatter.h; sourceTree = "<group>"; };
+		AB5F6E3F99227FE69F376190 /* FRBMCCAPFormat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRBMCCAPFormat.h; sourceTree = "<group>"; };
+		AB5F6E83D9E0C6728163EBAB /* FRBMCCAPFormat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRBMCCAPFormat.m; sourceTree = "<group>"; };
+		AB5F6ECA39ACB2E064486C1A /* FRBASFormat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRBASFormat.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,7 +45,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				68C0458419C83279005E1B4D /* libHopperCommon.a in Frameworks */,
-				68F19B0D19C82CFE008F6CEA /* CoreFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -70,6 +62,17 @@
 				68C0458619C832F6005E1B4D /* FRBGeneric8x300.m */,
 			);
 			name = Chips;
+			sourceTree = "<group>";
+		};
+		68C539E81EE0A7440026B6B0 /* Formatters */ = {
+			isa = PBXGroup;
+			children = (
+				AB5F61CC2680600E4DC96E64 /* FRBASFormat.h */,
+				AB5F6ECA39ACB2E064486C1A /* FRBASFormat.m */,
+				AB5F6E3F99227FE69F376190 /* FRBMCCAPFormat.h */,
+				AB5F6E83D9E0C6728163EBAB /* FRBMCCAPFormat.m */,
+			);
+			name = Formatters;
 			sourceTree = "<group>";
 		};
 		68F19B0019C82CFE008F6CEA = {
@@ -102,17 +105,13 @@
 			isa = PBXGroup;
 			children = (
 				68C0458219C82EE4005E1B4D /* Chips */,
+				68C539E81EE0A7440026B6B0 /* Formatters */,
 				68F19B0F19C82CFE008F6CEA /* Supporting Files */,
-				68C0458819C8612F005E1B4D /* FRBBase.h */,
 				68C0457619C82D8A005E1B4D /* FRBContext.h */,
 				68C0457719C82D8A005E1B4D /* FRBContext.m */,
 				68C0457819C82D8A005E1B4D /* FRBDefinition.h */,
 				68C0457919C82D8A005E1B4D /* FRBDefinition.m */,
-				68C0457A19C82D8A005E1B4D /* FRBModelHandler.h */,
-				68C0457B19C82D8A005E1B4D /* FRBModelHandler.m */,
-				68C0457C19C82D8A005E1B4D /* FRBProvider.h */,
-				68C0458D19C8C259005E1B4D /* FRBInstructionColouriser.h */,
-				68C0458E19C8C259005E1B4D /* FRBInstructionColouriser.m */,
+				AB5F625295A26BD84C050121 /* FRBInstructionFormatter.h */,
 			);
 			path = 8x300;
 			sourceTree = "<group>";
@@ -120,10 +119,7 @@
 		68F19B0F19C82CFE008F6CEA /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				68C0458019C82D94005E1B4D /* models.plist */,
-				68F19B1019C82CFE008F6CEA /* 8x300-Info.plist */,
-				68F19B1119C82CFE008F6CEA /* InfoPlist.strings */,
-				68F19B1419C82CFE008F6CEA /* 8x300-Prefix.pch */,
+				68F19B1019C82CFE008F6CEA /* Info.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -137,7 +133,7 @@
 			buildPhases = (
 				68F19B0519C82CFE008F6CEA /* Sources */,
 				68F19B0619C82CFE008F6CEA /* Frameworks */,
-				68F19B0719C82CFE008F6CEA /* Resources */,
+				689DCCF31ECF3482009CB2FF /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -174,17 +170,21 @@
 		};
 /* End PBXProject section */
 
-/* Begin PBXResourcesBuildPhase section */
-		68F19B0719C82CFE008F6CEA /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
+/* Begin PBXShellScriptBuildPhase section */
+		689DCCF31ECF3482009CB2FF /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				68C0458119C82D94005E1B4D /* models.plist in Resources */,
-				68F19B1319C82CFE008F6CEA /* InfoPlist.strings in Resources */,
+			);
+			inputPaths = (
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "rm -rf \"${INSTALL_PATH}/8x300.hopperCPU\"\nmkdir -p \"${INSTALL_PATH}\"\ncp -rf \"${BUILT_PRODUCTS_DIR}/8x300.hopperCPU\" \"${INSTALL_PATH}\"\n";
 		};
-/* End PBXResourcesBuildPhase section */
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		68F19B0519C82CFE008F6CEA /* Sources */ = {
@@ -196,23 +196,12 @@
 				68C0457E19C82D8A005E1B4D /* FRBDefinition.m in Sources */,
 				683CF0AE19FB8AF500CCABAE /* FRBBase8x300.m in Sources */,
 				68C0458719C832F6005E1B4D /* FRBGeneric8x300.m in Sources */,
-				68C0457F19C82D8A005E1B4D /* FRBModelHandler.m in Sources */,
-				68C0458F19C8C259005E1B4D /* FRBInstructionColouriser.m in Sources */,
+				AB5F698BB1D86F60C87314DD /* FRBASFormat.m in Sources */,
+				AB5F60CFFE8515C416AD5D23 /* FRBMCCAPFormat.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXVariantGroup section */
-		68F19B1119C82CFE008F6CEA /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				68F19B1219C82CFE008F6CEA /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		68F19B1519C82CFE008F6CEA /* Debug */ = {
@@ -258,7 +247,7 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SRCROOT)/HopperSDK",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 			};
@@ -301,7 +290,7 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SRCROOT)/HopperSDK",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				SDKROOT = macosx;
 			};
 			name = Release;
@@ -310,19 +299,21 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
+				CLANG_STATIC_ANALYZER_MODE = shallow;
 				COMBINE_HIDPI_IMAGES = YES;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "8x300/8x300-Prefix.pch";
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 				);
-				INFOPLIST_FILE = "8x300/8x300-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				INFOPLIST_FILE = 8x300/Info.plist;
+				INSTALL_PATH = "$(USER_LIBRARY_DIR)/Application Support/Hopper/PlugIns/v4/CPUs";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/HopperPlugins-fzslwhyufvevicghqykcwcprlbow/Build/Products/Debug",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_BUNDLE_IDENTIFIER = "it.frob.hopper.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/HopperCommon";
@@ -334,19 +325,21 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
+				CLANG_STATIC_ANALYZER_MODE = shallow;
 				COMBINE_HIDPI_IMAGES = YES;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "8x300/8x300-Prefix.pch";
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 				);
-				INFOPLIST_FILE = "8x300/8x300-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				INFOPLIST_FILE = 8x300/Info.plist;
+				INSTALL_PATH = "$(USER_LIBRARY_DIR)/Application Support/Hopper/PlugIns/v4/CPUs";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/HopperPlugins-fzslwhyufvevicghqykcwcprlbow/Build/Products/Debug",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_BUNDLE_IDENTIFIER = "it.frob.hopper.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/HopperCommon";

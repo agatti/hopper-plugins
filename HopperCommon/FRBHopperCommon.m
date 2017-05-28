@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2014-2016, Alessandro Gatti - frob.it
+ Copyright (c) 2014-2017, Alessandro Gatti - frob.it
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -26,10 +26,12 @@
 
 #import "FRBHopperCommon.h"
 
+static NSString *const kSignedSizeErrorFormat =
+    @"Internal error: invalid signed value size %zu";
+
 void InitialiseDisasmStruct(DisasmStruct *disasmStruct) {
-  memset(disasmStruct->completeInstructionString, 0x00,
-         sizeof(disasmStruct->completeInstructionString));
   memset(&disasmStruct->instruction, 0x00, sizeof(DisasmInstruction));
+
   for (int index = 0; index < DISASM_MAX_OPERANDS; index++) {
     memset(&disasmStruct->operand[index], 0x00, sizeof(DisasmOperand));
     disasmStruct->operand[index].type = DISASM_OPERAND_NO_OPERAND;
@@ -44,24 +46,39 @@ int64_t SignedValue(NSNumber *value, size_t size) {
   if (size > 32) {
     @throw [NSException
         exceptionWithName:FRBHopperExceptionName
-                   reason:[NSString stringWithFormat:@"Internal error: invalid "
-                                                     @"signed value size %zu",
-                                                     size]
+                   reason:[NSString
+                              stringWithFormat:kSignedSizeErrorFormat, size]
                  userInfo:nil];
   }
 
-  uint32_t sizeMask = (1 << size) - 1;
-  uint32_t negativeBitMask = 1 << (size - 1);
+  uint32_t sizeMask = (uint32_t)((1 << size) - 1);
+  uint32_t negativeBitMask = (uint32_t)(1 << (size - 1));
 
   int64_t output = (int64_t)(value.unsignedLongLongValue & sizeMask);
   return (output & negativeBitMask) ? output - (1 << size) : output;
 }
 
-void SetDefaultFormatForArgument(id<HPDisassembledFile> file, Address address,
-                                 int argument, ArgFormat format) {
-  ArgFormat currentArgument =
-      [file formatForArgument:argument atVirtualAddress:address];
-  if (currentArgument == Format_Default) {
-    [file setFormat:format forArgument:argument atVirtualAddress:address];
+void SetDefaultFormatForArgument(NSObject<HPDisassembledFile> *file,
+                                 Address address, int argument,
+                                 ArgFormat format) {
+
+  if ([file formatForArgument:(NSUInteger)argument atVirtualAddress:address] !=
+      Format_Default) {
+    return;
   }
+
+  [file setFormat:format
+           forArgument:(NSUInteger)argument
+      atVirtualAddress:address];
+}
+
+void AddInlineCommentIfEmpty(NSObject<HPDisassembledFile> *_Nonnull file,
+                             Address address, NSString *_Nonnull comment) {
+  if ([file inlineCommentAtVirtualAddress:address]) {
+    return;
+  }
+
+  [file setInlineComment:comment
+        atVirtualAddress:address
+                  reason:CCReason_Automatic];
 }

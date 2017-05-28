@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2014-2015, Alessandro Gatti - frob.it
+ Copyright (c) 2014-2017, Alessandro Gatti - frob.it
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -22,11 +22,99 @@
  CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
  OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
+ */
 
-#import <Foundation/Foundation.h>
+@import Foundation;
 
-#import "FRBHopperCommon.h"
+@protocol FRBInstructionFormatter;
 
-@interface NAMESPACE(8x300Definition) : NSObject<CPUDefinition>
+#import <Hopper/Hopper.h>
+
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "OCUnusedClassInspection"
+
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "OCUnusedGlobalDeclarationInspection"
+
+typedef NS_ENUM(NSUInteger, FRBSyntaxType) {
+  FRBSyntaxAS = 0,
+  FRBSyntaxMCCAP,
+
+  FRBSyntaxCount
+};
+
+#pragma clang diagnostic pop
+
+typedef NS_ENUM(uint8_t, FRBInstructionType) {
+  FRBInstructionType1 = 0,
+  FRBInstructionType2,
+  FRBInstructionType3,
+  FRBInstructionType4,
+  FRBInstructionType5
+};
+
+typedef struct {
+  uint16_t opcode : 3;
+  uint16_t source : 5;
+  uint16_t rotation : 3;
+  uint16_t destination : 5;
+} FRBFieldsInstructionType1;
+
+typedef struct {
+  uint16_t opcode : 3;
+  uint16_t source : 5;
+  uint16_t length : 3;
+  uint16_t destination : 5;
+} FRBFieldsInstructionType2;
+
+typedef struct {
+  uint16_t opcode : 3;
+  uint16_t source : 5;
+  uint16_t literal : 8;
+} FRBFieldsInstructionType3;
+
+typedef struct {
+  uint16_t opcode : 3;
+  uint16_t source : 5;
+  uint16_t length : 3;
+  uint16_t literal : 5;
+} FRBFieldsInstructionType4;
+
+typedef struct {
+  uint16_t opcode : 3;
+  uint16_t immediate : 12;
+} FRBFieldsInstructionType5;
+
+typedef union {
+  FRBFieldsInstructionType1 type1;
+  FRBFieldsInstructionType2 type2;
+  FRBFieldsInstructionType3 type3;
+  FRBFieldsInstructionType4 type4;
+  FRBFieldsInstructionType5 type5;
+} FRBFieldsInstruction;
+
+typedef struct {
+  uintptr_t opcode : 4;
+  uintptr_t encoding : 3;
+  uintptr_t haltsExecution : 1;
+  uintptr_t type : 3;
+  uintptr_t reserved : 5;
+  uintptr_t instruction : 16;
+} FRBInstructionUserData;
+
+/**
+ * CPU Definition class for the 8x300 disassembler plugin.
+ */
+@interface ItFrobHopper8x300Definition : NSObject <CPUDefinition>
+
+/**
+ * Hopper Services instance.
+ */
+@property(strong, nonatomic, nonnull) NSObject<HPHopperServices> *services;
+
+- (NSObject<FRBInstructionFormatter> *_Nullable)formatterForSyntax:
+    (FRBSyntaxType)syntaxType;
+
 @end
+
+#pragma clang diagnostic pop

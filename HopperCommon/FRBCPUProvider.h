@@ -24,48 +24,80 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import <Foundation/Foundation.h>
+@import Foundation;
 
-/*!
+#import <Hopper/Hopper.h>
+
+/**
  * Protocol for CPU providers.
  */
 @protocol FRBCPUProvider <NSObject>
 
-/*!
- * Provider name.
+/**
+ * Returns the family name for the CPU.
+ *
+ * @return the family name for the CPU.
  */
-@property(strong, nonatomic, readonly) NSString *name;
++ (NSString *_Nonnull)family;
 
-/*!
+/**
+ * Returns the model name for the CPU.
+ *
+ * @return the model name for the CPU.
+ */
++ (NSString *_Nonnull)model;
+
+/**
+ * Returns a flag indicating whether the CPU provider must be enumerated or not.
+ *
+ * @return YES if the CPU provider should be enumerated, NO otherwise.
+ */
++ (BOOL)exported;
+
+/**
+ * Returns the address space width, in bits, for the CPU.
+ *
+ * @return the address space width, in bits, for the CPU.
+ */
++ (int)addressSpaceWidth;
+
+/**
  * Processes the given disassembly structure.
  *
- * @param structure the structure with the current opcode data, if any.
- * @param file      the currently disassembled file.
+ * @param[in] structure the structure with the current opcode data, if any.
+ * @param[in] file      the currently disassembled file.
  *
  * @return how many bytes have been processed, or DISASM_UNKNOWN_OPCODE.
  */
-- (int)processStructure:(DisasmStruct *)structure
-                 onFile:(id<HPDisassembledFile>)file;
+- (int)processStructure:(DisasmStruct *_Nonnull)structure
+                 onFile:(NSObject<HPDisassembledFile> *_Nonnull)file;
 
-/*!
+/**
  * Checks if the given disassembly structure content halts execution flow
  * or not.
  *
- * @param structure the structure to check.
+ * @param[in] structure the structure to check.
  *
  * @return YES if the structure content halts execution flow, NO otherwise.
  */
-- (BOOL)haltsExecutionFlow:(const DisasmStruct *)structure;
+- (BOOL)haltsExecutionFlow:(const DisasmStruct *_Nonnull)structure;
 
-/*!
- * Creates an assemblable representation of the given disassembly
- * structure.
- *
- * @param structure the structure with the current opcode data, if any.
- * @param file      the currently disassembled file.
- * @param services  the shared Hopper services instance.
- */
-- (void)formatInstruction:(DisasmStruct *)structure
-                   onFile:(id<HPDisassembledFile>)file
-             withServices:(id<HPHopperServices>)services;
+- (NSObject<HPASMLine> *_Nonnull)
+buildMnemonicString:(DisasmStruct *_Nonnull)disasm
+             inFile:(NSObject<HPDisassembledFile> *_Nonnull)file
+       withServices:(NSObject<HPHopperServices> *_Nonnull)services;
+
+- (NSObject<HPASMLine> *_Nullable)
+buildOperandString:(DisasmStruct *_Nonnull)disasm
+   forOperandIndex:(NSUInteger)operandIndex
+            inFile:(NSObject<HPDisassembledFile> *_Nonnull)file
+               raw:(BOOL)raw
+      withServices:(NSObject<HPHopperServices> *_Nonnull)services;
+
+- (NSObject<HPASMLine> *_Nullable)
+buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
+                    inFile:(NSObject<HPDisassembledFile> *_Nonnull)file
+                       raw:(BOOL)raw
+              withServices:(NSObject<HPHopperServices> *_Nonnull)services;
+
 @end

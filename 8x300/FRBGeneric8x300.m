@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2014-2015, Alessandro Gatti - frob.it
+ Copyright (c) 2014-2017, Alessandro Gatti - frob.it
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -24,203 +24,204 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import "FRBBase.h"
 #import "FRBGeneric8x300.h"
-#import "FRBModelHandler.h"
 
-@interface NAMESPACE(8x300Generic8x300) ()
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "OCUnusedClassInspection"
 
+@interface ItFrobHopper8x300Generic8x300 ()
+
+/**
+ * Checks if the given register identifier is valid.
+ *
+ * @param[in] registerNumber the register identifier to check.
+ *
+ * @return YES if the given register identifier is valid, NO otherwise.
+ */
 - (BOOL)isRegisterValid:(uint)registerNumber;
+
+/**
+ * Performs some additional checks to make sure the ALU opcode is valid.
+ *
+ * @param[in] opcode the opcode word to check.
+ *
+ * @return YES if the given opcode is valid, NO otherwise.
+ */
 - (BOOL)isValidALUOpcode:(uint16_t)opcode;
+
 - (BOOL)isValidTargetOpcode:(uint16_t)opcode;
 
 @end
 
-@implementation NAMESPACE(8x300Generic8x300)
+@implementation ItFrobHopper8x300Generic8x300
 
-static NSString * const kProviderName = @"it.frob.hopper.generic8x300";
-
-@synthesize name;
-
-- (instancetype)init {
-    if (self = [super init]) {
-        name = kProviderName;
-    }
-
-    return self;
++ (NSString *_Nonnull)family {
+  return @"Generic";
 }
 
-+ (void)load {
-    [[NAMESPACE(8x300ModelHandler) sharedModelHandler] registerProvider:[NAMESPACE(8x300Generic8x300) class]
-                                                                 forName:kProviderName];
++ (NSString *_Nonnull)model {
+  return @"8x300";
+}
+
++ (BOOL)exported {
+  return YES;
+}
+
++ (int)addressSpaceWidth {
+  return 16;
 }
 
 #pragma mark - Private methods
 
 - (BOOL)isRegisterValid:(uint)registerNumber {
-    switch (registerNumber) {
-        case FRB8x300RegisterR12:
-        case FRB8x300RegisterR13:
-        case FRB8x300RegisterR14:
-        case FRB8x300RegisterR15:
-        case FRB8x300RegisterR16:
-            return NO;
+  switch (registerNumber) {
+  case FRBRegisterR12:
+  case FRBRegisterR13:
+  case FRBRegisterR14:
+  case FRBRegisterR15:
+  case FRBRegisterR16:
+    return NO;
 
-        default:
-            return YES;
-    }
+  default:
+    return YES;
+  }
 }
 
 - (BOOL)isValidALUOpcode:(uint16_t)opcode {
-    int sourceRegister = (opcode >> 8) & 0x001F;
-    int destinationRegister = opcode & 0x001F;
+  int sourceRegister = (opcode >> 8) & 0x001F;
+  int destinationRegister = opcode & 0x001F;
 
-    if (![self isRegisterValid:sourceRegister] ||
-        ![self isRegisterValid:destinationRegister]) {
-        return NO;
+  if (![self isRegisterValid:(uint)sourceRegister] ||
+      ![self isRegisterValid:(uint)destinationRegister]) {
+    return NO;
+  }
+
+  switch (opcode & 0x1010) {
+  case 0x0000:
+
+    // Register to Register
+
+    if (sourceRegister == FRBRegisterIVL || sourceRegister == FRBRegisterIVR ||
+        destinationRegister == FRBRegisterOVF) {
+      return NO;
     }
+    break;
 
-    switch (opcode & 0x1010) {
-        case 0x0000:
+  case 0x0010:
 
-            // Register to Register
+    // Register to I/O bus
 
-            if (sourceRegister == FRB8x300RegisterIVL ||
-                sourceRegister == FRB8x300RegisterIVR ||
-                destinationRegister == FRB8x300RegisterOVF) {
-
-                return NO;
-            }
-            break;
-
-        case 0x0010:
-
-            // Register to I/O bus
-
-            if (sourceRegister == FRB8x300RegisterIVL ||
-                sourceRegister == FRB8x300RegisterIVR) {
-
-                return NO;
-            }
-            break;
-
-        case 0x1000:
-
-            // I/O bus to register
-
-            if (destinationRegister == FRB8x300RegisterOVF) {
-                return NO;
-            }
-            break;
-            
-        default:
-            break;
+    if (sourceRegister == FRBRegisterIVL || sourceRegister == FRBRegisterIVR) {
+      return NO;
     }
+    break;
 
-    return YES;
+  case 0x1000:
+
+    // I/O bus to register
+
+    if (destinationRegister == FRBRegisterOVF) {
+      return NO;
+    }
+    break;
+
+  default:
+    break;
+  }
+
+  return YES;
 }
 
 - (BOOL)isValidTargetOpcode:(uint16_t)opcode {
-    uint registerId = (opcode >> 8) & 0x001F;
+  uint registerId = (uint)((opcode >> 8) & 0x001F);
 
-    if (![self isRegisterValid:registerId]) {
-        return NO;
-    }
-
-    if (((opcode & 0x1000) == 0x0000) && (registerId == FRB8x300RegisterIVL ||
-                                          registerId == FRB8x300RegisterIVR)) {
-        return NO;
-    }
-
-    return YES;
+  return [self isRegisterValid:registerId] &&
+         !(((opcode & 0x1000) == 0x0000) &&
+           (registerId == FRBRegisterIVL || registerId == FRBRegisterIVR));
 }
 
 #pragma mark - Opcode handlers
 
 - (BOOL)handleMOVEOpcode:(uint16_t)opcode
-            forStructure:(DisasmStruct *)structure
-                  onFile:(id<HPDisassembledFile>)file {
-    if (![self isValidALUOpcode:opcode]) {
-        return NO;
-    }
+            forStructure:(DisasmStruct *_Nonnull)structure
+                  onFile:(NSObject<HPDisassembledFile> *_Nonnull)file
+                metadata:(FRBInstructionUserData *_Nonnull)metadata {
 
-    return [super handleMOVEOpcode:opcode
-                      forStructure:structure
-                            onFile:file];
+  return [self isValidALUOpcode:opcode] && [super handleMOVEOpcode:opcode
+                                                      forStructure:structure
+                                                            onFile:file
+                                                          metadata:metadata];
 }
 
 - (BOOL)handleADDOpcode:(uint16_t)opcode
-           forStructure:(DisasmStruct *)structure
-                 onFile:(id<HPDisassembledFile>)file {
-    if (![self isValidALUOpcode:opcode]) {
-        return NO;
-    }
+           forStructure:(DisasmStruct *_Nonnull)structure
+                 onFile:(NSObject<HPDisassembledFile> *_Nonnull)file
+               metadata:(FRBInstructionUserData *_Nonnull)metadata {
 
-    return [super handleADDOpcode:opcode
-                     forStructure:structure
-                           onFile:file];
+  return [self isValidALUOpcode:opcode] && [super handleADDOpcode:opcode
+                                                     forStructure:structure
+                                                           onFile:file
+                                                         metadata:metadata];
 }
 
 - (BOOL)handleANDOpcode:(uint16_t)opcode
-           forStructure:(DisasmStruct *)structure
-                 onFile:(id<HPDisassembledFile>)file {
-    if (![self isValidALUOpcode:opcode]) {
-        return NO;
-    }
+           forStructure:(DisasmStruct *_Nonnull)structure
+                 onFile:(NSObject<HPDisassembledFile> *_Nonnull)file
+               metadata:(FRBInstructionUserData *_Nonnull)metadata {
 
-    return [super handleANDOpcode:opcode
-                     forStructure:structure
-                           onFile:file];
+  return [self isValidALUOpcode:opcode] && [super handleANDOpcode:opcode
+                                                     forStructure:structure
+                                                           onFile:file
+                                                         metadata:metadata];
 }
 
 - (BOOL)handleXOROpcode:(uint16_t)opcode
-           forStructure:(DisasmStruct *)structure
-                 onFile:(id<HPDisassembledFile>)file {
-    if (![self isValidALUOpcode:opcode]) {
-        return NO;
-    }
+           forStructure:(DisasmStruct *_Nonnull)structure
+                 onFile:(NSObject<HPDisassembledFile> *_Nonnull)file
+               metadata:(FRBInstructionUserData *_Nonnull)metadata {
 
-    return [super handleXOROpcode:opcode
-                     forStructure:structure
-                           onFile:file];
+  return [self isValidALUOpcode:opcode] && [super handleXOROpcode:opcode
+                                                     forStructure:structure
+                                                           onFile:file
+                                                         metadata:metadata];
 }
 
 - (BOOL)handleXECOpcode:(uint16_t)opcode
-           forStructure:(DisasmStruct *)structure
-                 onFile:(id<HPDisassembledFile>)file {
-    if (![self isValidTargetOpcode:opcode]) {
-        return NO;
-    }
+           forStructure:(DisasmStruct *_Nonnull)structure
+                 onFile:(NSObject<HPDisassembledFile> *_Nonnull)file
+               metadata:(FRBInstructionUserData *_Nonnull)metadata {
 
-    return [super handleXECOpcode:opcode
-                     forStructure:structure
-                           onFile:file];
+  return [self isValidTargetOpcode:opcode] && [super handleXECOpcode:opcode
+                                                        forStructure:structure
+                                                              onFile:file
+                                                            metadata:metadata];
 }
 
 - (BOOL)handleNZTOpcode:(uint16_t)opcode
-           forStructure:(DisasmStruct *)structure
-                 onFile:(id<HPDisassembledFile>)file {
-    if (![self isValidTargetOpcode:opcode]) {
-        return NO;
-    }
+           forStructure:(DisasmStruct *_Nonnull)structure
+                 onFile:(NSObject<HPDisassembledFile> *_Nonnull)file
+               metadata:(FRBInstructionUserData *_Nonnull)metadata {
 
-    return [super handleNZTOpcode:opcode
-                     forStructure:structure
-                           onFile:file];
+  return [self isValidTargetOpcode:opcode] && [super handleNZTOpcode:opcode
+                                                        forStructure:structure
+                                                              onFile:file
+                                                            metadata:metadata];
 }
 
 - (BOOL)handleXMITOpcode:(uint16_t)opcode
-            forStructure:(DisasmStruct *)structure
-                  onFile:(id<HPDisassembledFile>)file {
-    uint registerId = (opcode >> 8) & 0x001F;
-    if (![self isRegisterValid:registerId] || (((opcode & 0x1000) == 0x0000) &&
-                                               (registerId == FRB8x300RegisterIVL))) {
-        return NO;
-    }
+            forStructure:(DisasmStruct *_Nonnull)structure
+                  onFile:(NSObject<HPDisassembledFile> *_Nonnull)file
+                metadata:(FRBInstructionUserData *_Nonnull)metadata {
 
-    return [super handleXMITOpcode:opcode
-                      forStructure:structure
-                            onFile:file];
+  uint registerId = (uint)((opcode >> 8) & 0b11111);
+  return !(![self isRegisterValid:registerId] ||
+           (((opcode & 0x1000) == 0x0000) && (registerId == FRBRegisterIVL))) &&
+         [super handleXMITOpcode:opcode
+                    forStructure:structure
+                          onFile:file
+                        metadata:metadata];
 }
 
 @end
+
+#pragma clang diagnostic pop

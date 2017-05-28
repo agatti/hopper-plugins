@@ -55,8 +55,7 @@ NSString *FormatValue(NSNumber *value, const DisasmStruct *source,
 
   case Format_Offset:
   case Format_Address: {
-    NSString *address = [[services currentDocument]
-                             .disassembledFile
+    NSString *address = [[services currentDocument].disassembledFile
         nameForVirtualAddress:value.unsignedLongLongValue];
     return address ? address
                    : [FormatHexadecimal(value, size, NO,

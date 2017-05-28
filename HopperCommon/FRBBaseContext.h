@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2014-2015, Alessandro Gatti - frob.it
+ Copyright (c) 2014-2017, Alessandro Gatti - frob.it
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -24,10 +24,11 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import <Foundation/Foundation.h>
+@import Foundation;
+
 #import <Hopper/Hopper.h>
 
-/*!
+/**
  * Concrete class to derive CPU Context classes from, removing loads
  * of boilerplate.
  */

@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2014-2015, Alessandro Gatti - frob.it
+ Copyright (c) 2014-2017, Alessandro Gatti - frob.it
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -24,7 +24,7 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import <Foundation/Foundation.h>
+@import Foundation;
 
 /*
  According to Apple documentation ("Code Loading Programming Topics"):
@@ -42,7 +42,7 @@
  category of their own.
  */
 
-/*!
+/**
  * Returns a NSData object with the given size and filled with the chosen
  * filler byte.
  *
@@ -54,7 +54,7 @@
  */
 NSData *NSDataWithFiller(const uint8_t filler, NSUInteger length);
 
-/*!
+/**
  * Returns a NSMutableData object with the given size and filled with the
  * chosen filler byte.
  *

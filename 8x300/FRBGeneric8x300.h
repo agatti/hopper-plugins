@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2014-2015, Alessandro Gatti - frob.it
+ Copyright (c) 2014-2017, Alessandro Gatti - frob.it
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -24,10 +24,15 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import <Foundation/Foundation.h>
+@import Foundation;
 
-#import "FRBHopperCommon.h"
 #import "FRBBase8x300.h"
 
-@interface NAMESPACE(8x300Generic8x300) : NAMESPACE(8x300Base8x300)
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "OCUnusedClassInspection"
+
+@interface ItFrobHopper8x300Generic8x300
+    : ItFrobHopper8x300Base8x300 <FRBCPUProvider>
 @end
+
+#pragma clang diagnostic pop

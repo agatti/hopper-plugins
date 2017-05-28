@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2014-2015, Alessandro Gatti - frob.it
+ Copyright (c) 2014-2017, Alessandro Gatti - frob.it
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -24,22 +24,10 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import <Foundation/Foundation.h>
+@import Foundation;
 
-#import "FRBHopperCommon.h"
+#import "FRBInstructionFormatter.h"
 
-@protocol FRBProvider;
-
-@interface NAMESPACE(8x300ModelHandler) : NSObject
-
-+ (instancetype)sharedModelHandler;
-
-@property (strong, nonatomic, readonly) NSDictionary *models;
-
-- (void)registerProvider:(Class)provider
-                 forName:(NSString *)name;
-- (NSString *)providerNameForFamily:(NSString *)family
-                       andSubFamily:(NSString *)subFamily;
-- (id<FRBProvider>)providerForName:(NSString *)name;
+@interface FRBASFormat : NSObject <FRBInstructionFormatter>
 
 @end

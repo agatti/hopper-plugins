@@ -1,5 +1,5 @@
-/*!
- Copyright (c) 2014, Alessandro Gatti
+/*
+ Copyright (c) 2014-2016, Alessandro Gatti - frob.it
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -24,8 +24,23 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifdef __OBJC__
-    #import <Cocoa/Cocoa.h>
-#endif
+#import "NSDataWithFill.h"
 
-#import <Hopper/Hopper.h>
+static NSMutableData *newData(const uint8_t filler, NSUInteger length);
+
+NSData *NSDataWithFiller(const uint8_t filler, NSUInteger length) {
+  return newData(filler, length);
+}
+
+NSMutableData *NSMutableDataWithFiller(const uint8_t filler,
+                                       NSUInteger length) {
+  return newData(filler, length);
+}
+
+NSMutableData *newData(const uint8_t filler, NSUInteger length) {
+  NSMutableData *data = [[NSMutableData alloc] initWithCapacity:length];
+  if (data) {
+    memset(data.mutableBytes, filler, length);
+  }
+  return data;
+}

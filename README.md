@@ -259,7 +259,7 @@ CPU backends currently supported: 65816.
 
 ### **8x300 CPU Plugin**
 
-_version 0.0.2_
+_version 0.1.0_
 
 This CPU core plugin allows you to disassemble 8x300 code, used in early signal processing equipment in the 70s and early 80s.
 
@@ -285,10 +285,15 @@ CPU backends currently supported: 8x300, 8x305.
 
 #### TODO for next version:
 
-* Simplify opcodes by removing redundant zero rotations and lengths.
-* Create a test suite.
 * Add support for more 8x300 variants if any are found in the wild.
 * Attempt to reject files too big for address-space reduced chip variants.
+* Automatic variable extraction for generated `SEL` opcodes.
+
+#### Caveats
+
+* Rebuilding the test binaries requires having the [AS Macroassembler](http://www.alfsembler.de/) command line tools available in your `PATH` variable.
+* If MCCAP syntax is used, comments will still start with `;` instead than with `*` as expected.  As far as the author can see, this is something that cannot fixed by the plugin but by the Hopper authors directly.
+* The MCCAP does not support negation for constant operands, therefore attempting to mark a constant as negated will not yield anything.  Negation works as intended if using the AS syntax.
 
 <hr/>
 

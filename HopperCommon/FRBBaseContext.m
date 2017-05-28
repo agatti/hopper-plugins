@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2014-2015, Alessandro Gatti - frob.it
+ Copyright (c) 2014-2017, Alessandro Gatti - frob.it
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -30,7 +30,7 @@
 
 @implementation ItFrobHopperHopperCommonBaseContext
 
-- (id<CPUDefinition>)cpuDefinition {
+- (NSObject<CPUDefinition> *)cpuDefinition {
   @throw [NSException
       exceptionWithName:FRBHopperExceptionName
                  reason:[NSString stringWithFormat:@"Forgot to override %s",
@@ -55,6 +55,10 @@
   return NO;
 }
 
+- (uint8_t)estimateCPUModeAtVirtualAddress:(Address)address {
+  return 0;
+}
+
 - (Address)nextAddressToTryIfInstructionFailedToDecodeAt:(Address)address
                                               forCPUMode:(uint8_t)mode {
   return address + 1;
@@ -68,17 +72,21 @@
   return NO;
 }
 
+- (NSUInteger)detectedPaddingLengthAt:(Address)address {
+  return 0;
+}
+
 - (void)analysisBeginsAt:(Address)entryPoint {
 }
 
 - (void)analysisEnded {
 }
 
-- (void)procedureAnalysisBeginsForProcedure:(id<HPProcedure>)procedure
+- (void)procedureAnalysisBeginsForProcedure:(NSObject<HPProcedure> *)procedure
                                atEntryPoint:(Address)entryPoint {
 }
 
-- (void)procedureAnalysisOfPrologForProcedure:(id<HPProcedure>)procedure
+- (void)procedureAnalysisOfPrologForProcedure:(NSObject<HPProcedure> *)procedure
                                  atEntryPoint:(Address)entryPoint {
 }
 
@@ -86,18 +94,15 @@
                                  atEntryPoint:(Address)entryPoint {
 }
 
-- (void)procedureAnalysisEndedForProcedure:(id<HPProcedure>)procedure
+- (void)procedureAnalysisEndedForProcedure:(NSObject<HPProcedure> *)procedure
                               atEntryPoint:(Address)entryPoint {
 }
 
-- (void)procedureAnalysisContinuesOnBasicBlock:(id<HPBasicBlock>)basicBlock {
+- (void)procedureAnalysisContinuesOnBasicBlock:
+    (NSObject<HPBasicBlock> *)basicBlock {
 }
 
 - (void)resetDisassembler {
-}
-
-- (uint8_t)estimateCPUModeAtVirtualAddress:(Address)address {
-  return 0;
 }
 
 - (int)disassembleSingleInstruction:(DisasmStruct *)disasm
@@ -109,11 +114,6 @@
                userInfo:nil];
 }
 
-- (BOOL)instructionCanBeUsedToExtractDirectMemoryReferences:
-    (DisasmStruct *)disasmStruct {
-  return YES;
-}
-
 - (BOOL)instructionHaltsExecutionFlow:(DisasmStruct *)disasm {
   @throw [NSException
       exceptionWithName:FRBHopperExceptionName
@@ -122,19 +122,40 @@
                userInfo:nil];
 }
 
+- (void)updateProcedureAnalysis:(DisasmStruct *)disasm {
+}
+
+- (BOOL)instructionCanBeUsedToExtractDirectMemoryReferences:
+    (DisasmStruct *)disasmStruct {
+  return YES;
+}
+
+- (BOOL)instructionOnlyLoadsAddress:(DisasmStruct *)disasmStruct {
+  return NO;
+}
+
+- (BOOL)instructionMayBeASwitchStatement:(DisasmStruct *)disasmStruct {
+  return NO;
+}
+
 - (void)performBranchesAnalysis:(DisasmStruct *)disasm
            computingNextAddress:(Address *)next
-                    andBranches:(NSMutableArray *)branches
-                   forProcedure:(id<HPProcedure>)procedure
-                     basicBlock:(id<HPBasicBlock>)basicBlock
-                      ofSegment:(id<HPSegment>)segment
-                calledAddresses:(NSMutableArray *)calledAddresses
-                      callsites:(NSMutableArray *)callSitesAddresses {
+                    andBranches:(NSMutableArray<NSNumber *> *)branches
+                   forProcedure:(NSObject<HPProcedure> *)procedure
+                     basicBlock:(NSObject<HPBasicBlock> *)basicBlock
+                      ofSegment:(NSObject<HPSegment> *)segment
+                calledAddresses:(NSMutableArray<NSNumber *> *)calledAddresses
+                      callsites:
+                          (NSMutableArray<NSNumber *> *)callSitesAddresses {
 }
 
 - (void)performInstructionSpecificAnalysis:(DisasmStruct *)disasm
-                              forProcedure:(id<HPProcedure>)procedure
-                                 inSegment:(id<HPSegment>)segment {
+                              forProcedure:(NSObject<HPProcedure> *)procedure
+                                 inSegment:(NSObject<HPSegment> *)segment {
+}
+
+- (Address)getThunkDestinationForInstructionAt:(Address)address {
+  return BAD_ADDRESS;
 }
 
 - (void)performProcedureAnalysis:(id<HPProcedure>)procedure
@@ -142,13 +163,9 @@
                           disasm:(DisasmStruct *)disasm {
 }
 
-- (void)updateProcedureAnalysis:(DisasmStruct *)disasm {
-}
-
-- (void)buildInstructionString:(DisasmStruct *)disasm
-                    forSegment:(id<HPSegment>)segment
-                populatingInfo:
-                    (id<HPFormattedInstructionInfo>)formattedInstructionInfo {
+- (NSObject<HPASMLine> *)buildMnemonicString:(DisasmStruct *)disasm
+                                      inFile:
+                                          (NSObject<HPDisassembledFile> *)file {
   @throw [NSException
       exceptionWithName:FRBHopperExceptionName
                  reason:[NSString stringWithFormat:@"Forgot to override %s",
@@ -156,22 +173,44 @@
                userInfo:nil];
 }
 
-- (BOOL)canDecompileProcedure:(id<HPProcedure>)procedure {
+- (NSObject<HPASMLine> *)buildOperandString:(DisasmStruct *)disasm
+                            forOperandIndex:(NSUInteger)operandIndex
+                                     inFile:(NSObject<HPDisassembledFile> *)file
+                                        raw:(BOOL)raw {
+  @throw [NSException
+      exceptionWithName:FRBHopperExceptionName
+                 reason:[NSString stringWithFormat:@"Forgot to override %s",
+                                                   __PRETTY_FUNCTION__]
+               userInfo:nil];
+}
+
+- (NSObject<HPASMLine> *)
+buildCompleteOperandString:(DisasmStruct *)disasm
+                    inFile:(NSObject<HPDisassembledFile> *)file
+                       raw:(BOOL)raw {
+  @throw [NSException
+      exceptionWithName:FRBHopperExceptionName
+                 reason:[NSString stringWithFormat:@"Forgot to override %s",
+                                                   __PRETTY_FUNCTION__]
+               userInfo:nil];
+}
+
+- (BOOL)canDecompileProcedure:(NSObject<HPProcedure> *)procedure {
   return NO;
 }
 
-- (Address)skipHeader:(id<HPBasicBlock>)basicBlock
-          ofProcedure:(id<HPProcedure>)procedure {
+- (Address)skipHeader:(NSObject<HPBasicBlock> *)basicBlock
+          ofProcedure:(NSObject<HPProcedure> *)procedure {
   return basicBlock.from;
 }
 
-- (Address)skipFooter:(id<HPBasicBlock>)basicBlock
-          ofProcedure:(id<HPProcedure>)procedure {
+- (Address)skipFooter:(NSObject<HPBasicBlock> *)basicBlock
+          ofProcedure:(NSObject<HPProcedure> *)procedure {
   return basicBlock.to;
 }
 
 - (ASTNode *)decompileInstructionAtAddress:(Address)a
-                                    disasm:(DisasmStruct)d
+                                    disasm:(DisasmStruct *)d
                                  addNode_p:(BOOL *)addNode_p
                            usingDecompiler:(Decompiler *)decompiler {
   return nil;
@@ -179,19 +218,11 @@
 
 - (NSData *)assembleRawInstruction:(NSString *)instr
                          atAddress:(Address)addr
-                           forFile:(id<HPDisassembledFile>)file
+                           forFile:(NSObject<HPDisassembledFile> *)file
                        withCPUMode:(uint8_t)cpuMode
                 usingSyntaxVariant:(NSUInteger)syntax
                              error:(NSError **)error {
   return nil;
-}
-
-- (BOOL)instructionMayBeASwitchStatement:(DisasmStruct *)disasmStruct {
-  return NO;
-}
-
-- (Address)getThunkDestinationForInstructionAt:(Address)address {
-  return BAD_ADDRESS;
 }
 
 @end

@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2014-2016, Alessandro Gatti - frob.it
+ Copyright (c) 2014-2017, Alessandro Gatti - frob.it
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -24,43 +24,74 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import <Foundation/Foundation.h>
+@import Foundation;
+
 #import <Hopper/Hopper.h>
 
-#define NAMESPACE(entity) ItFrobHopper##entity
+/**
+ * Macro for calculating the amount of items contained in an array.
+ *
+ * @param[in] array the array to get the amount of items for.
+ */
+#define ARRAY_SIZE(array) (sizeof(array) / sizeof(array[0]))
 
-/*!
+/**
+ * Macro for extracting the format type, ignoring modifiers.
+ *
+ * @param[in] format the format to get the type for.
+ */
+#define RAW_FORMAT(format) ((format)&FORMAT_TYPE_MASK)
+
+#define FORMAT_MODIFIERS(format) ((format) & ~FORMAT_TYPE_MASK)
+#define FORMAT_IS_SIGNED(format) (((format)&Format_Signed) == Format_Signed)
+#define FORMAT_IS_NEGATED(format) (((format)&Format_Negated) == Format_Negated)
+#define FORMAT_HAS_LEADING_ZEROES(format)                                      \
+  (((format)&Format_LeadingZeroes) == Format_LeadingZeroes)
+
+/**
  * Internal exception identifier.
  */
-static NSString *FRBHopperExceptionName = @"it.frob.hopper.internalexception";
+static NSString *_Nonnull FRBHopperExceptionName =
+    @"it.frob.hopper.internalexception";
 
-/*!
+/**
  * Initialises the given DisasmStruct structure.
  *
- * @param disasmStruct the structure to initialise.
+ * @param[in] disasmStruct the structure to initialise.
  */
-void InitialiseDisasmStruct(DisasmStruct *disasmStruct);
+void InitialiseDisasmStruct(DisasmStruct *_Nonnull disasmStruct);
 
-/*!
+/**
  * Extracts a signed value out of the given NSNumber instance.
  *
  * A value is assumed as negative if and only if the value returned by
  * NSNumber has the most significant bit set to 1.
  *
- * @param value the number to get a signed representation of.
- * @param size  the size of the value in bits.
+ * @param[in] value the number to get a signed representation of.
+ * @param[out] size  the size of the value in bits.
  *
  * @return the signed value representation of the given NSNumber instance.
  */
-int64_t SignedValue(NSNumber *value, size_t size);
+int64_t SignedValue(NSNumber *_Nonnull value, size_t size);
 
-/*!
+/**
  * Changes format for the given argument, if it is still set as default.
  *
- * @param file    the file to operate on.
- * @param address the instruction address.
- * @param operand the index of the argument to change.
- * @param format  the new format for the argument.
+ * @param[in] file    the file to operate on.
+ * @param[in] address the instruction address.
+ * @param[in] operand the index of the argument to change.
+ * @param[in] format  the new format for the argument.
  */
-void SetDefaultFormatForArgument(id<HPDisassembledFile> file, Address address,
-                                 int argument, ArgFormat format);
+void SetDefaultFormatForArgument(NSObject<HPDisassembledFile> *_Nonnull file,
+                                 Address address, int argument,
+                                 ArgFormat format);
+
+/**
+ * Adds an inline comment at the given address if none is already present.
+ *
+ * @param[in] file    the file to operate on
+ * @param[in] address the instruction address.
+ * @param[in] comment the comment contents.
+ */
+void AddInlineCommentIfEmpty(NSObject<HPDisassembledFile> *_Nonnull file,
+                             Address address, NSString *_Nonnull comment);

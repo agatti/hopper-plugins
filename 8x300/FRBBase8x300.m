@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2014-2015, Alessandro Gatti - frob.it
+ Copyright (c) 2014-2017, Alessandro Gatti - frob.it
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -24,506 +24,830 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import "FRBBase.h"
 #import "FRBBase8x300.h"
-#import "FRBModelHandler.h"
-#import "FRBOperandFormatter.h"
-#import "FRBHopperCommon.h"
+#import "FRBDefinition.h"
+#import "FRBInstructionFormatter.h"
 
-typedef NS_ENUM(uint32_t, EncodingType) {
-    FRB8x300EncodingTypeSingle = 0,
-    FRB8x300EncodingTypeWithRotation,
-    FRB8x300EncodingTypeWithLength,
-    FRB8x300EncodingTypeAssignment,
-    FRB8x300EncodingTypeOffset,
-    FRB8x300EncodingTypeOffsetWithLength,
+#define OPCODE_FROM_WORD(word) ((FRBOpcode)((word) >> 13))
+
+typedef NS_OPTIONS(NSUInteger, RegisterFlags) {
+  RegisterFlagAUX = 1 << FRBRegisterAUX,
+  RegisterFlagOVF = 1 << FRBRegisterOVF
 };
 
-@interface NAMESPACE(8x300Base8x300) () {
-    NSArray *_instructionFormats;
-}
+/**
+ * CPU opcode names.
+ */
+static const char *kOpcodeNames[FRBOpcodesCount] = {
+    "MOVE", "ADD", "AND", "XOR",  "XEC", "NZT",
+    "XMIT", "JMP", "NOP", "HALT", "XML", "XMR"};
 
-- (BOOL)handleALUInstruction:(DisasmStruct *)structure
-                      onFile:(id<HPDisassembledFile>)file
-                  withOpcode:(uint16_t)opcode;
-- (BOOL)handleNZTInstruction:(DisasmStruct *)structure
-                      onFile:(id<HPDisassembledFile>)file
-                  withOpcode:(uint16_t)opcode;
-- (BOOL)handleXECInstruction:(DisasmStruct *)structure
-                      onFile:(id<HPDisassembledFile>)file
-                  withOpcode:(uint16_t)opcode;
-- (BOOL)handleXMITInstruction:(DisasmStruct *)structure
-                       onFile:(id<HPDisassembledFile>)file
-                   withOpcode:(uint16_t)opcode;
-- (BOOL)handleJMPInstruction:(DisasmStruct *)structure
-                      onFile:(id<HPDisassembledFile>)file
-                  withOpcode:(uint16_t)opcode;
+@interface ItFrobHopper8x300Base8x300 ()
+
+/**
+ * Handle potential ALU instructions.
+ *
+ * F1 encoding operand assignment:
+ *
+ * [0] = Source Register
+ * [1] = Rotation
+ * [2] = Destination Register
+ *
+ * F2 encoding operand assignment:
+ *
+ * [0] = Source Register
+ * [1] = Length
+ * [2] = Destination Register
+ *
+ * @param[in]  structure the structure to process.
+ * @param[in]  file      the file to operate on.
+ * @param[in]  opcode    the opcode to process.
+ * @param[out] metadata  the structure that will contain the extracted metadata.
+ *
+ * @return YES if a valid ALU instruction was found, NO otherwise.
+ */
+- (BOOL)handleALUInstruction:(DisasmStruct *_Nonnull)structure
+                      onFile:(NSObject<HPDisassembledFile> *_Nonnull)file
+                  withOpcode:(uint16_t)opcode
+                    metadata:(FRBInstructionUserData *_Nonnull)metadata;
+
+/**
+ * Handle potential NZT instructions.
+ *
+ * F3 encoding operand assignment:
+ *
+ * [0] = Literal
+ * [1] = Source Register
+ *
+ * F4 encoding operand assignment:
+ *
+ * [0] = Literal
+ * [1] = Source Register
+ * [2] = Length
+ *
+ * @param[in]  structure the structure to process.
+ * @param[in]  file      the file to operate on.
+ * @param[in]  opcode    the opcode to process.
+ * @param[out] metadata  the structure that will contain the extracted metadata.
+ *
+ * @return YES if a valid NZT instruction was found, NO otherwise.
+ */
+- (BOOL)handleNZTInstruction:(DisasmStruct *_Nonnull)structure
+                      onFile:(NSObject<HPDisassembledFile> *_Nonnull)file
+                  withOpcode:(uint16_t)opcode
+                    metadata:(FRBInstructionUserData *_Nonnull)metadata;
+
+/**
+ * Handle potential XEC instructions.
+ *
+ * @param[in]  structure the structure to process.
+ * @param[in]  file      the file to operate on.
+ * @param[in]  opcode    the opcode to process.
+ * @param[out] metadata  the structure that will contain the extracted metadata.
+ *
+ * @return YES if a valid XEC instruction was found, NO otherwise.
+ */
+- (BOOL)handleXECInstruction:(DisasmStruct *_Nonnull)structure
+                      onFile:(NSObject<HPDisassembledFile> *_Nonnull)file
+                  withOpcode:(uint16_t)opcode
+                    metadata:(FRBInstructionUserData *_Nonnull)metadata;
+
+/**
+ * Handle potential XMIT instructions.
+ *
+ * F3 encoding operand assignment:
+ *
+ * [0] = Literal
+ * [1] = Destination
+ *
+ * F4 encoding operand assignment:
+ *
+ * [0] = Literal
+ * [1] = Destination
+ * [2] = Length
+ *
+ * @param[in]  structure the structure to process.
+ * @param[in]  file      the file to operate on.
+ * @param[in]  opcode    the opcode to process.
+ * @param[out] metadata  the structure that will contain the extracted metadata.
+ *
+ * @return YES if a valid XMIT instruction was found, NO otherwise.
+ */
+- (BOOL)handleXMITInstruction:(DisasmStruct *_Nonnull)structure
+                       onFile:(NSObject<HPDisassembledFile> *_Nonnull)file
+                   withOpcode:(uint16_t)opcode
+                     metadata:(FRBInstructionUserData *_Nonnull)metadata;
+
+/**
+ * Handle potential JMP instructions.
+ *
+ * @param[in]  structure the structure to process.
+ * @param[in]  file      the file to operate on.
+ * @param[in]  opcode    the opcode to process.
+ * @param[out] metadata  the structure that will contain the extracted metadata.
+ *
+ * @return YES if a valid JMP instruction was found, NO otherwise.
+ */
+- (BOOL)handleJMPInstruction:(DisasmStruct *_Nonnull)structure
+                      onFile:(NSObject<HPDisassembledFile> *_Nonnull)file
+                  withOpcode:(uint16_t)opcode
+                    metadata:(FRBInstructionUserData *_Nonnull)metadata;
+
+- (void)fillInstructionType1:(uint16_t)opcode
+                 inStructure:(FRBFieldsInstructionType1 *_Nonnull)structure;
+
+- (void)fillInstructionType2:(uint16_t)opcode
+                 inStructure:(FRBFieldsInstructionType2 *_Nonnull)structure;
+
+- (void)fillInstructionType3:(uint16_t)opcode
+                 inStructure:(FRBFieldsInstructionType3 *_Nonnull)structure;
+
+- (void)fillInstructionType4:(uint16_t)opcode
+                 inStructure:(FRBFieldsInstructionType4 *_Nonnull)structure;
+
+- (void)fillInstructionType5:(uint16_t)opcode
+                 inStructure:(FRBFieldsInstructionType5 *_Nonnull)structure;
 
 @end
 
-@implementation NAMESPACE(8x300Base8x300)
+@implementation ItFrobHopper8x300Base8x300
 
-static NSString * const kProviderName = @"it.frob.hopper.generic8x300";
-
-@synthesize name;
-
-- (instancetype)init {
-    if (self = [super init]) {
-        _instructionFormats = [NSArray arrayWithObjects:
-                               @"%s    %@",        // FRBEncodingTypeSingle
-                               @"%s    %@(%@),%@", // FRBEncodingTypeWithRotation
-                               @"%s    %@,%@,%@",  // FRBEncodingTypeWithLength
-                               @"%s    %@,%@",     // FRBEncodingTypeAssignment
-                               @"%s    %@(%@)",    // FRBEncodingTypeOffset
-                               @"%s    %@(%@),%@", // FRBEncodingTypeOffsetWithLength
-                               nil];
-    }
-
-    return self;
++ (NSString *_Nonnull)family {
+  @throw [NSException
+      exceptionWithName:FRBHopperExceptionName
+                 reason:[NSString stringWithFormat:@"Forgot to implement %s",
+                                                   __PRETTY_FUNCTION__]
+               userInfo:nil];
 }
 
-- (int)processStructure:(DisasmStruct *)structure
-                 onFile:(id<HPDisassembledFile>)file {
-    InitialiseDisasmStruct(structure);
-
-    structure->instruction.length = 2;
-    uint16_t opcodeWord = [file readUInt16AtVirtualAddress:structure->virtualAddr];
-
-    const char *opcodeName = kOpcodeNames[opcodeWord >> 13];
-
-    strcpy(structure->instruction.mnemonic, opcodeName);
-    strcpy(structure->instruction.unconditionalMnemonic, opcodeName);
-
-    BOOL result = NO;
-
-    switch (opcodeWord >> 13) {
-        case FRBOpcodeMOVE:
-            result = [self handleMOVEOpcode:opcodeWord
-                               forStructure:structure
-                                     onFile:file];
-            break;
-
-        case FRBOpcodeADD:
-            result = [self handleADDOpcode:opcodeWord
-                              forStructure:structure
-                                    onFile:file];
-            break;
-
-        case FRBOpcodeAND:
-            result = [self handleANDOpcode:opcodeWord
-                              forStructure:structure
-                                    onFile:file];
-            break;
-
-        case FRBOpcodeXOR:
-            result = [self handleXOROpcode:opcodeWord
-                              forStructure:structure
-                                    onFile:file];
-            break;
-
-        case FRBOpcodeXEC:
-            result = [self handleXECOpcode:opcodeWord
-                              forStructure:structure
-                                    onFile:file];
-            break;
-
-        case FRBOpcodeNZT:
-            result = [self handleNZTOpcode:opcodeWord
-                              forStructure:structure
-                                    onFile:file];
-            break;
-
-        case FRBOpcodeXMIT:
-            result = [self handleXMITOpcode:opcodeWord
-                               forStructure:structure
-                                     onFile:file];
-            break;
-
-        case FRBOpcodeJMP:
-            result = [self handleJMPOpcode:opcodeWord
-                              forStructure:structure
-                                    onFile:file];
-            break;
-
-        default:
-            break;
-    }
-
-    return result ? structure->instruction.length : DISASM_UNKNOWN_OPCODE;
++ (NSString *_Nonnull)model {
+  @throw [NSException
+      exceptionWithName:FRBHopperExceptionName
+                 reason:[NSString stringWithFormat:@"Forgot to implement %s",
+                                                   __PRETTY_FUNCTION__]
+               userInfo:nil];
 }
 
-- (BOOL)haltsExecutionFlow:(const DisasmStruct *)structure {
-    return NO;
++ (BOOL)exported {
+  return NO;
 }
 
-- (const char *)formatInstruction:(const DisasmStruct *)structure
-                           onFile:(id<HPDisassembledFile>)file
-                     withServices:(id<HPHopperServices>)services {
++ (int)addressSpaceWidth {
+  @throw [NSException
+      exceptionWithName:FRBHopperExceptionName
+                 reason:[NSString stringWithFormat:@"Forgot to implement %s",
+                                                   __PRETTY_FUNCTION__]
+               userInfo:nil];
+}
 
-    NSMutableArray *strings = [NSMutableArray new];
+- (int)processStructure:(DisasmStruct *_Nonnull)structure
+                 onFile:(NSObject<HPDisassembledFile> *_Nonnull)file {
 
-    for (int index = 0; index < DISASM_MAX_OPERANDS; index++) {
-        if (structure->operand[index].type == DISASM_OPERAND_NO_OPERAND) {
-            continue;
-        }
+  InitialiseDisasmStruct(structure);
 
-        if (structure->operand[index].type == DISASM_OPERAND_REGISTER_TYPE) {
-            [strings addObject:[NSString stringWithUTF8String:structure->operand[index].mnemonic]];
-            continue;
-        }
+  BOOL result;
+  uint16_t opcodeWord =
+      [file readUInt16AtVirtualAddress:structure->virtualAddr];
+  FRBInstructionUserData metadata = {.haltsExecution = NO};
 
-        NSNumber *number;
-        if (structure->operand[index].size == 64 && structure->operand[index].immediateValue < 0) {
-            // TODO: Check this!
-            number = [NSNumber numberWithUnsignedLongLong:(structure->operand[index].immediateValue - 18446744073709551615ULL) - 1ULL];
-        } else {
-            number = [NSNumber numberWithLongLong:structure->operand[index].immediateValue];
-        }
+  switch (OPCODE_FROM_WORD(opcodeWord)) {
+  case FRBOpcodeMOVE:
+    result = [self handleMOVEOpcode:opcodeWord
+                       forStructure:structure
+                             onFile:file
+                           metadata:&metadata];
+    break;
 
-        ArgFormat format = [file formatForArgument:index
-                                  atVirtualAddress:structure->virtualAddr];
-        [strings addObject:FormatValue(number, structure, format,
-                                       structure->operand[index].size, services)];
-    }
+  case FRBOpcodeADD:
+    result = [self handleADDOpcode:opcodeWord
+                      forStructure:structure
+                            onFile:file
+                          metadata:&metadata];
+    break;
 
-    NSString *format = _instructionFormats[structure->instruction.userData];
+  case FRBOpcodeAND:
+    result = [self handleANDOpcode:opcodeWord
+                      forStructure:structure
+                            onFile:file
+                          metadata:&metadata];
+    break;
 
-    switch (structure->instruction.userData) {
-        case FRB8x300EncodingTypeSingle:
-            return [NSString stringWithFormat:format,
-                    structure->instruction.mnemonic, strings[0]].UTF8String;
+  case FRBOpcodeXOR:
+    result = [self handleXOROpcode:opcodeWord
+                      forStructure:structure
+                            onFile:file
+                          metadata:&metadata];
+    break;
 
-        case FRB8x300EncodingTypeOffset:
-        case FRB8x300EncodingTypeAssignment:
-            return [NSString stringWithFormat:format,
-                    structure->instruction.mnemonic, strings[0],
-                    strings[1]].UTF8String;
+  case FRBOpcodeXEC:
+    result = [self handleXECOpcode:opcodeWord
+                      forStructure:structure
+                            onFile:file
+                          metadata:&metadata];
+    break;
 
-        case FRB8x300EncodingTypeWithRotation:
-        case FRB8x300EncodingTypeWithLength:
-        case FRB8x300EncodingTypeOffsetWithLength:
-            return [NSString stringWithFormat:format,
-                    structure->instruction.mnemonic, strings[0], strings[1],
-                    strings[2]].UTF8String;
+  case FRBOpcodeNZT:
+    result = [self handleNZTOpcode:opcodeWord
+                      forStructure:structure
+                            onFile:file
+                          metadata:&metadata];
+    break;
 
-        default:
-            return nil;
-    }
+  case FRBOpcodeXMIT:
+    result = [self handleXMITOpcode:opcodeWord
+                       forStructure:structure
+                             onFile:file
+                           metadata:&metadata];
+    break;
+
+  case FRBOpcodeJMP:
+    result = [self handleJMPOpcode:opcodeWord
+                      forStructure:structure
+                            onFile:file
+                          metadata:&metadata];
+    break;
+
+  default:
+    result = NO;
+    break;
+  }
+
+  if (!result) {
+    return DISASM_UNKNOWN_OPCODE;
+  }
+
+  strcpy(&structure->instruction.mnemonic[0], kOpcodeNames[metadata.opcode]);
+  strcpy(&structure->instruction.unconditionalMnemonic[0],
+         kOpcodeNames[metadata.opcode]);
+  structure->instruction.userData = *((uintptr_t *)&metadata);
+  structure->instruction.length = 2;
+  return structure->instruction.length;
+}
+
+- (BOOL)haltsExecutionFlow:(const DisasmStruct *_Nonnull)structure {
+  return ((FRBInstructionUserData *)&structure->instruction.userData)
+             ->haltsExecution != 0;
+}
+
+- (NSObject<HPASMLine> *_Nonnull)
+buildMnemonicString:(DisasmStruct *_Nonnull)disasm
+             inFile:(NSObject<HPDisassembledFile> *_Nonnull)file
+       withServices:(NSObject<HPHopperServices> *_Nonnull)services {
+
+  NSObject<HPASMLine> *line = [services blankASMLine];
+  [line appendMnemonic:@(disasm->instruction.mnemonic)];
+  return line;
+}
+
+- (NSObject<HPASMLine> *_Nullable)
+buildOperandString:(DisasmStruct *_Nonnull)disasm
+   forOperandIndex:(NSUInteger)operandIndex
+            inFile:(NSObject<HPDisassembledFile> *_Nonnull)file
+               raw:(BOOL)raw
+      withServices:(NSObject<HPHopperServices> *_Nonnull)services {
+
+  NSAssert(
+      [file.cpuDefinition isKindOfClass:[ItFrobHopper8x300Definition class]],
+      @"Invalid CPU definition class");
+
+  NSObject<FRBInstructionFormatter> *formatter =
+      [(ItFrobHopper8x300Definition *)file.cpuDefinition
+          formatterForSyntax:(FRBSyntaxType)file.userRequestedSyntaxIndex];
+  NSAssert(formatter != nil, @"Missing formatter for syntax index");
+
+  return [formatter formatOperand:disasm
+                          atIndex:operandIndex
+                           inFile:file
+                     withServices:services];
+}
+
+- (NSObject<HPASMLine> *_Nullable)
+buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
+                    inFile:(NSObject<HPDisassembledFile> *_Nonnull)file
+                       raw:(BOOL)raw
+              withServices:(NSObject<HPHopperServices> *_Nonnull)services {
+
+  NSAssert(
+      [file.cpuDefinition isKindOfClass:[ItFrobHopper8x300Definition class]],
+      @"Invalid CPU definition class");
+
+  NSObject<FRBInstructionFormatter> *formatter =
+      [(ItFrobHopper8x300Definition *)file.cpuDefinition
+          formatterForSyntax:(FRBSyntaxType)file.userRequestedSyntaxIndex];
+  NSAssert(formatter != nil, @"Missing formatter for syntax index");
+
+  return [formatter
+      formatInstruction:disasm
+                 inFile:file
+           withServices:services
+            andEncoding:(FRBEncodingType)((FRBInstructionUserData *)&disasm
+                                              ->instruction.userData)
+                            ->encoding];
 }
 
 #pragma mark - Private methods
 
-- (BOOL)handleALUInstruction:(DisasmStruct *)structure
-                      onFile:(id<HPDisassembledFile>)file
-                  withOpcode:(uint16_t)opcode {
+- (BOOL)handleALUInstruction:(DisasmStruct *_Nonnull)structure
+                      onFile:(NSObject<HPDisassembledFile> *_Nonnull)file
+                  withOpcode:(uint16_t)opcode
+                    metadata:(FRBInstructionUserData *_Nonnull)metadata {
 
-    int sourceRegister = (opcode >> 8) & 0x001F;
-    int destinationRegister = opcode & 0x001F;
-    int rotationOrLength = (opcode >> 5) & 0x0007;
+  FRBFieldsInstruction fields;
 
-    switch (opcode & 0x1010) {
+  int sourceRegister = (opcode >> 8) & 0b11111;
+  int destinationRegister = opcode & 0b11111;
+  int rotationOrLength = (opcode >> 5) & 0b111;
 
-        // Register to Register
-        case 0x0000:
-            structure->instruction.userData = FRB8x300EncodingTypeWithRotation;
-            break;
+  switch (opcode & 0x1010) {
 
-        // Register to I/O bus
-        case 0x0010:
-            structure->instruction.userData = FRB8x300EncodingTypeWithLength;
-            break;
+  // Register to Register
+  case 0x0000:
+    metadata->encoding = FRBEncodingTypeWithRotation;
+    metadata->type = FRBInstructionType1;
+    [self fillInstructionType1:opcode inStructure:&fields.type1];
+    break;
 
-        // I/O bus to register
-        case 0x1000:
-            structure->instruction.userData = FRB8x300EncodingTypeWithLength;
-            break;
+  // Register to I/O bus
+  case 0x0010:
+    metadata->encoding = FRBEncodingTypeWithLength;
+    metadata->type = FRBInstructionType2;
+    [self fillInstructionType2:opcode inStructure:&fields.type2];
+    break;
 
-        // I/O bus to I/O bus
-        case 0x1010:
-            structure->instruction.userData = FRB8x300EncodingTypeWithLength;
-            break;
+  // I/O bus to register
+  case 0x1000:
+    metadata->encoding = FRBEncodingTypeWithLength;
+    metadata->type = FRBInstructionType2;
+    [self fillInstructionType2:opcode inStructure:&fields.type2];
+    break;
 
-        default:
-            break;
+  // I/O bus to I/O bus
+  case 0x1010:
+    metadata->encoding = FRBEncodingTypeWithLength;
+    metadata->type = FRBInstructionType2;
+    [self fillInstructionType2:opcode inStructure:&fields.type2];
+    break;
+
+  default:
+    return NO;
+  }
+
+  metadata->instruction = *((uint16_t *)&fields);
+
+  // Source
+
+  structure->operand[0].type = DISASM_OPERAND_REGISTER_TYPE;
+  structure->operand[0].immediateValue = sourceRegister;
+  structure->operand[0].size = 5;
+
+  // Rotation/Length
+
+  structure->operand[1].type = DISASM_OPERAND_CONSTANT_TYPE;
+  structure->operand[1].immediateValue = rotationOrLength;
+  structure->operand[1].size = 3;
+
+  // Destination
+
+  structure->operand[2].type = DISASM_OPERAND_REGISTER_TYPE;
+  structure->operand[2].immediateValue = destinationRegister;
+  structure->operand[2].size = 5;
+
+  structure->implicitlyReadRegisters[DISASM_OPERAND_GENERAL_REG_INDEX] =
+      (uint32_t)((1 << sourceRegister) | RegisterFlagAUX);
+  structure->implicitlyWrittenRegisters[DISASM_OPERAND_GENERAL_REG_INDEX] =
+      (uint32_t)((1 << destinationRegister) | RegisterFlagOVF);
+
+  SetDefaultFormatForArgument(file, structure->virtualAddr, 1, Format_Decimal);
+
+  metadata->opcode = OPCODE_FROM_WORD(opcode);
+
+  /* Handle synthetic NOP opcode. */
+  if ((metadata->opcode == FRBOpcodeMOVE) &&
+      (structure->operand[0].immediateValue == FRBRegisterAUX) &&
+      (structure->operand[2].immediateValue == FRBRegisterAUX) &&
+      (structure->operand[1].immediateValue == 0)) {
+    metadata->opcode = FRBOpcodeNOP;
+    metadata->encoding = FRBEncodingTypeImplicit;
+    for (NSUInteger index = 0; index < 3; index++) {
+      memset((void *)&structure->operand[index], 0x00, sizeof(DisasmOperand));
+      structure->operand[index].type = DISASM_OPERAND_NO_OPERAND;
     }
+  }
 
-    structure->operand[0].type = DISASM_OPERAND_REGISTER_TYPE;
-    strcpy(structure->operand[0].mnemonic, kRegisterNames[sourceRegister]);
-
-    structure->operand[1].type = DISASM_OPERAND_CONSTANT_TYPE;
-    structure->operand[1].immediateValue = rotationOrLength;
-    structure->operand[1].size = 8;
-
-    structure->operand[2].type = DISASM_OPERAND_REGISTER_TYPE;
-    strcpy(structure->operand[2].mnemonic, kRegisterNames[destinationRegister]);
-
-    structure->implicitlyReadRegisters[DISASM_OPERAND_GENERAL_REG_INDEX] = (1 << sourceRegister) | FRB8x300RegisterFlagAUX;
-    structure->implicitlyWrittenRegisters[DISASM_OPERAND_GENERAL_REG_INDEX] = 1 << destinationRegister | FRB8x300RegisterFlagOVF;
-
-    SetDefaultFormatForArgument(file, structure->virtualAddr, 1, Format_Decimal);
-
-    return YES;
+  return YES;
 }
 
-- (BOOL)handleNZTInstruction:(DisasmStruct *)structure
-                      onFile:(id<HPDisassembledFile>)file
-                  withOpcode:(uint16_t)opcode {
+- (BOOL)handleNZTInstruction:(DisasmStruct *_Nonnull)structure
+                      onFile:(NSObject<HPDisassembledFile> *_Nonnull)file
+                  withOpcode:(uint16_t)opcode
+                    metadata:(FRBInstructionUserData *_Nonnull)metadata {
 
-    uint8_t registerId = (opcode >> 8) & 0x001F;
+  uint8_t registerId = (uint8_t)((opcode >> 8) & 0b11111);
 
-    structure->implicitlyReadRegisters[DISASM_OPERAND_GENERAL_REG_INDEX] = 1 << registerId;
+  structure->implicitlyReadRegisters[DISASM_OPERAND_GENERAL_REG_INDEX] =
+      (uint32_t)(1 << registerId);
 
-    if ((opcode & 0x1000) == 0x0000) {
-        // Register immediate
+  structure->instruction.branchType = DISASM_BRANCH_JNE;
 
-        Address address = (structure->virtualAddr & 0xFFFFFF00) | ((opcode & 0x00FF) * 2);
-        structure->operand[0].memory.baseRegister = 0;
-        structure->operand[0].memory.indexRegister = 0;
-        structure->operand[0].memory.scale = 1;
-        structure->operand[0].memory.displacement = 0;
-        structure->operand[0].type = DISASM_OPERAND_CONSTANT_TYPE | DISASM_OPERAND_RELATIVE;
-        structure->operand[0].size = 16;
-        structure->operand[0].immediateValue = address;
+  // Literal
 
-        structure->instruction.addressValue = address;
-        structure->instruction.branchType = DISASM_BRANCH_JNE;
-        [file setFormat:Format_Address
-            forArgument:0
-       atVirtualAddress:structure->virtualAddr];
-        
-        structure->operand[1].type = DISASM_OPERAND_REGISTER_TYPE;
-        strcpy(structure->operand[1].mnemonic, kRegisterNames[registerId]);
+  structure->operand[0].type = DISASM_OPERAND_CONSTANT_TYPE;
+  structure->operand[0].isBranchDestination = YES;
+  structure->operand[0].accessMode = DISASM_ACCESS_NONE;
 
-        structure->instruction.userData = FRB8x300EncodingTypeOffset;
+  // Source
 
-        return YES;
-    }
+  structure->operand[1].type = DISASM_OPERAND_REGISTER_TYPE;
+  structure->operand[1].immediateValue = registerId;
 
+  // Length
+
+  structure->operand[2].type = DISASM_OPERAND_CONSTANT_TYPE;
+
+  FRBFieldsInstruction fields;
+
+  if ((opcode & 0x1000) == 0x0000) {
+    // Register immediate
+
+    Address address =
+        (structure->virtualAddr & 0xFFFFFE00) + ((opcode & 0x00FF) * 2);
+    structure->operand[0].immediateValue = (opcode & 0xFF) * 2;
+    structure->operand[0].size = 9;
+    structure->operand[2].immediateValue = 0;
+    structure->operand[2].size = 0;
+    structure->instruction.addressValue = address;
+    metadata->type = FRBInstructionType3;
+    [self fillInstructionType3:opcode inStructure:&fields.type3];
+  } else {
     // I/O bus immediate
 
-    Address address = (structure->virtualAddr & 0xFFFFFFE0) | ((opcode & 0x001F) * 2);
-
-    structure->operand[0].memory.baseRegister = 0;
-    structure->operand[0].memory.indexRegister = 0;
-    structure->operand[0].memory.scale = 1;
-    structure->operand[0].memory.displacement = 0;
-    structure->operand[0].type = DISASM_OPERAND_CONSTANT_TYPE | DISASM_OPERAND_RELATIVE;
-    structure->operand[0].size = 16;
-    structure->operand[0].immediateValue = address;
+    Address address =
+        (structure->virtualAddr & 0xFFFFFFD0) + ((opcode & 0b11111) * 2);
+    structure->operand[0].immediateValue = (opcode & 0b11111) * 2;
+    structure->operand[0].size = 6;
+    structure->operand[2].immediateValue = (opcode >> 5) & 0b111;
+    structure->operand[2].size = 3;
     structure->instruction.addressValue = address;
-    structure->instruction.branchType = DISASM_BRANCH_JNE;
-    [file setFormat:Format_Address
-        forArgument:0
-   atVirtualAddress:structure->virtualAddr];
+    metadata->type = FRBInstructionType4;
+    [self fillInstructionType4:opcode inStructure:&fields.type4];
+  }
 
-    structure->operand[1].type = DISASM_OPERAND_REGISTER_TYPE;
-    strcpy(structure->operand[1].mnemonic, kRegisterNames[registerId]);
+  SetDefaultFormatForArgument(file, structure->virtualAddr, 2, Format_Decimal);
+
+  metadata->encoding = FRBEncodingTypeOffsetWithLength;
+  metadata->instruction = *((uint16_t *)&fields);
+  metadata->opcode = OPCODE_FROM_WORD(opcode);
+
+  return YES;
+}
+
+- (BOOL)handleXECInstruction:(DisasmStruct *_Nonnull)structure
+                      onFile:(NSObject<HPDisassembledFile> *_Nonnull)file
+                  withOpcode:(uint16_t)opcode
+                    metadata:(FRBInstructionUserData *_Nonnull)metadata {
+
+  uint8_t registerId = (uint8_t)((opcode >> 8) & 0x001F);
+
+  structure->implicitlyReadRegisters[DISASM_OPERAND_GENERAL_REG_INDEX] =
+      (uint32_t)(1 << registerId);
+  structure->operand[0].type = DISASM_OPERAND_CONSTANT_TYPE;
+
+  structure->operand[1].type = DISASM_OPERAND_REGISTER_TYPE;
+  structure->operand[1].immediateValue = registerId;
+  structure->operand[1].size = 5;
+
+  structure->operand[2].type = DISASM_OPERAND_CONSTANT_TYPE;
+
+  Address resolvedAddress = structure->instruction.pcRegisterValue;
+
+  FRBFieldsInstruction fields;
+
+  if ((opcode & 0x1000) == 0x0000) {
+    // Register immediate
+
+    structure->operand[0].immediateValue = opcode & 0x00FF;
+    structure->operand[0].size = 8;
+    structure->operand[2].immediateValue = 0;
+    structure->operand[2].size = 0;
+    metadata->encoding = FRBEncodingTypeOffsetWithLength;
+
+    resolvedAddress = (resolvedAddress & ((1 << 9) - 1)) |
+                      (structure->operand[0].immediateValue * 2);
+    metadata->type = FRBInstructionType3;
+    [self fillInstructionType3:opcode inStructure:&fields.type3];
+  } else {
+    // I/O bus immediate
+
+    structure->operand[0].immediateValue = opcode & 0x001F;
+    structure->operand[0].size = 5;
 
     structure->operand[2].type = DISASM_OPERAND_CONSTANT_TYPE;
     structure->operand[2].immediateValue = (opcode >> 5) & 0x0007;
-    structure->operand[2].size = 8;
-    SetDefaultFormatForArgument(file, structure->virtualAddr, 2, Format_Decimal);
+    structure->operand[2].size = 3;
 
-    structure->instruction.branchType = DISASM_BRANCH_JNE;
-    structure->instruction.userData = FRB8x300EncodingTypeOffsetWithLength;
-    
-    return YES;
+    metadata->encoding = FRBEncodingTypeOffsetWithLength;
+    resolvedAddress = (resolvedAddress & ((1 << 5) - 1)) |
+                      (structure->operand[0].immediateValue * 2);
+    metadata->type = FRBInstructionType4;
+    [self fillInstructionType4:opcode inStructure:&fields.type4];
+  }
+
+  SetDefaultFormatForArgument(file, structure->virtualAddr, 2, Format_Decimal);
+
+  metadata->instruction = *((uint16_t *)&fields);
+  structure->instruction.addressValue = resolvedAddress;
+
+  if ([file segmentForVirtualAddress:structure->instruction.addressValue] ==
+      nil) {
+    AddInlineCommentIfEmpty(
+        file, structure->virtualAddr,
+        [NSString stringWithFormat:@"Switch table out of mapped memory (%X)",
+                                   (unsigned int)
+                                       structure->instruction.addressValue]);
+  } else {
+    AddInlineCommentIfEmpty(
+        file, structure->instruction.addressValue,
+        [NSString stringWithFormat:@"Switch table for %X",
+                                   (unsigned int)structure->virtualAddr]);
+  }
+
+  [[file segmentForVirtualAddress:structure->virtualAddr]
+      addReferencesToAddress:structure->instruction.addressValue
+                 fromAddress:structure->virtualAddr];
+  SetDefaultFormatForArgument(file, structure->virtualAddr, 0, Format_Address);
+
+  metadata->opcode = OPCODE_FROM_WORD(opcode);
+
+  return YES;
 }
 
-- (BOOL)handleXECInstruction:(DisasmStruct *)structure
-                         onFile:(id<HPDisassembledFile>)file
-                  withOpcode:(uint16_t)opcode {
+- (BOOL)handleXMITInstruction:(DisasmStruct *_Nonnull)structure
+                       onFile:(NSObject<HPDisassembledFile> *_Nonnull)file
+                   withOpcode:(uint16_t)opcode
+                     metadata:(FRBInstructionUserData *_Nonnull)metadata {
 
-    uint8_t registerId = (opcode >> 8) & 0x001F;
+  uint8_t registerId = (uint8_t)((opcode >> 8) & 0b11111);
 
-    structure->implicitlyReadRegisters[DISASM_OPERAND_GENERAL_REG_INDEX] = 1 << registerId;
-    structure->instruction.branchType = DISASM_BRANCH_JNE;
+  structure->implicitlyWrittenRegisters[DISASM_OPERAND_GENERAL_REG_INDEX] =
+      (uint32_t)(1 << registerId);
 
-    if ((opcode & 0x1000) == 0x0000) {
-        // Register immediate
+  structure->operand[0].type = DISASM_OPERAND_CONSTANT_TYPE;
 
-        structure->operand[0].type = DISASM_OPERAND_CONSTANT_TYPE;
-        structure->operand[0].immediateValue = opcode & 0x00FF;
-        structure->operand[0].size = 8;
+  structure->operand[1].type = DISASM_OPERAND_REGISTER_TYPE;
+  structure->operand[1].immediateValue = registerId;
+  structure->operand[1].size = 5;
 
-        structure->operand[1].type = DISASM_OPERAND_REGISTER_TYPE;
-        strcpy(structure->operand[1].mnemonic, kRegisterNames[registerId]);
+  FRBFieldsInstruction fields;
 
-        structure->instruction.userData = FRB8x300EncodingTypeOffset;
+  if ((opcode & 0x1000) == 0x0000) {
+    // Register immediate
 
-        return YES;
-    }
-
-    // I/O bus immediate
-
-    structure->operand[0].type = DISASM_OPERAND_CONSTANT_TYPE;
-    structure->operand[0].immediateValue = opcode & 0x001F;
+    structure->operand[0].immediateValue = opcode & 0x00FF;
     structure->operand[0].size = 8;
 
-    structure->operand[1].type = DISASM_OPERAND_REGISTER_TYPE;
-    strcpy(structure->operand[1].mnemonic, kRegisterNames[registerId]);
-
-    structure->operand[2].type = DISASM_OPERAND_CONSTANT_TYPE;
-    structure->operand[2].immediateValue = (opcode >> 5) & 0x0007;
-    structure->operand[2].size = 8;
-    SetDefaultFormatForArgument(file, structure->virtualAddr, 2, Format_Decimal);
-
-    structure->instruction.userData = FRB8x300EncodingTypeOffsetWithLength;
-
-    return YES;
-}
-
-- (BOOL)handleXMITInstruction:(DisasmStruct *)structure
-                             onFile:(id<HPDisassembledFile>)file
-                   withOpcode:(uint16_t)opcode {
-
-    uint8_t registerId = (opcode >> 8) & 0x001F;
-
-    structure->implicitlyWrittenRegisters[DISASM_OPERAND_GENERAL_REG_INDEX] = 1 << registerId;
-
-    if ((opcode & 0x1000) == 0x0000) {
-        // Register immediate
-
-        structure->operand[0].type = DISASM_OPERAND_CONSTANT_TYPE;
-        structure->operand[0].immediateValue = opcode & 0x00FF;
-        structure->operand[0].size = 8;
-
-        structure->operand[1].type = DISASM_OPERAND_REGISTER_TYPE;
-        strcpy(structure->operand[1].mnemonic, kRegisterNames[registerId]);
-
-        structure->instruction.userData = FRB8x300EncodingTypeAssignment;
-
-        return YES;
-    }
-
+    metadata->encoding = FRBEncodingTypeAssignment;
+    metadata->type = FRBInstructionType3;
+    [self fillInstructionType3:opcode inStructure:&fields.type3];
+  } else {
     // I/O bus immediate
 
-    structure->operand[0].type = DISASM_OPERAND_CONSTANT_TYPE;
-    structure->operand[0].immediateValue = opcode & 0x001F;
-    structure->operand[0].size = 8;
-
-    structure->operand[1].type = DISASM_OPERAND_REGISTER_TYPE;
-    strcpy(structure->operand[1].mnemonic, kRegisterNames[registerId]);
+    structure->operand[0].immediateValue = opcode & 0b11111;
+    structure->operand[0].size = 5;
 
     structure->operand[2].type = DISASM_OPERAND_CONSTANT_TYPE;
-    structure->operand[2].immediateValue = (opcode >> 5) & 0x0007;
-    structure->operand[2].size = 8;
+    structure->operand[2].immediateValue = (opcode >> 5) & 0b111;
+    structure->operand[2].size = 3;
 
-    SetDefaultFormatForArgument(file, structure->virtualAddr, 2, Format_Decimal);
+    SetDefaultFormatForArgument(file, structure->virtualAddr, 2,
+                                Format_Decimal);
 
-    structure->instruction.userData = FRB8x300EncodingTypeOffsetWithLength;
+    metadata->encoding = FRBEncodingTypeAssignmentWithLength;
+    metadata->type = FRBInstructionType4;
+    [self fillInstructionType4:opcode inStructure:&fields.type4];
+  }
 
-    return YES;
+  metadata->instruction = *((uint16_t *)&fields);
+  metadata->opcode = OPCODE_FROM_WORD(opcode);
+
+  /* Handle synthetic XML and XMR opcodes. */
+
+  if (metadata->encoding == FRBEncodingTypeAssignment) {
+    if ((structure->operand[1].immediateValue == FRBRegisterR12) ||
+        (structure->operand[1].immediateValue == FRBRegisterR13)) {
+      metadata->encoding = FRBEncodingTypeSingle;
+      metadata->opcode =
+          (structure->operand[1].immediateValue == FRBRegisterR12)
+              ? FRBOpcodeXML
+              : FRBOpcodeXMR;
+      memset((void *)&structure->operand[1], 0x00, sizeof(DisasmOperand));
+      structure->operand[1].type = DISASM_OPERAND_NO_OPERAND;
+      structure->operand[2].type = DISASM_OPERAND_NO_OPERAND;
+    }
+  }
+
+  return YES;
 }
 
-- (BOOL)handleJMPInstruction:(DisasmStruct *)structure
-                      onFile:(id<HPDisassembledFile>)file
-                  withOpcode:(uint16_t)opcode {
+- (BOOL)handleJMPInstruction:(DisasmStruct *_Nonnull)structure
+                      onFile:(NSObject<HPDisassembledFile> *_Nonnull)file
+                  withOpcode:(uint16_t)opcode
+                    metadata:(FRBInstructionUserData *_Nonnull)metadata {
 
-    // Address immediate
+  Address address = (Address)(opcode & 0x1FFF);
 
-    Address address = opcode & 0x1FFF;
+  structure->operand[0].memory.baseRegistersMask = 0;
+  structure->operand[0].memory.indexRegistersMask = 0;
+  structure->operand[0].memory.scale = 1;
+  structure->operand[0].memory.displacement = 0;
+  structure->operand[0].type = DISASM_OPERAND_CONSTANT_TYPE;
+  structure->operand[0].size = 16;
+  structure->operand[0].immediateValue = address;
+  structure->operand[0].accessMode = DISASM_ACCESS_NONE;
+  structure->instruction.branchType = DISASM_BRANCH_JMP;
+  structure->instruction.addressValue = address * 2;
 
-    structure->operand[0].memory.baseRegister = 0;
-    structure->operand[0].memory.indexRegister = 0;
-    structure->operand[0].memory.scale = 1;
-    structure->operand[0].memory.displacement = 0;
-    structure->operand[0].type = DISASM_OPERAND_CONSTANT_TYPE | DISASM_OPERAND_ABSOLUTE;
-    structure->operand[0].size = 16;
-    structure->operand[0].immediateValue = address;
+  if ([file segmentForVirtualAddress:structure->instruction.addressValue] ==
+      nil) {
+    AddInlineCommentIfEmpty(
+        file, structure->virtualAddr,
+        [NSString stringWithFormat:@"Jumping out of mapped memory (%X)",
+                                   (unsigned int)
+                                       structure->instruction.addressValue]);
 
-    structure->instruction.addressValue = address;
-    structure->instruction.branchType = DISASM_BRANCH_JMP;
-    structure->instruction.userData = FRB8x300EncodingTypeSingle;
-    [file setFormat:Format_Address
-        forArgument:0
-   atVirtualAddress:structure->virtualAddr];
+    structure->operand[0].isBranchDestination = NO;
+  } else {
+    structure->operand[0].isBranchDestination = YES;
+  }
 
-    return YES;
+  metadata->opcode = OPCODE_FROM_WORD(opcode);
+  metadata->encoding = FRBEncodingTypeSingle;
+
+  /* Handle synthetic HALT opcode. */
+  if (structure->instruction.addressValue == structure->virtualAddr) {
+    metadata->haltsExecution = YES;
+    metadata->opcode = FRBOpcodeHALT;
+    metadata->encoding = FRBEncodingTypeImplicit;
+    memset((void *)&structure->operand[0], 0x00, sizeof(DisasmOperand));
+    structure->operand[0].type = DISASM_OPERAND_NO_OPERAND;
+  }
+
+  FRBFieldsInstruction fields;
+
+  metadata->type = FRBInstructionType5;
+  [self fillInstructionType5:opcode inStructure:&fields.type5];
+  metadata->instruction = *((uint16_t *)&fields);
+
+  return YES;
 }
 
 #pragma mark - Overridable opcode handling methods
 
 - (BOOL)handleMOVEOpcode:(uint16_t)opcode
-            forStructure:(DisasmStruct *)structure
-                  onFile:(id<HPDisassembledFile>)file {
-    return [self handleALUInstruction:structure
-                               onFile:file
-                           withOpcode:opcode];
+            forStructure:(DisasmStruct *_Nonnull)structure
+                  onFile:(NSObject<HPDisassembledFile> *_Nonnull)file
+                metadata:(FRBInstructionUserData *_Nonnull)metadata {
+
+  return [self handleALUInstruction:structure
+                             onFile:file
+                         withOpcode:opcode
+                           metadata:metadata];
 }
 
 - (BOOL)handleADDOpcode:(uint16_t)opcode
-           forStructure:(DisasmStruct *)structure
-                 onFile:(id<HPDisassembledFile>)file {
-    BOOL result = [self handleALUInstruction:structure
-                                      onFile:file
-                                  withOpcode:opcode];
+           forStructure:(DisasmStruct *_Nonnull)structure
+                 onFile:(NSObject<HPDisassembledFile> *_Nonnull)file
+               metadata:(FRBInstructionUserData *_Nonnull)metadata {
 
-    if (result) {
-        structure->implicitlyReadRegisters[DISASM_OPERAND_GENERAL_REG_INDEX] |= 1 << FRB8x300RegisterAUX;
-    }
+  BOOL result = [self handleALUInstruction:structure
+                                    onFile:file
+                                withOpcode:opcode
+                                  metadata:metadata];
 
-    return result;
+  if (result) {
+    structure->implicitlyReadRegisters[DISASM_OPERAND_GENERAL_REG_INDEX] |=
+        1 << FRBRegisterAUX;
+  }
+
+  return result;
 }
 
 - (BOOL)handleANDOpcode:(uint16_t)opcode
-           forStructure:(DisasmStruct *)structure
-                 onFile:(id<HPDisassembledFile>)file {
-    BOOL result = [self handleALUInstruction:structure
-                                      onFile:file
-                                  withOpcode:opcode];
+           forStructure:(DisasmStruct *_Nonnull)structure
+                 onFile:(NSObject<HPDisassembledFile> *_Nonnull)file
+               metadata:(FRBInstructionUserData *_Nonnull)metadata {
 
-    if (result) {
-        structure->implicitlyReadRegisters[DISASM_OPERAND_GENERAL_REG_INDEX] |= 1 << FRB8x300RegisterAUX;
-    }
+  BOOL result = [self handleALUInstruction:structure
+                                    onFile:file
+                                withOpcode:opcode
+                                  metadata:metadata];
 
-    return result;
+  if (result) {
+    structure->implicitlyReadRegisters[DISASM_OPERAND_GENERAL_REG_INDEX] |=
+        1 << FRBRegisterAUX;
+  }
+
+  return result;
 }
 
 - (BOOL)handleXOROpcode:(uint16_t)opcode
-           forStructure:(DisasmStruct *)structure
-                 onFile:(id<HPDisassembledFile>)file {
-    BOOL result = [self handleALUInstruction:structure
-                                      onFile:file
-                                  withOpcode:opcode];
+           forStructure:(DisasmStruct *_Nonnull)structure
+                 onFile:(NSObject<HPDisassembledFile> *_Nonnull)file
+               metadata:(FRBInstructionUserData *_Nonnull)metadata {
 
-    if (result) {
-        structure->implicitlyReadRegisters[DISASM_OPERAND_GENERAL_REG_INDEX] |= 1 << FRB8x300RegisterAUX;
-    }
+  BOOL result = [self handleALUInstruction:structure
+                                    onFile:file
+                                withOpcode:opcode
+                                  metadata:metadata];
 
-    return result;
+  if (result) {
+    structure->implicitlyReadRegisters[DISASM_OPERAND_GENERAL_REG_INDEX] |=
+        1 << FRBRegisterAUX;
+  }
+
+  return result;
 }
 
 - (BOOL)handleXECOpcode:(uint16_t)opcode
-           forStructure:(DisasmStruct *)structure
-                 onFile:(id<HPDisassembledFile>)file {
-    return [self handleXECInstruction:structure
-                               onFile:file
-                           withOpcode:opcode];
+           forStructure:(DisasmStruct *_Nonnull)structure
+                 onFile:(NSObject<HPDisassembledFile> *_Nonnull)file
+               metadata:(FRBInstructionUserData *_Nonnull)metadata {
+
+  return [self handleXECInstruction:structure
+                             onFile:file
+                         withOpcode:opcode
+                           metadata:metadata];
 }
 
 - (BOOL)handleNZTOpcode:(uint16_t)opcode
-           forStructure:(DisasmStruct *)structure
-                 onFile:(id<HPDisassembledFile>)file {
-    return [self handleNZTInstruction:structure
-                               onFile:file
-                           withOpcode:opcode];
+           forStructure:(DisasmStruct *_Nonnull)structure
+                 onFile:(NSObject<HPDisassembledFile> *_Nonnull)file
+               metadata:(FRBInstructionUserData *_Nonnull)metadata {
+
+  return [self handleNZTInstruction:structure
+                             onFile:file
+                         withOpcode:opcode
+                           metadata:metadata];
 }
 
 - (BOOL)handleXMITOpcode:(uint16_t)opcode
-            forStructure:(DisasmStruct *)structure
-                  onFile:(id<HPDisassembledFile>)file {
-    return [self handleXMITInstruction:structure
-                                onFile:file
-                            withOpcode:opcode];
+            forStructure:(DisasmStruct *_Nonnull)structure
+                  onFile:(NSObject<HPDisassembledFile> *_Nonnull)file
+                metadata:(FRBInstructionUserData *_Nonnull)metadata {
+
+  return [self handleXMITInstruction:structure
+                              onFile:file
+                          withOpcode:opcode
+                            metadata:metadata];
 }
 
 - (BOOL)handleJMPOpcode:(uint16_t)opcode
-           forStructure:(DisasmStruct *)structure
-                 onFile:(id<HPDisassembledFile>)file {
-    return [self handleJMPInstruction:structure
-                               onFile:file
-                           withOpcode:opcode];
+           forStructure:(DisasmStruct *_Nonnull)structure
+                 onFile:(NSObject<HPDisassembledFile> *_Nonnull)file
+               metadata:(FRBInstructionUserData *_Nonnull)metadata {
+
+  return [self handleJMPInstruction:structure
+                             onFile:file
+                         withOpcode:opcode
+                           metadata:metadata];
+}
+
+#pragma mark - Instruction fields extractor functions
+
+- (void)fillInstructionType1:(uint16_t)opcode
+                 inStructure:(FRBFieldsInstructionType1 *_Nonnull)structure {
+  structure->opcode = (uint16_t)((opcode >> 13) & 0b111);
+  structure->source = (uint16_t)((opcode >> 8) & 0b11111);
+  structure->rotation = (uint16_t)((opcode >> 5) & 0b111);
+  structure->destination = (uint16_t)(opcode & 0b11111);
+}
+
+- (void)fillInstructionType2:(uint16_t)opcode
+                 inStructure:(FRBFieldsInstructionType2 *_Nonnull)structure {
+  structure->opcode = (uint16_t)((opcode >> 13) & 0b111);
+  structure->source = (uint16_t)((opcode >> 8) & 0b11111);
+  structure->length = (uint16_t)((opcode >> 5) & 0b111);
+  structure->destination = (uint16_t)(opcode & 0b11111);
+}
+
+- (void)fillInstructionType3:(uint16_t)opcode
+                 inStructure:(FRBFieldsInstructionType3 *_Nonnull)structure {
+  structure->opcode = (uint16_t)((opcode >> 13) & 0b111);
+  structure->source = (uint16_t)((opcode >> 8) & 0b11111);
+  structure->literal = (uint16_t)(opcode & 0x00FF);
+}
+
+- (void)fillInstructionType4:(uint16_t)opcode
+                 inStructure:(FRBFieldsInstructionType4 *_Nonnull)structure {
+  structure->opcode = (uint16_t)((opcode >> 13) & 0b111);
+  structure->source = (uint16_t)((opcode >> 8) & 0b11111);
+  structure->length = (uint16_t)((opcode >> 5) & 0b111);
+  structure->literal = (uint16_t)(opcode & 0b11111);
+}
+
+- (void)fillInstructionType5:(uint16_t)opcode
+                 inStructure:(FRBFieldsInstructionType5 *_Nonnull)structure {
+  structure->opcode = (uint16_t)((opcode >> 13) & 0b111);
+  structure->immediate = (uint16_t)(opcode & 0b1111111111111);
 }
 
 @end

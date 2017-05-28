@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2014-2015, Alessandro Gatti - frob.it
+ Copyright (c) 2014-2017, Alessandro Gatti - frob.it
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -24,115 +24,111 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import "FRBBase.h"
 #import "FRBGeneric8x305.h"
-#import "FRBModelHandler.h"
 
-@interface NAMESPACE(8x300Generic8x305) ()
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "OCUnusedClassInspection"
 
+@interface ItFrobHopper8x300Generic8x305 ()
+
+/**
+ * Performs some additional checks to allow for extended registers usage by the
+ * 8x305.
+ *
+ * @param[in] opcode the opcode word to check.
+ *
+ * @return YES if the given opcode is valid, NO otherwise.
+ */
 - (BOOL)isValidALUOpcode:(uint16_t)opcode;
 
 @end
 
-@implementation NAMESPACE(8x300Generic8x305)
+@implementation ItFrobHopper8x300Generic8x305
 
-static NSString * const kProviderName = @"it.frob.hopper.generic8x305";
-
-@synthesize name;
-
-- (instancetype)init {
-    if (self = [super init]) {
-        name = kProviderName;
-    }
-
-    return self;
++ (NSString *_Nonnull)family {
+  return @"Generic";
 }
 
-+ (void)load {
-    [[NAMESPACE(8x300ModelHandler) sharedModelHandler] registerProvider:[NAMESPACE(8x300Generic8x305) class]
-                                                                 forName:kProviderName];
++ (NSString *_Nonnull)model {
+  return @"8x305";
+}
+
++ (BOOL)exported {
+  return YES;
+}
+
++ (int)addressSpaceWidth {
+  return 16;
 }
 
 #pragma mark - Private methods
 
 - (BOOL)isValidALUOpcode:(uint16_t)opcode {
-    int destinationRegister = opcode & 0x001F;
+  int destinationRegister = opcode & 0b11111;
 
-    switch (opcode & 0x1010) {
-        case 0x0000:
+  switch (opcode & 0x1010) {
 
-            // Register to Register
+  // Register to Register
+  case 0x0000:
+  // Intentional fall-through.
 
-            if (destinationRegister == FRB8x300RegisterOVF) {
-                return NO;
-            }
-            break;
+  // I/O bus to register
+  case 0x1000:
+    return destinationRegister != FRBRegisterOVF;
 
-        case 0x1000:
+  default:
+    break;
+  }
 
-            // I/O bus to register
-
-            if (destinationRegister == FRB8x300RegisterOVF) {
-                return NO;
-            }
-            break;
-            
-        default:
-            break;
-    }
-    
-    return YES;
-
+  return YES;
 }
 
 #pragma mark - Opcode handlers
 
 - (BOOL)handleMOVEOpcode:(uint16_t)opcode
-            forStructure:(DisasmStruct *)structure
-                  onFile:(id<HPDisassembledFile>)file {
-    if (![self isValidALUOpcode:opcode]) {
-        return NO;
-    }
+            forStructure:(DisasmStruct *_Nonnull)structure
+                  onFile:(NSObject<HPDisassembledFile> *_Nonnull)file
+                metadata:(FRBInstructionUserData *_Nonnull)metadata {
 
-    return [super handleMOVEOpcode:opcode
-                      forStructure:structure
-                            onFile:file];
+  return [self isValidALUOpcode:opcode] && [super handleMOVEOpcode:opcode
+                                                      forStructure:structure
+                                                            onFile:file
+                                                          metadata:metadata];
 }
 
 - (BOOL)handleADDOpcode:(uint16_t)opcode
-           forStructure:(DisasmStruct *)structure
-                 onFile:(id<HPDisassembledFile>)file {
-    if (![self isValidALUOpcode:opcode]) {
-        return NO;
-    }
+           forStructure:(DisasmStruct *_Nonnull)structure
+                 onFile:(NSObject<HPDisassembledFile> *_Nonnull)file
+               metadata:(FRBInstructionUserData *_Nonnull)metadata {
 
-    return [super handleADDOpcode:opcode
-                     forStructure:structure
-                           onFile:file];
+  return [self isValidALUOpcode:opcode] && [super handleADDOpcode:opcode
+                                                     forStructure:structure
+                                                           onFile:file
+                                                         metadata:metadata];
 }
 
 - (BOOL)handleANDOpcode:(uint16_t)opcode
-           forStructure:(DisasmStruct *)structure
-                 onFile:(id<HPDisassembledFile>)file {
-    if (![self isValidALUOpcode:opcode]) {
-        return NO;
-    }
+           forStructure:(DisasmStruct *_Nonnull)structure
+                 onFile:(NSObject<HPDisassembledFile> *_Nonnull)file
+               metadata:(FRBInstructionUserData *_Nonnull)metadata {
 
-    return [super handleANDOpcode:opcode
-                     forStructure:structure
-                           onFile:file];
+  return [self isValidALUOpcode:opcode] && [super handleANDOpcode:opcode
+                                                     forStructure:structure
+                                                           onFile:file
+                                                         metadata:metadata];
 }
 
 - (BOOL)handleXOROpcode:(uint16_t)opcode
-           forStructure:(DisasmStruct *)structure
-                 onFile:(id<HPDisassembledFile>)file {
-    if (![self isValidALUOpcode:opcode]) {
-        return NO;
-    }
+           forStructure:(DisasmStruct *_Nonnull)structure
+                 onFile:(NSObject<HPDisassembledFile> *_Nonnull)file
+               metadata:(FRBInstructionUserData *_Nonnull)metadata {
 
-    return [super handleXOROpcode:opcode
-                     forStructure:structure
-                           onFile:file];
+  return [self isValidALUOpcode:opcode] && [super handleXOROpcode:opcode
+                                                     forStructure:structure
+                                                           onFile:file
+                                                         metadata:metadata];
 }
 
 @end
+
+#pragma clang diagnostic pop

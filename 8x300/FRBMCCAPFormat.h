@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2014-2016, Alessandro Gatti - frob.it
+ Copyright (c) 2014-2017, Alessandro Gatti - frob.it
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -24,23 +24,10 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import "NSDataHopperAdditions.h"
+@import Foundation;
 
-static NSMutableData *newData(const uint8_t filler, NSUInteger length);
+#import "FRBInstructionFormatter.h"
 
-NSData *NSDataWithFiller(const uint8_t filler, NSUInteger length) {
-    return newData(filler, length);
-}
+@interface FRBMCCAPFormat : NSObject <FRBInstructionFormatter>
 
-NSMutableData *NSMutableDataWithFiller(const uint8_t filler,
-                                       NSUInteger length) {
-    return newData(filler, length);
-}
-
-NSMutableData *newData(const uint8_t filler, NSUInteger length) {
-    NSMutableData *data = [[NSMutableData alloc] initWithCapacity:length];
-    if (data) {
-        memset(data.mutableBytes, filler, length);
-    }
-    return data;
-}
+@end

@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2014-2015, Alessandro Gatti - frob.it
+ Copyright (c) 2014-2017, Alessandro Gatti - frob.it
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -24,33 +24,24 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import <Foundation/Foundation.h>
+@import Foundation;
 
-#include "FRBHopperCommon.h"
+#import "FRBCPUProvider.h"
 
-/*!
- * The instruction colouriser for the 8x300 plugin.
- */
-@interface NAMESPACE(8x300InstructionColouriser) : NSObject
+@protocol FRBCPUProvider;
 
-/*!
- * Initialises an instance of the instruction colouriser with the given data.
- *
- * @param validOpcodes a list of valid opcodes for the CPU in use.
- * @param services     a reference to HPHopperService to fetch theme colours.
- *
- * @return an initialised instance of the instruction colouriser.
- */
-- (instancetype)initWithOpcodesSet:(const NSSet *)validOpcodes
-                       andServices:(id<HPHopperServices>)services;
+@interface FRBModelManager : NSObject
 
-/*!
- * Colourises the given string.
- *
- * @param source an attributed string containing the text to colourise.
- *
- * @return the colourised string, or the original string in case of problems.
- */
-- (NSAttributedString *)colouriseInstruction:(NSAttributedString *)source;
++ (instancetype _Nullable)modelManagerWithBundle:(NSBundle *_Nonnull)bundle;
 
+- (NSArray<NSString *> *_Nonnull)families;
+
+- (NSArray<NSString *> *_Nonnull)modelsForFamily:(NSString *_Nonnull)family;
+
+- (NSObject<FRBCPUProvider> *_Nonnull)
+providerForFamily:(NSString *_Nonnull)family
+         andModel:(NSString *_Nonnull)model;
+
+- (Class<FRBCPUProvider> _Nonnull)classForFamily:(NSString *_Nonnull)family
+                                        andModel:(NSString *_Nonnull)model;
 @end

@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2014-2015, Alessandro Gatti - frob.it
+ Copyright (c) 2014-2017, Alessandro Gatti - frob.it
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -25,80 +25,100 @@
  */
 
 #import "FRBContext.h"
+#import "FRBBase8x300.h"
 #import "FRBDefinition.h"
-#import "FRBModelHandler.h"
-#import "FRBProvider.h"
 
-// HopperCommon library imports
+@interface ItFrobHopper8x300Context ()
 
-#import "FRBHopperCommon.h"
+@property(strong, nonatomic, readonly, nonnull)
+    NSObject<CPUDefinition> *definition;
+@property(strong, nonatomic, readonly, nonnull)
+    NSObject<HPDisassembledFile> *file;
+@property(strong, nonatomic, readonly, nonnull)
+    NSObject<HPHopperServices> *services;
+@property(strong, nonatomic, readonly, nonnull)
+    NSObject<FRBCPUProvider> *provider;
 
-static const NAMESPACE(8x300ModelHandler) *kModelHandler;
-
-@interface NAMESPACE(8x300Context) () {
-    id<CPUDefinition> _cpu;
-    id<HPDisassembledFile> _file;
-    id<HPHopperServices> _services;
-    id<FRBProvider> _provider;
-}
 @end
 
-@implementation NAMESPACE(8x300Context)
+@implementation ItFrobHopper8x300Context
 
-- (instancetype)initWithCPU:(id<CPUDefinition>)cpu
-                    andFile:(id<HPDisassembledFile>)file
-               withServices:(id<HPHopperServices>)services {
-    if (self = [super init]) {
-        _cpu = cpu;
-        _file = file;
-        _services = services;
+- (instancetype _Nonnull)
+  initWithCPU:(NSObject<CPUDefinition> *_Nonnull)definition
+      andFile:(NSObject<HPDisassembledFile> *_Nonnull)file
+ withProvider:(NSObject<FRBCPUProvider> *_Nonnull)provider
+usingServices:(NSObject<HPHopperServices> *_Nonnull)services {
 
-        static dispatch_once_t onceToken;
-        dispatch_once(&onceToken, ^{
-            kModelHandler = [NAMESPACE(8x300ModelHandler) sharedModelHandler];
-        });
+  if (self = [super init]) {
+    _definition = definition;
+    _file = file;
+    _provider = provider;
+    _services = services;
+  }
 
-        NSString *providerName = [kModelHandler providerNameForFamily:file.cpuFamily
-                                                         andSubFamily:file.cpuSubFamily];
-        _provider = [kModelHandler providerForName:providerName];
-
-        if (!_provider) {
-            return nil;
-        }
-    }
-    return self;
+  return self;
 }
 
-- (id<CPUDefinition>)cpuDefinition {
-    return _cpu;
+#pragma mark - CPUContext protocol implementation
+
+- (NSObject<CPUDefinition> *)cpuDefinition {
+  return self.definition;
 }
 
 - (Address)adjustCodeAddress:(Address)address {
-    return address & ~1;
+  return address & ~1;
 }
 
 - (Address)nextAddressToTryIfInstructionFailedToDecodeAt:(Address)address
                                               forCPUMode:(uint8_t)mode {
-    return (address & ~1) + 2;
+  return (address & ~1) + 2;
+}
+
+- (int)isNopAt:(Address)address {
+  return ([self.file readUInt16AtVirtualAddress:address] == 0x0000) ? 2 : 0;
 }
 
 - (int)disassembleSingleInstruction:(DisasmStruct *)disasm
                  usingProcessorMode:(NSUInteger)mode {
-    disasm->instruction.pcRegisterValue = disasm->virtualAddr;
-    return [_provider processStructure:disasm
-                                onFile:_file];
+  disasm->instruction.pcRegisterValue = disasm->virtualAddr;
+  return [self.provider processStructure:disasm onFile:self.file];
+}
+
+- (BOOL)instructionMayBeASwitchStatement:(DisasmStruct *)disasmStruct {
+  return ((FRBOpcode)(disasmStruct->instruction.userData >> 8)) == FRBOpcodeXEC;
 }
 
 - (BOOL)instructionHaltsExecutionFlow:(DisasmStruct *)disasm {
-    return [_provider haltsExecutionFlow:disasm];
+  return [self.provider haltsExecutionFlow:disasm];
 }
 
-- (void)buildInstructionString:(DisasmStruct *)disasm
-                    forSegment:(NSObject<HPSegment> *)segment
-                populatingInfo:(NSObject<HPFormattedInstructionInfo> *)formattedInstructionInfo {
-    strcat(disasm->completeInstructionString, [_provider formatInstruction:disasm
-                                                                    onFile:_file
-                                                              withServices:_services]);
+- (NSObject<HPASMLine> *)buildMnemonicString:(DisasmStruct *)disasm
+                                      inFile:
+                                          (NSObject<HPDisassembledFile> *)file {
+  return [self.provider buildMnemonicString:disasm
+                                     inFile:file
+                               withServices:self.services];
+}
+
+- (NSObject<HPASMLine> *)
+buildCompleteOperandString:(DisasmStruct *)disasm
+                    inFile:(NSObject<HPDisassembledFile> *)file
+                       raw:(BOOL)raw {
+  return [self.provider buildCompleteOperandString:disasm
+                                            inFile:file
+                                               raw:raw
+                                      withServices:self.services];
+}
+
+- (NSObject<HPASMLine> *)buildOperandString:(DisasmStruct *)disasm
+                            forOperandIndex:(NSUInteger)operandIndex
+                                     inFile:(NSObject<HPDisassembledFile> *)file
+                                        raw:(BOOL)raw {
+  return [self.provider buildOperandString:disasm
+                           forOperandIndex:operandIndex
+                                    inFile:file
+                                       raw:raw
+                              withServices:self.services];
 }
 
 @end
