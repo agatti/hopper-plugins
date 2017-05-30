@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2014, Alessandro Gatti - frob.it
+ Copyright (c) 2014-2017, Alessandro Gatti - frob.it
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -24,23 +24,33 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import <Foundation/Foundation.h>
+@import Foundation;
+
+#import <Hopper/Hopper.h>
 
 #import "FRBBaseContext.h"
+#import "FRBCPUProvider.h"
 
-@interface ItFrobHopper6502Context : ItFrobHopperHopperCommonBaseContext
-
-/*!
- *	Initialises a CPU context object.
- *
- *	@param cpu      the CPU definition instance to base upon.
- *	@param file     the file being disassembled.
- *	@param services the shared Hopper services instance.
- *
- *	@return a new CPU context object.
+/**
+ * CPU Context class for the 6502 disassembler plugin.
  */
-- (instancetype)initWithCPU:(id<CPUDefinition>)cpu
-                    andFile:(id<HPDisassembledFile>)file
-               withServices:(id<HPHopperServices>)services;
+@interface ItFrobHopper6502Context
+    : ItFrobHopperHopperCommonBaseContext <CPUContext>
+
+/**
+ * Creates an instance of the 6502 CPU disassembler context.
+ *
+ * @param[in] definition the CPU definition instance.
+ * @param[in] file       the file to disassemble data from.
+ * @param[in] provider   the CPU disassembly provider instance.
+ * @param[in] services   the Hopper Services instance.
+ *
+ * @return an instance of ItFrobHopper6502Context.
+ */
+- (instancetype _Nonnull)
+  initWithCPU:(NSObject<CPUDefinition> *_Nonnull)definition
+      andFile:(NSObject<HPDisassembledFile> *_Nonnull)file
+ withProvider:(NSObject<FRBCPUProvider> *_Nonnull)provider
+usingServices:(NSObject<HPHopperServices> *_Nonnull)services;
 
 @end

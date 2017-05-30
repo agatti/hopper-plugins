@@ -82,3 +82,16 @@ void AddInlineCommentIfEmpty(NSObject<HPDisassembledFile> *_Nonnull file,
         atVirtualAddress:address
                   reason:CCReason_Automatic];
 }
+
+NSString *_Nullable ResolveNameForAddress(
+    NSObject<HPDisassembledFile> *_Nonnull file, Address address) {
+  NSString *_Nullable name = [file nameForVirtualAddress:address];
+  if (name == nil) {
+    NSObject<HPProcedure> *_Nullable procedure = [file procedureAt:address];
+    if (procedure != nil) {
+      name = [procedure localLabelAtAddress:address];
+    }
+  }
+
+  return name;
+}

@@ -10,8 +10,6 @@
 		6857367F1985708600D790A9 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6857367E1985708600D790A9 /* Cocoa.framework */; };
 		685736A71985715E00D790A9 /* FRBCPUSupport.h in Headers */ = {isa = PBXBuildFile; fileRef = 685736A51985715E00D790A9 /* FRBCPUSupport.h */; };
 		685736A81985715E00D790A9 /* FRBCPUSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 685736A61985715E00D790A9 /* FRBCPUSupport.m */; };
-		689BC5FD19C79E2700A8B6E2 /* FRBInstructionColouriser.h in Headers */ = {isa = PBXBuildFile; fileRef = 689BC5FB19C79E2700A8B6E2 /* FRBInstructionColouriser.h */; };
-		689BC5FE19C79E2700A8B6E2 /* FRBInstructionColouriser.m in Sources */ = {isa = PBXBuildFile; fileRef = 689BC5FC19C79E2700A8B6E2 /* FRBInstructionColouriser.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,8 +20,6 @@
 		685736831985708600D790A9 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		685736A51985715E00D790A9 /* FRBCPUSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRBCPUSupport.h; sourceTree = "<group>"; };
 		685736A61985715E00D790A9 /* FRBCPUSupport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRBCPUSupport.m; sourceTree = "<group>"; };
-		689BC5FB19C79E2700A8B6E2 /* FRBInstructionColouriser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRBInstructionColouriser.h; sourceTree = "<group>"; };
-		689BC5FC19C79E2700A8B6E2 /* FRBInstructionColouriser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRBInstructionColouriser.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,8 +75,6 @@
 			children = (
 				685736A51985715E00D790A9 /* FRBCPUSupport.h */,
 				685736A61985715E00D790A9 /* FRBCPUSupport.m */,
-				689BC5FB19C79E2700A8B6E2 /* FRBInstructionColouriser.h */,
-				689BC5FC19C79E2700A8B6E2 /* FRBInstructionColouriser.m */,
 			);
 			path = 65xxCommon;
 			sourceTree = "<group>";
@@ -93,7 +87,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				685736A71985715E00D790A9 /* FRBCPUSupport.h in Headers */,
-				689BC5FD19C79E2700A8B6E2 /* FRBInstructionColouriser.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -148,7 +141,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				689BC5FE19C79E2700A8B6E2 /* FRBInstructionColouriser.m in Sources */,
 				685736A81985715E00D790A9 /* FRBCPUSupport.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

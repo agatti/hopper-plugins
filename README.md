@@ -21,7 +21,7 @@ Plugins currently available in the repository:
 
 ### **6502 CPU Plugin**
 
-_version 0.1.3_
+_version 0.2.0_
 
 This CPU core plugin allows you to disassemble 6502/65C02 code, used in loads of home computers of the 70s, 80s, and early 90s, and in industrial automation or other specialised tasks where an MCU is needed.
 
@@ -215,7 +215,7 @@ CPU backends currently supported: 6502, 65C02, 65N02, 65R02, 65S02, HuC6280, M74
 #### Caveats:
 
 * Undocumented opcodes are not recognised (and this is not going to change in the near future).
-* Rebuilding the test binaries requires having `xa` installed (available from homebrew via `brew install xa`).
+* Rebuilding the test binaries requires having the [AS Macroassembler](http://www.alfsembler.de/) command line tools available in your `PATH` variable.
 
 <hr/>
 

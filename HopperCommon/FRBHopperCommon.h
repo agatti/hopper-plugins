@@ -95,3 +95,15 @@ void SetDefaultFormatForArgument(NSObject<HPDisassembledFile> *_Nonnull file,
  */
 void AddInlineCommentIfEmpty(NSObject<HPDisassembledFile> *_Nonnull file,
                              Address address, NSString *_Nonnull comment);
+
+/**
+ * Resolves the name assigned to the given address, regardless of whether it is
+ * local or global.
+ *
+ * @param[in] file    the file to operate on.
+ * @param[in] address the address to examine.
+ *
+ * @return the assigned name if any is present, or nil otherwise.
+ */
+NSString *_Nullable ResolveNameForAddress(
+    NSObject<HPDisassembledFile> *_Nonnull file, Address address);

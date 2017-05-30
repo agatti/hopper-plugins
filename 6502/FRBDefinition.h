@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2014, Alessandro Gatti - frob.it
+ Copyright (c) 2014-2017, Alessandro Gatti - frob.it
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -24,7 +24,20 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#import <Foundation/Foundation.h>
+@import Foundation;
 
-@interface ItFrobHopper6502Definition : NSObject<CPUDefinition>
+#import "Hopper/Hopper.h"
+
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "OCUnusedClassInspection"
+
+@interface ItFrobHopper6502Definition : NSObject <CPUDefinition>
+
+/**
+ * Hopper Services instance.
+ */
+@property(strong, nonatomic, nonnull) NSObject<HPHopperServices> *services;
+
 @end
+
+#pragma clang diagnostic pop

@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2014-2015, Alessandro Gatti - frob.it
+ Copyright (c) 2014-2017, Alessandro Gatti - frob.it
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -29,8 +29,9 @@
 
 static BOOL IsBitsSizeValid(size_t size);
 
-Address SetAddressOperand(id<HPDisassembledFile> file, DisasmStruct *disasm,
-                          int operand, uint32_t size, uint32_t effectiveSize,
+Address SetAddressOperand(NSObject<HPDisassembledFile> *_Nonnull file,
+                          DisasmStruct *_Nonnull disasm, NSUInteger operand,
+                          uint32_t size, uint32_t effectiveSize,
                           uint32_t offset, uint32_t indexRegisters) {
 
   if (!IsBitsSizeValid(size)) {
@@ -43,19 +44,8 @@ Address SetAddressOperand(id<HPDisassembledFile> file, DisasmStruct *disasm,
                  userInfo:nil];
   }
 
-  if (!IsBitsSizeValid(effectiveSize)) {
-    @throw [NSException
-        exceptionWithName:FRBHopperExceptionName
-                   reason:[NSString stringWithFormat:@"Internal error: invalid "
-                                                     @"effectiveSize for "
-                                                     @"SetAddressOperand(): "
-                                                     @"%d",
-                                                     effectiveSize]
-                 userInfo:nil];
-  }
-
-  disasm->operand[operand].memory.baseRegister = 0;
-  disasm->operand[operand].memory.indexRegister = indexRegisters;
+  disasm->operand[operand].memory.baseRegistersMask = 0;
+  disasm->operand[operand].memory.indexRegistersMask = indexRegisters;
   disasm->operand[operand].memory.scale = 1;
   disasm->operand[operand].memory.displacement = 0;
   disasm->operand[operand].type =
@@ -84,7 +74,14 @@ Address SetAddressOperand(id<HPDisassembledFile> file, DisasmStruct *disasm,
     break;
 
   default:
-    break;
+    @throw [NSException
+        exceptionWithName:FRBHopperExceptionName
+                   reason:[NSString stringWithFormat:@"Internal error: invalid "
+                                                     @"effectiveSize for "
+                                                     @"SetAddressOperand(): "
+                                                     @"%d",
+                                                     effectiveSize]
+                 userInfo:nil];
   }
 
   disasm->operand[operand].immediateValue = address;
@@ -95,21 +92,10 @@ Address SetAddressOperand(id<HPDisassembledFile> file, DisasmStruct *disasm,
   return address;
 }
 
-Address SetRelativeAddressOperand(id<HPDisassembledFile> file,
-                                  DisasmStruct *disasm, int operand,
-                                  uint32_t size, uint32_t effectiveSize,
-                                  uint32_t offset) {
-
-  if (!IsBitsSizeValid(size)) {
-    @throw [NSException
-        exceptionWithName:FRBHopperExceptionName
-                   reason:[NSString stringWithFormat:@"Internal error: invalid "
-                                                     @"size for "
-                                                     @"SetRelativeAddressOpera"
-                                                     @"nd(): %d",
-                                                     size]
-                 userInfo:nil];
-  }
+Address SetRelativeAddressOperand(NSObject<HPDisassembledFile> *_Nonnull file,
+                                  DisasmStruct *_Nonnull disasm,
+                                  NSUInteger operand, uint32_t size,
+                                  uint32_t effectiveSize, uint32_t offset) {
 
   if (!IsBitsSizeValid(effectiveSize)) {
     @throw [NSException
@@ -148,7 +134,14 @@ Address SetRelativeAddressOperand(id<HPDisassembledFile> file,
     break;
 
   default:
-    break;
+    @throw [NSException
+        exceptionWithName:FRBHopperExceptionName
+                   reason:[NSString stringWithFormat:@"Internal error: invalid "
+                                                     @"size for "
+                                                     @"SetRelativeAddressOpera"
+                                                     @"nd(): %d",
+                                                     size]
+                 userInfo:nil];
   }
 
   Address address = disasm->instruction.pcRegisterValue +
@@ -165,8 +158,9 @@ Address SetRelativeAddressOperand(id<HPDisassembledFile> file,
   return address;
 }
 
-void SetConstantOperand(id<HPDisassembledFile> file, DisasmStruct *disasm,
-                        int operand, uint32_t size, uint32_t offset) {
+void SetConstantOperand(NSObject<HPDisassembledFile> *_Nonnull file,
+                        DisasmStruct *_Nonnull disasm, int operand,
+                        uint32_t size, uint32_t offset) {
 
   disasm->operand[operand].type = DISASM_OPERAND_CONSTANT_TYPE;
   disasm->operand[operand].size = size;
@@ -203,18 +197,7 @@ void SetConstantOperand(id<HPDisassembledFile> file, DisasmStruct *disasm,
                                                @"for SetConstantOperand(): %d",
                                                size]
                  userInfo:nil];
-
-    break;
   }
-}
-
-BOOL CanReadBytes(id<HPDisassembledFile> file, Address address, size_t bytes) {
-  id<HPSegment> segment = [file segmentForVirtualAddress:address];
-  if (!segment) {
-    return NO;
-  }
-
-  return ([segment endAddress] < (address + bytes));
 }
 
 int64_t CalculateRelativeJumpTarget(int64_t target) {

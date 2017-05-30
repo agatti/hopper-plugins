@@ -1,4 +1,4 @@
-; Copyright (c) 2014, Alessandro Gatti - frob.it
+; Copyright (c) 2014-2017, Alessandro Gatti - frob.it
 ; All rights reserved.
 ;
 ; Redistribution and use in source and binary forms, with or without
@@ -23,21 +23,23 @@
 ; ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 ; POSSIBILITY OF SUCH DAMAGE.
 
-		*=$1000
+		cpu	65c02
 
-farjumps	JMP $7fff
-		JMP $8000
-		JMP $8001
-		JMP $FFFE
-		JMP $FFFF
+		org	$1000
+
+farjumps	JMP	$7FFF
+		JMP	$8000
+		JMP	$8001
+		JMP	$FFFE
+		JMP	$FFFF
 jumpstart	NOP
 		NOP
-		JMP jumpstart
+		JMP	jumpstart
 		NOP
 		NOP
-loop		JMP loop
+loop		JMP	loop
 		NOP
-		BCC bcc_forward
+		BCC	bcc_forward
 		NOP
 bcc_forward	NOP
 		NOP
@@ -47,9 +49,9 @@ bcc_backwards	NOP
 		NOP
 		NOP
 		NOP
-		BCC bcc_backwards
+		BCC	bcc_backwards
 		NOP
-		BCS bcs_forward
+		BCS	bcs_forward
 		NOP
 bcs_forward	NOP
 		NOP
@@ -59,9 +61,9 @@ bcs_backwards	NOP
 		NOP
 		NOP
 		NOP
-		BCS bcs_backwards
+		BCS	bcs_backwards
 		NOP
-		BEQ beq_forward
+		BEQ	beq_forward
 		NOP
 beq_forward	NOP
 		NOP
@@ -71,9 +73,9 @@ beq_backwards	NOP
 		NOP
 		NOP
 		NOP
-		BEQ beq_backwards
+		BEQ	beq_backwards
 		NOP
-		BMI bmi_forward
+		BMI	bmi_forward
 		NOP
 bmi_forward	NOP
 		NOP
@@ -83,9 +85,9 @@ bmi_backwards	NOP
 		NOP
 		NOP
 		NOP
-		BMI bmi_backwards
+		BMI	bmi_backwards
 		NOP
-		BNE bne_forward
+		BNE	bne_forward
 		NOP
 bne_forward	NOP
 		NOP
@@ -95,9 +97,9 @@ bne_backwards	NOP
 		NOP
 		NOP
 		NOP
-		BNE bne_backwards
+		BNE	bne_backwards
 		NOP
-		BPL bpl_forward
+		BPL	bpl_forward
 		NOP
 bpl_forward	NOP
 		NOP
@@ -107,9 +109,9 @@ bpl_backwards	NOP
 		NOP
 		NOP
 		NOP
-		BPL bpl_backwards
+		BPL	bpl_backwards
 		NOP
-		BVC bvc_forward
+		BVC	bvc_forward
 		NOP
 bvc_forward	NOP
 		NOP
@@ -119,9 +121,9 @@ bvc_backwards	NOP
 		NOP
 		NOP
 		NOP
-		BVC bvc_backwards
+		BVC	bvc_backwards
 		NOP
-		BVS bvs_forward
+		BVS	bvs_forward
 		NOP
 bvs_forward	NOP
 		NOP
@@ -131,9 +133,9 @@ bvs_backwards	NOP
 		NOP
 		NOP
 		NOP
-		BVS bvs_backwards
+		BVS	bvs_backwards
 		NOP
-		JMP jmp_forward
+		JMP	jmp_forward
 		NOP
 jmp_forward	NOP
 		NOP
@@ -143,9 +145,9 @@ jmp_backwards	NOP
 		NOP
 		NOP
 		NOP
-		JMP jmp_backwards
+		JMP	jmp_backwards
 		NOP
-		JSR jsr_forward
+		JSR	jsr_forward
 		NOP
 jsr_forward	NOP
 		NOP
@@ -155,7 +157,19 @@ jsr_backwards	NOP
 		NOP
 		NOP
 		NOP
-		JSR jsr_backwards
+		JSR	jsr_backwards
+		NOP
+		BRA	bra_forward
+		NOP
+bra_forward	NOP
+		NOP
+		NOP
+		NOP
+bra_backwards	NOP
+		NOP
+		NOP
+		NOP
+		BRA	bra_backwards
 		NOP
 
 		RTS

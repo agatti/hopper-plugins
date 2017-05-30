@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2014-2015, Alessandro Gatti - frob.it
+ Copyright (c) 2014-2017, Alessandro Gatti - frob.it
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -24,28 +24,34 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import <Foundation/Foundation.h>
+@import Foundation;
+
 #import <Hopper/Hopper.h>
 
 @protocol HPHopperServices;
 
-void SetOperandType(DisasmStruct *disasm, int operand, DisasmOperandType type,
-                    uint32_t size, int64_t immediate);
-Address SetAddressOperand(id<HPDisassembledFile> file, DisasmStruct *disasm,
-                          int operand, uint32_t size, uint32_t effectiveSize,
-                          uint32_t offset, uint32_t indexRegisters);
-Address SetRelativeAddressOperand(id<HPDisassembledFile> file,
-                                  DisasmStruct *disasm, int operand,
-                                  uint32_t size, uint32_t effectiveSize,
-                                  uint32_t offset);
-void SetConstantOperand(id<HPDisassembledFile> file, DisasmStruct *disasm,
-                        int operand, uint32_t size, uint32_t offset);
-BOOL CanReadBytes(id<HPDisassembledFile> file, Address address, size_t bytes);
+/*
+ * @todo: See if this whole project can be removed from the workspace.
+ */
 
-/*!
+Address SetAddressOperand(NSObject<HPDisassembledFile> *_Nonnull file,
+                          DisasmStruct *_Nonnull disasm, NSUInteger operand,
+                          uint32_t size, uint32_t effectiveSize,
+                          uint32_t offset, uint32_t indexRegisters);
+
+Address SetRelativeAddressOperand(NSObject<HPDisassembledFile> *_Nonnull file,
+                                  DisasmStruct *_Nonnull disasm,
+                                  NSUInteger operand, uint32_t size,
+                                  uint32_t effectiveSize, uint32_t offset);
+
+void SetConstantOperand(NSObject<HPDisassembledFile> *_Nonnull file,
+                        DisasmStruct *_Nonnull disasm, int operand,
+                        uint32_t size, uint32_t offset);
+
+/**
  * Calculates the signed displacement for the given branch target value.
  *
- * @param target the branch target value extracted from the opcode.
+ * @param[in] target the branch target value extracted from the opcode.
  *
  * @return the calculated relative displacement.
  */

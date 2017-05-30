@@ -26,7 +26,9 @@
 .PHONY: all clean
 
 all:
+	@$(MAKE) -C 6502
 	@$(MAKE) -C 8x300
 
 clean:
+	@$(MAKE) -C 6502 clean
 	@$(MAKE) -C 8x300 clean

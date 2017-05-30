@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2014, Alessandro Gatti - frob.it
+ Copyright (c) 2014-2017, Alessandro Gatti - frob.it
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -24,12 +24,19 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import <Foundation/Foundation.h>
+@import Foundation;
 
 #import "FRBBase6502.h"
+#import "FRBCPUProvider.h"
 
-/*!
- *	CPU Backend for the generic 65C02 chip family.
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "OCUnusedClassInspection"
+
+/**
+ * Backend for the generic 65C02 chip family.
  */
-@interface ItFrobHopper6502Generic65C02 : ItFrobHopper6502Base6502
+@interface ItFrobHopper6502Generic65C02
+    : ItFrobHopper6502Base6502 <FRBCPUProvider>
 @end
+
+#pragma clang diagnostic pop

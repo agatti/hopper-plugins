@@ -14,7 +14,6 @@
 		683A4C24197C8E4700B7F172 /* FRBContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 683A4C1A197C8E4700B7F172 /* FRBContext.m */; };
 		683A4C25197C8E4700B7F172 /* FRBDefinition.m in Sources */ = {isa = PBXBuildFile; fileRef = 683A4C1C197C8E4700B7F172 /* FRBDefinition.m */; };
 		683A4C27197C8E4700B7F172 /* FRBGeneric6502.m in Sources */ = {isa = PBXBuildFile; fileRef = 683A4C21197C8E4700B7F172 /* FRBGeneric6502.m */; };
-		683A4C31197C8E7000B7F172 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 683A4C2F197C8E7000B7F172 /* InfoPlist.strings */; };
 		685736AA1985738C00D790A9 /* lib65xxCommon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 685736A91985738B00D790A9 /* lib65xxCommon.a */; };
 		6873AD77197F810400B46DB5 /* FRBR6500.m in Sources */ = {isa = PBXBuildFile; fileRef = 6873AD76197F810400B46DB5 /* FRBR6500.m */; };
 		6873AD7D197F8E7A00B46DB5 /* FRBHuC6280.m in Sources */ = {isa = PBXBuildFile; fileRef = 6873AD7C197F8E7A00B46DB5 /* FRBHuC6280.m */; };
@@ -23,8 +22,6 @@
 		68B87E0A19AB975400BEE286 /* FRBR65C02.m in Sources */ = {isa = PBXBuildFile; fileRef = 68B87E0819AB975400BEE286 /* FRBR65C02.m */; };
 		68B87E0E19ABD99800BEE286 /* FRBR65C19.m in Sources */ = {isa = PBXBuildFile; fileRef = 68B87E0C19ABD99800BEE286 /* FRBR65C19.m */; };
 		68BFF68919AC467800025CDE /* FRBR65C29.m in Sources */ = {isa = PBXBuildFile; fileRef = 68BFF68719AC467800025CDE /* FRBR65C29.m */; };
-		68CEFDC6197CB07C0068B320 /* models.plist in Resources */ = {isa = PBXBuildFile; fileRef = 68CEFDC5197CB07C0068B320 /* models.plist */; };
-		68CEFDC9197CB5840068B320 /* FRBModelHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 68CEFDC8197CB5840068B320 /* FRBModelHandler.m */; };
 		68F0A4E219E0645A007037E2 /* FRB65N02.m in Sources */ = {isa = PBXBuildFile; fileRef = 68F0A4DB19E0645A007037E2 /* FRB65N02.m */; };
 		68F0A4E319E0645A007037E2 /* FRB65R02.m in Sources */ = {isa = PBXBuildFile; fileRef = 68F0A4DD19E0645A007037E2 /* FRB65R02.m */; };
 		68F0A4E419E0645A007037E2 /* FRB65S02.m in Sources */ = {isa = PBXBuildFile; fileRef = 68F0A4DF19E0645A007037E2 /* FRB65S02.m */; };
@@ -46,9 +43,7 @@
 		683A4C1C197C8E4700B7F172 /* FRBDefinition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FRBDefinition.m; path = 6502/FRBDefinition.m; sourceTree = SOURCE_ROOT; };
 		683A4C20197C8E4700B7F172 /* FRBGeneric6502.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FRBGeneric6502.h; path = 6502/FRBGeneric6502.h; sourceTree = SOURCE_ROOT; };
 		683A4C21197C8E4700B7F172 /* FRBGeneric6502.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FRBGeneric6502.m; path = 6502/FRBGeneric6502.m; sourceTree = SOURCE_ROOT; };
-		683A4C2B197C8E5700B7F172 /* FRB6502Plugin-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "FRB6502Plugin-Info.plist"; path = "6502/FRB6502Plugin-Info.plist"; sourceTree = SOURCE_ROOT; };
-		683A4C2C197C8E5700B7F172 /* FRB6502Plugin-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "FRB6502Plugin-Prefix.pch"; path = "6502/FRB6502Plugin-Prefix.pch"; sourceTree = SOURCE_ROOT; };
-		683A4C30197C8E7000B7F172 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = 6502/en.lproj/InfoPlist.strings; sourceTree = SOURCE_ROOT; };
+		683A4C2B197C8E5700B7F172 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.info; name = Info.plist; path = 6502/Info.plist; sourceTree = SOURCE_ROOT; };
 		685736A91985738B00D790A9 /* lib65xxCommon.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = lib65xxCommon.a; path = build/Debug/lib65xxCommon.a; sourceTree = "<group>"; };
 		6860A68819AAA0B600A9AC3B /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		6873AD75197F810400B46DB5 /* FRBR6500.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRBR6500.h; sourceTree = "<group>"; };
@@ -65,9 +60,6 @@
 		68B87E0C19ABD99800BEE286 /* FRBR65C19.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRBR65C19.m; sourceTree = "<group>"; };
 		68BFF68619AC467800025CDE /* FRBR65C29.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRBR65C29.h; sourceTree = "<group>"; };
 		68BFF68719AC467800025CDE /* FRBR65C29.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRBR65C29.m; sourceTree = "<group>"; };
-		68CEFDC5197CB07C0068B320 /* models.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = models.plist; path = 6502/models.plist; sourceTree = SOURCE_ROOT; };
-		68CEFDC7197CB5840068B320 /* FRBModelHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FRBModelHandler.h; path = 6502/FRBModelHandler.h; sourceTree = SOURCE_ROOT; };
-		68CEFDC8197CB5840068B320 /* FRBModelHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FRBModelHandler.m; path = 6502/FRBModelHandler.m; sourceTree = SOURCE_ROOT; };
 		68F0A4DA19E0645A007037E2 /* FRB65N02.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRB65N02.h; sourceTree = "<group>"; };
 		68F0A4DB19E0645A007037E2 /* FRB65N02.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRB65N02.m; sourceTree = "<group>"; };
 		68F0A4DC19E0645A007037E2 /* FRB65R02.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRB65R02.h; sourceTree = "<group>"; };
@@ -130,8 +122,6 @@
 				683A4C1A197C8E4700B7F172 /* FRBContext.m */,
 				683A4C1B197C8E4700B7F172 /* FRBDefinition.h */,
 				683A4C1C197C8E4700B7F172 /* FRBDefinition.m */,
-				68CEFDC7197CB5840068B320 /* FRBModelHandler.h */,
-				68CEFDC8197CB5840068B320 /* FRBModelHandler.m */,
 			);
 			path = 6502;
 			sourceTree = "<group>";
@@ -139,10 +129,7 @@
 		6801368919706CC5004964BD /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				683A4C2F197C8E7000B7F172 /* InfoPlist.strings */,
-				683A4C2B197C8E5700B7F172 /* FRB6502Plugin-Info.plist */,
-				683A4C2C197C8E5700B7F172 /* FRB6502Plugin-Prefix.pch */,
-				68CEFDC5197CB07C0068B320 /* models.plist */,
+				683A4C2B197C8E5700B7F172 /* Info.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -191,7 +178,7 @@
 			buildPhases = (
 				6801367F19706CC5004964BD /* Sources */,
 				6801368019706CC5004964BD /* Frameworks */,
-				6801368119706CC5004964BD /* Resources */,
+				687BEC4F1EDC0C4200C6E3CD /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -228,17 +215,21 @@
 		};
 /* End PBXProject section */
 
-/* Begin PBXResourcesBuildPhase section */
-		6801368119706CC5004964BD /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
+/* Begin PBXShellScriptBuildPhase section */
+		687BEC4F1EDC0C4200C6E3CD /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				68CEFDC6197CB07C0068B320 /* models.plist in Resources */,
-				683A4C31197C8E7000B7F172 /* InfoPlist.strings in Resources */,
+			);
+			inputPaths = (
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "rm -rf \"${INSTALL_PATH}/6502.hopperCPU\"\nmkdir -p \"${INSTALL_PATH}\"\ncp -rf \"${BUILT_PRODUCTS_DIR}/6502.hopperCPU\" \"${INSTALL_PATH}\"\n";
 		};
-/* End PBXResourcesBuildPhase section */
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		6801367F19706CC5004964BD /* Sources */ = {
@@ -261,22 +252,10 @@
 				68BFF68919AC467800025CDE /* FRBR65C29.m in Sources */,
 				683372EA197C909B002B432E /* FRBGeneric65C02.m in Sources */,
 				68B87E0A19AB975400BEE286 /* FRBR65C02.m in Sources */,
-				68CEFDC9197CB5840068B320 /* FRBModelHandler.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXVariantGroup section */
-		683A4C2F197C8E7000B7F172 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				683A4C30197C8E7000B7F172 /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		6801368F19706CC5004964BD /* Debug */ = {
@@ -383,9 +362,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				INFOPLIST_FILE = "6502/FRB6502Plugin-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
+				INFOPLIST_FILE = 6502/Info.plist;
+				INSTALL_PATH = "$(USER_LIBRARY_DIR)/Application Support/Hopper/PlugIns/v4/CPUs";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/HopperPlugins-fzslwhyufvevicghqykcwcprlbow/Build/Products/Debug",
@@ -400,9 +380,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				INFOPLIST_FILE = "6502/FRB6502Plugin-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
+				INFOPLIST_FILE = 6502/Info.plist;
+				INSTALL_PATH = "$(USER_LIBRARY_DIR)/Application Support/Hopper/PlugIns/v4/CPUs";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/HopperPlugins-fzslwhyufvevicghqykcwcprlbow/Build/Products/Debug",

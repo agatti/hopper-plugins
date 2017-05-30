@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2014, Alessandro Gatti - frob.it
+ Copyright (c) 2014-2017, Alessandro Gatti - frob.it
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -30,20 +30,24 @@
 
 #import "FRBBase.h"
 
-@interface ItFrobHopper6502Base6502 : NSObject<FRBCPUProvider>
+@interface ItFrobHopper6502Base6502 : NSObject <FRBCPUProvider>
 
 - (FRBInstruction)instructionForByte:(uint8_t)byte;
 
-- (const FRBOpcode *)opcodeForByte:(uint8_t)byte;
-- (void)updateFlags:(DisasmStruct *)structure
-     forInstruction:(const FRBInstruction *)instruction;
-- (void)decodeNonBranch:(DisasmStruct *)structure
-      forInstruction:(const FRBInstruction *)instruction
-              inFile:(id<HPDisassembledFile>)file;
-- (void)decodeBranch:(DisasmStruct *)structure
-      forInstruction:(const FRBInstruction *)instruction
-              inFile:(id<HPDisassembledFile>)file;
-- (void)setMemoryFlags:(DisasmStruct *)structure
-        forInstruction:(const FRBInstruction *)instruction;
+- (const FRBOpcode *_Nonnull)opcodeForByte:(uint8_t)byte;
+
+- (void)updateFlags:(DisasmStruct *_Nonnull)structure
+     forInstruction:(const FRBInstruction *_Nonnull)instruction;
+
+- (void)decodeNonBranch:(DisasmStruct *_Nonnull)structure
+         forInstruction:(const FRBInstruction *_Nonnull)instruction
+                 inFile:(NSObject<HPDisassembledFile> *_Nonnull)file;
+
+- (void)decodeBranch:(DisasmStruct *_Nonnull)structure
+      forInstruction:(const FRBInstruction *_Nonnull)instruction
+              inFile:(NSObject<HPDisassembledFile> *_Nonnull)file;
+
+- (void)setMemoryFlags:(DisasmStruct *_Nonnull)structure
+        forInstruction:(const FRBInstruction *_Nonnull)instruction;
 
 @end
