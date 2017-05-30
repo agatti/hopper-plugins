@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2014-2015, Alessandro Gatti - frob.it
+ Copyright (c) 2014-2017, Alessandro Gatti - frob.it
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -24,8 +24,29 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#import <Foundation/Foundation.h>
+@import Foundation;
+
 #import <Hopper/Hopper.h>
 
-@interface ItFrobHopper65816Definition : NSObject<CPUDefinition>
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "OCUnusedClassInspection"
+
+typedef NS_ENUM(NSUInteger, FRBCPUOperationMode) {
+  FRBCPUModeAccumulator8Index8 = 0,
+  FRBCPUModeAccumulator8Index16,
+  FRBCPUModeAccumulator16Index8,
+  FRBCPUModeAccumulator16Index16,
+
+  FRBCPUModeCount
+};
+
+@interface ItFrobHopper65816Definition : NSObject <CPUDefinition>
+
+/**
+ * Hopper Services instance.
+ */
+@property(strong, nonatomic, nonnull) NSObject<HPHopperServices> *services;
+
 @end
+
+#pragma clang diagnostic pop

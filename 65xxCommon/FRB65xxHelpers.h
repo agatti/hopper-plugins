@@ -30,10 +30,6 @@
 
 @protocol HPHopperServices;
 
-/*
- * @todo: See if this whole project can be removed from the workspace.
- */
-
 Address SetAddressOperand(NSObject<HPDisassembledFile> *_Nonnull file,
                           DisasmStruct *_Nonnull disasm, NSUInteger operand,
                           uint32_t size, uint32_t effectiveSize,
@@ -56,3 +52,5 @@ void SetConstantOperand(NSObject<HPDisassembledFile> *_Nonnull file,
  * @return the calculated relative displacement.
  */
 int64_t CalculateRelativeJumpTarget(int64_t target);
+
+NSString * _Nullable FormatHexadecimalValue(int64_t value, BOOL isSigned, BOOL hasLeadingZeroes, uint32_t bits);

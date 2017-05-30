@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2014-2015, Alessandro Gatti - frob.it
+ Copyright (c) 2014-2017, Alessandro Gatti - frob.it
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -24,9 +24,16 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import <Foundation/Foundation.h>
+@import Foundation;
 
-#import "FRBProvider.h"
+#import "FRBBase65816.h"
+#import "FRBCPUProvider.h"
 
-@interface ItFrobHopper65816Generic65816 : NSObject<FRBProvider>
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "OCUnusedClassInspection"
+
+@interface ItFrobHopper65816Generic65816
+    : ItFrobHopper65816Base65816 <FRBCPUProvider>
 @end
+
+#pragma clang diagnostic pop

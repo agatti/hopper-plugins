@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2014-2015, Alessandro Gatti - frob.it
+ Copyright (c) 2014-2017, Alessandro Gatti - frob.it
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -24,14 +24,33 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import <Foundation/Foundation.h>
+@import Foundation;
+
+#import <Hopper/Hopper.h>
 
 #import "FRBBaseContext.h"
+#import "FRBCPUProvider.h"
 
-@interface ItFrobHopper65816Context : ItFrobHopperHopperCommonBaseContext
+/**
+ * CPU Context class for the 65816 disassembler plugin.
+ */
+@interface ItFrobHopper65816Context
+    : ItFrobHopperHopperCommonBaseContext <CPUContext>
 
-- (instancetype)initWithCPU:(id<CPUDefinition>)cpu
-                    andFile:(id<HPDisassembledFile>)file
-               withServices:(id<HPHopperServices>)services;
+/**
+ * Creates an instance of the 65816 CPU disassembler context.
+ *
+ * @param[in] definition the CPU definition instance.
+ * @param[in] file       the file to disassemble data from.
+ * @param[in] provider   the CPU disassembly provider instance.
+ * @param[in] services   the Hopper Services instance.
+ *
+ * @return an instance of ItFrobHopper65816Context.
+ */
+- (instancetype _Nonnull)
+  initWithCPU:(NSObject<CPUDefinition> *_Nonnull)definition
+      andFile:(NSObject<HPDisassembledFile> *_Nonnull)file
+ withProvider:(NSObject<FRBCPUProvider> *_Nonnull)provider
+usingServices:(NSObject<HPHopperServices> *_Nonnull)services;
 
 @end

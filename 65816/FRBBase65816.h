@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2014-2015, Alessandro Gatti - frob.it
+ Copyright (c) 2014-2017, Alessandro Gatti - frob.it
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -24,47 +24,13 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import <Foundation/Foundation.h>
+@import Foundation;
 
-#import "FRBBase.h"
+#import "FRBCPUProvider.h"
+#import "FRBHopperCommon.h"
 
-/*!
- * Protocol for CPU providers.
- */
-@protocol FRBProvider <NSObject>
+@interface ItFrobHopper65816Base65816 : NSObject <FRBCPUProvider>
 
-/*!
- * Provider name.
- */
-@property (strong, nonatomic, readonly) NSString *name;
-
-/*!
- * Looks up the opcode mapped to the tiven byte.
- *
- * @param byte the byte to get an opcode for.
- *
- * @return the mapped opcode structure.
- */
 - (const struct FRBOpcode *)opcodeForByte:(uint8_t)byte;
-
-/*!
- * Performs some additional or alternative processing of the given opcode.
- *
- * @param opcode the opcode to process.
- * @param disasm the instruction details.
- *
- * @return YES if no more processing must be performed, NO otherwise.
- */
-- (BOOL)processOpcode:(const struct FRBOpcode *)opcode
-            forDisasm:(DisasmStruct *)disasm;
-
-/*!
- * Checks if the given opcode halts execution flow or not.
- *
- * @param opcode the opcode to check.
- *
- * @return YES if the opcode halts the execution flow, NO otherwise.
- */
-- (BOOL)haltsExecutionFlow:(const struct FRBOpcode *)opcode;
 
 @end

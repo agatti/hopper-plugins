@@ -25,7 +25,7 @@
  */
 
 #import "FRBBase6502.h"
-#import "FRBCPUSupport.h"
+#import "FRB65xxHelpers.h"
 #import "FRBHopperCommon.h"
 
 @interface ItFrobHopper6502Base6502 ()
@@ -675,36 +675,16 @@ static NSString *_Nonnull const kValueTooLarge = @"Invalid bits count (%d)";
                             hasLeadingZeroes:(BOOL)hasLeadingZeroes
                                      andSize:(uint32_t)size {
 
-  char buffer[4 + 1 + 1 + 1] = {0};
-  size_t index = 0;
+  NSString *formattedValue = FormatHexadecimalValue(value, isSigned, hasLeadingZeroes, size);
 
-  if ((size == 0) || (size > 16)) {
+  if (!formattedValue) {
     @throw [NSException
         exceptionWithName:FRBHopperExceptionName
                    reason:[NSString stringWithFormat:kValueTooLarge, size]
                  userInfo:nil];
   }
 
-  if (isSigned && ((value & (1 << (size - 1))) != 0)) {
-    value = -(value & ((1 << size) - 1));
-  }
-
-  buffer[index++] = '$';
-
-  if (value < 0) {
-    buffer[index++] = '-';
-    value = (labs(value) + 2) & ((1 << (size - 2)) - 1);
-  }
-
-  if (size > 8) {
-    snprintf(&buffer[index], sizeof(buffer), hasLeadingZeroes ? "%04X" : "%X",
-             (uint16_t)(value & 0xFFFF));
-  } else {
-    snprintf(&buffer[index], sizeof(buffer), hasLeadingZeroes ? "%02X" : "%X",
-             (uint8_t)(value & 0xFF));
-  }
-
-  return [NSString stringWithUTF8String:buffer];
+  return formattedValue;
 }
 
 - (NSObject<HPASMLine> *_Nonnull)

@@ -24,466 +24,105 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import "FRBBase.h"
 #import "FRBContext.h"
+#import "FRB65xxHelpers.h"
+#import "FRBBase.h"
 #import "FRBDefinition.h"
-#import "FRBModelHandler.h"
-#import "FRBProvider.h"
-#import "FRBOperandFormatter.h"
-
-// 65xxCommon library imports
-
-#import "FRBCPUSupport.h"
-
-// HopperCommon library imports
-
 #import "FRBHopperCommon.h"
 #import "FRBOperandFormatter.h"
 
-static const NSArray *kOpcodeFormats;
-static const ItFrobHopper65816ModelHandler *kModelHandler;
+@interface ItFrobHopper65816Context ()
 
-@interface ItFrobHopper65816Context () {
-    id<CPUDefinition> _cpu;
-    id<HPDisassembledFile> _file;
-    id<HPHopperServices> _services;
-    id<FRBProvider> _provider;
-}
-
-- (void)handleNonBranchOpcode:(const struct FRBOpcode *)opcode
-                    forDisasm:(DisasmStruct *)disasm;
-- (void)handleBranchOpcode:(const struct FRBOpcode *)opcode
-                 forDisasm:(DisasmStruct *)disasm;
-- (NSString *)formatInstruction:(DisasmStruct *)source;
-- (void)setMemoryFlags:(DisasmStruct *)disasm
-        forInstruction:(const struct FRBInstruction *)instruction;
-- (NSString *)format:(Mode)addressMode
-              opcode:(const char *)opcode
-            operands:(NSArray *)operands;
-- (void)updateShifts:(DisasmStruct *)disasm
-           forOpcode:(const struct FRBOpcode *)opcode;
+@property(strong, nonatomic, readonly, nonnull)
+    NSObject<CPUDefinition> *definition;
+@property(strong, nonatomic, readonly, nonnull)
+    NSObject<HPDisassembledFile> *file;
+@property(strong, nonatomic, readonly, nonnull)
+    NSObject<HPHopperServices> *services;
+@property(strong, nonatomic, readonly, nonnull)
+    NSObject<FRBCPUProvider> *provider;
 
 @end
 
 @implementation ItFrobHopper65816Context
 
-- (instancetype)initWithCPU:(id<CPUDefinition>)cpu
-                    andFile:(id<HPDisassembledFile>)file
-               withServices:(id<HPHopperServices>)services {
-    if (self = [super init]) {
-        _cpu = cpu;
-        _file = file;
-        _services = services;
+- (instancetype)initWithCPU:(NSObject<CPUDefinition> *_Nonnull)definition
+                    andFile:(NSObject<HPDisassembledFile> *_Nonnull)file
+               withProvider:(NSObject<FRBCPUProvider> *_Nonnull)provider
+              usingServices:(NSObject<HPHopperServices> *_Nonnull)services {
+  if (self = [super init]) {
+    _definition = definition;
+    _file = file;
+    _provider = provider;
+    _services = services;
+  }
 
-        static dispatch_once_t onceToken;
-        dispatch_once(&onceToken, ^{
-            kOpcodeFormats = [NSArray arrayWithObjects:
-                              @"%s    %@",       // ModeAbsolute
-                              @"%s    %@,X",     // ModeAbsoluteIndexedX
-                              @"%s    %@,Y",     // ModeAbsoluteIndexedY
-                              @"%s    %@",       // ModeAbsoluteLong
-                              @"%s    %@,X",     // ModeAbsoluteLongIndexed
-                              @"%s    #%@",      // ModeImmediate
-                              @"%s    A",        // ModeAccumulator
-                              @"%s",             // ModeImplied
-                              @"%s",             // ModeStack
-                              @"%s    (%@)",     // ModeAbsoluteIndirect
-                              @"%s    %@",       // ModeProgramCounterRelative
-                              @"%s    %@",       // ModeProgramCounterRelativeLong
-                              @"%s    %@",       // ModeDirect
-                              @"%s    %@,X",     // ModeDirectIndexedX
-                              @"%s    %@,Y",     // ModeDirectIndexedY
-                              @"%s    (%@,X)",   // ModeDirectIndexedIndirect
-                              @"%s    (%@,Y)",   // ModeDirectIndirectIndexedY
-                              @"%s    (%@)",     // ModeDirectIndirect
-                              @"%s    [%@]",     // ModeDirectIndirectLong
-                              @"%s    [%@],Y",   // ModeDirectIndirectLongIndexed
-                              @"%s    (%@,X)",   // ModeAbsoluteIndexedIndirect
-                              @"%s    %@,S",     // ModeStackRelative
-                              @"%s    (%@,S),Y", // ModeStackRelativeIndirectIndexed
-                              @"%s    %@,%@",    // ModeBlockMove
-                              nil
-                              ];
-            kModelHandler = [ItFrobHopper65816ModelHandler sharedModelHandler];
-        });
-
-        NSString *providerName = [kModelHandler providerNameForFamily:file.cpuFamily
-                                                         andSubFamily:file.cpuSubFamily];
-        _provider = [kModelHandler providerForName:providerName];
-
-        if (!_provider) {
-            return nil;
-        }
-    }
-    return self;
+  return self;
 }
 
-- (id<CPUDefinition>)cpuDefinition {
-    return _cpu;
+#pragma mark - CPUContext protocol implementation
+
+- (NSObject<CPUDefinition> *)cpuDefinition {
+  return self.definition;
+}
+
+- (Address)adjustCodeAddress:(Address)address {
+  return address;
+}
+
+- (Address)nextAddressToTryIfInstructionFailedToDecodeAt:(Address)address
+                                              forCPUMode:(uint8_t)mode {
+  return address + 1;
+}
+
+- (int)isNopAt:(Address)address {
+  return [self.file readUInt8AtVirtualAddress:address] == 0xEA;
 }
 
 - (int)disassembleSingleInstruction:(DisasmStruct *)disasm
                  usingProcessorMode:(NSUInteger)mode {
-    InitialiseDisasmStruct(disasm);
+  disasm->instruction.pcRegisterValue = disasm->virtualAddr;
+  return [self.provider processStructure:disasm onFile:self.file];
+}
 
-    disasm->instruction.pcRegisterValue = disasm->virtualAddr;
-    uint8_t opcodeByte = [_file readUInt8AtVirtualAddress:disasm->virtualAddr];
-    const struct FRBOpcode *opcode = [_provider opcodeForByte:opcodeByte];
-    struct FRBInstruction instruction = FRBInstructions[opcode->type];
-    disasm->instruction.userData = opcodeByte;
-    if (opcode->addressMode == ModeUnknown) {
-        return DISASM_UNKNOWN_OPCODE;
-    }
-
-    disasm->instruction.branchType = instruction.branchType;
-
-    strcpy(disasm->instruction.mnemonic, instruction.name);
-    strcpy(disasm->instruction.unconditionalMnemonic, instruction.name);
-
-    if (instruction.category == CategoryStatusFlagChanges) {
-        switch (opcode->type) {
-            case OpcodeCLC:
-                disasm->instruction.eflags.CF_flag = DISASM_EFLAGS_RESET;
-                break;
-
-            case OpcodeCLD:
-                disasm->instruction.eflags.DF_flag = DISASM_EFLAGS_RESET;
-                break;
-
-            case OpcodeCLI:
-                disasm->instruction.eflags.IF_flag = DISASM_EFLAGS_RESET;
-                break;
-
-            case OpcodeCLV:
-                disasm->instruction.eflags.OF_flag = DISASM_EFLAGS_RESET;
-                break;
-
-            case OpcodeSEC:
-                disasm->instruction.eflags.CF_flag = DISASM_EFLAGS_SET;
-                break;
-
-            case OpcodeSED:
-                disasm->instruction.eflags.DF_flag = DISASM_EFLAGS_SET;
-                break;
-
-            case OpcodeSEI:
-                disasm->instruction.eflags.IF_flag = DISASM_EFLAGS_SET;
-                break;
-
-            default:
-                break;
-        }
-    } else {
-        if (opcode->type == OpcodeCOP) {
-            disasm->instruction.eflags.DF_flag = DISASM_EFLAGS_RESET;
-        }
-    }
-
-    disasm->implicitlyReadRegisters[DISASM_OPERAND_GENERAL_REG_INDEX] = opcode->readRegisters;
-    disasm->implicitlyWrittenRegisters[DISASM_OPERAND_GENERAL_REG_INDEX] = opcode->writtenRegisters;
-    disasm->instruction.length = FRBOpcodeLength[opcode->addressMode];
-
-    if (instruction.branchType == DISASM_BRANCH_NONE) {
-        [self handleNonBranchOpcode:opcode
-                          forDisasm:disasm];
-    } else {
-        [self handleBranchOpcode:opcode
-                       forDisasm:disasm];
-    }
-
-    [self updateShifts:disasm
-             forOpcode:opcode];
-
-    return disasm->instruction.length;
+- (BOOL)instructionMayBeASwitchStatement:(DisasmStruct *)disasmStruct {
+  return NO;
 }
 
 - (BOOL)instructionHaltsExecutionFlow:(DisasmStruct *)disasm {
-    return [_provider haltsExecutionFlow:[_provider opcodeForByte:disasm->instruction.userData]];
+  return [self.provider haltsExecutionFlow:disasm];
 }
 
-- (void)buildInstructionString:(DisasmStruct *)disasm
-                    forSegment:(NSObject<HPSegment> *)segment
-                populatingInfo:(NSObject<HPFormattedInstructionInfo> *)formattedInstructionInfo {
-    strcat(disasm->completeInstructionString, [self formatInstruction:disasm].UTF8String);
+- (NSObject<HPASMLine> *)buildMnemonicString:(DisasmStruct *)disasm
+                                      inFile:
+                                          (NSObject<HPDisassembledFile> *)file {
+
+  return [self.provider buildMnemonicString:disasm
+                                     inFile:file
+                               withServices:self.services];
 }
 
-#pragma mark Extra methods
+- (NSObject<HPASMLine> *)
+buildCompleteOperandString:(DisasmStruct *)disasm
+                    inFile:(NSObject<HPDisassembledFile> *)file
+                       raw:(BOOL)raw {
 
-- (void)updateShifts:(DisasmStruct *)disasm
-           forOpcode:(const struct FRBOpcode *)opcode {
-
-    switch (opcode->type) {
-        case OpcodeASL:
-            disasm->operand[0].shiftMode = DISASM_SHIFT_LSL;
-            disasm->operand[0].shiftAmount = 1;
-            break;
-
-        case OpcodeLSR:
-            disasm->operand[0].shiftMode = DISASM_SHIFT_LSR;
-            disasm->operand[0].shiftAmount = 1;
-            break;
-            
-        case OpcodeROL:
-            disasm->operand[0].shiftMode = DISASM_SHIFT_ROR;
-            disasm->operand[0].shiftMode = -1;
-            break;
-
-        case OpcodeROR:
-            disasm->operand[0].shiftMode = DISASM_SHIFT_ROR;
-            disasm->operand[0].shiftAmount = 1;
-            break;
-
-        default:
-            break;
-    }
+  return [self.provider buildCompleteOperandString:disasm
+                                            inFile:file
+                                               raw:raw
+                                      withServices:self.services];
 }
 
-- (void)handleNonBranchOpcode:(const struct FRBOpcode *)opcode
-                    forDisasm:(DisasmStruct *)disasm {
+- (NSObject<HPASMLine> *)buildOperandString:(DisasmStruct *)disasm
+                            forOperandIndex:(NSUInteger)operandIndex
+                                     inFile:(NSObject<HPDisassembledFile> *)file
+                                        raw:(BOOL)raw {
 
-    switch (opcode->addressMode) {
-        case ModeAbsolute:
-        case ModeAbsoluteIndirect:
-            SetAddressOperand(_file, disasm, 0, 16, 24, 1, 0);
-            break;
-
-        case ModeProgramCounterRelativeLong: {
-            Address address = SignedValue(@([_file readUInt16AtVirtualAddress:disasm->virtualAddr + 1]), 16);
-            address += disasm->instruction.pcRegisterValue + disasm->instruction.length;
-
-            disasm->operand[0].memory.baseRegister = 0;
-            disasm->operand[0].memory.indexRegister = 0;
-            disasm->operand[0].memory.scale = 1;
-            disasm->operand[0].memory.displacement = 0;
-            disasm->operand[0].type = DISASM_OPERAND_MEMORY_TYPE | DISASM_OPERAND_ABSOLUTE;
-            disasm->operand[0].size = 24;
-            disasm->operand[0].immediateValue = address;
-            [_file setFormat:Format_Address
-                 forArgument:0
-            atVirtualAddress:disasm->virtualAddr];
-            break;
-        }
-
-        case ModeAbsoluteLong:
-        case ModeAbsoluteLongIndexed:
-            SetAddressOperand(_file, disasm, 0, 24, 24, 1, 0);
-            break;
-
-        case ModeAbsoluteIndexedX:
-            SetAddressOperand(_file, disasm, 0, 16, 24, 1, RegisterX);
-            break;
-
-        case ModeAbsoluteIndexedY:
-            SetAddressOperand(_file, disasm, 0, 16, 24, 1, RegisterY);
-            break;
-
-        case ModeImmediate:
-            SetConstantOperand(_file, disasm, 0, 8, 1);
-            break;
-
-        case ModeDirectIndexedX:
-        case ModeDirectIndexedIndirect:
-            SetAddressOperand(_file, disasm, 0, 8, 24, 1, RegisterX);
-            break;
-
-        case ModeDirect:
-        case ModeDirectIndirect:
-        case ModeStackRelative:
-        case ModeStackRelativeIndirectIndexed:
-        case ModeDirectIndirectLong:
-        case ModeDirectIndirectLongIndexed:
-            SetAddressOperand(_file, disasm, 0, 8, 24, 1, 0);
-            break;
-
-        case ModeDirectIndexedY:
-        case ModeDirectIndirectIndexedY:
-            SetAddressOperand(_file, disasm, 0, 8, 24, 1, RegisterY);
-            break;
-
-        case ModeBlockMove:
-            SetConstantOperand(_file, disasm, 0, 8, 1);
-            SetConstantOperand(_file, disasm, 1, 8, 1 + sizeof(uint8_t));
-            break;
-
-        case ModeAccumulator:
-        case ModeImplied:
-        case ModeStack:
-            break;
-
-        default:
-            @throw [NSException exceptionWithName:FRBHopperExceptionName
-                                           reason:[NSString stringWithFormat:@"Internal error: non-branch opcode with address mode %lu found", opcode->addressMode]
-                                         userInfo:nil];
-    }
-
-    disasm->operand[0].accessMode = DISASM_ACCESS_NONE;
-    const struct FRBInstruction instruction = FRBInstructions[opcode->type];
-
-    switch (opcode->addressMode) {
-        case ModeImmediate:
-        case ModeProgramCounterRelative:
-        case ModeAccumulator:
-        case ModeImplied:
-        case ModeStack:
-            break;
-
-        default: {
-            [self setMemoryFlags:disasm
-                  forInstruction:&instruction];
-            break;
-        }
-    }
-}
-
-- (void)handleBranchOpcode:(const struct FRBOpcode *)opcode
-                 forDisasm:(DisasmStruct *)disasm {
-    switch (opcode->addressMode) {
-
-        case ModeAbsoluteLong:
-            disasm->instruction.addressValue = SetAddressOperand(_file, disasm, 0, 24, 24, 1, 0);
-            break;
-
-        case ModeDirectIndirect:
-            disasm->instruction.addressValue = SetAddressOperand(_file, disasm, 0, 8, 24, 1, 0);
-            break;
-
-        case ModeAbsolute:
-        case ModeAbsoluteIndirect:
-        case ModeAbsoluteIndexedIndirect:
-            disasm->instruction.addressValue = SetAddressOperand(_file, disasm, 0, 16, 24, 1, 0);
-            break;
-
-        case ModeProgramCounterRelative:
-            disasm->instruction.addressValue = SetRelativeAddressOperand(_file, disasm, 0, 8, 24, 1);
-            break;
-
-        case ModeProgramCounterRelativeLong: {
-            Address address = SignedValue(@([_file readUInt16AtVirtualAddress:disasm->virtualAddr + 1]), 16) +
-                disasm->instruction.pcRegisterValue + disasm->instruction.length;
-
-            disasm->operand[0].memory.baseRegister = 0;
-            disasm->operand[0].memory.indexRegister = 0;
-            disasm->operand[0].memory.scale = 1;
-            disasm->operand[0].memory.displacement = 0;
-            disasm->operand[0].type = DISASM_OPERAND_MEMORY_TYPE | DISASM_OPERAND_ABSOLUTE;
-            disasm->operand[0].size = 24;
-            disasm->operand[0].immediateValue = address;
-            [_file setFormat:Format_Address
-                 forArgument:0
-            atVirtualAddress:disasm->virtualAddr];
-            break;
-        }
-
-        case ModeImplied:
-        case ModeStack:
-            break;
-
-        default:
-            @throw [NSException exceptionWithName:FRBHopperExceptionName
-                                           reason:[NSString stringWithFormat:@"Internal error: branch opcode with address mode %lu found", opcode->addressMode]
-                                         userInfo:nil];
-    }
-}
-
-- (NSString *)formatInstruction:(DisasmStruct *)source {
-
-    NSMutableArray *strings = [NSMutableArray new];
-
-    for (int index = 0; index < DISASM_MAX_OPERANDS; index++) {
-        if (source->operand[index].type == DISASM_OPERAND_NO_OPERAND) {
-            break;
-        }
-
-        NSNumber *number;
-        if (source->operand[index].size == 64 && source->operand[index].immediateValue < 0) {
-            // TODO: Check this!
-            number = [NSNumber numberWithUnsignedLongLong:(source->operand[index].immediateValue - 18446744073709551615ULL) - 1ULL];
-        } else {
-            number = [NSNumber numberWithLongLong:source->operand[index].immediateValue];
-        }
-
-        ArgFormat format = [_file formatForArgument:index
-                                   atVirtualAddress:source->virtualAddr];
-        [strings addObject:FormatValue(number, source, format, source->operand[index].size, _services)];
-    }
-
-    const struct FRBOpcode *opcode = [_provider opcodeForByte:source->instruction.userData];
-    return [self format:opcode->addressMode
-                 opcode:FRBInstructions[opcode->type].name
-               operands:strings];
-}
-
-- (void)setMemoryFlags:(DisasmStruct *)disasm
-        forInstruction:(const struct FRBInstruction *)instruction {
-
-    switch (instruction->category) {
-        case CategoryLoad:
-        case CategoryComparison:
-        case CategoryLogical:
-        case CategoryArithmetic:
-            disasm->operand[0].accessMode = DISASM_ACCESS_READ;
-            break;
-
-        case CategoryStore:
-        case CategoryIncrementDecrement:
-        case CategoryShifts:
-            disasm->operand[0].accessMode = DISASM_ACCESS_WRITE;
-            break;
-
-        case CategoryBlockTransfer:
-        case CategoryJumps:
-        case CategoryStack:
-        case CategorySystem:
-        case CategoryBranches:
-        case CategoryRegisterTransfers:
-        case CategoryStatusFlagChanges:
-        case CategoryUnknown:
-            break;
-    }
-}
-
-- (NSString *)format:(Mode)addressMode
-              opcode:(const char *)opcode
-            operands:(NSArray *)operands {
-
-    NSString *format = kOpcodeFormats[addressMode];
-
-    switch (addressMode) {
-        case ModeAbsolute:
-        case ModeAbsoluteIndexedX:
-        case ModeAbsoluteLongIndexed:
-        case ModeAbsoluteLong:
-        case ModeAbsoluteIndexedY:
-        case ModeImmediate:
-        case ModeDirect:
-        case ModeDirectIndirectLong:
-        case ModeDirectIndexedIndirect:
-        case ModeAbsoluteIndirect:
-        case ModeStackRelative:
-        case ModeProgramCounterRelative:
-        case ModeProgramCounterRelativeLong:
-        case ModeDirectIndexedX:
-        case ModeDirectIndexedY:
-        case ModeDirectIndirectIndexedY:
-        case ModeDirectIndirect:
-        case ModeDirectIndirectLongIndexed:
-        case ModeStackRelativeIndirectIndexed:
-        case ModeAbsoluteIndexedIndirect:
-            return [NSString stringWithFormat:format, opcode, operands[0]];
-
-        case ModeAccumulator:
-        case ModeImplied:
-        case ModeStack:
-            return [NSString stringWithFormat:format, opcode];
-
-        case ModeBlockMove:
-            return [NSString stringWithFormat:format, opcode, operands[0],
-                    operands[1]];
-
-        case ModeUnknown:
-        default:
-            return nil;
-    }
+  return [self.provider buildOperandString:disasm
+                           forOperandIndex:operandIndex
+                                    inFile:file
+                                       raw:raw
+                              withServices:self.services];
 }
 
 @end

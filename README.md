@@ -221,7 +221,7 @@ CPU backends currently supported: 6502, 65C02, 65N02, 65R02, 65S02, HuC6280, M74
 
 ### **65816 CPU Plugin**
 
-_version 0.0.2_
+_version 0.1.0_
 
 This CPU core plugin allows you to disassemble 65816/65802 code, used in some of home computers of the 80s, and early 90s, for industrial automation or other specialised tasks where a microcontroller is needed, and in the Super Nintendo/Super Famicom games console.
 
@@ -333,9 +333,12 @@ This tool plugin currently allows to map the full address space of the CPU chose
 
 ## Installation instructions:
 
-Checkout from Git, open `HopperPlugins.xcworkspace` in Xcode, select the `Everything` scheme and then rebuild.  Once done, copy the bundles whose name ends in `.hopperLoader` into `~/Library/Application Support/Hopper/PlugIns/Loaders/`, the bundles whose name ends in `.hopperCPU` into `~/Library/Application Support/Hopper/PlugIns/CPUs/`, and the bundle whose name ends in `.hopperTool` into `~/Library/Application Support/Hopper/PlugIns/Tools/`.  Keep in mind that these plugins require **Hopper 3.11.7** or later to work.  They may work on older versions but they are neither tested nor supported on anything older than v3.11.7.
+Checkout from Git, open `HopperPlugins.xcworkspace` in Xcode, select the plugin you are interested in and then let Xcode build the associated project; the plugin will be automatically copied to the appropriate paths (`~/Library/Application Support/Hopper/Plugins/v4/{CPUs,Loaders,Tools}`).  Once done, please close any open instances of Hopper and restart them.  That's all there is to it.
+
+Keep in mind that these plugins require **Hopper 4.2.1** or later to work.  They may work on older versions but they are neither tested nor supported on anything older than v4.2.1.
+
+If you are unable or unwilling to update your Hopper installation from v3 to v4 then build the code marked by the `v3api` git tag.  However, since the Hopper author allowed free upgrades from v3 licences to v4 licenses, v3 plugins are effectively unsupported as of v4 release.  It is strongly suggested to update your Hopper installation at your earliest opportunity.
 
 ## Need to get in touch?
 
 Send an email to `a.gatti * frob.it` (yep, replace the asterisk, you know what to do), or try sending a message to `agatti@jabber.ccc.de` on Jabber if you so fancy.
-

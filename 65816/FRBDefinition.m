@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2014-2015, Alessandro Gatti - frob.it
+ Copyright (c) 2014-2017, Alessandro Gatti - frob.it
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -25,274 +25,273 @@
  */
 
 #import "FRBDefinition.h"
-#import "FRBContext.h"
 #import "FRBBase.h"
-#import "FRBModelHandler.h"
+#import "FRBContext.h"
+#import "FRBModelManager.h"
+#import "NSDataWithFill.h"
 
-// 65xxCommon library imports
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "OCUnusedClassInspection"
 
-#import "FRBCPUSupport.h"
-#import "FRBInstructionColouriser.h"
-
-// HopperCommon library imports
-
-#import "NSDataHopperAdditions.h"
-
-/*!
- * Backend model handler.
+/**
+ * Assembler syntax variants.
  */
-static ItFrobHopper65816ModelHandler *kModelHandler;
+static NSString *const kSyntaxVariant = @"Generic";
 
-@interface ItFrobHopper65816Definition () {
+/*
+ * CPU modes
+ */
 
-    /*!
-     * Hopper Services instance.
-     */
-    id<HPHopperServices> _services;
+static NSString *const kCPUModeAccumulator8Index8 = @"A8 I8";
+static NSString *const kCPUModeAccumulator8Index16 = @"A8 I16";
+static NSString *const kCPUModeAccumulator16Index8 = @"A16 I8";
+static NSString *const kCPUModeAccumulator16Index16 = @"A16 I16";
 
-    /*!
-     * Instruction string colouriser.
-     */
-    ItFrobHopper65xxCommonInstructionColouriser *_colouriser;
-}
+@interface ItFrobHopper65816Definition ()
+
+/**
+ * Model manager instance.
+ */
+@property(strong, nonatomic, nonnull) FRBModelManager *modelManager;
 
 @end
 
 @implementation ItFrobHopper65816Definition
 
-- (id<HopperPlugin>)initWithHopperServices:(id<HPHopperServices>)services {
-    if (self = [super init]) {
-        _services = services;
-        static dispatch_once_t onceToken;
-        dispatch_once(&onceToken, ^{
-            NSMutableSet *opcodes = [NSMutableSet new];
-            for (int index = 0; index < FRBUniqueOpcodesCount; index++) {
-                [opcodes addObject:[[NSString stringWithUTF8String:FRBInstructions[index].name] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]]];
-            }
-            _colouriser = [[ItFrobHopper65xxCommonInstructionColouriser alloc] initWithOpcodesSet:opcodes
-                                                                                      andServices:services];
-            kModelHandler = [ItFrobHopper65816ModelHandler sharedModelHandler];
-        });
+#pragma mark - HopperPlugin protocol implementation
+
+- (instancetype)initWithHopperServices:(NSObject<HPHopperServices> *)services {
+  if (self = [super init]) {
+    _services = services;
+
+    FRBModelManager *manager = [FRBModelManager
+        modelManagerWithBundle:[NSBundle bundleForClass:self.class]];
+    if (!manager) {
+      return nil;
     }
 
-    return self;
-}
+    _modelManager = manager;
+  }
 
-- (id<CPUContext>)buildCPUContextForFile:(id<HPDisassembledFile>)file {
-    return [[ItFrobHopper65816Context alloc] initWithCPU:self
-                                                 andFile:file
-                                            withServices:_services];
+  return self;
 }
 
 - (HopperUUID *)pluginUUID {
-    return [_services UUIDWithString:@"18D19920-2858-11E4-8C21-0800200C9A66"];
+  return [self.services UUIDWithString:@"18D19920-2858-11E4-8C21-0800200C9A66"];
 }
 
 - (HopperPluginType)pluginType {
-    return Plugin_CPU;
+  return Plugin_CPU;
 }
 
 - (NSString *)pluginName {
-    return @"65816";
+  return @"65816";
 }
 
 - (NSString *)pluginDescription {
-    return @"65816-family CPU support";
+  return @"65816 CPU support";
 }
 
 - (NSString *)pluginAuthor {
-    return @"Alessandro Gatti";
+  return @"Alessandro Gatti";
 }
 
 - (NSString *)pluginCopyright {
-    return @"©2014 Alessandro Gatti";
+  return @"©2014-2017 Alessandro Gatti";
 }
 
 - (NSString *)pluginVersion {
-    return @"0.0.2";
+  return @"0.1.0";
+}
+
+#pragma mark - CPUDefinition protocol implementation
+
+- (Class)cpuContextClass {
+  return [ItFrobHopper65816Context class];
+}
+
+- (NSObject<CPUContext> *)buildCPUContextForFile:
+    (NSObject<HPDisassembledFile> *)file {
+
+  return [[ItFrobHopper65816Context alloc]
+        initWithCPU:self
+            andFile:file
+       withProvider:[self.modelManager providerForFamily:file.cpuFamily
+                                                andModel:file.cpuSubFamily]
+      usingServices:self.services];
 }
 
 - (NSArray *)cpuFamilies {
-    return [kModelHandler.models.allKeys sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+  return [self.modelManager.families
+      sortedArrayUsingComparator:^NSComparisonResult(NSString *obj1,
+                                                     NSString *obj2) {
         return [obj1 compare:obj2];
-    }];
+      }];
 }
 
 - (NSArray *)cpuSubFamiliesForFamily:(NSString *)family {
-    return [((NSDictionary *)kModelHandler.models[family]).allKeys sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+  return [[self.modelManager modelsForFamily:family]
+      sortedArrayUsingComparator:^NSComparisonResult(NSString *obj1,
+                                                     NSString *obj2) {
         return [obj1 compare:obj2];
-    }];
+      }];
 }
 
 - (int)addressSpaceWidthInBitsForCPUFamily:(NSString *)family
                               andSubFamily:(NSString *)subFamily {
-    NSDictionary *subFamilies = kModelHandler.models[family];
-    if (subFamilies && subFamilies[subFamily]) {
-            return 16;
-    }
-
-    return 0;
-}
-
-- (NSString *)registerIndexToString:(int)reg
-                            ofClass:(RegClass)reg_class
-                        withBitSize:(int)size
-                        andPosition:(DisasmPosition)position {
-    switch (reg_class) {
-        case RegClass_PseudoRegisterSTACK:
-            switch (reg) {
-                case 0:
-                    return @"S";
-
-                default:
-                    break;
-            }
-            break;
-
-        case RegClass_GeneralPurposeRegister:
-            switch (reg) {
-                case 0:
-                    return @"A";
-
-                case 1:
-                    return @"X";
-
-                case 2:
-                    return @"Y";
-
-                case 3:
-                    return @"DBR";
-
-                case 4:
-                    return @"D";
-
-                case 5:
-                    return @"S"; // Until there's a way to mark stack operations as such...
-
-                case 6:
-                    return @"PBR";
-
-                case 7:
-                    return @"C";
-
-                case 8:
-                    return @"B";
-
-                default:
-                    break;
-            }
-            break;
-
-        default:
-            switch (reg) {
-                case 0:
-                    return @"P";
-
-                default:
-                    break;
-            }
-            break;
-    }
-
-    return nil;
-}
-
-- (NSString *)cpuRegisterStateMaskToString:(uint32_t)cpuState {
-    return @"";
-}
-
-- (BOOL)registerIndexIsStackPointer:(uint32_t)reg
-                            ofClass:(RegClass)reg_class {
-    return reg == RegisterS && reg_class == RegClass_GeneralPurposeRegister;
-}
-
-- (BOOL)registerIndexIsFrameBasePointer:(uint32_t)reg
-                                ofClass:(RegClass)reg_class {
-    return NO;
-}
-
-- (BOOL)registerIndexIsProgramCounter:(uint32_t)reg {
-    return NO;
+  Class<FRBCPUProvider> class =
+      [self.modelManager classForFamily:family andModel:subFamily];
+  return (class != nil) ? [class addressSpaceWidth] : 0;
 }
 
 - (CPUEndianess)endianess {
-    return CPUEndianess_Little;
+  return CPUEndianess_Little;
 }
 
 - (NSUInteger)syntaxVariantCount {
-    return 1;
+  return 1;
 }
 
 - (NSUInteger)cpuModeCount {
-    return 1;
+  return FRBCPUModeCount;
 }
 
 - (NSArray *)syntaxVariantNames {
-    return @[ FRBSyntaxVariant ];
+  return @[ kSyntaxVariant ];
 }
 
 - (NSArray *)cpuModeNames {
-    return @[ FRBCPUMode ];
+  return @[
+    kCPUModeAccumulator8Index8, kCPUModeAccumulator8Index16,
+    kCPUModeAccumulator16Index8, kCPUModeAccumulator16Index16
+  ];
 }
 
 - (NSUInteger)registerClassCount {
-    return RegClass_FirstUserClass;
+  return RegClass_FirstUserClass;
 }
 
 - (NSUInteger)registerCountForClass:(RegClass)reg_class {
-    switch (reg_class) {
-        case RegClass_CPUState:
-            return 1;
+  switch (reg_class) {
+  case RegClass_CPUState:
+    return 1;
 
-        case RegClass_PseudoRegisterSTACK:
-            return 1;
+  case RegClass_PseudoRegisterSTACK:
+    return 1;
 
-        case RegClass_GeneralPurposeRegister:
-            return 9;
+  case RegClass_GeneralPurposeRegister:
+    return 9;
 
-        default:
-            break;
+  default:
+    break;
+  }
+
+  return 0;
+}
+
+- (NSString *)registerIndexToString:(NSUInteger)reg
+                            ofClass:(RegClass)reg_class
+                        withBitSize:(NSUInteger)size
+                           position:(DisasmPosition)position
+                     andSyntaxIndex:(NSUInteger)syntaxIndex {
+  switch (reg_class) {
+  case RegClass_PseudoRegisterSTACK:
+    switch (reg) {
+    case 0:
+      return @"S";
+
+    default:
+      break;
     }
+    break;
 
-    return 0;
+  case RegClass_GeneralPurposeRegister:
+    switch (reg) {
+    case 0:
+      return @"A";
+
+    case 1:
+      return @"X";
+
+    case 2:
+      return @"Y";
+
+    case 3:
+      return @"DBR";
+
+    case 4:
+      return @"D";
+
+    case 5:
+      return @"S"; // Until there's a way to mark stack operations as such...
+
+    case 6:
+      return @"PBR";
+
+    case 7:
+      return @"C";
+
+    case 8:
+      return @"B";
+
+    default:
+      break;
+    }
+    break;
+
+  default:
+    switch (reg) {
+    case 0:
+      return @"P";
+
+    default:
+      break;
+    }
+    break;
+  }
+
+  return nil;
 }
 
-- (BOOL)registerIsStackPointer:(uint32_t)reg {
-    return NO;
+- (NSString *)cpuRegisterStateMaskToString:(uint32_t)cpuState {
+  return @"";
 }
 
-- (BOOL)registerIsFrameBasePointer:(uint32_t)reg {
-    return NO;
+- (BOOL)registerIndexIsStackPointer:(NSUInteger)reg
+                            ofClass:(RegClass)reg_class {
+  return reg == RegisterS && reg_class == RegClass_GeneralPurposeRegister;
 }
 
-- (NSString *)framePointerRegisterNameForFile:(NSObject<HPDisassembledFile>*)file {
-    return nil;
+- (BOOL)registerIndexIsFrameBasePointer:(NSUInteger)reg
+                                ofClass:(RegClass)reg_class {
+  return NO;
 }
 
-- (NSUInteger)translateOperandIndex:(NSUInteger)index
-                       operandCount:(NSUInteger)count
-                  accordingToSyntax:(uint8_t)syntaxIndex {
-    return index;
+- (BOOL)registerIndexIsProgramCounter:(NSUInteger)reg {
+  return NO;
 }
 
-- (NSAttributedString *)colorizeInstructionString:(NSAttributedString *)string {
-    return [_colouriser colouriseInstruction:string];
+- (NSString *)framePointerRegisterNameForFile:
+    (NSObject<HPDisassembledFile> *)file {
+  return nil;
 }
 
 - (NSData *)nopWithSize:(NSUInteger)size
                 andMode:(NSUInteger)cpuMode
                 forFile:(NSObject<HPDisassembledFile> *)file {
-    return NSDataWithFiller(0xEA, size);
+  return NSDataWithFiller(0xEA, size);
 }
 
 - (BOOL)canAssembleInstructionsForCPUFamily:(NSString *)family
                                andSubFamily:(NSString *)subFamily {
-    return NO;
+  return NO;
 }
 
 - (BOOL)canDecompileProceduresForCPUFamily:(NSString *)family
                               andSubFamily:(NSString *)subFamily {
-    return NO;
+  return NO;
 }
 
 @end
+
+#pragma clang diagnostic pop

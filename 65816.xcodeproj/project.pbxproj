@@ -9,33 +9,28 @@
 /* Begin PBXBuildFile section */
 		68259B2E19B738E00060713A /* libHopperCommon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 68259B2D19B738E00060713A /* libHopperCommon.a */; };
 		684A7243198568DC00955AF5 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 684A7242198568DC00955AF5 /* CoreFoundation.framework */; };
-		684A7249198568DC00955AF5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 684A7247198568DC00955AF5 /* InfoPlist.strings */; };
 		684A726B1985692100955AF5 /* FRBContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 684A72521985692100955AF5 /* FRBContext.m */; };
 		684A726C1985692100955AF5 /* FRBDefinition.m in Sources */ = {isa = PBXBuildFile; fileRef = 684A72541985692100955AF5 /* FRBDefinition.m */; };
-		684A72711985692100955AF5 /* FRBModelHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 684A72611985692100955AF5 /* FRBModelHandler.m */; };
 		684A72731985692100955AF5 /* FRBGeneric65816.m in Sources */ = {isa = PBXBuildFile; fileRef = 684A72671985692100955AF5 /* FRBGeneric65816.m */; };
-		684A72741985692100955AF5 /* models.plist in Resources */ = {isa = PBXBuildFile; fileRef = 684A726A1985692100955AF5 /* models.plist */; };
 		68AD4F1819A4B3AA00E0EBE2 /* lib65xxCommon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 68AD4F1719A4B3AA00E0EBE2 /* lib65xxCommon.a */; };
+		AB5F66A47539716CB882262A /* FRBBase65816.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5F613FF40E8C4968612B10 /* FRBBase65816.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		68259B2C19B736D80060713A /* FRBProvider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FRBProvider.h; sourceTree = "<group>"; };
 		68259B2D19B738E00060713A /* libHopperCommon.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libHopperCommon.a; path = "../../Library/Developer/Xcode/DerivedData/HopperPlugins-fzslwhyufvevicghqykcwcprlbow/Build/Products/Debug/libHopperCommon.a"; sourceTree = "<group>"; };
 		684A723F198568DC00955AF5 /* 65816.hopperCPU */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = 65816.hopperCPU; sourceTree = BUILT_PRODUCTS_DIR; };
 		684A7242198568DC00955AF5 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
-		684A7246198568DC00955AF5 /* 65816-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "65816-Info.plist"; sourceTree = "<group>"; };
-		684A7248198568DC00955AF5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		684A7246198568DC00955AF5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.info; path = Info.plist; sourceTree = "<group>"; };
 		684A72501985692100955AF5 /* FRBBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRBBase.h; sourceTree = "<group>"; };
 		684A72511985692100955AF5 /* FRBContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRBContext.h; sourceTree = "<group>"; };
 		684A72521985692100955AF5 /* FRBContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRBContext.m; sourceTree = "<group>"; };
 		684A72531985692100955AF5 /* FRBDefinition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRBDefinition.h; sourceTree = "<group>"; };
 		684A72541985692100955AF5 /* FRBDefinition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRBDefinition.m; sourceTree = "<group>"; };
-		684A72601985692100955AF5 /* FRBModelHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRBModelHandler.h; sourceTree = "<group>"; };
-		684A72611985692100955AF5 /* FRBModelHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRBModelHandler.m; sourceTree = "<group>"; };
 		684A72661985692100955AF5 /* FRBGeneric65816.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRBGeneric65816.h; sourceTree = "<group>"; };
 		684A72671985692100955AF5 /* FRBGeneric65816.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRBGeneric65816.m; sourceTree = "<group>"; };
-		684A726A1985692100955AF5 /* models.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = models.plist; sourceTree = "<group>"; };
 		68AD4F1719A4B3AA00E0EBE2 /* lib65xxCommon.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = lib65xxCommon.a; path = "../../Library/Developer/Xcode/DerivedData/HopperPlugins-fzslwhyufvevicghqykcwcprlbow/Build/Products/Debug/lib65xxCommon.a"; sourceTree = "<group>"; };
+		AB5F613FF40E8C4968612B10 /* FRBBase65816.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRBBase65816.m; sourceTree = "<group>"; };
+		AB5F632FBCAC0F0F7DE3D9A0 /* FRBBase65816.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRBBase65816.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +52,8 @@
 			children = (
 				684A72661985692100955AF5 /* FRBGeneric65816.h */,
 				684A72671985692100955AF5 /* FRBGeneric65816.m */,
+				AB5F613FF40E8C4968612B10 /* FRBBase65816.m */,
+				AB5F632FBCAC0F0F7DE3D9A0 /* FRBBase65816.h */,
 			);
 			name = Chips;
 			sourceTree = "<group>";
@@ -97,9 +94,6 @@
 				684A72521985692100955AF5 /* FRBContext.m */,
 				684A72531985692100955AF5 /* FRBDefinition.h */,
 				684A72541985692100955AF5 /* FRBDefinition.m */,
-				684A72601985692100955AF5 /* FRBModelHandler.h */,
-				684A72611985692100955AF5 /* FRBModelHandler.m */,
-				68259B2C19B736D80060713A /* FRBProvider.h */,
 				684A7245198568DC00955AF5 /* Supporting Files */,
 			);
 			path = 65816;
@@ -108,9 +102,7 @@
 		684A7245198568DC00955AF5 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				684A726A1985692100955AF5 /* models.plist */,
-				684A7246198568DC00955AF5 /* 65816-Info.plist */,
-				684A7247198568DC00955AF5 /* InfoPlist.strings */,
+				684A7246198568DC00955AF5 /* Info.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -124,7 +116,7 @@
 			buildPhases = (
 				684A723B198568DC00955AF5 /* Sources */,
 				684A723C198568DC00955AF5 /* Frameworks */,
-				684A723D198568DC00955AF5 /* Resources */,
+				686EB9551EDD63AC00A1C5AE /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -161,17 +153,21 @@
 		};
 /* End PBXProject section */
 
-/* Begin PBXResourcesBuildPhase section */
-		684A723D198568DC00955AF5 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
+/* Begin PBXShellScriptBuildPhase section */
+		686EB9551EDD63AC00A1C5AE /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				684A72741985692100955AF5 /* models.plist in Resources */,
-				684A7249198568DC00955AF5 /* InfoPlist.strings in Resources */,
+			);
+			inputPaths = (
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "rm -rf \"${INSTALL_PATH}/65816.hopperCPU\"\nmkdir -p \"${INSTALL_PATH}\"\ncp -rf \"${BUILT_PRODUCTS_DIR}/65816.hopperCPU\" \"${INSTALL_PATH}\"\n";
 		};
-/* End PBXResourcesBuildPhase section */
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		684A723B198568DC00955AF5 /* Sources */ = {
@@ -180,23 +176,12 @@
 			files = (
 				684A72731985692100955AF5 /* FRBGeneric65816.m in Sources */,
 				684A726B1985692100955AF5 /* FRBContext.m in Sources */,
-				684A72711985692100955AF5 /* FRBModelHandler.m in Sources */,
 				684A726C1985692100955AF5 /* FRBDefinition.m in Sources */,
+				AB5F66A47539716CB882262A /* FRBBase65816.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXVariantGroup section */
-		684A7247198568DC00955AF5 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				684A7248198568DC00955AF5 /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		684A724B198568DC00955AF5 /* Debug */ = {
@@ -299,8 +284,8 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
-				INFOPLIST_FILE = "65816/65816-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				INFOPLIST_FILE = 65816/Info.plist;
+				INSTALL_PATH = "$(USER_LIBRARY_DIR)/Application Support/Hopper/PlugIns/v4/CPUs";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/HopperPlugins-fzslwhyufvevicghqykcwcprlbow/Build/Products/Debug",
@@ -317,8 +302,8 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
-				INFOPLIST_FILE = "65816/65816-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				INFOPLIST_FILE = 65816/Info.plist;
+				INSTALL_PATH = "$(USER_LIBRARY_DIR)/Application Support/Hopper/PlugIns/v4/CPUs";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/HopperPlugins-fzslwhyufvevicghqykcwcprlbow/Build/Products/Debug",

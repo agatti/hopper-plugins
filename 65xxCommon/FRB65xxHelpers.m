@@ -24,7 +24,7 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import "FRBCPUSupport.h"
+#import "FRB65xxHelpers.h"
 #import "FRBHopperCommon.h"
 
 static BOOL IsBitsSizeValid(size_t size);
@@ -67,10 +67,6 @@ Address SetAddressOperand(NSObject<HPDisassembledFile> *_Nonnull file,
               [file readUInt8AtVirtualAddress:disasm->virtualAddr + offset +
                                               sizeof(uint16_t)]
                   << 16;
-    break;
-
-  case 32:
-    address = [file readUInt32AtVirtualAddress:disasm->virtualAddr + offset];
     break;
 
   default:
@@ -128,11 +124,6 @@ Address SetRelativeAddressOperand(NSObject<HPDisassembledFile> *_Nonnull file,
             << 16;
     break;
 
-  case 32:
-    displacement =
-        [file readUInt32AtVirtualAddress:disasm->virtualAddr + offset];
-    break;
-
   default:
     @throw [NSException
         exceptionWithName:FRBHopperExceptionName
@@ -184,11 +175,6 @@ void SetConstantOperand(NSObject<HPDisassembledFile> *_Nonnull file,
             << 16;
     break;
 
-  case 32:
-    disasm->operand[operand].immediateValue =
-        [file readUInt32AtVirtualAddress:disasm->virtualAddr + offset];
-    break;
-
   default:
     @throw [NSException
         exceptionWithName:FRBHopperExceptionName
@@ -211,5 +197,40 @@ int64_t CalculateRelativeJumpTarget(int64_t target) {
 }
 
 BOOL IsBitsSizeValid(size_t size) {
-  return (size == 8) || (size == 16) || (size == 24) || (size == 32);
+  return (size == 8) || (size == 16) || (size == 24);
+}
+
+NSString * _Nullable FormatHexadecimalValue(int64_t value, BOOL isSigned, BOOL hasLeadingZeroes, uint32_t bits) {
+  if ((bits == 0) || (bits > 24)) {
+    return nil;
+  }
+
+  char buffer[6 + 1 + 1 + 1] = {0};
+  size_t index = 0;
+
+  if (isSigned && ((value & (1 << (bits - 1))) != 0)) {
+    value = -(value & ((1 << bits) - 1));
+  }
+
+  buffer[index++] = '$';
+
+  if (value < 0) {
+    buffer[index++] = '-';
+    value = (labs(value) + 2) & ((1 << (bits - 2)) - 1);
+  }
+
+  if (bits > 16) {
+    snprintf(&buffer[index], sizeof(buffer), hasLeadingZeroes ? "%06X" : "%X",
+            (uint32_t) (value & 0xFFFFFF));
+  } else {
+    if (bits > 8) {
+      snprintf(&buffer[index], sizeof(buffer), hasLeadingZeroes ? "%04X" : "%X",
+              (uint16_t) (value & 0xFFFF));
+    } else {
+      snprintf(&buffer[index], sizeof(buffer), hasLeadingZeroes ? "%02X" : "%X",
+              (uint8_t) (value & 0xFF));
+    }
+  }
+
+  return [NSString stringWithUTF8String:buffer];
 }
