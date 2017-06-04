@@ -253,7 +253,8 @@ CPU backends currently supported: 65816.
 
 #### Caveats:
 
-* Rebuilding the test binaries requires having `xa` installed (available from homebrew via `brew install xa`).
+* Rebuilding the test binaries requires having the [AS Macroassembler](http://www.alfsembler.de/) command line tools available in your `PATH` variable.
+* The default CPU mode has both accumulator and index registers set to 8 bits each.  This can be changed via the usual Hopper CPU mode setting facilities.
 
 <hr/>
 
