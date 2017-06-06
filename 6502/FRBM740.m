@@ -38,7 +38,7 @@ static const struct FRBOpcode kOpcodeTable[256];
 }
 
 + (NSString *_Nonnull)model {
-  return @"M50734";
+  return @"M740";
 }
 
 + (BOOL)exported {
