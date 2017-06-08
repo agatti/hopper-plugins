@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2014-2016, Alessandro Gatti - frob.it
+ Copyright (c) 2014-2017, Alessandro Gatti - frob.it
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -26,21 +26,66 @@
 
 #import "NSDataWithFill.h"
 
-static NSMutableData *newData(const uint8_t filler, NSUInteger length);
+/**
+ * Creates a NSMutableData object filled with the given byte.
+ *
+ * @param[in] filler the filler byte to use.
+ * @param[in] length how many bytes to write.
+ *
+ * @return a filled NSMutableData object or nil if there is no memory available.
+ */
+static NSMutableData *_Nullable newDataForFillerByte(const uint8_t filler,
+                                                     NSUInteger length);
 
-NSData *NSDataWithFiller(const uint8_t filler, NSUInteger length) {
-  return newData(filler, length);
+/**
+ * Creates a NSMutableData object filled with the given byte sequence.
+ *
+ * @param[in] filler the filler object to use.
+ * @param[in] length how many bytes to write.
+ *
+ * @return a filled NSMutableData object or nil if there is no memory available
+ * or if the requested length does not match the filler length.
+ */
+static NSMutableData *_Nullable newDataForFillerData(
+    const NSData *_Nonnull data, NSUInteger length);
+
+NSData *_Nullable NSDataWithFiller(const uint8_t filler, NSUInteger length) {
+  return newDataForFillerByte(filler, length);
 }
 
-NSMutableData *NSMutableDataWithFiller(const uint8_t filler,
+NSMutableData *_Nullable NSMutableDataWithFiller(const uint8_t filler,
+                                                 NSUInteger length) {
+  return newDataForFillerByte(filler, length);
+}
+
+NSData *_Nullable NSDataWithFillerData(const NSData *_Nonnull data,
                                        NSUInteger length) {
-  return newData(filler, length);
+  return newDataForFillerData(data, length);
 }
 
-NSMutableData *newData(const uint8_t filler, NSUInteger length) {
+NSMutableData *_Nullable NSMutableDataWithFillerData(
+    const NSData *_Nonnull data, NSUInteger length) {
+  return newDataForFillerData(data, length);
+}
+
+NSMutableData *_Nullable newDataForFillerByte(const uint8_t filler,
+                                              NSUInteger length) {
   NSMutableData *data = [[NSMutableData alloc] initWithCapacity:length];
   if (data) {
     memset(data.mutableBytes, filler, length);
   }
   return data;
+}
+
+NSMutableData *_Nullable newDataForFillerData(const NSData *_Nonnull data,
+                                              NSUInteger length) {
+  NSMutableData *target = [[NSMutableData alloc] initWithCapacity:length];
+  if (target && ((length % data.length) == 0)) {
+    NSUInteger rounds = length / data.length;
+    for (size_t index = 0; index < rounds; index++) {
+      [target appendData:(NSData * _Nonnull) data];
+    }
+  }
+
+  return target;
 }

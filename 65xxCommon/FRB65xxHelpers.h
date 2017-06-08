@@ -53,4 +53,20 @@ void SetConstantOperand(NSObject<HPDisassembledFile> *_Nonnull file,
  */
 int64_t CalculateRelativeJumpTarget(int64_t target);
 
-NSString * _Nullable FormatHexadecimalValue(int64_t value, BOOL isSigned, BOOL hasLeadingZeroes, uint32_t bits);
+/**
+ * Formats a hexadecimal value using 6502-like notation.
+ *
+ * If the value is supposed to represent a signed integer, a check for the MSB
+ * being set is performed and the value is assumed to be negative if so.
+ *
+ * @param value[in] the value to format.
+ * @param isSigned[in] flag indicating if the value is signed.
+ * @param hasLeadingZeroes[in] flag indicating if the formatted value should
+ *                             fill unused bits with zeroes.
+ * @param bits[in] how many bits of the value are used.
+ *
+ * @return the formatted string or nil if an invalid number of bits is used.
+ */
+NSString *_Nullable FormatHexadecimalValue(int64_t value, BOOL isSigned,
+                                           BOOL hasLeadingZeroes,
+                                           uint32_t bits);

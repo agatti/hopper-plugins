@@ -52,7 +52,7 @@
  * @return a NSData instance using the given filler or nil if there is no
  *         memory.
  */
-NSData *NSDataWithFiller(const uint8_t filler, NSUInteger length);
+NSData *_Nullable NSDataWithFiller(const uint8_t filler, NSUInteger length);
 
 /**
  * Returns a NSMutableData object with the given size and filled with the
@@ -64,4 +64,37 @@ NSData *NSDataWithFiller(const uint8_t filler, NSUInteger length);
  * @return a NSMutableData instance using the given filler or nil if there is
  *         no memory.
  */
-NSMutableData *NSMutableDataWithFiller(const uint8_t filler, NSUInteger length);
+NSMutableData *_Nullable NSMutableDataWithFiller(const uint8_t filler,
+                                                 NSUInteger length);
+
+/**
+ * Returns a NSData object with the given size and filled with the chosen
+ * filler data object.
+ *
+ * If the required length is not a multiple of the filler object length, no
+ * object will be returned.
+ *
+ * @param filler the filler byte.
+ * @param length the length.
+ *
+ * @return a NSData instance using the given filler or nil if there is no
+ *         memory.
+ */
+NSData *_Nullable NSDataWithFillerData(const NSData *_Nonnull data,
+                                       NSUInteger length);
+
+/**
+ * Returns a NSMutableData object with the given size and filled with the chosen
+ * filler data object.
+ *
+ * If the required length is not a multiple of the filler object length, no
+ * object will be returned.
+ *
+ * @param filler the filler byte.
+ * @param length the length.
+ *
+ * @return a NSMutableData instance using the given filler or nil if there is no
+ *         memory.
+ */
+NSMutableData *_Nullable NSMutableDataWithFillerData(
+    const NSData *_Nonnull data, NSUInteger length);

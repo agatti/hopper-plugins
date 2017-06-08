@@ -26,22 +26,13 @@
 
 @import Foundation;
 
+#import "FRBBase65816.h"
 #import "FRBCPUProvider.h"
-#import "FRBHopperCommon.h"
 
-typedef struct {
-  uintptr_t opcode : 7;
-  uintptr_t haltsExecution : 1;
-  uintptr_t mode : 6;
-  uintptr_t wideOpcode : 1;
-  uintptr_t accumulatorType : 2;
-} FRBInstructionUserData;
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "OCUnusedClassInspection"
 
-@interface ItFrobHopper65816Base65816 : NSObject <FRBCPUProvider>
-
-- (const struct FRBOpcode *_Nonnull)
-  opcodeForFile:(NSObject<HPDisassembledFile> *_Nonnull)file
-      atAddress:(Address)address
-andFillMetadata:(FRBInstructionUserData *_Nonnull)metadata;
-
+@interface ItFrobHopper65816M7700 : ItFrobHopper65816Base65816 <FRBCPUProvider>
 @end
+
+#pragma clang diagnostic pop

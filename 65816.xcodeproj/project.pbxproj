@@ -13,6 +13,7 @@
 		684A726C1985692100955AF5 /* FRBDefinition.m in Sources */ = {isa = PBXBuildFile; fileRef = 684A72541985692100955AF5 /* FRBDefinition.m */; };
 		684A72731985692100955AF5 /* FRBGeneric65816.m in Sources */ = {isa = PBXBuildFile; fileRef = 684A72671985692100955AF5 /* FRBGeneric65816.m */; };
 		68AD4F1819A4B3AA00E0EBE2 /* lib65xxCommon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 68AD4F1719A4B3AA00E0EBE2 /* lib65xxCommon.a */; };
+		AB5F651D93A3EB5105ECE046 /* FRBM7700.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5F65B3B3DFD0FC117EB079 /* FRBM7700.m */; };
 		AB5F66A47539716CB882262A /* FRBBase65816.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5F613FF40E8C4968612B10 /* FRBBase65816.m */; };
 /* End PBXBuildFile section */
 
@@ -31,6 +32,8 @@
 		68AD4F1719A4B3AA00E0EBE2 /* lib65xxCommon.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = lib65xxCommon.a; path = "../../Library/Developer/Xcode/DerivedData/HopperPlugins-fzslwhyufvevicghqykcwcprlbow/Build/Products/Debug/lib65xxCommon.a"; sourceTree = "<group>"; };
 		AB5F613FF40E8C4968612B10 /* FRBBase65816.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRBBase65816.m; sourceTree = "<group>"; };
 		AB5F632FBCAC0F0F7DE3D9A0 /* FRBBase65816.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRBBase65816.h; sourceTree = "<group>"; };
+		AB5F65B3B3DFD0FC117EB079 /* FRBM7700.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRBM7700.m; sourceTree = "<group>"; };
+		AB5F6E04CA701247FDD9179D /* FRBM7700.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRBM7700.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -50,10 +53,12 @@
 		6814467819B2324F0058AB8B /* Chips */ = {
 			isa = PBXGroup;
 			children = (
+				AB5F632FBCAC0F0F7DE3D9A0 /* FRBBase65816.h */,
+				AB5F613FF40E8C4968612B10 /* FRBBase65816.m */,
 				684A72661985692100955AF5 /* FRBGeneric65816.h */,
 				684A72671985692100955AF5 /* FRBGeneric65816.m */,
-				AB5F613FF40E8C4968612B10 /* FRBBase65816.m */,
-				AB5F632FBCAC0F0F7DE3D9A0 /* FRBBase65816.h */,
+				AB5F6E04CA701247FDD9179D /* FRBM7700.h */,
+				AB5F65B3B3DFD0FC117EB079 /* FRBM7700.m */,
 			);
 			name = Chips;
 			sourceTree = "<group>";
@@ -178,6 +183,7 @@
 				684A726B1985692100955AF5 /* FRBContext.m in Sources */,
 				684A726C1985692100955AF5 /* FRBDefinition.m in Sources */,
 				AB5F66A47539716CB882262A /* FRBBase65816.m in Sources */,
+				AB5F651D93A3EB5105ECE046 /* FRBM7700.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

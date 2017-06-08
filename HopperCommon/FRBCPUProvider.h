@@ -61,6 +61,18 @@
  */
 + (int)addressSpaceWidth;
 
+@optional
+
+/**
+ * Returns a NSData container for the sequence of bytes that are interpreted as
+ * a no-operation (NOP) opcode by the CPU.
+ *
+ * @return the NSData container with the NOP opcode.
+ */
++ (NSData *_Nonnull)nopOpcodeSignature;
+
+@required
+
 /**
  * Processes the given disassembly structure.
  *

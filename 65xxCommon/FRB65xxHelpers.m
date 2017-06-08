@@ -200,7 +200,9 @@ BOOL IsBitsSizeValid(size_t size) {
   return (size == 8) || (size == 16) || (size == 24);
 }
 
-NSString * _Nullable FormatHexadecimalValue(int64_t value, BOOL isSigned, BOOL hasLeadingZeroes, uint32_t bits) {
+NSString *_Nullable FormatHexadecimalValue(int64_t value, BOOL isSigned,
+                                           BOOL hasLeadingZeroes,
+                                           uint32_t bits) {
   if ((bits == 0) || (bits > 24)) {
     return nil;
   }
@@ -221,14 +223,14 @@ NSString * _Nullable FormatHexadecimalValue(int64_t value, BOOL isSigned, BOOL h
 
   if (bits > 16) {
     snprintf(&buffer[index], sizeof(buffer), hasLeadingZeroes ? "%06X" : "%X",
-            (uint32_t) (value & 0xFFFFFF));
+             (uint32_t)(value & 0xFFFFFF));
   } else {
     if (bits > 8) {
       snprintf(&buffer[index], sizeof(buffer), hasLeadingZeroes ? "%04X" : "%X",
-              (uint16_t) (value & 0xFFFF));
+               (uint16_t)(value & 0xFFFF));
     } else {
       snprintf(&buffer[index], sizeof(buffer), hasLeadingZeroes ? "%02X" : "%X",
-              (uint8_t) (value & 0xFF));
+               (uint8_t)(value & 0xFF));
     }
   }
 

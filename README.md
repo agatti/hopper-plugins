@@ -221,11 +221,11 @@ CPU backends currently supported: 6502, 65C02, 65N02, 65R02, 65S02, HuC6280, M74
 
 ### **65816 CPU Plugin**
 
-_version 0.1.0_
+_version 0.2.0_
 
 This CPU core plugin allows you to disassemble 65816/65802 code, used in some of home computers of the 80s, and early 90s, for industrial automation or other specialised tasks where a microcontroller is needed, and in the Super Nintendo/Super Famicom games console.
 
-CPU backends currently supported: 65816.
+CPU backends currently supported: 65816, MELPS 7700.
 
 <table>
 <thead>
@@ -238,6 +238,10 @@ CPU backends currently supported: 65816.
 <tr><td>W65C802S</td><td>Generic &rarr; 65816</td><td><a href="#">N/A</a></td></tr>
 <tr><td>W65C265S</td><td>Generic &rarr; 65816</td><td><a href="http://www.westerndesigncenter.com/wdc/documentation/w65c265s.pdf">Datasheet</a></td></tr>
 <tr><td>W65C816GPMCU</td><td>Generic &rarr; 65816</td><td><a href="http://www.westerndesigncenter.com/wdc/documentation/W65C816GPMCU_DS.pdf">Datasheet</a></td></tr>
+<tr><td rowspan="4">Mitsubishi</td><td>M37906M4C</td><td>Mitsubishi &rarr; M7700</td><td><a href="https://www.renesas.com/zh-tw/doc/products/mpumcu/001/e7906mxx.pdf">Datasheet</a></td></tr>
+<tr><td>M37906M4H</td><td>Mitsubishi &rarr; M7700</td><td><a href="https://www.renesas.com/zh-tw/doc/products/mpumcu/001/e7906mxx.pdf">Datasheet</a></td></tr>
+<tr><td>M37906M6C</td><td>Mitsubishi &rarr; M7700</td><td><a href="https://www.renesas.com/zh-tw/doc/products/mpumcu/001/e7906mxx.pdf">Datasheet</a></td></tr>
+<tr><td>M37906M8C</td><td>Mitsubishi &rarr; M7700</td><td><a href="https://www.renesas.com/zh-tw/doc/products/mpumcu/001/e7906mxx.pdf">Datasheet</a></td></tr>
 </tbody>
 </table>
 
@@ -245,6 +249,9 @@ CPU backends currently supported: 65816.
 
 * Add support for more 65816 variants if any are found in the wild.
 * Attempt to reject files too big for address-space reduced chip variants.
+* Expand the generic 65816 test suite.
+* Accumulator and index register width change propagation analysis.
+* Automatically add I/O register labels for MELPS 7700.
 * Properly relocate files in the entire address space with BSS sections around data segments.
 
 #### Future plans (need Hopper SDK changes):

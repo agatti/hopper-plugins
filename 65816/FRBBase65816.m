@@ -32,12 +32,6 @@
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCUnusedClassInspection"
 
-typedef struct {
-  uintptr_t opcode : 7;
-  uintptr_t haltsExecution : 1;
-  uintptr_t mode : 5;
-} InstructionUserData;
-
 @interface ItFrobHopper65816Base65816 ()
 
 - (void)updateShifts:(DisasmStruct *_Nonnull)disasm
@@ -48,7 +42,8 @@ typedef struct {
 
 - (void)handleNonBranchOpcode:(const struct FRBOpcode *_Nonnull)opcode
                     forDisasm:(DisasmStruct *_Nonnull)disasm
-                    usingFile:(NSObject<HPDisassembledFile> *_Nonnull)file;
+                    usingFile:(NSObject<HPDisassembledFile> *_Nonnull)file
+                  andMetadata:(FRBInstructionUserData *_Nonnull)metadata;
 
 - (void)handleBranchOpcode:(const struct FRBOpcode *_Nonnull)opcode
                  forDisasm:(DisasmStruct *_Nonnull)disasm
@@ -75,7 +70,7 @@ formatHexadecimal:(const DisasmOperand *_Nonnull)operand
 + (NSString *_Nonnull)family {
   @throw [NSException
       exceptionWithName:FRBHopperExceptionName
-                 reason:[NSString stringWithFormat:@"Forgot to implement %s",
+                 reason:[NSString stringWithFormat:@"Forgot to override %s",
                                                    __PRETTY_FUNCTION__]
                userInfo:nil];
 }
@@ -83,7 +78,7 @@ formatHexadecimal:(const DisasmOperand *_Nonnull)operand
 + (NSString *_Nonnull)model {
   @throw [NSException
       exceptionWithName:FRBHopperExceptionName
-                 reason:[NSString stringWithFormat:@"Forgot to implement %s",
+                 reason:[NSString stringWithFormat:@"Forgot to override %s",
                                                    __PRETTY_FUNCTION__]
                userInfo:nil];
 }
@@ -95,7 +90,15 @@ formatHexadecimal:(const DisasmOperand *_Nonnull)operand
 + (int)addressSpaceWidth {
   @throw [NSException
       exceptionWithName:FRBHopperExceptionName
-                 reason:[NSString stringWithFormat:@"Forgot to implement %s",
+                 reason:[NSString stringWithFormat:@"Forgot to override %s",
+                                                   __PRETTY_FUNCTION__]
+               userInfo:nil];
+}
+
++ (NSData *_Nonnull)nopOpcodeSignature {
+  @throw [NSException
+      exceptionWithName:FRBHopperExceptionName
+                 reason:[NSString stringWithFormat:@"Forgot to override %s",
                                                    __PRETTY_FUNCTION__]
                userInfo:nil];
 }
@@ -103,16 +106,18 @@ formatHexadecimal:(const DisasmOperand *_Nonnull)operand
 - (int)processStructure:(DisasmStruct *_Nonnull)structure
                  onFile:(NSObject<HPDisassembledFile> *_Nonnull)file {
 
-  InstructionUserData userData;
+  FRBInstructionUserData metadata;
 
   InitialiseDisasmStruct(structure);
   structure->instruction.pcRegisterValue = structure->virtualAddr;
-  uint8_t opcodeByte = [file readUInt8AtVirtualAddress:structure->virtualAddr];
-  const struct FRBOpcode *opcode = [self opcodeForByte:opcodeByte];
-  userData.opcode = opcode->type;
-  userData.haltsExecution =
-      (userData.opcode == OpcodeSTP || userData.opcode == OpcodeBRK) ? 1 : 0;
-  userData.mode = opcode->addressMode;
+  const struct FRBOpcode *opcode = [self opcodeForFile:file
+                                             atAddress:structure->virtualAddr
+                                       andFillMetadata:&metadata];
+  metadata.opcode = opcode->type;
+  metadata.haltsExecution =
+      (metadata.opcode == OpcodeSTP || metadata.opcode == OpcodeBRK) ? 1 : 0;
+  metadata.mode = opcode->addressMode;
+  metadata.accumulatorType = opcode->accumulatorType;
 
   if (opcode->addressMode == ModeUnknown) {
     return DISASM_UNKNOWN_OPCODE;
@@ -186,21 +191,28 @@ formatHexadecimal:(const DisasmOperand *_Nonnull)operand
     }
   }
 
+  if (metadata.wideOpcode) {
+    structure->instruction.length += 1;
+  }
+
   if (instruction.branchType == DISASM_BRANCH_NONE) {
-    [self handleNonBranchOpcode:opcode forDisasm:structure usingFile:file];
+    [self handleNonBranchOpcode:opcode
+                      forDisasm:structure
+                      usingFile:file
+                    andMetadata:&metadata];
   } else {
     [self handleBranchOpcode:opcode forDisasm:structure usingFile:file];
   }
 
   [self updateShifts:structure forOpcode:opcode];
 
-  structure->instruction.userData = *((uintptr_t *)&userData);
+  structure->instruction.userData = *((uintptr_t *)&metadata);
 
   return structure->instruction.length;
 }
 
 - (BOOL)haltsExecutionFlow:(const DisasmStruct *_Nonnull)structure {
-  return ((InstructionUserData *)&structure->instruction.userData)
+  return ((FRBInstructionUserData *)&structure->instruction.userData)
              ->haltsExecution != 0;
 }
 
@@ -327,13 +339,37 @@ buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
               withServices:(NSObject<HPHopperServices> *_Nonnull)services {
 
   NSObject<HPASMLine> *line = [services blankASMLine];
+  FRBInstructionUserData *metadata =
+      (FRBInstructionUserData *)&disasm->instruction.userData;
 
-  switch ((Mode)((InstructionUserData *)&disasm->instruction.userData)->mode) {
+  switch ((FRBAccumulatorType)metadata->accumulatorType) {
+  case AccumulatorA:
+    if ((Mode)metadata->mode == ModeAccumulator) {
+      [line appendRawString:@"A"];
+    } else {
+      [line appendRawString:@"A,"];
+    }
+    break;
+
+  case AccumulatorB:
+    if ((Mode)metadata->mode == ModeAccumulator) {
+      [line appendRawString:@"B"];
+    } else {
+      [line appendRawString:@"B,"];
+    }
+    break;
+
+  case AccumulatorDefault:
+  default:
+    break;
+  }
+
+  switch ((Mode)metadata->mode) {
 
   case ModeAccumulator:
   case ModeImplied:
   case ModeStack:
-    return [services blankASMLine];
+    return line;
 
   case ModeAbsolute:
   case ModeAbsoluteLong:
@@ -510,6 +546,10 @@ buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
     return line;
   }
 
+  case ModeDirectMemoryAccess:
+  case ModeDirectBitAddressing:
+  case ModeAbsoluteBitAddressing:
+  case ModeAbsoluteMemoryAddress:
   case ModeBlockMove: {
     NSObject<HPASMLine> *first = [self buildOperandString:disasm
                                           forOperandIndex:0
@@ -533,6 +573,62 @@ buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
     return line;
   }
 
+  case ModeAbsoluteMemoryAddressIndexed:
+  case ModeDirectMemoryAccessIndexed: {
+    NSObject<HPASMLine> *first = [self buildOperandString:disasm
+                                          forOperandIndex:0
+                                                   inFile:file
+                                                      raw:raw
+                                             withServices:services];
+    NSObject<HPASMLine> *second = [self buildOperandString:disasm
+                                           forOperandIndex:1
+                                                    inFile:file
+                                                       raw:raw
+                                              withServices:services];
+
+    if (!first || !second) {
+      return nil;
+    }
+
+    [line append:first];
+    [line appendRawString:@","];
+    [line append:second];
+    [line appendRawString:@",X"];
+
+    return line;
+  }
+
+  case ModeDirectBitAddressingAbsolute:
+  case ModeDirectBitAddressingProgramCounterRelative: {
+    NSObject<HPASMLine> *first = [self buildOperandString:disasm
+                                          forOperandIndex:0
+                                                   inFile:file
+                                                      raw:raw
+                                             withServices:services];
+    NSObject<HPASMLine> *second = [self buildOperandString:disasm
+                                           forOperandIndex:1
+                                                    inFile:file
+                                                       raw:raw
+                                              withServices:services];
+    NSObject<HPASMLine> *third = [self buildOperandString:disasm
+                                          forOperandIndex:2
+                                                   inFile:file
+                                                      raw:raw
+                                             withServices:services];
+
+    if (!first || !second || !third) {
+      return nil;
+    }
+
+    [line append:first];
+    [line appendRawString:@","];
+    [line append:second];
+    [line appendRawString:@","];
+    [line append:third];
+
+    return line;
+  }
+
   default:
     break;
   }
@@ -543,7 +639,11 @@ buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wunused-parameter"
 
-- (const struct FRBOpcode *)opcodeForByte:(uint8_t)byte {
+- (const struct FRBOpcode *_Nonnull)
+  opcodeForFile:(NSObject<HPDisassembledFile> *_Nonnull)file
+      atAddress:(Address)address
+andFillMetadata:(FRBInstructionUserData *_Nonnull)metadata {
+
   @throw [NSException
       exceptionWithName:FRBHopperExceptionName
                  reason:[NSString stringWithFormat:@"Forgot to override %s",
@@ -570,6 +670,7 @@ buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
     break;
 
   case OpcodeROL:
+  case OpcodeRLA:
     disasm->operand[0].shiftMode = DISASM_SHIFT_ROR;
     disasm->operand[0].shiftAmount = -1;
     break;
@@ -615,17 +716,22 @@ buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
 
 - (void)handleNonBranchOpcode:(const struct FRBOpcode *_Nonnull)opcode
                     forDisasm:(DisasmStruct *_Nonnull)disasm
-                    usingFile:(NSObject<HPDisassembledFile> *_Nonnull)file {
+                    usingFile:(NSObject<HPDisassembledFile> *_Nonnull)file
+                  andMetadata:(FRBInstructionUserData *_Nonnull)metadata {
+
+  uint32_t baseOffset = metadata->wideOpcode ? 1 : 0;
 
   switch (opcode->addressMode) {
   case ModeAbsolute:
   case ModeAbsoluteIndirect:
-    SetAddressOperand(file, disasm, 0, 16, 24, 1, 0);
+    SetAddressOperand(file, disasm, 0, 16, 24, baseOffset + 1, 0);
     break;
 
   case ModeProgramCounterRelativeLong: {
     Address address = (Address)SignedValue(
-        @([file readUInt16AtVirtualAddress:disasm->virtualAddr + 1]), 16);
+        @([file
+            readUInt16AtVirtualAddress:disasm->virtualAddr + baseOffset + 1]),
+        16);
     address += disasm->instruction.pcRegisterValue + disasm->instruction.length;
 
     disasm->operand[0].memory.baseRegistersMask = 0;
@@ -642,15 +748,15 @@ buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
 
   case ModeAbsoluteLong:
   case ModeAbsoluteLongIndexed:
-    SetAddressOperand(file, disasm, 0, 24, 24, 1, 0);
+    SetAddressOperand(file, disasm, 0, 24, 24, baseOffset + 1, 0);
     break;
 
   case ModeAbsoluteIndexedX:
-    SetAddressOperand(file, disasm, 0, 16, 24, 1, RegisterX);
+    SetAddressOperand(file, disasm, 0, 16, 24, baseOffset + 1, RegisterX);
     break;
 
   case ModeAbsoluteIndexedY:
-    SetAddressOperand(file, disasm, 0, 16, 24, 1, RegisterY);
+    SetAddressOperand(file, disasm, 0, 16, 24, baseOffset + 1, RegisterY);
     break;
 
   case ModeImmediate: {
@@ -661,16 +767,16 @@ buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
     if (registersMask & (RegisterIndexX | RegisterIndexY)) {
       if ((mode == FRBCPUModeAccumulator8Index16) ||
           (mode == FRBCPUModeAccumulator16Index16)) {
-        SetConstantOperand(file, disasm, 0, 16, 1);
+        SetConstantOperand(file, disasm, 0, 16, baseOffset + 1);
       } else {
-        SetConstantOperand(file, disasm, 0, 8, 1);
+        SetConstantOperand(file, disasm, 0, 8, baseOffset + 1);
       }
     } else {
       if ((mode == FRBCPUModeAccumulator16Index8) ||
           (mode == FRBCPUModeAccumulator16Index16)) {
-        SetConstantOperand(file, disasm, 0, 16, 1);
+        SetConstantOperand(file, disasm, 0, 16, baseOffset + 1);
       } else {
-        SetConstantOperand(file, disasm, 0, 8, 1);
+        SetConstantOperand(file, disasm, 0, 8, baseOffset + 1);
       }
     }
 
@@ -679,7 +785,7 @@ buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
 
   case ModeDirectIndexedX:
   case ModeDirectIndexedIndirect:
-    SetAddressOperand(file, disasm, 0, 8, 24, 1, RegisterX);
+    SetAddressOperand(file, disasm, 0, 8, 24, baseOffset + 1, RegisterX);
     break;
 
   case ModeDirect:
@@ -688,17 +794,43 @@ buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
   case ModeStackRelativeIndirectIndexed:
   case ModeDirectIndirectLong:
   case ModeDirectIndirectLongIndexed:
-    SetAddressOperand(file, disasm, 0, 8, 24, 1, 0);
+    SetAddressOperand(file, disasm, 0, 8, 24, baseOffset + 1, 0);
     break;
 
   case ModeDirectIndexedY:
   case ModeDirectIndirectIndexedY:
-    SetAddressOperand(file, disasm, 0, 8, 24, 1, RegisterY);
+    SetAddressOperand(file, disasm, 0, 8, 24, baseOffset + 1, RegisterY);
     break;
 
   case ModeBlockMove:
-    SetConstantOperand(file, disasm, 0, 8, 1);
-    SetConstantOperand(file, disasm, 1, 8, 1 + sizeof(uint8_t));
+    SetConstantOperand(file, disasm, 0, 8, baseOffset + 1);
+    SetConstantOperand(file, disasm, 1, 8, baseOffset + 1 + sizeof(uint8_t));
+    break;
+
+  case ModeDirectMemoryAccess:
+  case ModeDirectBitAddressing:
+    SetAddressOperand(file, disasm, 1, 8, 24, baseOffset + 1, 0);
+    SetConstantOperand(file, disasm, 0, 8, baseOffset + 1 + sizeof(uint8_t));
+    break;
+
+  case ModeDirectMemoryAccessIndexed:
+    SetAddressOperand(file, disasm, 1, 8, 24, baseOffset + 1, RegisterX);
+    SetConstantOperand(file, disasm, 0, 8, baseOffset + 1 + sizeof(uint8_t));
+    break;
+
+  case ModeAbsoluteBitAddressing:
+    SetAddressOperand(file, disasm, 1, 16, 24, baseOffset + 1, 0);
+    SetConstantOperand(file, disasm, 0, 8, baseOffset + 1 + sizeof(uint16_t));
+    break;
+
+  case ModeAbsoluteMemoryAddress:
+    SetAddressOperand(file, disasm, 1, 16, 24, baseOffset + 1, 0);
+    SetConstantOperand(file, disasm, 0, 8, baseOffset + 1 + sizeof(uint16_t));
+    break;
+
+  case ModeAbsoluteMemoryAddressIndexed:
+    SetAddressOperand(file, disasm, 1, 16, 24, baseOffset + 1, RegisterX);
+    SetConstantOperand(file, disasm, 0, 8, baseOffset + 1 + sizeof(uint16_t));
     break;
 
   case ModeAccumulator:
@@ -785,8 +917,25 @@ buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
     disasm->operand[0].size = 24;
     disasm->operand[0].immediateValue = address;
     disasm->operand[0].isBranchDestination = YES;
+    disasm->instruction.addressValue = address;
     break;
   }
+
+  case ModeDirectBitAddressingProgramCounterRelative:
+    SetAddressOperand(file, disasm, 1, 8, 24, 1, 0);
+    SetConstantOperand(file, disasm, 0, 8, 1 + sizeof(uint8_t));
+    disasm->instruction.addressValue = SetRelativeAddressOperand(
+        file, disasm, 2, 8, 24, 1 + (sizeof(uint8_t) * 2));
+    disasm->operand[2].isBranchDestination = YES;
+    break;
+
+  case ModeDirectBitAddressingAbsolute:
+    SetAddressOperand(file, disasm, 1, 16, 24, 1, 0);
+    SetConstantOperand(file, disasm, 0, 8, 1 + sizeof(uint16_t));
+    disasm->instruction.addressValue = SetRelativeAddressOperand(
+        file, disasm, 2, 8, 24, 1 + (sizeof(uint8_t) + sizeof(uint16_t)));
+    disasm->operand[2].isBranchDestination = YES;
+    break;
 
   case ModeImplied:
   case ModeStack:

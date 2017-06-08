@@ -38,13 +38,24 @@
  */
 static NSString *const kSyntaxVariant = @"Generic";
 
-/*
- * CPU modes
+/**
+ * CPU mode string identifier for narrow accumulator and narrow index registers.
  */
-
 static NSString *const kCPUModeAccumulator8Index8 = @"A8 I8";
+
+/**
+ * CPU mode string identifier for narrow accumulator and wide index registers.
+ */
 static NSString *const kCPUModeAccumulator8Index16 = @"A8 I16";
+
+/**
+ * CPU mode string identifier for wide accumulator and narrow index registers.
+ */
 static NSString *const kCPUModeAccumulator16Index8 = @"A16 I8";
+
+/**
+ * CPU mode string identifier for wide accumulator and wide index registers.
+ */
 static NSString *const kCPUModeAccumulator16Index16 = @"A16 I16";
 
 @interface ItFrobHopper65816Definition ()
@@ -53,6 +64,12 @@ static NSString *const kCPUModeAccumulator16Index16 = @"A16 I16";
  * Model manager instance.
  */
 @property(strong, nonatomic, nonnull) FRBModelManager *modelManager;
+
+/**
+ * General purpose register names.
+ */
+@property(strong, nonatomic, nonnull)
+    NSArray<NSString *> *generalPurposeRegisterNames;
 
 @end
 
@@ -70,6 +87,8 @@ static NSString *const kCPUModeAccumulator16Index16 = @"A16 I16";
       return nil;
     }
 
+    _generalPurposeRegisterNames =
+        @[ @"A", @"X", @"Y", @"DBR", @"D", @"S", @"PBR", @"C", @"B" ];
     _modelManager = manager;
   }
 
@@ -101,7 +120,7 @@ static NSString *const kCPUModeAccumulator16Index16 = @"A16 I16";
 }
 
 - (NSString *)pluginVersion {
-  return @"0.1.0";
+  return @"0.2.0";
 }
 
 #pragma mark - CPUDefinition protocol implementation
@@ -194,58 +213,23 @@ static NSString *const kCPUModeAccumulator16Index16 = @"A16 I16";
                         withBitSize:(NSUInteger)size
                            position:(DisasmPosition)position
                      andSyntaxIndex:(NSUInteger)syntaxIndex {
+
   switch (reg_class) {
   case RegClass_PseudoRegisterSTACK:
-    switch (reg) {
-    case 0:
+    if (reg == 0) {
       return @"S";
-
-    default:
-      break;
     }
     break;
 
   case RegClass_GeneralPurposeRegister:
-    switch (reg) {
-    case 0:
-      return @"A";
-
-    case 1:
-      return @"X";
-
-    case 2:
-      return @"Y";
-
-    case 3:
-      return @"DBR";
-
-    case 4:
-      return @"D";
-
-    case 5:
-      return @"S"; // Until there's a way to mark stack operations as such...
-
-    case 6:
-      return @"PBR";
-
-    case 7:
-      return @"C";
-
-    case 8:
-      return @"B";
-
-    default:
-      break;
+    if (reg < self.generalPurposeRegisterNames.count) {
+      return self.generalPurposeRegisterNames[reg];
     }
     break;
 
   default:
-    switch (reg) {
-    case 0:
+    if (reg == 0) {
       return @"P";
-
-    default:
-      break;
     }
     break;
   }
@@ -279,7 +263,12 @@ static NSString *const kCPUModeAccumulator16Index16 = @"A16 I16";
 - (NSData *)nopWithSize:(NSUInteger)size
                 andMode:(NSUInteger)cpuMode
                 forFile:(NSObject<HPDisassembledFile> *)file {
-  return NSDataWithFiller(0xEA, size);
+
+  NSData *opcode = [(Class<FRBCPUProvider>)[self.modelManager
+      classForFamily:file.cpuFamily
+            andModel:file.cpuSubFamily] nopOpcodeSignature];
+
+  return NSDataWithFillerData(opcode, size);
 }
 
 - (BOOL)canAssembleInstructionsForCPUFamily:(NSString *)family
