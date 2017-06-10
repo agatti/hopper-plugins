@@ -143,7 +143,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "rm -rf \"${INSTALL_PATH}/CBMLoader.hopperLoader\"\nmkdir -p \"${INSTALL_PATH}\"\ncp -rf \"${BUILT_PRODUCTS_DIR}/CBMLoader.hopperLoader\" \"${INSTALL_PATH}\"";
+			shellScript = "rm -rf \"${INSTALL_PATH}/${PRODUCT_NAME}.${WRAPPER_EXTENSION}\"\nmkdir -p \"${INSTALL_PATH}\"\ncp -rf \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.${WRAPPER_EXTENSION}\" \"${INSTALL_PATH}\"";
 		};
 /* End PBXShellScriptBuildPhase section */
 

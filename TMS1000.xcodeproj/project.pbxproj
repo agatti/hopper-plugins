@@ -188,7 +188,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "rm -rf \"${INSTALL_PATH}/TMS1000.hopperCPU\"\nmkdir -p \"${INSTALL_PATH}\"\ncp -rf \"${BUILT_PRODUCTS_DIR}/TMS1000.hopperCPU\" \"${INSTALL_PATH}\"";
+			shellScript = "rm -rf \"${INSTALL_PATH}/${PRODUCT_NAME}.${WRAPPER_EXTENSION}\"\nmkdir -p \"${INSTALL_PATH}\"\ncp -rf \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.${WRAPPER_EXTENSION}\" \"${INSTALL_PATH}\"";
 		};
 /* End PBXShellScriptBuildPhase section */
 
