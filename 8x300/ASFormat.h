@@ -28,6 +28,6 @@
 
 #import "FRBInstructionFormatter.h"
 
-@interface FRBASFormat : NSObject <FRBInstructionFormatter>
+@interface ItFrobHopper8x300ASFormat : NSObject <FRBInstructionFormatter>
 
 @end

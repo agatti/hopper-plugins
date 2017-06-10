@@ -24,9 +24,8 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import "FRBContext.h"
-#import "FRBBase8x300.h"
-#import "FRBDefinition.h"
+#import "Context.h"
+#import "Core.h"
 
 @interface ItFrobHopper8x300Context ()
 
@@ -85,7 +84,7 @@ usingServices:(NSObject<HPHopperServices> *_Nonnull)services {
 }
 
 - (BOOL)instructionMayBeASwitchStatement:(DisasmStruct *)disasmStruct {
-  return ((FRBOpcode)(disasmStruct->instruction.userData >> 8)) == FRBOpcodeXEC;
+  return ((FRBOpcode)(disasmStruct->instruction.userData >> 8)) == OpcodeXEC;
 }
 
 - (BOOL)instructionHaltsExecutionFlow:(DisasmStruct *)disasm {

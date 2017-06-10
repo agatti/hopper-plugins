@@ -33,74 +33,42 @@
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCUnusedClassInspection"
 
-#pragma clang diagnostic push
-#pragma ide diagnostic ignored "OCUnusedGlobalDeclarationInspection"
-
+/**
+ * Available syntaxes for instruction output.
+ */
 typedef NS_ENUM(NSUInteger, FRBSyntaxType) {
-  FRBSyntaxAS = 0,
-  FRBSyntaxMCCAP,
 
-  FRBSyntaxCount
+  /** Output syntax follows AS Macro Assembler's. */
+  SyntaxAS = 0,
+
+  /** Output syntax follows Signetics' MCCAP. */
+  SyntaxMCCAP,
+
+  /** How many syntaxes are available. */
+  SyntaxCount
 };
 
-#pragma clang diagnostic pop
-
-typedef NS_ENUM(uint8_t, FRBInstructionType) {
-  FRBInstructionType1 = 0,
-  FRBInstructionType2,
-  FRBInstructionType3,
-  FRBInstructionType4,
-  FRBInstructionType5
-};
-
+/**
+ * Instruction metadata.
+ */
 typedef struct {
-  uint16_t opcode : 3;
-  uint16_t source : 5;
-  uint16_t rotation : 3;
-  uint16_t destination : 5;
-} FRBFieldsInstructionType1;
 
-typedef struct {
-  uint16_t opcode : 3;
-  uint16_t source : 5;
-  uint16_t length : 3;
-  uint16_t destination : 5;
-} FRBFieldsInstructionType2;
-
-typedef struct {
-  uint16_t opcode : 3;
-  uint16_t source : 5;
-  uint16_t literal : 8;
-} FRBFieldsInstructionType3;
-
-typedef struct {
-  uint16_t opcode : 3;
-  uint16_t source : 5;
-  uint16_t length : 3;
-  uint16_t literal : 5;
-} FRBFieldsInstructionType4;
-
-typedef struct {
-  uint16_t opcode : 3;
-  uint16_t immediate : 12;
-} FRBFieldsInstructionType5;
-
-typedef union {
-  FRBFieldsInstructionType1 type1;
-  FRBFieldsInstructionType2 type2;
-  FRBFieldsInstructionType3 type3;
-  FRBFieldsInstructionType4 type4;
-  FRBFieldsInstructionType5 type5;
-} FRBFieldsInstruction;
-
-typedef struct {
+  /** Opcode identifier. */
   uintptr_t opcode : 4;
+
+  /** Instruction encoding. */
   uintptr_t encoding : 3;
+
+  /** Flag indicating whether the instruction halts execution or not. */
   uintptr_t haltsExecution : 1;
-  uintptr_t type : 3;
-  uintptr_t reserved : 5;
+
+  /** Reserved. */
+  uintptr_t reserved : 8;
+
+  /** The raw instruction bits. */
   uintptr_t instruction : 16;
-} FRBInstructionUserData;
+
+} InstructionMetadata;
 
 /**
  * CPU Definition class for the 8x300 disassembler plugin.
@@ -112,6 +80,14 @@ typedef struct {
  */
 @property(strong, nonatomic, nonnull) NSObject<HPHopperServices> *services;
 
+/**
+ * Returns the appropriate instruction formatter for the given syntax type.
+ *
+ * @param[in] syntaxType the syntax type to get a formatter for.
+ *
+ * @return an object implementing FRBInstructionFormatter or nil if the syntax
+ * type is invalid.
+ */
 - (NSObject<FRBInstructionFormatter> *_Nullable)formatterForSyntax:
     (FRBSyntaxType)syntaxType;
 

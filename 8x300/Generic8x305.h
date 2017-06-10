@@ -26,7 +26,7 @@
 
 @import Foundation;
 
-#import "FRBBase8x300.h"
+#import "Core.h"
 
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCUnusedClassInspection"

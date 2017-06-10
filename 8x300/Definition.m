@@ -24,11 +24,11 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import "FRBDefinition.h"
-#import "FRBASFormat.h"
-#import "FRBContext.h"
-#import "FRBMCCAPFormat.h"
+#import "Definition.h"
+#import "ASFormat.h"
+#import "Context.h"
 #import "FRBModelManager.h"
+#import "MCCAPFormat.h"
 #import "NSDataWithFill.h"
 
 #pragma clang diagnostic push
@@ -51,10 +51,11 @@ static const char *kRegisterNames[] = {
  */
 @property(strong, nonatomic, nonnull) FRBModelManager *modelManager;
 
+/**
+ * Instruction formatter instances.
+ */
 @property(strong, nonatomic, nonnull)
     NSArray<NSObject<FRBInstructionFormatter> *> *formatterInstances;
-
-@property(strong, nonatomic, nonnull) NSArray<NSString *> *formatterNames;
 
 @end
 
@@ -65,12 +66,9 @@ static const char *kRegisterNames[] = {
 - (instancetype)initWithHopperServices:(NSObject<HPHopperServices> *)services {
   if (self = [super init]) {
     _services = services;
-    _formatterNames = @[ @"AS Macro Assembler", @"Signetics MCCAP" ];
-    _formatterInstances = @[ [FRBASFormat new], [FRBMCCAPFormat new] ];
-
-    NSAssert((_formatterNames.count == _formatterInstances.count) &&
-                 (_formatterNames.count > 0),
-             @"Formatter information mismatch");
+    _formatterInstances = @[
+      [ItFrobHopper8x300ASFormat new], [ItFrobHopper8x300MCCAPFormat new]
+    ];
 
     FRBModelManager *manager = [FRBModelManager
         modelManagerWithBundle:[NSBundle bundleForClass:self.class]];
@@ -157,7 +155,7 @@ static const char *kRegisterNames[] = {
 }
 
 - (NSUInteger)syntaxVariantCount {
-  return self.formatterNames.count;
+  return SyntaxCount;
 }
 
 - (NSUInteger)cpuModeCount {
@@ -165,7 +163,15 @@ static const char *kRegisterNames[] = {
 }
 
 - (NSArray *)syntaxVariantNames {
-  return self.formatterNames;
+  NSMutableArray *names =
+      [[NSMutableArray alloc] initWithCapacity:self.formatterInstances.count];
+
+  for (NSObject<FRBInstructionFormatter> *formatter in self
+           .formatterInstances) {
+    [names addObject:formatter.name];
+  }
+
+  return names;
 }
 
 - (NSArray *)cpuModeNames {
@@ -234,7 +240,7 @@ static const char *kRegisterNames[] = {
 
 - (NSObject<FRBInstructionFormatter> *_Nullable)formatterForSyntax:
     (FRBSyntaxType)syntaxType {
-  return (syntaxType != FRBSyntaxAS) && (syntaxType != FRBSyntaxMCCAP)
+  return (syntaxType != SyntaxAS) && (syntaxType != SyntaxMCCAP)
              ? nil
              : self.formatterInstances[syntaxType];
 }

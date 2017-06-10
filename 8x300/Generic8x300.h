@@ -26,8 +26,13 @@
 
 @import Foundation;
 
-#import "FRBInstructionFormatter.h"
+#import "Core.h"
 
-@interface FRBMCCAPFormat : NSObject <FRBInstructionFormatter>
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "OCUnusedClassInspection"
 
+@interface ItFrobHopper8x300Generic8x300
+    : ItFrobHopper8x300Base8x300 <FRBCPUProvider>
 @end
+
+#pragma clang diagnostic pop

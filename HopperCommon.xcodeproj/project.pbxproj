@@ -18,6 +18,7 @@
 		68A425511ECCD76F00FCA83C /* FRBModelManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 68A4254F1ECCD76F00FCA83C /* FRBModelManager.m */; };
 		68C0458B19C8706E005E1B4D /* FRBOperandFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = 68C0458919C8706E005E1B4D /* FRBOperandFormatter.h */; };
 		68C0458C19C8706E005E1B4D /* FRBOperandFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 68C0458A19C8706E005E1B4D /* FRBOperandFormatter.m */; };
+		AB5F6158398F973C5E7F1B67 /* FRBInstructionFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = AB5F6DC47419524D2D53D34A /* FRBInstructionFormatter.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +38,7 @@
 		68A4254F1ECCD76F00FCA83C /* FRBModelManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRBModelManager.m; sourceTree = "<group>"; };
 		68C0458919C8706E005E1B4D /* FRBOperandFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRBOperandFormatter.h; sourceTree = "<group>"; };
 		68C0458A19C8706E005E1B4D /* FRBOperandFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRBOperandFormatter.m; sourceTree = "<group>"; };
+		AB5F6DC47419524D2D53D34A /* FRBInstructionFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRBInstructionFormatter.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +103,7 @@
 				682870491A22EECA005B5412 /* FRBCPUProvider.h */,
 				68A4254E1ECCD76F00FCA83C /* FRBModelManager.h */,
 				68A4254F1ECCD76F00FCA83C /* FRBModelManager.m */,
+				AB5F6DC47419524D2D53D34A /* FRBInstructionFormatter.h */,
 			);
 			path = HopperCommon;
 			sourceTree = "<group>";
@@ -117,6 +120,7 @@
 				68C0458B19C8706E005E1B4D /* FRBOperandFormatter.h in Headers */,
 				6828704A1A22EECA005B5412 /* FRBCPUProvider.h in Headers */,
 				68A425501ECCD76F00FCA83C /* FRBModelManager.h in Headers */,
+				AB5F6158398F973C5E7F1B67 /* FRBInstructionFormatter.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

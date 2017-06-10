@@ -26,78 +26,95 @@
 
 @import Foundation;
 
+#import "Definition.h"
 #import "FRBCPUProvider.h"
-#import "FRBDefinition.h"
 #import "FRBHopperCommon.h"
 
+/**
+ * Available opcodes.
+ */
 typedef NS_ENUM(NSUInteger, FRBOpcode) {
-  FRBOpcodeMOVE,
-  FRBOpcodeADD,
-  FRBOpcodeAND,
-  FRBOpcodeXOR,
-  FRBOpcodeXEC,
-  FRBOpcodeNZT,
-  FRBOpcodeXMIT,
-  FRBOpcodeJMP,
 
-  FRBOpcodeNOP,
-  FRBOpcodeHALT,
-  FRBOpcodeXML,
-  FRBOpcodeXMR,
+  // Real opcodes.
 
-  FRBOpcodesCount
+  OpcodeMOVE,
+  OpcodeADD,
+  OpcodeAND,
+  OpcodeXOR,
+  OpcodeXEC,
+  OpcodeNZT,
+  OpcodeXMIT,
+  OpcodeJMP,
+
+  // Synthetic opcodes.
+
+  OpcodeNOP,
+  OpcodeHALT,
+  OpcodeXML,
+  OpcodeXMR,
+
+  OpcodesCount
 };
 
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCUnusedGlobalDeclarationInspection"
 
+/**
+ * Available registers.
+ */
 typedef NS_ENUM(NSUInteger, FRBRegister) {
-  FRBRegisterAUX = 0,
-  FRBRegisterR1,
-  FRBRegisterR2,
-  FRBRegisterR3,
-  FRBRegisterR4,
-  FRBRegisterR5,
-  FRBRegisterR6,
-  FRBRegisterIVL,
-  FRBRegisterOVF,
-  FRBRegisterR11,
-  FRBRegisterR12,
-  FRBRegisterR13,
-  FRBRegisterR14,
-  FRBRegisterR15,
-  FRBRegisterR16,
-  FRBRegisterIVR,
-  FRBRegisterLIV0,
-  FRBRegisterLIV1,
-  FRBRegisterLIV2,
-  FRBRegisterLIV3,
-  FRBRegisterLIV4,
-  FRBRegisterLIV5,
-  FRBRegisterLIV6,
-  FRBRegisterLIV7,
-  FRBRegisterRIV0,
-  FRBRegisterRIV1,
-  FRBRegisterRIV2,
-  FRBRegisterRIV3,
-  FRBRegisterRIV4,
-  FRBRegisterRIV5,
-  FRBRegisterRIV6,
-  FRBRegisterRIV7
+  RegisterAUX = 0,
+  RegisterR1,
+  RegisterR2,
+  RegisterR3,
+  RegisterR4,
+  RegisterR5,
+  RegisterR6,
+  RegisterIVL,
+  RegisterOVF,
+  RegisterR11,
+  RegisterR12,
+  RegisterR13,
+  RegisterR14,
+  RegisterR15,
+  RegisterR16,
+  RegisterIVR,
+  RegisterLIV0,
+  RegisterLIV1,
+  RegisterLIV2,
+  RegisterLIV3,
+  RegisterLIV4,
+  RegisterLIV5,
+  RegisterLIV6,
+  RegisterLIV7,
+  RegisterRIV0,
+  RegisterRIV1,
+  RegisterRIV2,
+  RegisterRIV3,
+  RegisterRIV4,
+  RegisterRIV5,
+  RegisterRIV6,
+  RegisterRIV7
 };
 
 #pragma clang diagnostic pop
 
+/**
+ * Instruction encodings.
+ */
 typedef NS_ENUM(uint32_t, FRBEncodingType) {
-  FRBEncodingTypeSingle = 0,
-  FRBEncodingTypeWithRotation,
-  FRBEncodingTypeWithLength,
-  FRBEncodingTypeAssignment,
-  FRBEncodingTypeOffsetWithLength,
-  FRBEncodingTypeAssignmentWithLength,
-  FRBEncodingTypeImplicit
+  EncodingSingle = 0,
+  EncodingWithRotation,
+  EncodingWithLength,
+  EncodingAssignment,
+  EncodingOffsetWithLength,
+  EncodingAssignmentWithLength,
+  EncodingImplicit
 };
 
+/**
+ * Base class for 8x300 CPU disassembler backends.
+ */
 @interface ItFrobHopper8x300Base8x300 : NSObject <FRBCPUProvider>
 
 /**
@@ -113,7 +130,7 @@ typedef NS_ENUM(uint32_t, FRBEncodingType) {
 - (BOOL)handleMOVEOpcode:(uint16_t)opcode
             forStructure:(DisasmStruct *_Nonnull)structure
                   onFile:(NSObject<HPDisassembledFile> *_Nonnull)file
-                metadata:(FRBInstructionUserData *_Nonnull)metadata;
+                metadata:(InstructionMetadata *_Nonnull)metadata;
 
 /**
  * Handles a potential ADD instruction.
@@ -128,7 +145,7 @@ typedef NS_ENUM(uint32_t, FRBEncodingType) {
 - (BOOL)handleADDOpcode:(uint16_t)opcode
            forStructure:(DisasmStruct *_Nonnull)structure
                  onFile:(NSObject<HPDisassembledFile> *_Nonnull)file
-               metadata:(FRBInstructionUserData *_Nonnull)metadata;
+               metadata:(InstructionMetadata *_Nonnull)metadata;
 
 /**
  * Handles a potential AND instruction.
@@ -143,7 +160,7 @@ typedef NS_ENUM(uint32_t, FRBEncodingType) {
 - (BOOL)handleANDOpcode:(uint16_t)opcode
            forStructure:(DisasmStruct *_Nonnull)structure
                  onFile:(NSObject<HPDisassembledFile> *_Nonnull)file
-               metadata:(FRBInstructionUserData *_Nonnull)metadata;
+               metadata:(InstructionMetadata *_Nonnull)metadata;
 
 /**
  * Handles a potential XOR instruction.
@@ -158,7 +175,7 @@ typedef NS_ENUM(uint32_t, FRBEncodingType) {
 - (BOOL)handleXOROpcode:(uint16_t)opcode
            forStructure:(DisasmStruct *_Nonnull)structure
                  onFile:(NSObject<HPDisassembledFile> *_Nonnull)file
-               metadata:(FRBInstructionUserData *_Nonnull)metadata;
+               metadata:(InstructionMetadata *_Nonnull)metadata;
 
 /**
  * Handles a potential XEC instruction.
@@ -173,7 +190,7 @@ typedef NS_ENUM(uint32_t, FRBEncodingType) {
 - (BOOL)handleXECOpcode:(uint16_t)opcode
            forStructure:(DisasmStruct *_Nonnull)structure
                  onFile:(NSObject<HPDisassembledFile> *_Nonnull)file
-               metadata:(FRBInstructionUserData *_Nonnull)metadata;
+               metadata:(InstructionMetadata *_Nonnull)metadata;
 
 /**
  * Handles a potential NZT instruction.
@@ -188,7 +205,7 @@ typedef NS_ENUM(uint32_t, FRBEncodingType) {
 - (BOOL)handleNZTOpcode:(uint16_t)opcode
            forStructure:(DisasmStruct *_Nonnull)structure
                  onFile:(NSObject<HPDisassembledFile> *_Nonnull)file
-               metadata:(FRBInstructionUserData *_Nonnull)metadata;
+               metadata:(InstructionMetadata *_Nonnull)metadata;
 
 /**
  * Handles a potential XMIT instruction.
@@ -203,7 +220,7 @@ typedef NS_ENUM(uint32_t, FRBEncodingType) {
 - (BOOL)handleXMITOpcode:(uint16_t)opcode
             forStructure:(DisasmStruct *_Nonnull)structure
                   onFile:(NSObject<HPDisassembledFile> *_Nonnull)file
-                metadata:(FRBInstructionUserData *_Nonnull)metadata;
+                metadata:(InstructionMetadata *_Nonnull)metadata;
 
 /**
  * Handles a potential JMP instruction.
@@ -218,6 +235,6 @@ typedef NS_ENUM(uint32_t, FRBEncodingType) {
 - (BOOL)handleJMPOpcode:(uint16_t)opcode
            forStructure:(DisasmStruct *_Nonnull)structure
                  onFile:(NSObject<HPDisassembledFile> *_Nonnull)file
-               metadata:(FRBInstructionUserData *_Nonnull)metadata;
+               metadata:(InstructionMetadata *_Nonnull)metadata;
 
 @end

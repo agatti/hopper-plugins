@@ -24,7 +24,7 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import "FRBGeneric8x300.h"
+#import "Generic8x300.h"
 
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCUnusedClassInspection"
@@ -75,11 +75,11 @@
 
 - (BOOL)isRegisterValid:(uint)registerNumber {
   switch (registerNumber) {
-  case FRBRegisterR12:
-  case FRBRegisterR13:
-  case FRBRegisterR14:
-  case FRBRegisterR15:
-  case FRBRegisterR16:
+  case RegisterR12:
+  case RegisterR13:
+  case RegisterR14:
+  case RegisterR15:
+  case RegisterR16:
     return NO;
 
   default:
@@ -101,8 +101,8 @@
 
     // Register to Register
 
-    if (sourceRegister == FRBRegisterIVL || sourceRegister == FRBRegisterIVR ||
-        destinationRegister == FRBRegisterOVF) {
+    if (sourceRegister == RegisterIVL || sourceRegister == RegisterIVR ||
+        destinationRegister == RegisterOVF) {
       return NO;
     }
     break;
@@ -111,7 +111,7 @@
 
     // Register to I/O bus
 
-    if (sourceRegister == FRBRegisterIVL || sourceRegister == FRBRegisterIVR) {
+    if (sourceRegister == RegisterIVL || sourceRegister == RegisterIVR) {
       return NO;
     }
     break;
@@ -120,7 +120,7 @@
 
     // I/O bus to register
 
-    if (destinationRegister == FRBRegisterOVF) {
+    if (destinationRegister == RegisterOVF) {
       return NO;
     }
     break;
@@ -137,7 +137,7 @@
 
   return [self isRegisterValid:registerId] &&
          !(((opcode & 0x1000) == 0x0000) &&
-           (registerId == FRBRegisterIVL || registerId == FRBRegisterIVR));
+           (registerId == RegisterIVL || registerId == RegisterIVR));
 }
 
 #pragma mark - Opcode handlers
@@ -145,7 +145,7 @@
 - (BOOL)handleMOVEOpcode:(uint16_t)opcode
             forStructure:(DisasmStruct *_Nonnull)structure
                   onFile:(NSObject<HPDisassembledFile> *_Nonnull)file
-                metadata:(FRBInstructionUserData *_Nonnull)metadata {
+                metadata:(InstructionMetadata *_Nonnull)metadata {
 
   return [self isValidALUOpcode:opcode] && [super handleMOVEOpcode:opcode
                                                       forStructure:structure
@@ -156,7 +156,7 @@
 - (BOOL)handleADDOpcode:(uint16_t)opcode
            forStructure:(DisasmStruct *_Nonnull)structure
                  onFile:(NSObject<HPDisassembledFile> *_Nonnull)file
-               metadata:(FRBInstructionUserData *_Nonnull)metadata {
+               metadata:(InstructionMetadata *_Nonnull)metadata {
 
   return [self isValidALUOpcode:opcode] && [super handleADDOpcode:opcode
                                                      forStructure:structure
@@ -167,7 +167,7 @@
 - (BOOL)handleANDOpcode:(uint16_t)opcode
            forStructure:(DisasmStruct *_Nonnull)structure
                  onFile:(NSObject<HPDisassembledFile> *_Nonnull)file
-               metadata:(FRBInstructionUserData *_Nonnull)metadata {
+               metadata:(InstructionMetadata *_Nonnull)metadata {
 
   return [self isValidALUOpcode:opcode] && [super handleANDOpcode:opcode
                                                      forStructure:structure
@@ -178,7 +178,7 @@
 - (BOOL)handleXOROpcode:(uint16_t)opcode
            forStructure:(DisasmStruct *_Nonnull)structure
                  onFile:(NSObject<HPDisassembledFile> *_Nonnull)file
-               metadata:(FRBInstructionUserData *_Nonnull)metadata {
+               metadata:(InstructionMetadata *_Nonnull)metadata {
 
   return [self isValidALUOpcode:opcode] && [super handleXOROpcode:opcode
                                                      forStructure:structure
@@ -189,7 +189,7 @@
 - (BOOL)handleXECOpcode:(uint16_t)opcode
            forStructure:(DisasmStruct *_Nonnull)structure
                  onFile:(NSObject<HPDisassembledFile> *_Nonnull)file
-               metadata:(FRBInstructionUserData *_Nonnull)metadata {
+               metadata:(InstructionMetadata *_Nonnull)metadata {
 
   return [self isValidTargetOpcode:opcode] && [super handleXECOpcode:opcode
                                                         forStructure:structure
@@ -200,7 +200,7 @@
 - (BOOL)handleNZTOpcode:(uint16_t)opcode
            forStructure:(DisasmStruct *_Nonnull)structure
                  onFile:(NSObject<HPDisassembledFile> *_Nonnull)file
-               metadata:(FRBInstructionUserData *_Nonnull)metadata {
+               metadata:(InstructionMetadata *_Nonnull)metadata {
 
   return [self isValidTargetOpcode:opcode] && [super handleNZTOpcode:opcode
                                                         forStructure:structure
@@ -211,11 +211,11 @@
 - (BOOL)handleXMITOpcode:(uint16_t)opcode
             forStructure:(DisasmStruct *_Nonnull)structure
                   onFile:(NSObject<HPDisassembledFile> *_Nonnull)file
-                metadata:(FRBInstructionUserData *_Nonnull)metadata {
+                metadata:(InstructionMetadata *_Nonnull)metadata {
 
   uint registerId = (uint)((opcode >> 8) & 0b11111);
   return !(![self isRegisterValid:registerId] ||
-           (((opcode & 0x1000) == 0x0000) && (registerId == FRBRegisterIVL))) &&
+           (((opcode & 0x1000) == 0x0000) && (registerId == RegisterIVL))) &&
          [super handleXMITOpcode:opcode
                     forStructure:structure
                           onFile:file

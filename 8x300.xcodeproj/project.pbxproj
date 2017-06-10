@@ -7,36 +7,35 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		683CF0AB19FB89E700CCABAE /* FRBGeneric8x305.m in Sources */ = {isa = PBXBuildFile; fileRef = 683CF0AA19FB89E700CCABAE /* FRBGeneric8x305.m */; };
-		683CF0AE19FB8AF500CCABAE /* FRBBase8x300.m in Sources */ = {isa = PBXBuildFile; fileRef = 683CF0AD19FB8AF500CCABAE /* FRBBase8x300.m */; };
-		68C0457D19C82D8A005E1B4D /* FRBContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 68C0457719C82D8A005E1B4D /* FRBContext.m */; };
-		68C0457E19C82D8A005E1B4D /* FRBDefinition.m in Sources */ = {isa = PBXBuildFile; fileRef = 68C0457919C82D8A005E1B4D /* FRBDefinition.m */; };
+		683CF0AB19FB89E700CCABAE /* Generic8x305.m in Sources */ = {isa = PBXBuildFile; fileRef = 683CF0AA19FB89E700CCABAE /* Generic8x305.m */; };
+		683CF0AE19FB8AF500CCABAE /* Core.m in Sources */ = {isa = PBXBuildFile; fileRef = 683CF0AD19FB8AF500CCABAE /* Core.m */; };
+		68C0457D19C82D8A005E1B4D /* Context.m in Sources */ = {isa = PBXBuildFile; fileRef = 68C0457719C82D8A005E1B4D /* Context.m */; };
+		68C0457E19C82D8A005E1B4D /* Definition.m in Sources */ = {isa = PBXBuildFile; fileRef = 68C0457919C82D8A005E1B4D /* Definition.m */; };
 		68C0458419C83279005E1B4D /* libHopperCommon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 68C0458319C83279005E1B4D /* libHopperCommon.a */; };
-		68C0458719C832F6005E1B4D /* FRBGeneric8x300.m in Sources */ = {isa = PBXBuildFile; fileRef = 68C0458619C832F6005E1B4D /* FRBGeneric8x300.m */; };
-		AB5F60CFFE8515C416AD5D23 /* FRBMCCAPFormat.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5F6E83D9E0C6728163EBAB /* FRBMCCAPFormat.m */; };
-		AB5F698BB1D86F60C87314DD /* FRBASFormat.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5F6ECA39ACB2E064486C1A /* FRBASFormat.m */; };
+		68C0458719C832F6005E1B4D /* Generic8x300.m in Sources */ = {isa = PBXBuildFile; fileRef = 68C0458619C832F6005E1B4D /* Generic8x300.m */; };
+		AB5F60CFFE8515C416AD5D23 /* MCCAPFormat.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5F6E83D9E0C6728163EBAB /* MCCAPFormat.m */; };
+		AB5F698BB1D86F60C87314DD /* ASFormat.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5F6ECA39ACB2E064486C1A /* ASFormat.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		683CF0A919FB89E700CCABAE /* FRBGeneric8x305.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRBGeneric8x305.h; sourceTree = "<group>"; };
-		683CF0AA19FB89E700CCABAE /* FRBGeneric8x305.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRBGeneric8x305.m; sourceTree = "<group>"; };
-		683CF0AC19FB8AF500CCABAE /* FRBBase8x300.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRBBase8x300.h; sourceTree = "<group>"; };
-		683CF0AD19FB8AF500CCABAE /* FRBBase8x300.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRBBase8x300.m; sourceTree = "<group>"; };
-		68C0457619C82D8A005E1B4D /* FRBContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRBContext.h; sourceTree = "<group>"; };
-		68C0457719C82D8A005E1B4D /* FRBContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRBContext.m; sourceTree = "<group>"; };
-		68C0457819C82D8A005E1B4D /* FRBDefinition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRBDefinition.h; sourceTree = "<group>"; };
-		68C0457919C82D8A005E1B4D /* FRBDefinition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRBDefinition.m; sourceTree = "<group>"; };
+		683CF0A919FB89E700CCABAE /* Generic8x305.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Generic8x305.h; sourceTree = "<group>"; };
+		683CF0AA19FB89E700CCABAE /* Generic8x305.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Generic8x305.m; sourceTree = "<group>"; };
+		683CF0AC19FB8AF500CCABAE /* Core.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Core.h; sourceTree = "<group>"; };
+		683CF0AD19FB8AF500CCABAE /* Core.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Core.m; sourceTree = "<group>"; };
+		68C0457619C82D8A005E1B4D /* Context.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Context.h; sourceTree = "<group>"; };
+		68C0457719C82D8A005E1B4D /* Context.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Context.m; sourceTree = "<group>"; };
+		68C0457819C82D8A005E1B4D /* Definition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Definition.h; sourceTree = "<group>"; };
+		68C0457919C82D8A005E1B4D /* Definition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Definition.m; sourceTree = "<group>"; };
 		68C0458319C83279005E1B4D /* libHopperCommon.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libHopperCommon.a; path = "../../Library/Developer/Xcode/DerivedData/HopperPlugins-fzslwhyufvevicghqykcwcprlbow/Build/Products/Debug/libHopperCommon.a"; sourceTree = "<group>"; };
-		68C0458519C832F6005E1B4D /* FRBGeneric8x300.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRBGeneric8x300.h; sourceTree = "<group>"; };
-		68C0458619C832F6005E1B4D /* FRBGeneric8x300.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRBGeneric8x300.m; sourceTree = "<group>"; };
+		68C0458519C832F6005E1B4D /* Generic8x300.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Generic8x300.h; sourceTree = "<group>"; };
+		68C0458619C832F6005E1B4D /* Generic8x300.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Generic8x300.m; sourceTree = "<group>"; };
 		68F19B0919C82CFE008F6CEA /* 8x300.hopperCPU */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = 8x300.hopperCPU; sourceTree = BUILT_PRODUCTS_DIR; };
 		68F19B0C19C82CFE008F6CEA /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		68F19B1019C82CFE008F6CEA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		AB5F61CC2680600E4DC96E64 /* FRBASFormat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRBASFormat.h; sourceTree = "<group>"; };
-		AB5F625295A26BD84C050121 /* FRBInstructionFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRBInstructionFormatter.h; sourceTree = "<group>"; };
-		AB5F6E3F99227FE69F376190 /* FRBMCCAPFormat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRBMCCAPFormat.h; sourceTree = "<group>"; };
-		AB5F6E83D9E0C6728163EBAB /* FRBMCCAPFormat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRBMCCAPFormat.m; sourceTree = "<group>"; };
-		AB5F6ECA39ACB2E064486C1A /* FRBASFormat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRBASFormat.m; sourceTree = "<group>"; };
+		AB5F61CC2680600E4DC96E64 /* ASFormat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASFormat.h; sourceTree = "<group>"; };
+		AB5F6E3F99227FE69F376190 /* MCCAPFormat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCCAPFormat.h; sourceTree = "<group>"; };
+		AB5F6E83D9E0C6728163EBAB /* MCCAPFormat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCCAPFormat.m; sourceTree = "<group>"; };
+		AB5F6ECA39ACB2E064486C1A /* ASFormat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASFormat.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,12 +53,12 @@
 		68C0458219C82EE4005E1B4D /* Chips */ = {
 			isa = PBXGroup;
 			children = (
-				683CF0AC19FB8AF500CCABAE /* FRBBase8x300.h */,
-				683CF0AD19FB8AF500CCABAE /* FRBBase8x300.m */,
-				683CF0A919FB89E700CCABAE /* FRBGeneric8x305.h */,
-				683CF0AA19FB89E700CCABAE /* FRBGeneric8x305.m */,
-				68C0458519C832F6005E1B4D /* FRBGeneric8x300.h */,
-				68C0458619C832F6005E1B4D /* FRBGeneric8x300.m */,
+				683CF0AC19FB8AF500CCABAE /* Core.h */,
+				683CF0AD19FB8AF500CCABAE /* Core.m */,
+				683CF0A919FB89E700CCABAE /* Generic8x305.h */,
+				683CF0AA19FB89E700CCABAE /* Generic8x305.m */,
+				68C0458519C832F6005E1B4D /* Generic8x300.h */,
+				68C0458619C832F6005E1B4D /* Generic8x300.m */,
 			);
 			name = Chips;
 			sourceTree = "<group>";
@@ -67,10 +66,10 @@
 		68C539E81EE0A7440026B6B0 /* Formatters */ = {
 			isa = PBXGroup;
 			children = (
-				AB5F61CC2680600E4DC96E64 /* FRBASFormat.h */,
-				AB5F6ECA39ACB2E064486C1A /* FRBASFormat.m */,
-				AB5F6E3F99227FE69F376190 /* FRBMCCAPFormat.h */,
-				AB5F6E83D9E0C6728163EBAB /* FRBMCCAPFormat.m */,
+				AB5F61CC2680600E4DC96E64 /* ASFormat.h */,
+				AB5F6ECA39ACB2E064486C1A /* ASFormat.m */,
+				AB5F6E3F99227FE69F376190 /* MCCAPFormat.h */,
+				AB5F6E83D9E0C6728163EBAB /* MCCAPFormat.m */,
 			);
 			name = Formatters;
 			sourceTree = "<group>";
@@ -107,11 +106,10 @@
 				68C0458219C82EE4005E1B4D /* Chips */,
 				68C539E81EE0A7440026B6B0 /* Formatters */,
 				68F19B0F19C82CFE008F6CEA /* Supporting Files */,
-				68C0457619C82D8A005E1B4D /* FRBContext.h */,
-				68C0457719C82D8A005E1B4D /* FRBContext.m */,
-				68C0457819C82D8A005E1B4D /* FRBDefinition.h */,
-				68C0457919C82D8A005E1B4D /* FRBDefinition.m */,
-				AB5F625295A26BD84C050121 /* FRBInstructionFormatter.h */,
+				68C0457619C82D8A005E1B4D /* Context.h */,
+				68C0457719C82D8A005E1B4D /* Context.m */,
+				68C0457819C82D8A005E1B4D /* Definition.h */,
+				68C0457919C82D8A005E1B4D /* Definition.m */,
 			);
 			path = 8x300;
 			sourceTree = "<group>";
@@ -191,13 +189,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				68C0457D19C82D8A005E1B4D /* FRBContext.m in Sources */,
-				683CF0AB19FB89E700CCABAE /* FRBGeneric8x305.m in Sources */,
-				68C0457E19C82D8A005E1B4D /* FRBDefinition.m in Sources */,
-				683CF0AE19FB8AF500CCABAE /* FRBBase8x300.m in Sources */,
-				68C0458719C832F6005E1B4D /* FRBGeneric8x300.m in Sources */,
-				AB5F698BB1D86F60C87314DD /* FRBASFormat.m in Sources */,
-				AB5F60CFFE8515C416AD5D23 /* FRBMCCAPFormat.m in Sources */,
+				68C0457D19C82D8A005E1B4D /* Context.m in Sources */,
+				683CF0AB19FB89E700CCABAE /* Generic8x305.m in Sources */,
+				68C0457E19C82D8A005E1B4D /* Definition.m in Sources */,
+				683CF0AE19FB8AF500CCABAE /* Core.m in Sources */,
+				68C0458719C832F6005E1B4D /* Generic8x300.m in Sources */,
+				AB5F698BB1D86F60C87314DD /* ASFormat.m in Sources */,
+				AB5F60CFFE8515C416AD5D23 /* MCCAPFormat.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -24,8 +24,8 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import "FRBMCCAPFormat.h"
-#import "FRBDefinition.h"
+#import "MCCAPFormat.h"
+#import "Definition.h"
 
 /**
  * MCCAP binary formatter bits table.
@@ -33,7 +33,7 @@
 static const int64_t kBinaryBitsTable[] = {0x01, 0x02, 0x04, 0x08,
                                            0x10, 0x20, 0x40, 0x80};
 
-@interface FRBMCCAPFormat ()
+@interface ItFrobHopper8x300MCCAPFormat ()
 
 - (NSObject<HPASMLine> *_Nonnull)
 formatMCCAPBinary:(const DisasmOperand *_Nonnull)operand
@@ -55,7 +55,11 @@ hasLeadingZeroes:(BOOL)hasLeadingZeroes;
 
 @end
 
-@implementation FRBMCCAPFormat
+@implementation ItFrobHopper8x300MCCAPFormat
+
+- (NSString *_Nonnull)name {
+  return @"Signetics MCCAP";
+}
 
 - (NSObject<HPASMLine> *_Nullable)
 formatOperand:(DisasmStruct *_Nonnull)disasm
@@ -167,13 +171,13 @@ formatInstruction:(DisasmStruct *_Nonnull)disasm
   NSObject<HPASMLine> *line = [services blankASMLine];
 
   switch (encoding) {
-  case FRBEncodingTypeSingle: {
+  case EncodingSingle: {
     GET_OPERAND(first, disasm, 0, file, services);
     [line append:first];
     break;
   }
 
-  case FRBEncodingTypeWithRotation: {
+  case EncodingWithRotation: {
     GET_OPERAND(first, disasm, 0, file, services);
     [line append:first];
     GET_OPERAND(second, disasm, 1, file, services);
@@ -189,7 +193,7 @@ formatInstruction:(DisasmStruct *_Nonnull)disasm
     break;
   }
 
-  case FRBEncodingTypeWithLength: {
+  case EncodingWithLength: {
     GET_OPERAND(first, disasm, 0, file, services);
     [line append:first];
     [line appendRawString:@","];
@@ -203,7 +207,7 @@ formatInstruction:(DisasmStruct *_Nonnull)disasm
     break;
   }
 
-  case FRBEncodingTypeAssignment: {
+  case EncodingAssignment: {
     GET_OPERAND(first, disasm, 0, file, services);
     GET_OPERAND(second, disasm, 1, file, services);
     [line append:first];
@@ -212,7 +216,7 @@ formatInstruction:(DisasmStruct *_Nonnull)disasm
     break;
   }
 
-  case FRBEncodingTypeAssignmentWithLength: {
+  case EncodingAssignmentWithLength: {
     GET_OPERAND(first, disasm, 0, file, services);
     GET_OPERAND(second, disasm, 1, file, services);
     GET_OPERAND(third, disasm, 2, file, services);
@@ -226,7 +230,7 @@ formatInstruction:(DisasmStruct *_Nonnull)disasm
     }
   } break;
 
-  case FRBEncodingTypeOffsetWithLength: {
+  case EncodingOffsetWithLength: {
     GET_OPERAND(first, disasm, 0, file, services);
     GET_OPERAND(second, disasm, 1, file, services);
     GET_OPERAND(third, disasm, 2, file, services);
@@ -243,7 +247,7 @@ formatInstruction:(DisasmStruct *_Nonnull)disasm
     break;
   }
 
-  case FRBEncodingTypeImplicit:
+  case EncodingImplicit:
     break;
 
   default:
@@ -267,13 +271,8 @@ formatMCCAPBinary:(const DisasmOperand *_Nonnull)operand
   NSInteger bit = operand->size;
   BOOL firstOne = NO;
 
-  if ((operand->size == 0) || (operand->size > 8)) {
-    @throw [NSException
-        exceptionWithName:FRBHopperExceptionName
-                   reason:[NSString stringWithFormat:@"Invalid bits count %d",
-                                                     operand->size]
-                 userInfo:nil];
-  }
+  NSAssert(((operand->size > 0) && (operand->size <= 8)),
+           @"Invalid bits count (%d)", operand->size);
 
   value = operand->immediateValue;
   if (isSigned && ((value & (1 << (operand->size - 1))) != 0)) {
@@ -321,13 +320,8 @@ formatMCCAPHexadecimal:(const DisasmOperand *_Nonnull)operand
   int64_t value;
   size_t index;
 
-  if ((operand->size == 0) || (operand->size > 8)) {
-    @throw [NSException
-        exceptionWithName:FRBHopperExceptionName
-                   reason:[NSString stringWithFormat:@"Invalid bits count %d",
-                                                     operand->size]
-                 userInfo:nil];
-  }
+  NSAssert(((operand->size > 0) && (operand->size <= 8)),
+           @"Invalid bits count (%d)", operand->size);
 
   value = operand->immediateValue;
   if (isSigned && ((value & (1 << (operand->size - 1))) != 0)) {
@@ -360,13 +354,8 @@ hasLeadingZeroes:(BOOL)hasLeadingZeroes {
   int64_t value;
   size_t index;
 
-  if ((operand->size == 0) || (operand->size > 8)) {
-    @throw [NSException
-        exceptionWithName:FRBHopperExceptionName
-                   reason:[NSString stringWithFormat:@"Invalid bits count %d",
-                                                     operand->size]
-                 userInfo:nil];
-  }
+  NSAssert(((operand->size > 0) && (operand->size <= 8)),
+           @"Invalid bits count (%d)", operand->size);
 
   value = operand->immediateValue;
   if (isSigned && ((value & (1 << (operand->size - 1))) != 0)) {

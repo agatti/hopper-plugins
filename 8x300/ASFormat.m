@@ -24,10 +24,13 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import "FRBASFormat.h"
-#import "FRBDefinition.h"
+#import "ASFormat.h"
 
-@implementation FRBASFormat
+@implementation ItFrobHopper8x300ASFormat
+
+- (NSString *_Nonnull)name {
+  return @"AS Macro Assembler";
+}
 
 - (NSObject<HPASMLine> *_Nullable)
 formatOperand:(DisasmStruct *_Nonnull)disasm
@@ -105,13 +108,13 @@ formatInstruction:(DisasmStruct *_Nonnull)disasm
 
   switch (encoding) {
 
-  case FRBEncodingTypeSingle: {
+  case EncodingSingle: {
     GET_OPERAND(first, disasm, 0, file, services);
     [line append:first];
     break;
   }
 
-  case FRBEncodingTypeWithRotation: {
+  case EncodingWithRotation: {
     GET_OPERAND(first, disasm, 0, file, services);
     [line append:first];
     GET_OPERAND(second, disasm, 1, file, services);
@@ -127,7 +130,7 @@ formatInstruction:(DisasmStruct *_Nonnull)disasm
     break;
   }
 
-  case FRBEncodingTypeWithLength: {
+  case EncodingWithLength: {
     GET_OPERAND(first, disasm, 0, file, services);
     [line append:first];
     [line appendRawString:@","];
@@ -141,7 +144,7 @@ formatInstruction:(DisasmStruct *_Nonnull)disasm
     break;
   }
 
-  case FRBEncodingTypeAssignment: {
+  case EncodingAssignment: {
     GET_OPERAND(first, disasm, 0, file, services);
     [line append:first];
     [line appendRawString:@","];
@@ -150,7 +153,7 @@ formatInstruction:(DisasmStruct *_Nonnull)disasm
     break;
   }
 
-  case FRBEncodingTypeOffsetWithLength: {
+  case EncodingOffsetWithLength: {
     GET_OPERAND(first, disasm, 0, file, services);
     [line append:first];
     [line appendRawString:@"("];
@@ -166,7 +169,7 @@ formatInstruction:(DisasmStruct *_Nonnull)disasm
     break;
   }
 
-  case FRBEncodingTypeAssignmentWithLength: {
+  case EncodingAssignmentWithLength: {
     GET_OPERAND(first, disasm, 0, file, services);
     [line append:first];
     [line appendRawString:@","];
@@ -180,7 +183,7 @@ formatInstruction:(DisasmStruct *_Nonnull)disasm
     break;
   }
 
-  case FRBEncodingTypeImplicit:
+  case EncodingImplicit:
     break;
 
   default:

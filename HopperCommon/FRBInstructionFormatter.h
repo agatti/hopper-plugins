@@ -28,8 +28,8 @@
 
 #import "Hopper/Hopper.h"
 
-#import "FRBBase8x300.h"
-#import "FRBDefinition.h"
+#import "Core.h"
+#import "Definition.h"
 
 static NSString *_Nonnull kMissingOperand =
     @"Missing operand fragment for index %d at address %llu";
@@ -46,6 +46,8 @@ static NSString *_Nonnull kMissingOperand =
   }
 
 @protocol FRBInstructionFormatter <NSObject>
+
+- (NSString *_Nonnull)name;
 
 - (NSObject<HPASMLine> *_Nullable)
 formatOperand:(DisasmStruct *_Nonnull)disasm

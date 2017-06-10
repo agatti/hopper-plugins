@@ -24,7 +24,7 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import "FRBGeneric8x305.h"
+#import "Generic8x305.h"
 
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCUnusedClassInspection"
@@ -74,7 +74,7 @@
 
   // I/O bus to register
   case 0x1000:
-    return destinationRegister != FRBRegisterOVF;
+    return destinationRegister != RegisterOVF;
 
   default:
     break;
@@ -88,7 +88,7 @@
 - (BOOL)handleMOVEOpcode:(uint16_t)opcode
             forStructure:(DisasmStruct *_Nonnull)structure
                   onFile:(NSObject<HPDisassembledFile> *_Nonnull)file
-                metadata:(FRBInstructionUserData *_Nonnull)metadata {
+                metadata:(InstructionMetadata *_Nonnull)metadata {
 
   return [self isValidALUOpcode:opcode] && [super handleMOVEOpcode:opcode
                                                       forStructure:structure
@@ -99,7 +99,7 @@
 - (BOOL)handleADDOpcode:(uint16_t)opcode
            forStructure:(DisasmStruct *_Nonnull)structure
                  onFile:(NSObject<HPDisassembledFile> *_Nonnull)file
-               metadata:(FRBInstructionUserData *_Nonnull)metadata {
+               metadata:(InstructionMetadata *_Nonnull)metadata {
 
   return [self isValidALUOpcode:opcode] && [super handleADDOpcode:opcode
                                                      forStructure:structure
@@ -110,7 +110,7 @@
 - (BOOL)handleANDOpcode:(uint16_t)opcode
            forStructure:(DisasmStruct *_Nonnull)structure
                  onFile:(NSObject<HPDisassembledFile> *_Nonnull)file
-               metadata:(FRBInstructionUserData *_Nonnull)metadata {
+               metadata:(InstructionMetadata *_Nonnull)metadata {
 
   return [self isValidALUOpcode:opcode] && [super handleANDOpcode:opcode
                                                      forStructure:structure
@@ -121,7 +121,7 @@
 - (BOOL)handleXOROpcode:(uint16_t)opcode
            forStructure:(DisasmStruct *_Nonnull)structure
                  onFile:(NSObject<HPDisassembledFile> *_Nonnull)file
-               metadata:(FRBInstructionUserData *_Nonnull)metadata {
+               metadata:(InstructionMetadata *_Nonnull)metadata {
 
   return [self isValidALUOpcode:opcode] && [super handleXOROpcode:opcode
                                                      forStructure:structure
