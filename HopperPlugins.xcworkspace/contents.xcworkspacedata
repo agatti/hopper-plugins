@@ -1,27 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Workspace
    version = "1.0">
-   <FileRef
-      location = "group:AddressSpace.xcodeproj">
-   </FileRef>
-   <FileRef
-      location = "group:8x300.xcodeproj">
-   </FileRef>
-   <FileRef
-      location = "group:HopperCommon.xcodeproj">
-   </FileRef>
-   <FileRef
-      location = "group:65xxCommon.xcodeproj">
-   </FileRef>
-   <FileRef
-      location = "group:65816.xcodeproj">
-   </FileRef>
-   <FileRef
-      location = "group:6502.xcodeproj">
-   </FileRef>
-   <FileRef
-      location = "group:CBMLoader.xcodeproj">
-   </FileRef>
+   <Group
+      location = "container:"
+      name = "CPUs">
+      <FileRef
+         location = "group:8x300.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:65816.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:6502.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:TMS1000.xcodeproj">
+      </FileRef>
+   </Group>
+   <Group
+      location = "container:"
+      name = "Loaders">
+      <FileRef
+         location = "group:CBMLoader.xcodeproj">
+      </FileRef>
+   </Group>
+   <Group
+      location = "container:"
+      name = "Other">
+      <FileRef
+         location = "group:HopperCommon.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:65xxCommon.xcodeproj">
+      </FileRef>
+   </Group>
+   <Group
+      location = "container:"
+      name = "Tools">
+      <FileRef
+         location = "group:AddressSpace.xcodeproj">
+      </FileRef>
+   </Group>
    <FileRef
       location = "group:LICENSE">
    </FileRef>

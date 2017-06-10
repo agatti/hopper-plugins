@@ -8,6 +8,7 @@ Plugins currently available in the repository:
 * [6502](#6502-cpu-plugin)
 * [65816](#65816-cpu-plugin)
 * [8x300](#8x300-cpu-plugin)
+* [TMS1000](#tms1000-cpu-plugin)
 
 **File loader plugins:**
 
@@ -302,6 +303,39 @@ CPU backends currently supported: 8x300, 8x305.
 * Rebuilding the test binaries requires having the [AS Macroassembler](http://www.alfsembler.de/) command line tools available in your `PATH` variable.
 * If MCCAP syntax is used, comments will still start with `;` instead than with `*` as expected.  As far as the author can see, this is something that cannot fixed by the plugin but by the Hopper authors directly.
 * The MCCAP does not support negation for constant operands, therefore attempting to mark a constant as negated will not yield anything.  Negation works as intended if using the AS syntax.
+
+<hr/>
+
+### **TMS1000 CPU Plugin**
+
+_version 0.0.1_
+
+This CPU core plugin allows you to disassemble Texas Instruments' TMS1000 series code, used in early embedded equipment and terminals.
+
+CPU backends currently supported: TMS1000, TMS1100.
+
+<table>
+<thead>
+<tr><th>Manufacturer</th><th>Model</th><th>Provider</th><th>Datasheet</th></tr>
+</thead>
+<tbody>
+<tr><td rowspan="6">Texas Instruments</td><td>TMS1000</td><td>Texas Instruments &rarr; TMS1000</td><td><a href="https://en.wikichip.org/w/images/f/ff/TMS1000_Series_Programmer%27s_reference_manual.pdf">Datasheet</td></tr>
+<tr><td>TMS1070</td><td>Texas Instruments &rarr; TMS1000</td><td><a href="https://en.wikichip.org/w/images/f/ff/TMS1000_Series_Programmer%27s_reference_manual.pdf">Datasheet</td></tr>
+<tr><td>TMS1100</td><td>Texas Instruments &rarr; TMS1100</td><td><a href="https://en.wikichip.org/w/images/f/ff/TMS1000_Series_Programmer%27s_reference_manual.pdf">Datasheet</td></tr>
+<tr><td>TMS1200</td><td>Texas Instruments &rarr; TMS1000</td><td><a href="https://en.wikichip.org/w/images/f/ff/TMS1000_Series_Programmer%27s_reference_manual.pdf">Datasheet</td></tr>
+<tr><td>TMS1270</td><td>Texas Instruments &rarr; TMS1000</td><td><a href="https://en.wikichip.org/w/images/f/ff/TMS1000_Series_Programmer%27s_reference_manual.pdf">Datasheet</td></tr>
+<tr><td>TMS1300</td><td>Texas Instruments &rarr; TMS1100</td><td><a href="https://en.wikichip.org/w/images/f/ff/TMS1000_Series_Programmer%27s_reference_manual.pdf">Datasheet</td></tr>
+</table>
+
+#### TODO for next version:
+
+* Add support for more TMS1000 variants if any are found in the wild.
+* Attempt to reject files too big for address-space reduced chip variants.
+* Alternate syntax for A1ACC opcodes.
+
+#### Caveats
+
+* Rebuilding the test binaries requires having the [AS Macroassembler](http://www.alfsembler.de/) command line tools available in your `PATH` variable.
 
 <hr/>
 
