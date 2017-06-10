@@ -28,45 +28,42 @@
 
 #import "Hopper/Hopper.h"
 
-static NSString *const kSyntaxVariant = @"Generic";
-static NSString *const kCPUMode = @"generic";
-
 /**
  * Address modes.
  */
-typedef NS_ENUM(NSUInteger, AddressMode) {
-  AddressModeAbsolute = 0,
-  AddressModeAbsoluteIndexedX,
-  AddressModeAbsoluteIndexedY,
-  AddressModeImmediate,
-  AddressModeAccumulator,
-  AddressModeImplied,
-  AddressModeStack,
-  AddressModeAbsoluteIndirect,
-  AddressModeProgramCounterRelative,
-  AddressModeZeroPage,
-  AddressModeZeroPageIndexedX,
-  AddressModeZeroPageIndexedY,
-  AddressModeZeroPageIndexedIndirect,
-  AddressModeZeroPageIndirectIndexedY,
-  AddressModeZeroPageIndirect,
-  AddressModeAbsoluteIndexedIndirect,
-  AddressModeZeroPageProgramCounterRelative,
-  AddressModeBlockTransfer,
-  AddressModeImmediateZeroPage,
-  AddressModeImmediateZeroPageX,
-  AddressModeImmediateAbsolute,
-  AddressModeImmediateAbsoluteX,
-  AddressModeZeroPageIndirectIndexedX,
-  AddressModeBitsProgramCounterAbsolute,
-  AddressModeSpecialPage,
-  AddressModeUnknown
+typedef NS_ENUM(NSUInteger, Mode) {
+  ModeAbsolute = 0,
+  ModeAbsoluteIndexedX,
+  ModeAbsoluteIndexedY,
+  ModeImmediate,
+  ModeAccumulator,
+  ModeImplied,
+  ModeStack,
+  ModeAbsoluteIndirect,
+  ModeProgramCounterRelative,
+  ModeZeroPage,
+  ModeZeroPageIndexedX,
+  ModeZeroPageIndexedY,
+  ModeZeroPageIndexedIndirect,
+  ModeZeroPageIndirectIndexedY,
+  ModeZeroPageIndirect,
+  ModeAbsoluteIndexedIndirect,
+  ModeZeroPageProgramCounterRelative,
+  ModeBlockTransfer,
+  ModeImmediateZeroPage,
+  ModeImmediateZeroPageX,
+  ModeImmediateAbsolute,
+  ModeImmediateAbsoluteX,
+  ModeZeroPageIndirectIndexedX,
+  ModeBitsProgramCounterAbsolute,
+  ModeSpecialPage,
+  ModeUnknown
 };
 
 /**
  * Available address modes count.
  */
-static const size_t kAddressModesCount = AddressModeUnknown;
+static const size_t kAddressModesCount = ModeUnknown;
 
 /**
  * Opcode length, in bytes, for each address mode.
@@ -291,7 +288,7 @@ typedef NS_ENUM(NSUInteger, OpcodeType) {
 
 static const size_t kOpcodesCount = OpcodeUndocumented;
 
-typedef NS_ENUM(NSUInteger, FRBRegisters) {
+typedef NS_ENUM(NSUInteger, Registers) {
   RegisterA = 0,
   RegisterX,
   RegisterY,
@@ -301,7 +298,7 @@ typedef NS_ENUM(NSUInteger, FRBRegisters) {
   RegisterP
 };
 
-typedef NS_OPTIONS(NSUInteger, FRBRegisterFlags) {
+typedef NS_OPTIONS(NSUInteger, RegisterFlags) {
   RegisterFlagsNone = 0,
   RegisterFlagsA = 1 << RegisterA,
   RegisterFlagsX = 1 << RegisterX,
@@ -327,9 +324,9 @@ typedef struct {
  */
 typedef struct {
   OpcodeType type;
-  AddressMode addressMode;
-  FRBRegisterFlags readRegisters;
-  FRBRegisterFlags writtenRegisters;
+  Mode addressMode;
+  RegisterFlags readRegisters;
+  RegisterFlags writtenRegisters;
 } Opcode;
 
 typedef struct {
@@ -527,5 +524,4 @@ static const Mnemonic kMnemonics[kOpcodesCount] = {
     {"TXS", DISASM_BRANCH_NONE, OpcodeCategoryRegisterTransfers, NO},
     {"TYA", DISASM_BRANCH_NONE, OpcodeCategoryRegisterTransfers, NO},
     {"WAI", DISASM_BRANCH_NONE, OpcodeCategorySystem, NO},
-    {"WIT", DISASM_BRANCH_NONE, OpcodeCategorySystem, YES},
-};
+    {"WIT", DISASM_BRANCH_NONE, OpcodeCategorySystem, YES}};

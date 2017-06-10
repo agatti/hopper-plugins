@@ -201,17 +201,17 @@ buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
   const Instruction instruction =
       [self instructionForByte:(uint8_t)disasm->instruction.userData];
   switch (instruction.opcode->addressMode) {
-  case AddressModeAbsolute:
-  case AddressModeProgramCounterRelative:
-  case AddressModeZeroPage:
+  case ModeAbsolute:
+  case ModeProgramCounterRelative:
+  case ModeZeroPage:
     return [self buildOperandString:disasm
                     forOperandIndex:0
                              inFile:file
                                 raw:raw
                        withServices:services];
 
-  case AddressModeAbsoluteIndexedX:
-  case AddressModeZeroPageIndexedX: {
+  case ModeAbsoluteIndexedX:
+  case ModeZeroPageIndexedX: {
     NSObject<HPASMLine> *line = [services blankASMLine];
     [line append:[self buildOperandString:disasm
                           forOperandIndex:0
@@ -223,8 +223,8 @@ buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
     return line;
   }
 
-  case AddressModeAbsoluteIndexedY:
-  case AddressModeZeroPageIndexedY: {
+  case ModeAbsoluteIndexedY:
+  case ModeZeroPageIndexedY: {
     NSObject<HPASMLine> *line = [services blankASMLine];
     [line append:[self buildOperandString:disasm
                           forOperandIndex:0
@@ -236,7 +236,7 @@ buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
     return line;
   }
 
-  case AddressModeImmediate: {
+  case ModeImmediate: {
     NSObject<HPASMLine> *line = [services blankASMLine];
     [line append:[self buildOperandString:disasm
                           forOperandIndex:0
@@ -247,13 +247,13 @@ buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
     return line;
   }
 
-  case AddressModeAccumulator:
-  case AddressModeImplied:
-  case AddressModeStack:
+  case ModeAccumulator:
+  case ModeImplied:
+  case ModeStack:
     return [services blankASMLine];
 
-  case AddressModeAbsoluteIndirect:
-  case AddressModeZeroPageIndirect: {
+  case ModeAbsoluteIndirect:
+  case ModeZeroPageIndirect: {
     NSObject<HPASMLine> *line = [services blankASMLine];
     [line appendRawString:@"("];
     [line append:[self buildOperandString:disasm
@@ -266,8 +266,8 @@ buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
     return line;
   }
 
-  case AddressModeZeroPageIndexedIndirect:
-  case AddressModeAbsoluteIndexedIndirect: {
+  case ModeZeroPageIndexedIndirect:
+  case ModeAbsoluteIndexedIndirect: {
     NSObject<HPASMLine> *line = [services blankASMLine];
     [line appendRawString:@"("];
     [line append:[self buildOperandString:disasm
@@ -280,7 +280,7 @@ buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
     return line;
   }
 
-  case AddressModeZeroPageIndirectIndexedY: {
+  case ModeZeroPageIndirectIndexedY: {
     NSObject<HPASMLine> *line = [services blankASMLine];
     [line appendRawString:@"("];
     [line append:[self buildOperandString:disasm
@@ -293,9 +293,9 @@ buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
     return line;
   }
 
-  case AddressModeZeroPageProgramCounterRelative:
-  case AddressModeImmediateZeroPage:
-  case AddressModeImmediateAbsolute: {
+  case ModeZeroPageProgramCounterRelative:
+  case ModeImmediateZeroPage:
+  case ModeImmediateAbsolute: {
     NSObject<HPASMLine> *line = [services blankASMLine];
     [line append:[self buildOperandString:disasm
                           forOperandIndex:0
@@ -312,8 +312,8 @@ buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
     return line;
   }
 
-  case AddressModeBlockTransfer:
-  case AddressModeBitsProgramCounterAbsolute: {
+  case ModeBlockTransfer:
+  case ModeBitsProgramCounterAbsolute: {
     NSObject<HPASMLine> *line = [services blankASMLine];
     [line append:[self buildOperandString:disasm
                           forOperandIndex:0
@@ -336,8 +336,8 @@ buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
     return line;
   }
 
-  case AddressModeImmediateZeroPageX:
-  case AddressModeImmediateAbsoluteX: {
+  case ModeImmediateZeroPageX:
+  case ModeImmediateAbsoluteX: {
     NSObject<HPASMLine> *line = [services blankASMLine];
     [line append:[self buildOperandString:disasm
                           forOperandIndex:0
@@ -355,7 +355,7 @@ buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
     return line;
   }
 
-  case AddressModeZeroPageIndirectIndexedX: {
+  case ModeZeroPageIndirectIndexedX: {
     NSObject<HPASMLine> *line = [services blankASMLine];
     [line appendRawString:@"("];
     [line append:[self buildOperandString:disasm
@@ -368,7 +368,7 @@ buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
     return line;
   }
 
-  case AddressModeSpecialPage: {
+  case ModeSpecialPage: {
     NSObject<HPASMLine> *line = [services blankASMLine];
     [line appendRawString:@"\\"];
     [line append:[self buildOperandString:disasm
@@ -380,7 +380,7 @@ buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
     return line;
   }
 
-  case AddressModeUnknown:
+  case ModeUnknown:
   default:
     return nil;
   }
@@ -394,7 +394,7 @@ buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
   const uint8_t byte = [file readUInt8AtVirtualAddress:structure->virtualAddr];
   const Instruction instruction = [self instructionForByte:byte];
   structure->instruction.userData = byte;
-  if (instruction.opcode->addressMode == AddressModeUnknown) {
+  if (instruction.opcode->addressMode == ModeUnknown) {
     return DISASM_UNKNOWN_OPCODE;
   }
   structure->instruction.branchType = instruction.mnemonic->branchType;
@@ -483,70 +483,70 @@ buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
          forInstruction:(const Instruction *_Nonnull)instruction
                  inFile:(NSObject<HPDisassembledFile> *_Nonnull)file {
   switch (instruction->opcode->addressMode) {
-  case AddressModeAbsolute:
-  case AddressModeAbsoluteIndirect:
+  case ModeAbsolute:
+  case ModeAbsoluteIndirect:
     SetAddressOperand(file, structure, 0, 16, 16, 1, 0);
     break;
 
-  case AddressModeAbsoluteIndexedX:
+  case ModeAbsoluteIndexedX:
     SetAddressOperand(file, structure, 0, 16, 16, 1, RegisterX);
     break;
 
-  case AddressModeAbsoluteIndexedY:
+  case ModeAbsoluteIndexedY:
     SetAddressOperand(file, structure, 0, 16, 16, 1, RegisterY);
     break;
 
-  case AddressModeImmediate:
+  case ModeImmediate:
     SetConstantOperand(file, structure, 0, 8, 1);
     break;
 
-  case AddressModeZeroPageIndirect:
-  case AddressModeZeroPage:
+  case ModeZeroPageIndirect:
+  case ModeZeroPage:
     SetAddressOperand(file, structure, 0, 8, 16, 1, 0);
     break;
 
-  case AddressModeZeroPageIndexedIndirect:
-  case AddressModeZeroPageIndexedX:
-  case AddressModeZeroPageIndirectIndexedX:
+  case ModeZeroPageIndexedIndirect:
+  case ModeZeroPageIndexedX:
+  case ModeZeroPageIndirectIndexedX:
     SetAddressOperand(file, structure, 0, 8, 16, 1, RegisterX);
     break;
 
-  case AddressModeZeroPageIndexedY:
-  case AddressModeZeroPageIndirectIndexedY:
+  case ModeZeroPageIndexedY:
+  case ModeZeroPageIndirectIndexedY:
     SetAddressOperand(file, structure, 0, 8, 16, 1, RegisterY);
     break;
 
-  case AddressModeBlockTransfer:
+  case ModeBlockTransfer:
     SetAddressOperand(file, structure, 0, 16, 16, 1, 0);
     SetAddressOperand(file, structure, 1, 16, 16, 1 + sizeof(uint16_t), 0);
     SetConstantOperand(file, structure, 2, 16, 1 + sizeof(uint16_t) * 2);
     break;
 
-  case AddressModeImmediateZeroPage:
+  case ModeImmediateZeroPage:
     SetConstantOperand(file, structure, 0, 8, 1);
     SetAddressOperand(file, structure, 1, 8, 16, 1 + sizeof(uint8_t), 0);
     break;
 
-  case AddressModeImmediateZeroPageX:
+  case ModeImmediateZeroPageX:
     SetConstantOperand(file, structure, 0, 8, 1);
     SetAddressOperand(file, structure, 1, 8, 16, 1 + sizeof(uint8_t),
                       RegisterX);
     break;
 
-  case AddressModeImmediateAbsolute:
+  case ModeImmediateAbsolute:
     SetConstantOperand(file, structure, 0, 8, 1);
     SetAddressOperand(file, structure, 1, 16, 16, 1 + sizeof(uint8_t), 0);
     break;
 
-  case AddressModeImmediateAbsoluteX:
+  case ModeImmediateAbsoluteX:
     SetConstantOperand(file, structure, 0, 8, 1);
     SetAddressOperand(file, structure, 1, 16, 16, 1 + sizeof(uint8_t),
                       RegisterX);
     break;
 
-  case AddressModeAccumulator:
-  case AddressModeImplied:
-  case AddressModeStack:
+  case ModeAccumulator:
+  case ModeImplied:
+  case ModeStack:
     break;
 
   default: {
@@ -563,11 +563,11 @@ buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
   }
 
   switch (instruction->opcode->addressMode) {
-  case AddressModeImmediate:
-  case AddressModeProgramCounterRelative:
-  case AddressModeAccumulator:
-  case AddressModeImplied:
-  case AddressModeStack:
+  case ModeImmediate:
+  case ModeProgramCounterRelative:
+  case ModeAccumulator:
+  case ModeImplied:
+  case ModeStack:
     break;
 
   default: {
@@ -582,10 +582,10 @@ buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
               inFile:(NSObject<HPDisassembledFile> *_Nonnull)file {
 
   switch (instruction->opcode->addressMode) {
-  case AddressModeAbsolute:
-  case AddressModeAbsoluteIndirect:
-  case AddressModeAbsoluteIndexedIndirect:
-  case AddressModeSpecialPage:
+  case ModeAbsolute:
+  case ModeAbsoluteIndirect:
+  case ModeAbsoluteIndexedIndirect:
+  case ModeSpecialPage:
     structure->operand[0].immediateValue =
         [file readUInt16AtVirtualAddress:structure->virtualAddr + 1];
     structure->operand[0].isBranchDestination = YES;
@@ -595,14 +595,14 @@ buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
         (Address)structure->operand[0].immediateValue;
     break;
 
-  case AddressModeProgramCounterRelative: {
+  case ModeProgramCounterRelative: {
     structure->instruction.addressValue =
         SetRelativeAddressOperand(file, structure, 0, 8, 16, 1);
     structure->operand[0].isBranchDestination = YES;
     break;
   }
 
-  case AddressModeZeroPageProgramCounterRelative: {
+  case ModeZeroPageProgramCounterRelative: {
     SetAddressOperand(file, structure, 0, 8, 16, 1, 0);
     structure->instruction.addressValue = SetRelativeAddressOperand(
         file, structure, 1, 8, 16, 1 + sizeof(uint8_t));
@@ -611,7 +611,7 @@ buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
     break;
   }
 
-  case AddressModeBitsProgramCounterAbsolute:
+  case ModeBitsProgramCounterAbsolute:
     SetAddressOperand(file, structure, 0, 16, 16, 1, 0);
     SetConstantOperand(file, structure, 1, 8, 1 + sizeof(uint16_t));
     structure->instruction.addressValue = SetRelativeAddressOperand(
@@ -619,10 +619,10 @@ buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
     structure->operand[2].isBranchDestination = YES;
     break;
 
-  case AddressModeStack:
+  case ModeStack:
     break;
 
-  case AddressModeImplied:
+  case ModeImplied:
   default: {
     NSString *exceptionFormat = @"Internal error: branch opcode at address "
                                 @"$%04llX with address mode %ld found (%s)";

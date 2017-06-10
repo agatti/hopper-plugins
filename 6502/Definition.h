@@ -33,7 +33,8 @@
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCUnusedClassInspection"
 
-@interface ItFrobHopper6502Definition : ItFrobHopperHopperCommonBaseDefinition <CPUDefinition>
+@interface ItFrobHopper6502Definition
+    : ItFrobHopperHopperCommonBaseDefinition <CPUDefinition>
 
 @end
 
