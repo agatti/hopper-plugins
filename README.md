@@ -207,6 +207,7 @@ CPU backends currently supported: 6502, 65C02, 65N02, 65R02, 65S02, HuC6280, M74
 * Attempt to reject files too big for address-space reduced chip variants.
 * Add support for more 6502 variants if any are found in the wild.
 * Properly relocate files in the 64k address space with BSS sections around data segments.
+* Alternate syntax for extended opcodes.
 
 #### Future plans (need Hopper SDK changes):
 

@@ -9,65 +9,65 @@
 /* Begin PBXBuildFile section */
 		6801368719706CC5004964BD /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6801368619706CC5004964BD /* CoreFoundation.framework */; };
 		68259B2119B712DF0060713A /* libHopperCommon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 68259B2019B712DF0060713A /* libHopperCommon.a */; };
-		682870481A22D5AB005B5412 /* FRBBase6502.m in Sources */ = {isa = PBXBuildFile; fileRef = 682870471A22D5AB005B5412 /* FRBBase6502.m */; };
-		683372EA197C909B002B432E /* FRBGeneric65C02.m in Sources */ = {isa = PBXBuildFile; fileRef = 683372E9197C909B002B432E /* FRBGeneric65C02.m */; };
-		683A4C24197C8E4700B7F172 /* FRBContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 683A4C1A197C8E4700B7F172 /* FRBContext.m */; };
-		683A4C25197C8E4700B7F172 /* FRBDefinition.m in Sources */ = {isa = PBXBuildFile; fileRef = 683A4C1C197C8E4700B7F172 /* FRBDefinition.m */; };
-		683A4C27197C8E4700B7F172 /* FRBGeneric6502.m in Sources */ = {isa = PBXBuildFile; fileRef = 683A4C21197C8E4700B7F172 /* FRBGeneric6502.m */; };
+		682870481A22D5AB005B5412 /* Core.m in Sources */ = {isa = PBXBuildFile; fileRef = 682870471A22D5AB005B5412 /* Core.m */; };
+		683372EA197C909B002B432E /* Generic65C02.m in Sources */ = {isa = PBXBuildFile; fileRef = 683372E9197C909B002B432E /* Generic65C02.m */; };
+		683A4C24197C8E4700B7F172 /* Context.m in Sources */ = {isa = PBXBuildFile; fileRef = 683A4C1A197C8E4700B7F172 /* Context.m */; };
+		683A4C25197C8E4700B7F172 /* Definition.m in Sources */ = {isa = PBXBuildFile; fileRef = 683A4C1C197C8E4700B7F172 /* Definition.m */; };
+		683A4C27197C8E4700B7F172 /* Generic6502.m in Sources */ = {isa = PBXBuildFile; fileRef = 683A4C21197C8E4700B7F172 /* Generic6502.m */; };
 		685736AA1985738C00D790A9 /* lib65xxCommon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 685736A91985738B00D790A9 /* lib65xxCommon.a */; };
-		6873AD77197F810400B46DB5 /* FRBR6500.m in Sources */ = {isa = PBXBuildFile; fileRef = 6873AD76197F810400B46DB5 /* FRBR6500.m */; };
-		6873AD7D197F8E7A00B46DB5 /* FRBHuC6280.m in Sources */ = {isa = PBXBuildFile; fileRef = 6873AD7C197F8E7A00B46DB5 /* FRBHuC6280.m */; };
-		688E0143197C949E00C9DC94 /* FRBW65C02S.m in Sources */ = {isa = PBXBuildFile; fileRef = 688E0142197C949E00C9DC94 /* FRBW65C02S.m */; };
-		68AE6F0019ACE4370020D445 /* FRBM740.m in Sources */ = {isa = PBXBuildFile; fileRef = 68AE6EFE19ACE4370020D445 /* FRBM740.m */; };
-		68B87E0A19AB975400BEE286 /* FRBR65C02.m in Sources */ = {isa = PBXBuildFile; fileRef = 68B87E0819AB975400BEE286 /* FRBR65C02.m */; };
-		68B87E0E19ABD99800BEE286 /* FRBR65C19.m in Sources */ = {isa = PBXBuildFile; fileRef = 68B87E0C19ABD99800BEE286 /* FRBR65C19.m */; };
-		68BFF68919AC467800025CDE /* FRBR65C29.m in Sources */ = {isa = PBXBuildFile; fileRef = 68BFF68719AC467800025CDE /* FRBR65C29.m */; };
-		68F0A4E219E0645A007037E2 /* FRB65N02.m in Sources */ = {isa = PBXBuildFile; fileRef = 68F0A4DB19E0645A007037E2 /* FRB65N02.m */; };
-		68F0A4E319E0645A007037E2 /* FRB65R02.m in Sources */ = {isa = PBXBuildFile; fileRef = 68F0A4DD19E0645A007037E2 /* FRB65R02.m */; };
-		68F0A4E419E0645A007037E2 /* FRB65S02.m in Sources */ = {isa = PBXBuildFile; fileRef = 68F0A4DF19E0645A007037E2 /* FRB65S02.m */; };
-		68F0A4E519E0645A007037E2 /* FRBSunPlus.m in Sources */ = {isa = PBXBuildFile; fileRef = 68F0A4E119E0645A007037E2 /* FRBSunPlus.m */; };
+		6873AD77197F810400B46DB5 /* R6500.m in Sources */ = {isa = PBXBuildFile; fileRef = 6873AD76197F810400B46DB5 /* R6500.m */; };
+		6873AD7D197F8E7A00B46DB5 /* HuC6280.m in Sources */ = {isa = PBXBuildFile; fileRef = 6873AD7C197F8E7A00B46DB5 /* HuC6280.m */; };
+		688E0143197C949E00C9DC94 /* W65C02S.m in Sources */ = {isa = PBXBuildFile; fileRef = 688E0142197C949E00C9DC94 /* W65C02S.m */; };
+		68AE6F0019ACE4370020D445 /* M740.m in Sources */ = {isa = PBXBuildFile; fileRef = 68AE6EFE19ACE4370020D445 /* M740.m */; };
+		68B87E0A19AB975400BEE286 /* R65C02.m in Sources */ = {isa = PBXBuildFile; fileRef = 68B87E0819AB975400BEE286 /* R65C02.m */; };
+		68B87E0E19ABD99800BEE286 /* R65C19.m in Sources */ = {isa = PBXBuildFile; fileRef = 68B87E0C19ABD99800BEE286 /* R65C19.m */; };
+		68BFF68919AC467800025CDE /* R65C29.m in Sources */ = {isa = PBXBuildFile; fileRef = 68BFF68719AC467800025CDE /* R65C29.m */; };
+		68F0A4E219E0645A007037E2 /* 65N02.m in Sources */ = {isa = PBXBuildFile; fileRef = 68F0A4DB19E0645A007037E2 /* 65N02.m */; };
+		68F0A4E319E0645A007037E2 /* 65R02.m in Sources */ = {isa = PBXBuildFile; fileRef = 68F0A4DD19E0645A007037E2 /* 65R02.m */; };
+		68F0A4E419E0645A007037E2 /* 65S02.m in Sources */ = {isa = PBXBuildFile; fileRef = 68F0A4DF19E0645A007037E2 /* 65S02.m */; };
+		68F0A4E519E0645A007037E2 /* SunPlus.m in Sources */ = {isa = PBXBuildFile; fileRef = 68F0A4E119E0645A007037E2 /* SunPlus.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		6801368319706CC5004964BD /* 6502.hopperCPU */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = 6502.hopperCPU; sourceTree = BUILT_PRODUCTS_DIR; };
 		6801368619706CC5004964BD /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		68259B2019B712DF0060713A /* libHopperCommon.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libHopperCommon.a; path = "../../Library/Developer/Xcode/DerivedData/HopperPlugins-fzslwhyufvevicghqykcwcprlbow/Build/Products/Debug/libHopperCommon.a"; sourceTree = "<group>"; };
-		682870461A22D5AB005B5412 /* FRBBase6502.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRBBase6502.h; sourceTree = "<group>"; };
-		682870471A22D5AB005B5412 /* FRBBase6502.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRBBase6502.m; sourceTree = "<group>"; };
-		683372E8197C909B002B432E /* FRBGeneric65C02.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FRBGeneric65C02.h; path = 6502/FRBGeneric65C02.h; sourceTree = SOURCE_ROOT; };
-		683372E9197C909B002B432E /* FRBGeneric65C02.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FRBGeneric65C02.m; path = 6502/FRBGeneric65C02.m; sourceTree = SOURCE_ROOT; };
-		683A4C18197C8E4700B7F172 /* FRBBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FRBBase.h; path = 6502/FRBBase.h; sourceTree = SOURCE_ROOT; };
-		683A4C19197C8E4700B7F172 /* FRBContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FRBContext.h; path = 6502/FRBContext.h; sourceTree = SOURCE_ROOT; };
-		683A4C1A197C8E4700B7F172 /* FRBContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FRBContext.m; path = 6502/FRBContext.m; sourceTree = SOURCE_ROOT; };
-		683A4C1B197C8E4700B7F172 /* FRBDefinition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FRBDefinition.h; path = 6502/FRBDefinition.h; sourceTree = SOURCE_ROOT; };
-		683A4C1C197C8E4700B7F172 /* FRBDefinition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FRBDefinition.m; path = 6502/FRBDefinition.m; sourceTree = SOURCE_ROOT; };
-		683A4C20197C8E4700B7F172 /* FRBGeneric6502.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FRBGeneric6502.h; path = 6502/FRBGeneric6502.h; sourceTree = SOURCE_ROOT; };
-		683A4C21197C8E4700B7F172 /* FRBGeneric6502.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FRBGeneric6502.m; path = 6502/FRBGeneric6502.m; sourceTree = SOURCE_ROOT; };
+		682870461A22D5AB005B5412 /* Core.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Core.h; sourceTree = "<group>"; };
+		682870471A22D5AB005B5412 /* Core.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Core.m; sourceTree = "<group>"; };
+		683372E8197C909B002B432E /* Generic65C02.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Generic65C02.h; path = 6502/Generic65C02.h; sourceTree = SOURCE_ROOT; };
+		683372E9197C909B002B432E /* Generic65C02.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Generic65C02.m; path = 6502/Generic65C02.m; sourceTree = SOURCE_ROOT; };
+		683A4C18197C8E4700B7F172 /* Common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Common.h; path = 6502/Common.h; sourceTree = SOURCE_ROOT; };
+		683A4C19197C8E4700B7F172 /* Context.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Context.h; path = 6502/Context.h; sourceTree = SOURCE_ROOT; };
+		683A4C1A197C8E4700B7F172 /* Context.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Context.m; path = 6502/Context.m; sourceTree = SOURCE_ROOT; };
+		683A4C1B197C8E4700B7F172 /* Definition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Definition.h; path = 6502/Definition.h; sourceTree = SOURCE_ROOT; };
+		683A4C1C197C8E4700B7F172 /* Definition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Definition.m; path = 6502/Definition.m; sourceTree = SOURCE_ROOT; };
+		683A4C20197C8E4700B7F172 /* Generic6502.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Generic6502.h; path = 6502/Generic6502.h; sourceTree = SOURCE_ROOT; };
+		683A4C21197C8E4700B7F172 /* Generic6502.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Generic6502.m; path = 6502/Generic6502.m; sourceTree = SOURCE_ROOT; };
 		683A4C2B197C8E5700B7F172 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.info; name = Info.plist; path = 6502/Info.plist; sourceTree = SOURCE_ROOT; };
 		685736A91985738B00D790A9 /* lib65xxCommon.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = lib65xxCommon.a; path = build/Debug/lib65xxCommon.a; sourceTree = "<group>"; };
 		6860A68819AAA0B600A9AC3B /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		6873AD75197F810400B46DB5 /* FRBR6500.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRBR6500.h; sourceTree = "<group>"; };
-		6873AD76197F810400B46DB5 /* FRBR6500.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRBR6500.m; sourceTree = "<group>"; };
-		6873AD7B197F8E7A00B46DB5 /* FRBHuC6280.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRBHuC6280.h; sourceTree = "<group>"; };
-		6873AD7C197F8E7A00B46DB5 /* FRBHuC6280.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRBHuC6280.m; sourceTree = "<group>"; };
-		688E0141197C949E00C9DC94 /* FRBW65C02S.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FRBW65C02S.h; path = 6502/FRBW65C02S.h; sourceTree = SOURCE_ROOT; };
-		688E0142197C949E00C9DC94 /* FRBW65C02S.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FRBW65C02S.m; path = 6502/FRBW65C02S.m; sourceTree = SOURCE_ROOT; };
-		68AE6EFD19ACE4370020D445 /* FRBM740.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRBM740.h; sourceTree = "<group>"; };
-		68AE6EFE19ACE4370020D445 /* FRBM740.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRBM740.m; sourceTree = "<group>"; };
-		68B87E0719AB975400BEE286 /* FRBR65C02.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRBR65C02.h; sourceTree = "<group>"; };
-		68B87E0819AB975400BEE286 /* FRBR65C02.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRBR65C02.m; sourceTree = "<group>"; };
-		68B87E0B19ABD99800BEE286 /* FRBR65C19.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRBR65C19.h; sourceTree = "<group>"; };
-		68B87E0C19ABD99800BEE286 /* FRBR65C19.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRBR65C19.m; sourceTree = "<group>"; };
-		68BFF68619AC467800025CDE /* FRBR65C29.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRBR65C29.h; sourceTree = "<group>"; };
-		68BFF68719AC467800025CDE /* FRBR65C29.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRBR65C29.m; sourceTree = "<group>"; };
-		68F0A4DA19E0645A007037E2 /* FRB65N02.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRB65N02.h; sourceTree = "<group>"; };
-		68F0A4DB19E0645A007037E2 /* FRB65N02.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRB65N02.m; sourceTree = "<group>"; };
-		68F0A4DC19E0645A007037E2 /* FRB65R02.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRB65R02.h; sourceTree = "<group>"; };
-		68F0A4DD19E0645A007037E2 /* FRB65R02.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRB65R02.m; sourceTree = "<group>"; };
-		68F0A4DE19E0645A007037E2 /* FRB65S02.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRB65S02.h; sourceTree = "<group>"; };
-		68F0A4DF19E0645A007037E2 /* FRB65S02.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRB65S02.m; sourceTree = "<group>"; };
-		68F0A4E019E0645A007037E2 /* FRBSunPlus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRBSunPlus.h; sourceTree = "<group>"; };
-		68F0A4E119E0645A007037E2 /* FRBSunPlus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRBSunPlus.m; sourceTree = "<group>"; };
+		6873AD75197F810400B46DB5 /* R6500.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = R6500.h; sourceTree = "<group>"; };
+		6873AD76197F810400B46DB5 /* R6500.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = R6500.m; sourceTree = "<group>"; };
+		6873AD7B197F8E7A00B46DB5 /* HuC6280.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HuC6280.h; sourceTree = "<group>"; };
+		6873AD7C197F8E7A00B46DB5 /* HuC6280.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HuC6280.m; sourceTree = "<group>"; };
+		688E0141197C949E00C9DC94 /* W65C02S.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = W65C02S.h; path = 6502/W65C02S.h; sourceTree = SOURCE_ROOT; };
+		688E0142197C949E00C9DC94 /* W65C02S.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = W65C02S.m; path = 6502/W65C02S.m; sourceTree = SOURCE_ROOT; };
+		68AE6EFD19ACE4370020D445 /* M740.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = M740.h; sourceTree = "<group>"; };
+		68AE6EFE19ACE4370020D445 /* M740.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = M740.m; sourceTree = "<group>"; };
+		68B87E0719AB975400BEE286 /* R65C02.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = R65C02.h; sourceTree = "<group>"; };
+		68B87E0819AB975400BEE286 /* R65C02.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = R65C02.m; sourceTree = "<group>"; };
+		68B87E0B19ABD99800BEE286 /* R65C19.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = R65C19.h; sourceTree = "<group>"; };
+		68B87E0C19ABD99800BEE286 /* R65C19.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = R65C19.m; sourceTree = "<group>"; };
+		68BFF68619AC467800025CDE /* R65C29.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = R65C29.h; sourceTree = "<group>"; };
+		68BFF68719AC467800025CDE /* R65C29.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = R65C29.m; sourceTree = "<group>"; };
+		68F0A4DA19E0645A007037E2 /* 65N02.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = 65N02.h; sourceTree = "<group>"; };
+		68F0A4DB19E0645A007037E2 /* 65N02.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = 65N02.m; sourceTree = "<group>"; };
+		68F0A4DC19E0645A007037E2 /* 65R02.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = 65R02.h; sourceTree = "<group>"; };
+		68F0A4DD19E0645A007037E2 /* 65R02.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = 65R02.m; sourceTree = "<group>"; };
+		68F0A4DE19E0645A007037E2 /* 65S02.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = 65S02.h; sourceTree = "<group>"; };
+		68F0A4DF19E0645A007037E2 /* 65S02.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = 65S02.m; sourceTree = "<group>"; };
+		68F0A4E019E0645A007037E2 /* SunPlus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SunPlus.h; sourceTree = "<group>"; };
+		68F0A4E119E0645A007037E2 /* SunPlus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SunPlus.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,11 +117,11 @@
 			children = (
 				6873AD79197F863400B46DB5 /* Chips */,
 				6801368919706CC5004964BD /* Supporting Files */,
-				683A4C18197C8E4700B7F172 /* FRBBase.h */,
-				683A4C19197C8E4700B7F172 /* FRBContext.h */,
-				683A4C1A197C8E4700B7F172 /* FRBContext.m */,
-				683A4C1B197C8E4700B7F172 /* FRBDefinition.h */,
-				683A4C1C197C8E4700B7F172 /* FRBDefinition.m */,
+				683A4C18197C8E4700B7F172 /* Common.h */,
+				683A4C19197C8E4700B7F172 /* Context.h */,
+				683A4C1A197C8E4700B7F172 /* Context.m */,
+				683A4C1B197C8E4700B7F172 /* Definition.h */,
+				683A4C1C197C8E4700B7F172 /* Definition.m */,
 			);
 			path = 6502;
 			sourceTree = "<group>";
@@ -137,34 +137,34 @@
 		6873AD79197F863400B46DB5 /* Chips */ = {
 			isa = PBXGroup;
 			children = (
-				68F0A4DA19E0645A007037E2 /* FRB65N02.h */,
-				68F0A4DB19E0645A007037E2 /* FRB65N02.m */,
-				68F0A4DC19E0645A007037E2 /* FRB65R02.h */,
-				68F0A4DD19E0645A007037E2 /* FRB65R02.m */,
-				68F0A4DE19E0645A007037E2 /* FRB65S02.h */,
-				68F0A4DF19E0645A007037E2 /* FRB65S02.m */,
-				68F0A4E019E0645A007037E2 /* FRBSunPlus.h */,
-				68F0A4E119E0645A007037E2 /* FRBSunPlus.m */,
-				683A4C20197C8E4700B7F172 /* FRBGeneric6502.h */,
-				683A4C21197C8E4700B7F172 /* FRBGeneric6502.m */,
-				683372E8197C909B002B432E /* FRBGeneric65C02.h */,
-				683372E9197C909B002B432E /* FRBGeneric65C02.m */,
-				6873AD7B197F8E7A00B46DB5 /* FRBHuC6280.h */,
-				6873AD7C197F8E7A00B46DB5 /* FRBHuC6280.m */,
-				68AE6EFD19ACE4370020D445 /* FRBM740.h */,
-				68AE6EFE19ACE4370020D445 /* FRBM740.m */,
-				6873AD75197F810400B46DB5 /* FRBR6500.h */,
-				6873AD76197F810400B46DB5 /* FRBR6500.m */,
-				68B87E0719AB975400BEE286 /* FRBR65C02.h */,
-				68B87E0819AB975400BEE286 /* FRBR65C02.m */,
-				68B87E0B19ABD99800BEE286 /* FRBR65C19.h */,
-				68B87E0C19ABD99800BEE286 /* FRBR65C19.m */,
-				68BFF68619AC467800025CDE /* FRBR65C29.h */,
-				68BFF68719AC467800025CDE /* FRBR65C29.m */,
-				688E0141197C949E00C9DC94 /* FRBW65C02S.h */,
-				688E0142197C949E00C9DC94 /* FRBW65C02S.m */,
-				682870461A22D5AB005B5412 /* FRBBase6502.h */,
-				682870471A22D5AB005B5412 /* FRBBase6502.m */,
+				68F0A4DA19E0645A007037E2 /* 65N02.h */,
+				68F0A4DB19E0645A007037E2 /* 65N02.m */,
+				68F0A4DC19E0645A007037E2 /* 65R02.h */,
+				68F0A4DD19E0645A007037E2 /* 65R02.m */,
+				68F0A4DE19E0645A007037E2 /* 65S02.h */,
+				68F0A4DF19E0645A007037E2 /* 65S02.m */,
+				68F0A4E019E0645A007037E2 /* SunPlus.h */,
+				68F0A4E119E0645A007037E2 /* SunPlus.m */,
+				683A4C20197C8E4700B7F172 /* Generic6502.h */,
+				683A4C21197C8E4700B7F172 /* Generic6502.m */,
+				683372E8197C909B002B432E /* Generic65C02.h */,
+				683372E9197C909B002B432E /* Generic65C02.m */,
+				6873AD7B197F8E7A00B46DB5 /* HuC6280.h */,
+				6873AD7C197F8E7A00B46DB5 /* HuC6280.m */,
+				68AE6EFD19ACE4370020D445 /* M740.h */,
+				68AE6EFE19ACE4370020D445 /* M740.m */,
+				6873AD75197F810400B46DB5 /* R6500.h */,
+				6873AD76197F810400B46DB5 /* R6500.m */,
+				68B87E0719AB975400BEE286 /* R65C02.h */,
+				68B87E0819AB975400BEE286 /* R65C02.m */,
+				68B87E0B19ABD99800BEE286 /* R65C19.h */,
+				68B87E0C19ABD99800BEE286 /* R65C19.m */,
+				68BFF68619AC467800025CDE /* R65C29.h */,
+				68BFF68719AC467800025CDE /* R65C29.m */,
+				688E0141197C949E00C9DC94 /* W65C02S.h */,
+				688E0142197C949E00C9DC94 /* W65C02S.m */,
+				682870461A22D5AB005B5412 /* Core.h */,
+				682870471A22D5AB005B5412 /* Core.m */,
 			);
 			name = Chips;
 			sourceTree = "<group>";
@@ -236,22 +236,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				68F0A4E319E0645A007037E2 /* FRB65R02.m in Sources */,
-				68B87E0E19ABD99800BEE286 /* FRBR65C19.m in Sources */,
-				68F0A4E219E0645A007037E2 /* FRB65N02.m in Sources */,
-				683A4C24197C8E4700B7F172 /* FRBContext.m in Sources */,
-				683A4C25197C8E4700B7F172 /* FRBDefinition.m in Sources */,
-				688E0143197C949E00C9DC94 /* FRBW65C02S.m in Sources */,
-				682870481A22D5AB005B5412 /* FRBBase6502.m in Sources */,
-				68AE6F0019ACE4370020D445 /* FRBM740.m in Sources */,
-				6873AD7D197F8E7A00B46DB5 /* FRBHuC6280.m in Sources */,
-				683A4C27197C8E4700B7F172 /* FRBGeneric6502.m in Sources */,
-				68F0A4E419E0645A007037E2 /* FRB65S02.m in Sources */,
-				6873AD77197F810400B46DB5 /* FRBR6500.m in Sources */,
-				68F0A4E519E0645A007037E2 /* FRBSunPlus.m in Sources */,
-				68BFF68919AC467800025CDE /* FRBR65C29.m in Sources */,
-				683372EA197C909B002B432E /* FRBGeneric65C02.m in Sources */,
-				68B87E0A19AB975400BEE286 /* FRBR65C02.m in Sources */,
+				68F0A4E319E0645A007037E2 /* 65R02.m in Sources */,
+				68B87E0E19ABD99800BEE286 /* R65C19.m in Sources */,
+				68F0A4E219E0645A007037E2 /* 65N02.m in Sources */,
+				683A4C24197C8E4700B7F172 /* Context.m in Sources */,
+				683A4C25197C8E4700B7F172 /* Definition.m in Sources */,
+				688E0143197C949E00C9DC94 /* W65C02S.m in Sources */,
+				682870481A22D5AB005B5412 /* Core.m in Sources */,
+				68AE6F0019ACE4370020D445 /* M740.m in Sources */,
+				6873AD7D197F8E7A00B46DB5 /* HuC6280.m in Sources */,
+				683A4C27197C8E4700B7F172 /* Generic6502.m in Sources */,
+				68F0A4E419E0645A007037E2 /* 65S02.m in Sources */,
+				6873AD77197F810400B46DB5 /* R6500.m in Sources */,
+				68F0A4E519E0645A007037E2 /* SunPlus.m in Sources */,
+				68BFF68919AC467800025CDE /* R65C29.m in Sources */,
+				683372EA197C909B002B432E /* Generic65C02.m in Sources */,
+				68B87E0A19AB975400BEE286 /* R65C02.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
