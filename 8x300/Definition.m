@@ -47,11 +47,6 @@ static const char *kRegisterNames[] = {
 @interface ItFrobHopper8x300Definition ()
 
 /**
- * Model manager instance.
- */
-@property(strong, nonatomic, nonnull) FRBModelManager *modelManager;
-
-/**
  * Instruction formatter instances.
  */
 @property(strong, nonatomic, nonnull)
@@ -64,19 +59,10 @@ static const char *kRegisterNames[] = {
 #pragma mark - HopperPlugin protocol implementation
 
 - (instancetype)initWithHopperServices:(NSObject<HPHopperServices> *)services {
-  if (self = [super init]) {
-    _services = services;
+  if (self = [super initWithHopperServices:services]) {
     _formatterInstances = @[
       [ItFrobHopper8x300ASFormat new], [ItFrobHopper8x300MCCAPFormat new]
     ];
-
-    FRBModelManager *manager = [FRBModelManager
-        modelManagerWithBundle:[NSBundle bundleForClass:self.class]];
-    if (!manager) {
-      return nil;
-    }
-
-    _modelManager = manager;
   }
 
   return self;
@@ -125,29 +111,6 @@ static const char *kRegisterNames[] = {
        withProvider:[self.modelManager providerForFamily:file.cpuFamily
                                                 andModel:file.cpuSubFamily]
       usingServices:self.services];
-}
-
-- (NSArray *)cpuFamilies {
-  return [self.modelManager.families
-      sortedArrayUsingComparator:^NSComparisonResult(NSString *obj1,
-                                                     NSString *obj2) {
-        return [obj1 compare:obj2];
-      }];
-}
-
-- (NSArray *)cpuSubFamiliesForFamily:(NSString *)family {
-  return [[self.modelManager modelsForFamily:family]
-      sortedArrayUsingComparator:^NSComparisonResult(NSString *obj1,
-                                                     NSString *obj2) {
-        return [obj1 compare:obj2];
-      }];
-}
-
-- (int)addressSpaceWidthInBitsForCPUFamily:(NSString *)family
-                              andSubFamily:(NSString *)subFamily {
-  Class<FRBCPUProvider> class =
-      [self.modelManager classForFamily:family andModel:subFamily];
-  return (class != nil) ? [class addressSpaceWidth] : 0;
 }
 
 - (CPUEndianess)endianess {
@@ -199,43 +162,10 @@ static const char *kRegisterNames[] = {
              : nil;
 }
 
-- (NSString *)cpuRegisterStateMaskToString:(uint32_t)cpuState {
-  return @"";
-}
-
-- (BOOL)registerIndexIsStackPointer:(NSUInteger)reg
-                            ofClass:(RegClass)reg_class {
-  return NO;
-}
-
-- (BOOL)registerIndexIsFrameBasePointer:(NSUInteger)reg
-                                ofClass:(RegClass)reg_class {
-  return NO;
-}
-
-- (BOOL)registerIndexIsProgramCounter:(NSUInteger)reg {
-  return NO;
-}
-
-- (NSString *)framePointerRegisterNameForFile:
-    (NSObject<HPDisassembledFile> *)file {
-  return nil;
-}
-
 - (NSData *)nopWithSize:(NSUInteger)size
                 andMode:(NSUInteger)cpuMode
                 forFile:(NSObject<HPDisassembledFile> *)file {
   return NSDataWithFiller(0, size);
-}
-
-- (BOOL)canAssembleInstructionsForCPUFamily:(NSString *)family
-                               andSubFamily:(NSString *)subFamily {
-  return NO;
-}
-
-- (BOOL)canDecompileProceduresForCPUFamily:(NSString *)family
-                              andSubFamily:(NSString *)subFamily {
-  return NO;
 }
 
 - (NSObject<FRBInstructionFormatter> *_Nullable)formatterForSyntax:

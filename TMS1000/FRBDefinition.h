@@ -28,15 +28,12 @@
 
 #import "Hopper/Hopper.h"
 
+#import "BaseDefinition.h"
+
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCUnusedClassInspection"
 
-@interface ItFrobHopperTMS1000Definition : NSObject <CPUDefinition>
-
-/**
- * Hopper Services instance.
- */
-@property(strong, nonatomic, nonnull) NSObject<HPHopperServices> *services;
+@interface ItFrobHopperTMS1000Definition : ItFrobHopperHopperCommonBaseDefinition <CPUDefinition>
 
 @end
 

@@ -34,11 +34,6 @@
 #pragma ide diagnostic ignored "OCUnusedClassInspection"
 
 /**
- * Assembler syntax variants.
- */
-static NSString *const kSyntaxVariant = @"Generic";
-
-/**
  * CPU mode string identifier for narrow accumulator and narrow index registers.
  */
 static NSString *const kCPUModeAccumulator8Index8 = @"A8 I8";
@@ -61,11 +56,6 @@ static NSString *const kCPUModeAccumulator16Index16 = @"A16 I16";
 @interface ItFrobHopper65816Definition ()
 
 /**
- * Model manager instance.
- */
-@property(strong, nonatomic, nonnull) FRBModelManager *modelManager;
-
-/**
  * General purpose register names.
  */
 @property(strong, nonatomic, nonnull)
@@ -78,18 +68,9 @@ static NSString *const kCPUModeAccumulator16Index16 = @"A16 I16";
 #pragma mark - HopperPlugin protocol implementation
 
 - (instancetype)initWithHopperServices:(NSObject<HPHopperServices> *)services {
-  if (self = [super init]) {
-    _services = services;
-
-    FRBModelManager *manager = [FRBModelManager
-        modelManagerWithBundle:[NSBundle bundleForClass:self.class]];
-    if (!manager) {
-      return nil;
-    }
-
+  if (self = [super initWithHopperServices:services]) {
     _generalPurposeRegisterNames =
         @[ @"A", @"X", @"Y", @"DBR", @"D", @"S", @"PBR", @"C", @"B" ];
-    _modelManager = manager;
   }
 
   return self;
@@ -140,43 +121,12 @@ static NSString *const kCPUModeAccumulator16Index16 = @"A16 I16";
       usingServices:self.services];
 }
 
-- (NSArray *)cpuFamilies {
-  return [self.modelManager.families
-      sortedArrayUsingComparator:^NSComparisonResult(NSString *obj1,
-                                                     NSString *obj2) {
-        return [obj1 compare:obj2];
-      }];
-}
-
-- (NSArray *)cpuSubFamiliesForFamily:(NSString *)family {
-  return [[self.modelManager modelsForFamily:family]
-      sortedArrayUsingComparator:^NSComparisonResult(NSString *obj1,
-                                                     NSString *obj2) {
-        return [obj1 compare:obj2];
-      }];
-}
-
-- (int)addressSpaceWidthInBitsForCPUFamily:(NSString *)family
-                              andSubFamily:(NSString *)subFamily {
-  Class<FRBCPUProvider> class =
-      [self.modelManager classForFamily:family andModel:subFamily];
-  return (class != nil) ? [class addressSpaceWidth] : 0;
-}
-
 - (CPUEndianess)endianess {
   return CPUEndianess_Little;
 }
 
-- (NSUInteger)syntaxVariantCount {
-  return 1;
-}
-
 - (NSUInteger)cpuModeCount {
   return FRBCPUModeCount;
-}
-
-- (NSArray *)syntaxVariantNames {
-  return @[ kSyntaxVariant ];
 }
 
 - (NSArray *)cpuModeNames {
@@ -237,27 +187,9 @@ static NSString *const kCPUModeAccumulator16Index16 = @"A16 I16";
   return nil;
 }
 
-- (NSString *)cpuRegisterStateMaskToString:(uint32_t)cpuState {
-  return @"";
-}
-
 - (BOOL)registerIndexIsStackPointer:(NSUInteger)reg
                             ofClass:(RegClass)reg_class {
   return reg == RegisterS && reg_class == RegClass_GeneralPurposeRegister;
-}
-
-- (BOOL)registerIndexIsFrameBasePointer:(NSUInteger)reg
-                                ofClass:(RegClass)reg_class {
-  return NO;
-}
-
-- (BOOL)registerIndexIsProgramCounter:(NSUInteger)reg {
-  return NO;
-}
-
-- (NSString *)framePointerRegisterNameForFile:
-    (NSObject<HPDisassembledFile> *)file {
-  return nil;
 }
 
 - (NSData *)nopWithSize:(NSUInteger)size
@@ -269,16 +201,6 @@ static NSString *const kCPUModeAccumulator16Index16 = @"A16 I16";
             andModel:file.cpuSubFamily] nopOpcodeSignature];
 
   return NSDataWithFillerData(opcode, size);
-}
-
-- (BOOL)canAssembleInstructionsForCPUFamily:(NSString *)family
-                               andSubFamily:(NSString *)subFamily {
-  return NO;
-}
-
-- (BOOL)canDecompileProceduresForCPUFamily:(NSString *)family
-                              andSubFamily:(NSString *)subFamily {
-  return NO;
 }
 
 @end

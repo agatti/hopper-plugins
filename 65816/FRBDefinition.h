@@ -28,7 +28,10 @@
 
 #import <Hopper/Hopper.h>
 
+#import "BaseDefinition.h"
+
 #pragma clang diagnostic push
+#pragma ide diagnostic ignored "OCUnusedGlobalDeclarationInspection"
 #pragma ide diagnostic ignored "OCUnusedClassInspection"
 
 typedef NS_ENUM(NSUInteger, FRBCPUOperationMode) {
@@ -40,12 +43,7 @@ typedef NS_ENUM(NSUInteger, FRBCPUOperationMode) {
   FRBCPUModeCount
 };
 
-@interface ItFrobHopper65816Definition : NSObject <CPUDefinition>
-
-/**
- * Hopper Services instance.
- */
-@property(strong, nonatomic, nonnull) NSObject<HPHopperServices> *services;
+@interface ItFrobHopper65816Definition : ItFrobHopperHopperCommonBaseDefinition <CPUDefinition>
 
 @end
 

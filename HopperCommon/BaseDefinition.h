@@ -22,19 +22,28 @@
  CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
  OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
+ */
 
 @import Foundation;
 
-#import "Hopper/Hopper.h"
+#import <Hopper/Hopper.h>
 
-#import "BaseDefinition.h"
+@class FRBModelManager;
 
-#pragma clang diagnostic push
-#pragma ide diagnostic ignored "OCUnusedClassInspection"
+/**
+ * Concrete class to derive CPU Definition classes from, removing loads
+ * of boilerplate.
+ */
+@interface ItFrobHopperHopperCommonBaseDefinition : NSObject <CPUDefinition>
 
-@interface ItFrobHopper6502Definition : ItFrobHopperHopperCommonBaseDefinition <CPUDefinition>
+/**
+ * Hopper Services instance.
+ */
+@property(strong, nonatomic, nonnull) NSObject<HPHopperServices> *services;
+
+/**
+ * Model manager instance.
+ */
+@property(strong, nonatomic, nonnull) FRBModelManager *modelManager;
 
 @end
-
-#pragma clang diagnostic pop

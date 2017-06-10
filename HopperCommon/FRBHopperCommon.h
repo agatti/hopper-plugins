@@ -83,7 +83,7 @@ int64_t SignedValue(NSNumber *_Nonnull value, size_t size);
  * @param[in] format  the new format for the argument.
  */
 void SetDefaultFormatForArgument(NSObject<HPDisassembledFile> *_Nonnull file,
-                                 Address address, int argument,
+                                 Address address, int operand,
                                  ArgFormat format);
 
 /**

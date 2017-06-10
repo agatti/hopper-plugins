@@ -28,7 +28,7 @@
 
 #import <Hopper/Hopper.h>
 
-#import "FRBBaseContext.h"
+#import "BaseContext.h"
 #import "FRBCPUProvider.h"
 
 /**

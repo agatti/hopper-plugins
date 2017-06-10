@@ -24,7 +24,7 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import "FRBBaseContext.h"
+#import "BaseContext.h"
 
 #import "FRBHopperCommon.h"
 
@@ -32,7 +32,7 @@
 
 - (NSObject<CPUDefinition> *)cpuDefinition {
   @throw [NSException
-      exceptionWithName:FRBHopperExceptionName
+      exceptionWithName:NSInternalInconsistencyException
                  reason:[NSString stringWithFormat:@"Forgot to override %s",
                                                    __PRETTY_FUNCTION__]
                userInfo:nil];
@@ -108,7 +108,7 @@
 - (int)disassembleSingleInstruction:(DisasmStruct *)disasm
                  usingProcessorMode:(NSUInteger)mode {
   @throw [NSException
-      exceptionWithName:FRBHopperExceptionName
+      exceptionWithName:NSInternalInconsistencyException
                  reason:[NSString stringWithFormat:@"Forgot to override %s",
                                                    __PRETTY_FUNCTION__]
                userInfo:nil];
@@ -116,7 +116,7 @@
 
 - (BOOL)instructionHaltsExecutionFlow:(DisasmStruct *)disasm {
   @throw [NSException
-      exceptionWithName:FRBHopperExceptionName
+      exceptionWithName:NSInternalInconsistencyException
                  reason:[NSString stringWithFormat:@"Forgot to override %s",
                                                    __PRETTY_FUNCTION__]
                userInfo:nil];
@@ -167,7 +167,7 @@
                                       inFile:
                                           (NSObject<HPDisassembledFile> *)file {
   @throw [NSException
-      exceptionWithName:FRBHopperExceptionName
+      exceptionWithName:NSInternalInconsistencyException
                  reason:[NSString stringWithFormat:@"Forgot to override %s",
                                                    __PRETTY_FUNCTION__]
                userInfo:nil];
@@ -178,7 +178,7 @@
                                      inFile:(NSObject<HPDisassembledFile> *)file
                                         raw:(BOOL)raw {
   @throw [NSException
-      exceptionWithName:FRBHopperExceptionName
+      exceptionWithName:NSInternalInconsistencyException
                  reason:[NSString stringWithFormat:@"Forgot to override %s",
                                                    __PRETTY_FUNCTION__]
                userInfo:nil];
@@ -189,7 +189,7 @@ buildCompleteOperandString:(DisasmStruct *)disasm
                     inFile:(NSObject<HPDisassembledFile> *)file
                        raw:(BOOL)raw {
   @throw [NSException
-      exceptionWithName:FRBHopperExceptionName
+      exceptionWithName:NSInternalInconsistencyException
                  reason:[NSString stringWithFormat:@"Forgot to override %s",
                                                    __PRETTY_FUNCTION__]
                userInfo:nil];

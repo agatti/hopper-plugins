@@ -30,6 +30,8 @@
 
 #import <Hopper/Hopper.h>
 
+#import "BaseDefinition.h"
+
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCUnusedClassInspection"
 
@@ -73,12 +75,7 @@ typedef struct {
 /**
  * CPU Definition class for the 8x300 disassembler plugin.
  */
-@interface ItFrobHopper8x300Definition : NSObject <CPUDefinition>
-
-/**
- * Hopper Services instance.
- */
-@property(strong, nonatomic, nonnull) NSObject<HPHopperServices> *services;
+@interface ItFrobHopper8x300Definition : ItFrobHopperHopperCommonBaseDefinition <CPUDefinition>
 
 /**
  * Returns the appropriate instruction formatter for the given syntax type.

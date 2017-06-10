@@ -34,35 +34,14 @@
 
 @interface ItFrobHopperTMS1000Definition ()
 
-/**
- * Model manager instance.
- */
-@property(strong, nonatomic, nonnull) FRBModelManager *modelManager;
-
 @end
 
 @implementation ItFrobHopperTMS1000Definition
 
 #pragma mark - HopperPlugin protocol implementation
 
-- (instancetype)initWithHopperServices:(NSObject<HPHopperServices> *)services {
-  if (self = [super init]) {
-    _services = services;
-
-    FRBModelManager *manager = [FRBModelManager
-        modelManagerWithBundle:[NSBundle bundleForClass:self.class]];
-    if (!manager) {
-      return nil;
-    }
-
-    _modelManager = manager;
-  }
-
-  return self;
-}
-
 - (HopperUUID *)pluginUUID {
-  return [_services UUIDWithString:@"53C4BE05-3378-4E38-9DBA-F939874E9B49"];
+  return [self.services UUIDWithString:@"53C4BE05-3378-4E38-9DBA-F939874E9B49"];
 }
 
 - (HopperPluginType)pluginType {
@@ -106,47 +85,8 @@
       usingServices:self.services];
 }
 
-- (NSArray *)cpuFamilies {
-  return [self.modelManager.families
-      sortedArrayUsingComparator:^NSComparisonResult(NSString *obj1,
-                                                     NSString *obj2) {
-        return [obj1 compare:obj2];
-      }];
-}
-
-- (NSArray *)cpuSubFamiliesForFamily:(NSString *)family {
-  return [[self.modelManager modelsForFamily:family]
-      sortedArrayUsingComparator:^NSComparisonResult(NSString *obj1,
-                                                     NSString *obj2) {
-        return [obj1 compare:obj2];
-      }];
-}
-
-- (int)addressSpaceWidthInBitsForCPUFamily:(NSString *)family
-                              andSubFamily:(NSString *)subFamily {
-  Class<FRBCPUProvider> class =
-      [self.modelManager classForFamily:family andModel:subFamily];
-  return (class != nil) ? [class addressSpaceWidth] : 0;
-}
-
 - (CPUEndianess)endianess {
   return CPUEndianess_Little;
-}
-
-- (NSUInteger)syntaxVariantCount {
-  return 1;
-}
-
-- (NSUInteger)cpuModeCount {
-  return 1;
-}
-
-- (NSArray *)syntaxVariantNames {
-  return @[ kSyntaxVariant ];
-}
-
-- (NSArray *)cpuModeNames {
-  return @[ kCPUMode ];
 }
 
 - (NSUInteger)registerClassCount {
@@ -212,43 +152,10 @@
   return nil;
 }
 
-- (NSString *)cpuRegisterStateMaskToString:(uint32_t)cpuState {
-  return @"";
-}
-
-- (BOOL)registerIndexIsStackPointer:(NSUInteger)reg
-                            ofClass:(RegClass)reg_class {
-  return NO;
-}
-
-- (BOOL)registerIndexIsFrameBasePointer:(NSUInteger)reg
-                                ofClass:(RegClass)reg_class {
-  return NO;
-}
-
-- (BOOL)registerIndexIsProgramCounter:(NSUInteger)reg {
-  return NO;
-}
-
-- (NSString *)framePointerRegisterNameForFile:
-    (NSObject<HPDisassembledFile> *)file {
-  return nil;
-}
-
 - (NSData *)nopWithSize:(NSUInteger)size
                 andMode:(NSUInteger)cpuMode
                 forFile:(id<HPDisassembledFile>)file {
-  return nil;
-}
-
-- (BOOL)canAssembleInstructionsForCPUFamily:(NSString *)family
-                               andSubFamily:(NSString *)subFamily {
-  return NO;
-}
-
-- (BOOL)canDecompileProceduresForCPUFamily:(NSString *)family
-                              andSubFamily:(NSString *)subFamily {
-  return NO;
+  return [NSData data];
 }
 
 @end
