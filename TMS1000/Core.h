@@ -26,11 +26,11 @@
 
 @import Foundation;
 
-#import "FRBBase.h"
+#import "Common.h"
 #import "FRBCPUProvider.h"
 
-@interface FRBTMS1000Base : NSObject <FRBCPUProvider>
+@interface Core : NSObject <FRBCPUProvider>
 
-- (FRBInstruction)instructionForByte:(uint8_t)byte;
+- (Instruction)instructionForByte:(uint8_t)byte;
 
 @end

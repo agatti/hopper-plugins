@@ -26,12 +26,16 @@
 
 @import Foundation;
 
-#import "FRBTMS1000Base.h"
+#import "Hopper/Hopper.h"
+
+#import "BaseDefinition.h"
 
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCUnusedClassInspection"
 
-@interface FRBTMS1100 : FRBTMS1000Base <FRBCPUProvider>
+@interface ItFrobHopperTMS1000Definition
+    : ItFrobHopperHopperCommonBaseDefinition <CPUDefinition>
+
 @end
 
 #pragma clang diagnostic pop

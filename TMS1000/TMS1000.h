@@ -24,29 +24,10 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import "FRBTMS1200.h"
+@import Foundation;
 
-#pragma clang diagnostic push
-#pragma ide diagnostic ignored "OCUnusedClassInspection"
+#import "Core.h"
 
-@implementation FRBTMS1200
-
-+ (NSString *_Nonnull)family {
-  return @"Texas Instruments";
-}
-
-+ (NSString *_Nonnull)model {
-  return @"TMS1200";
-}
-
-+ (BOOL)exported {
-  return YES;
-}
-
-+ (int)addressSpaceWidth {
-  return 16;
-}
+@interface TMS1000 : Core <FRBCPUProvider>
 
 @end
-
-#pragma clang diagnostic pop

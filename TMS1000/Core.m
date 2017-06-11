@@ -24,7 +24,7 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import "FRBTMS1000Base.h"
+#import "Core.h"
 #import "FRBHopperCommon.h"
 
 static const uint8_t kFlipped4BitsTable[16] = {
@@ -36,7 +36,7 @@ static const uint8_t kFlipped2BitsTable[4] = {0b00, 0b10, 0b01, 0b11};
 static const uint8_t kFlipped3BitsTable[8] = {0b000, 0b100, 0b010, 0b110,
                                               0b001, 0b101, 0b011, 0b111};
 
-@interface FRBTMS1000Base ()
+@interface Core ()
 
 - (uint8_t)flip2Bits:(uint8_t)bits;
 
@@ -46,7 +46,7 @@ static const uint8_t kFlipped3BitsTable[8] = {0b000, 0b100, 0b010, 0b110,
 
 @end
 
-@implementation FRBTMS1000Base
+@implementation Core
 
 + (NSString *_Nonnull)family {
   @throw [NSException
@@ -80,8 +80,8 @@ static const uint8_t kFlipped3BitsTable[8] = {0b000, 0b100, 0b010, 0b110,
                  onFile:(NSObject<HPDisassembledFile> *_Nonnull)file {
 
   uint8_t opcodeByte = [file readUInt8AtVirtualAddress:structure->virtualAddr];
-  const FRBInstruction instruction = [self instructionForByte:opcodeByte];
-  const FRBOpcode *opcode = &FRBOpcodes[instruction.opcode];
+  const Instruction instruction = [self instructionForByte:opcodeByte];
+  const Opcode *opcode = &kMnemonics[instruction.opcode];
 
   InitialiseDisasmStruct(structure);
   structure->instruction.pcRegisterValue = structure->virtualAddr;
@@ -96,7 +96,7 @@ static const uint8_t kFlipped3BitsTable[8] = {0b000, 0b100, 0b010, 0b110,
   structure->instruction.length = 1;
 
   switch (instruction.encoding) {
-  case FRBInstructionEncodingI:
+  case InstructionEncodingI:
     structure->operand[0].type = DISASM_OPERAND_CONSTANT_TYPE;
     structure->operand[0].size = 6;
     structure->operand[0].immediateValue = opcodeByte & 0x3F;
@@ -117,24 +117,24 @@ static const uint8_t kFlipped3BitsTable[8] = {0b000, 0b100, 0b010, 0b110,
     }
     break;
 
-  case FRBInstructionEncodingII:
+  case InstructionEncodingII:
     structure->operand[0].type = DISASM_OPERAND_CONSTANT_TYPE;
     structure->operand[0].size = 4;
     structure->operand[0].immediateValue =
         [self flip4Bits:(uint8_t)(opcodeByte & 0x0F)];
     break;
 
-  case FRBInstructionEncodingIII:
+  case InstructionEncodingIII:
     structure->operand[0].type = DISASM_OPERAND_CONSTANT_TYPE;
     structure->operand[0].size = 2;
     structure->operand[0].immediateValue =
         [self flip2Bits:(uint8_t)(opcodeByte & 0x03)] & 0x03;
     break;
 
-  case FRBInstructionEncodingIV:
+  case InstructionEncodingIV:
     break;
 
-  case FRBInstructionEncodingV:
+  case InstructionEncodingV:
     structure->operand[0].type = DISASM_OPERAND_CONSTANT_TYPE;
     structure->operand[0].size = 2;
     structure->operand[0].immediateValue =
@@ -222,7 +222,7 @@ buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
   return kFlipped4BitsTable[bits & 0x0F];
 }
 
-- (FRBInstruction)instructionForByte:(uint8_t)byte {
+- (Instruction)instructionForByte:(uint8_t)byte {
   @throw [NSException
       exceptionWithName:FRBHopperExceptionName
                  reason:[NSString stringWithFormat:@"Forgot to override %s",

@@ -9,41 +9,29 @@
 /* Begin PBXBuildFile section */
 		68A38A221EEC5B4A004A50E1 /* libHopperCommon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 68A38A211EEC5B4A004A50E1 /* libHopperCommon.a */; };
 		68A38A241EEC5B50004A50E1 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 68A38A231EEC5B50004A50E1 /* CoreFoundation.framework */; };
-		68CAC1871EEC12580067E360 /* FRBDefinition.m in Sources */ = {isa = PBXBuildFile; fileRef = 68CAC1861EEC12580067E360 /* FRBDefinition.m */; };
-		AB5F61206CA017D0B420D62A /* FRBTMS1000Base.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5F67CEFF8DE2AC1C557FFB /* FRBTMS1000Base.m */; };
-		AB5F61D869AAC056AFF16601 /* FRBTMS1000.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5F6F6D87BDEAAC2C8BED8D /* FRBTMS1000.m */; };
-		AB5F62B498CEE32F72E24362 /* FRBTMS1100.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5F6919A8D0197DAE1668E3 /* FRBTMS1100.m */; };
-		AB5F63343D5E8BB36239D46F /* FRBTMS1300.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5F6B039CBCC4107D7F394F /* FRBTMS1300.m */; };
-		AB5F643D718060D6D5231F9D /* FRBTMS1270.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5F64042DC13B0EEF59EE8E /* FRBTMS1270.m */; };
-		AB5F652348B732F010708B72 /* FRBTMS1070.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5F690A250540BA3E7A8B58 /* FRBTMS1070.m */; };
-		AB5F6D5D6553512864D529B9 /* FRBContext.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5F67A86907AE0D9D14429A /* FRBContext.m */; };
-		AB5F6F0888AEE96C2B5F7A70 /* FRBTMS1200.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5F6541D76A43EF92A157FB /* FRBTMS1200.m */; };
+		68CAC1871EEC12580067E360 /* Definition.m in Sources */ = {isa = PBXBuildFile; fileRef = 68CAC1861EEC12580067E360 /* Definition.m */; };
+		AB5F61206CA017D0B420D62A /* Core.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5F67CEFF8DE2AC1C557FFB /* Core.m */; };
+		AB5F61D869AAC056AFF16601 /* TMS1000.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5F6F6D87BDEAAC2C8BED8D /* TMS1000.m */; };
+		AB5F62B498CEE32F72E24362 /* TMS1100.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5F6919A8D0197DAE1668E3 /* TMS1100.m */; };
+		AB5F6D5D6553512864D529B9 /* Context.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5F67A86907AE0D9D14429A /* Context.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		68A38A211EEC5B4A004A50E1 /* libHopperCommon.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libHopperCommon.a; path = "../../Library/Developer/Xcode/DerivedData/HopperPlugins-fzslwhyufvevicghqykcwcprlbow/Build/Products/Debug/libHopperCommon.a"; sourceTree = "<group>"; };
 		68A38A231EEC5B50004A50E1 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
-		68CAC1851EEC12580067E360 /* FRBDefinition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRBDefinition.h; sourceTree = "<group>"; };
-		68CAC1861EEC12580067E360 /* FRBDefinition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRBDefinition.m; sourceTree = "<group>"; };
-		68CAC1881EEC136C0067E360 /* FRBBase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FRBBase.h; sourceTree = "<group>"; };
-		AB5F6104A6D81D99AD894F52 /* FRBTMS1300.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRBTMS1300.h; sourceTree = "<group>"; };
-		AB5F63B26B8274CAB3C1D622 /* FRBTMS1000Base.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRBTMS1000Base.h; sourceTree = "<group>"; };
-		AB5F64042DC13B0EEF59EE8E /* FRBTMS1270.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRBTMS1270.m; sourceTree = "<group>"; };
-		AB5F650D40CE8672F1C79EEF /* FRBTMS1200.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRBTMS1200.h; sourceTree = "<group>"; };
-		AB5F652CB746D47A36538908 /* FRBContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRBContext.h; sourceTree = "<group>"; };
-		AB5F6541D76A43EF92A157FB /* FRBTMS1200.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRBTMS1200.m; sourceTree = "<group>"; };
-		AB5F66D3C24AC132FACDEAFE /* FRBTMS1000.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRBTMS1000.h; sourceTree = "<group>"; };
-		AB5F67A86907AE0D9D14429A /* FRBContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRBContext.m; sourceTree = "<group>"; };
-		AB5F67CEFF8DE2AC1C557FFB /* FRBTMS1000Base.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRBTMS1000Base.m; sourceTree = "<group>"; };
+		68CAC1851EEC12580067E360 /* Definition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Definition.h; sourceTree = "<group>"; };
+		68CAC1861EEC12580067E360 /* Definition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Definition.m; sourceTree = "<group>"; };
+		68CAC1881EEC136C0067E360 /* Common.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Common.h; sourceTree = "<group>"; };
+		AB5F63B26B8274CAB3C1D622 /* Core.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Core.h; sourceTree = "<group>"; };
+		AB5F652CB746D47A36538908 /* Context.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Context.h; sourceTree = "<group>"; };
+		AB5F66D3C24AC132FACDEAFE /* TMS1000.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMS1000.h; sourceTree = "<group>"; };
+		AB5F67A86907AE0D9D14429A /* Context.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Context.m; sourceTree = "<group>"; };
+		AB5F67CEFF8DE2AC1C557FFB /* Core.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Core.m; sourceTree = "<group>"; };
 		AB5F67EC01106160E678C38C /* TMS1000.hopperCPU */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TMS1000.hopperCPU; sourceTree = BUILT_PRODUCTS_DIR; };
-		AB5F688099E7A06F4E830F12 /* FRBTMS1270.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRBTMS1270.h; sourceTree = "<group>"; };
-		AB5F690A250540BA3E7A8B58 /* FRBTMS1070.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRBTMS1070.m; sourceTree = "<group>"; };
-		AB5F6919A8D0197DAE1668E3 /* FRBTMS1100.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRBTMS1100.m; sourceTree = "<group>"; };
+		AB5F6919A8D0197DAE1668E3 /* TMS1100.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMS1100.m; sourceTree = "<group>"; };
 		AB5F6957045247F2FF6DC549 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.info; path = Info.plist; sourceTree = "<group>"; };
-		AB5F6A39826FE17DD7294209 /* FRBTMS1100.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRBTMS1100.h; sourceTree = "<group>"; };
-		AB5F6B039CBCC4107D7F394F /* FRBTMS1300.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRBTMS1300.m; sourceTree = "<group>"; };
-		AB5F6DA7038B811B88E89E39 /* FRBTMS1070.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRBTMS1070.h; sourceTree = "<group>"; };
-		AB5F6F6D87BDEAAC2C8BED8D /* FRBTMS1000.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRBTMS1000.m; sourceTree = "<group>"; };
+		AB5F6A39826FE17DD7294209 /* TMS1100.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMS1100.h; sourceTree = "<group>"; };
+		AB5F6F6D87BDEAAC2C8BED8D /* TMS1000.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMS1000.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,20 +76,12 @@
 		AB5F6923025B87A275C5C26B /* Chips */ = {
 			isa = PBXGroup;
 			children = (
-				AB5F67CEFF8DE2AC1C557FFB /* FRBTMS1000Base.m */,
-				AB5F63B26B8274CAB3C1D622 /* FRBTMS1000Base.h */,
-				AB5F6F6D87BDEAAC2C8BED8D /* FRBTMS1000.m */,
-				AB5F66D3C24AC132FACDEAFE /* FRBTMS1000.h */,
-				AB5F6919A8D0197DAE1668E3 /* FRBTMS1100.m */,
-				AB5F6A39826FE17DD7294209 /* FRBTMS1100.h */,
-				AB5F690A250540BA3E7A8B58 /* FRBTMS1070.m */,
-				AB5F6DA7038B811B88E89E39 /* FRBTMS1070.h */,
-				AB5F6541D76A43EF92A157FB /* FRBTMS1200.m */,
-				AB5F650D40CE8672F1C79EEF /* FRBTMS1200.h */,
-				AB5F64042DC13B0EEF59EE8E /* FRBTMS1270.m */,
-				AB5F688099E7A06F4E830F12 /* FRBTMS1270.h */,
-				AB5F6B039CBCC4107D7F394F /* FRBTMS1300.m */,
-				AB5F6104A6D81D99AD894F52 /* FRBTMS1300.h */,
+				AB5F67CEFF8DE2AC1C557FFB /* Core.m */,
+				AB5F63B26B8274CAB3C1D622 /* Core.h */,
+				AB5F6F6D87BDEAAC2C8BED8D /* TMS1000.m */,
+				AB5F66D3C24AC132FACDEAFE /* TMS1000.h */,
+				AB5F6919A8D0197DAE1668E3 /* TMS1100.m */,
+				AB5F6A39826FE17DD7294209 /* TMS1100.h */,
 			);
 			name = Chips;
 			sourceTree = "<group>";
@@ -110,12 +90,12 @@
 			isa = PBXGroup;
 			children = (
 				AB5F6957045247F2FF6DC549 /* Info.plist */,
-				68CAC1881EEC136C0067E360 /* FRBBase.h */,
-				68CAC1851EEC12580067E360 /* FRBDefinition.h */,
-				68CAC1861EEC12580067E360 /* FRBDefinition.m */,
+				68CAC1881EEC136C0067E360 /* Common.h */,
+				68CAC1851EEC12580067E360 /* Definition.h */,
+				68CAC1861EEC12580067E360 /* Definition.m */,
 				AB5F6923025B87A275C5C26B /* Chips */,
-				AB5F67A86907AE0D9D14429A /* FRBContext.m */,
-				AB5F652CB746D47A36538908 /* FRBContext.h */,
+				AB5F67A86907AE0D9D14429A /* Context.m */,
+				AB5F652CB746D47A36538908 /* Context.h */,
 			);
 			path = TMS1000;
 			sourceTree = "<group>";
@@ -197,15 +177,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				68CAC1871EEC12580067E360 /* FRBDefinition.m in Sources */,
-				AB5F61206CA017D0B420D62A /* FRBTMS1000Base.m in Sources */,
-				AB5F61D869AAC056AFF16601 /* FRBTMS1000.m in Sources */,
-				AB5F62B498CEE32F72E24362 /* FRBTMS1100.m in Sources */,
-				AB5F652348B732F010708B72 /* FRBTMS1070.m in Sources */,
-				AB5F6F0888AEE96C2B5F7A70 /* FRBTMS1200.m in Sources */,
-				AB5F643D718060D6D5231F9D /* FRBTMS1270.m in Sources */,
-				AB5F63343D5E8BB36239D46F /* FRBTMS1300.m in Sources */,
-				AB5F6D5D6553512864D529B9 /* FRBContext.m in Sources */,
+				68CAC1871EEC12580067E360 /* Definition.m in Sources */,
+				AB5F61206CA017D0B420D62A /* Core.m in Sources */,
+				AB5F61D869AAC056AFF16601 /* TMS1000.m in Sources */,
+				AB5F62B498CEE32F72E24362 /* TMS1100.m in Sources */,
+				AB5F6D5D6553512864D529B9 /* Context.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

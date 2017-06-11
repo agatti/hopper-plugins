@@ -24,9 +24,9 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import "FRBDefinition.h"
-#import "FRBBase.h"
-#import "FRBContext.h"
+#import "Definition.h"
+#import "Common.h"
+#import "Context.h"
 #import "FRBModelManager.h"
 
 #pragma clang diagnostic push
@@ -122,19 +122,19 @@
 
   case RegClass_GeneralPurposeRegister:
     switch (reg) {
-    case FRBRegisterA:
+    case RegisterA:
       return @"A";
 
-    case FRBRegisterX:
+    case RegisterX:
       return @"X";
 
-    case FRBRegisterY:
+    case RegisterY:
       return @"Y";
 
-    case FRBRegisterO:
+    case RegisterO:
       return @"O";
 
-    case FRBRegisterPB:
+    case RegisterPB:
       return @"PB";
 
     default:

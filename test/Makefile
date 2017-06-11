@@ -29,10 +29,10 @@ all:
 	@$(MAKE) -C 6502
 	@$(MAKE) -C 65816
 	@$(MAKE) -C 8x300
-	@$(MAKE) -C tms1000
+	@$(MAKE) -C TMS1000
 
 clean:
 	@$(MAKE) -C 6502 clean
 	@$(MAKE) -C 65816 clean
 	@$(MAKE) -C 8x300 clean
-	@$(MAKE) -C tms1000 clean
+	@$(MAKE) -C TMS1000 clean

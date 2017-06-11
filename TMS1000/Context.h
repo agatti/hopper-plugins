@@ -6,11 +6,11 @@
  modification, are permitted provided that the following conditions are met:
 
  1. Redistributions of source code must retain the above copyright notice, this
- list of conditions and the following disclaimer.
+    list of conditions and the following disclaimer.
 
  2. Redistributions in binary form must reproduce the above copyright notice,
- this list of conditions and the following disclaimer in the documentation
- and/or other materials provided with the distribution.
+    this list of conditions and the following disclaimer in the documentation
+    and/or other materials provided with the distribution.
 
  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
@@ -26,14 +26,35 @@
 
 @import Foundation;
 
-#import "Hopper/Hopper.h"
+#import <Hopper/Hopper.h>
 
-#import "BaseDefinition.h"
+#import "BaseContext.h"
+#import "FRBCPUProvider.h"
 
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCUnusedClassInspection"
 
-@interface ItFrobHopperTMS1000Definition : ItFrobHopperHopperCommonBaseDefinition <CPUDefinition>
+/**
+ * CPU Context class for the 6502 disassembler plugin.
+ */
+@interface ItFrobHopperTMS1000Context
+    : ItFrobHopperHopperCommonBaseContext <CPUContext>
+
+/**
+ * Creates an instance of the TMS1000 CPU disassembler context.
+ *
+ * @param[in] definition the CPU definition instance.
+ * @param[in] file       the file to disassemble data from.
+ * @param[in] provider   the CPU disassembly provider instance.
+ * @param[in] services   the Hopper Services instance.
+ *
+ * @return an instance of ItFrobTMS1000Context.
+ */
+- (instancetype _Nonnull)
+  initWithCPU:(NSObject<CPUDefinition> *_Nonnull)definition
+      andFile:(NSObject<HPDisassembledFile> *_Nonnull)file
+ withProvider:(NSObject<FRBCPUProvider> *_Nonnull)provider
+usingServices:(NSObject<HPHopperServices> *_Nonnull)services;
 
 @end
 
