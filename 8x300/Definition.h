@@ -26,7 +26,7 @@
 
 @import Foundation;
 
-@protocol FRBInstructionFormatter;
+@protocol InstructionFormatter;
 
 #import <Hopper/Hopper.h>
 
@@ -75,7 +75,7 @@ typedef struct {
 /**
  * CPU Definition class for the 8x300 disassembler plugin.
  */
-@interface ItFrobHopper8x300Definition : ItFrobHopperHopperCommonBaseDefinition <CPUDefinition>
+@interface ItFrobHopper8x300Definition : ItFrobHopperBaseDefinition <CPUDefinition>
 
 /**
  * Returns the appropriate instruction formatter for the given syntax type.
@@ -85,7 +85,7 @@ typedef struct {
  * @return an object implementing FRBInstructionFormatter or nil if the syntax
  * type is invalid.
  */
-- (NSObject<FRBInstructionFormatter> *_Nullable)formatterForSyntax:
+- (NSObject<InstructionFormatter> *_Nullable)formatterForSyntax:
     (FRBSyntaxType)syntaxType;
 
 @end

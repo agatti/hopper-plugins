@@ -32,5 +32,5 @@
  * Concrete class to derive CPU Context classes from, removing loads
  * of boilerplate.
  */
-@interface ItFrobHopperHopperCommonBaseContext : NSObject <CPUContext>
+@interface ItFrobHopperBaseContext : NSObject <CPUContext>
 @end

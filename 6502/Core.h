@@ -26,11 +26,11 @@
 
 #import <Foundation/Foundation.h>
 
-#import "FRBCPUProvider.h"
+#import "CPUProvider.h"
 
 #import "Common.h"
 
-@interface ItFrobHopper6502Base6502 : NSObject <FRBCPUProvider>
+@interface ItFrobHopper6502Base6502 : NSObject <CPUProvider>
 
 - (Instruction)instructionForByte:(uint8_t)byte;
 

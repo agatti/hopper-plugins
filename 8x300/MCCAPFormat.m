@@ -24,6 +24,8 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#import "HopperCommon.h"
+
 #import "MCCAPFormat.h"
 #import "Definition.h"
 
@@ -166,7 +168,7 @@ formatOperand:(DisasmStruct *_Nonnull)disasm
 formatInstruction:(DisasmStruct *_Nonnull)disasm
            inFile:(NSObject<HPDisassembledFile> *_Nonnull)file
      withServices:(NSObject<HPHopperServices> *_Nonnull)services
-      andEncoding:(FRBEncodingType)encoding {
+      andEncoding:(EncodingType)encoding {
 
   NSObject<HPASMLine> *line = [services blankASMLine];
 

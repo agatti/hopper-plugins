@@ -27,9 +27,9 @@
 @import Foundation;
 
 #import "Common.h"
-#import "FRBCPUProvider.h"
+#import "CPUProvider.h"
 
-@interface Core : NSObject <FRBCPUProvider>
+@interface Core : NSObject <CPUProvider>
 
 - (Instruction)instructionForByte:(uint8_t)byte;
 

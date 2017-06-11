@@ -27,7 +27,7 @@
 @import Foundation;
 
 #import "Core.h"
-#import "FRBCPUProvider.h"
+#import "CPUProvider.h"
 
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCUnusedClassInspection"
@@ -35,7 +35,7 @@
 /**
  * Backend for the Mitsubishi M740 chip family.
  */
-@interface ItFrobHopper6502M740 : ItFrobHopper6502Base6502 <FRBCPUProvider>
+@interface ItFrobHopper6502M740 : ItFrobHopper6502Base6502 <CPUProvider>
 @end
 
 #pragma clang diagnostic pop

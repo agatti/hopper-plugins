@@ -24,24 +24,10 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-@import Foundation;
-
-#import "FRBCPUProvider.h"
-
-@protocol FRBCPUProvider;
-
-@interface FRBModelManager : NSObject
-
-+ (instancetype _Nullable)modelManagerWithBundle:(NSBundle *_Nonnull)bundle;
-
-- (NSArray<NSString *> *_Nonnull)families;
-
-- (NSArray<NSString *> *_Nonnull)modelsForFamily:(NSString *_Nonnull)family;
-
-- (NSObject<FRBCPUProvider> *_Nonnull)
-providerForFamily:(NSString *_Nonnull)family
-         andModel:(NSString *_Nonnull)model;
-
-- (Class<FRBCPUProvider> _Nonnull)classForFamily:(NSString *_Nonnull)family
-                                        andModel:(NSString *_Nonnull)model;
-@end
+#import "BaseContext.h"
+#import "BaseDefinition.h"
+#import "CPUProvider.h"
+#import "Miscellaneous.h"
+#import "ModelManager.h"
+#import "NSDataWithFill.h"
+#import "OperandFormatter.h"

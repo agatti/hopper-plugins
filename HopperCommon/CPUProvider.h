@@ -31,7 +31,7 @@
 /**
  * Protocol for CPU providers.
  */
-@protocol FRBCPUProvider <NSObject>
+@protocol CPUProvider <NSObject>
 
 /**
  * Returns the family name for the CPU.

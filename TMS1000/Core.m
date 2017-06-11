@@ -25,7 +25,7 @@
  */
 
 #import "Core.h"
-#import "FRBHopperCommon.h"
+#import "HopperCommon.h"
 
 static const uint8_t kFlipped4BitsTable[16] = {
     0b0000, 0b1000, 0b0100, 0b1100, 0b0010, 0b1010, 0b0110, 0b1110,

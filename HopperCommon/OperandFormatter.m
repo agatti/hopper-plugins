@@ -24,11 +24,11 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import "FRBOperandFormatter.h"
+#import "OperandFormatter.h"
 
 // HopperCommon library imports
 
-#import "FRBHopperCommon.h"
+#import "HopperCommon.h"
 
 NSString *FormatValue(NSNumber *value, const DisasmStruct *source,
                       ArgFormat format, size_t size,

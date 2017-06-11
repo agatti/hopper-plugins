@@ -27,7 +27,7 @@
 #import "Definition.h"
 #import "ASFormat.h"
 #import "Context.h"
-#import "FRBModelManager.h"
+#import "ModelManager.h"
 #import "MCCAPFormat.h"
 #import "NSDataWithFill.h"
 
@@ -50,7 +50,7 @@ static const char *kRegisterNames[] = {
  * Instruction formatter instances.
  */
 @property(strong, nonatomic, nonnull)
-    NSArray<NSObject<FRBInstructionFormatter> *> *formatterInstances;
+    NSArray<NSObject<InstructionFormatter> *> *formatterInstances;
 
 @end
 
@@ -129,7 +129,7 @@ static const char *kRegisterNames[] = {
   NSMutableArray *names =
       [[NSMutableArray alloc] initWithCapacity:self.formatterInstances.count];
 
-  for (NSObject<FRBInstructionFormatter> *formatter in self
+  for (NSObject<InstructionFormatter> *formatter in self
            .formatterInstances) {
     [names addObject:formatter.name];
   }
@@ -168,7 +168,7 @@ static const char *kRegisterNames[] = {
   return NSDataWithFiller(0, size);
 }
 
-- (NSObject<FRBInstructionFormatter> *_Nullable)formatterForSyntax:
+- (NSObject<InstructionFormatter> *_Nullable)formatterForSyntax:
     (FRBSyntaxType)syntaxType {
   return (syntaxType != SyntaxAS) && (syntaxType != SyntaxMCCAP)
              ? nil

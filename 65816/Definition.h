@@ -43,7 +43,7 @@ typedef NS_ENUM(NSUInteger, CPUOperationMode) {
   CPUOperationModesCount
 };
 
-@interface ItFrobHopper65816Definition : ItFrobHopperHopperCommonBaseDefinition <CPUDefinition>
+@interface ItFrobHopper65816Definition : ItFrobHopperBaseDefinition <CPUDefinition>
 
 @end
 

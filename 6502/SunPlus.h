@@ -27,7 +27,7 @@
 @import Foundation;
 
 #import "Core.h"
-#import "FRBCPUProvider.h"
+#import "CPUProvider.h"
 
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCUnusedClassInspection"
@@ -36,7 +36,7 @@
  * Backend for Sunplus' SunPlus chip family.
  */
 @interface ItFrobHopperSunplus6502SunPlus
-    : ItFrobHopper6502Base6502 <FRBCPUProvider>
+    : ItFrobHopper6502Base6502 <CPUProvider>
 @end
 
 #pragma clang diagnostic pop

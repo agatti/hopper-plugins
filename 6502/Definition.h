@@ -34,7 +34,7 @@
 #pragma ide diagnostic ignored "OCUnusedClassInspection"
 
 @interface ItFrobHopper6502Definition
-    : ItFrobHopperHopperCommonBaseDefinition <CPUDefinition>
+    : ItFrobHopperBaseDefinition <CPUDefinition>
 
 @end
 

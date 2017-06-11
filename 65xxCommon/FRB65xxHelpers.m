@@ -25,7 +25,7 @@
  */
 
 #import "FRB65xxHelpers.h"
-#import "FRBHopperCommon.h"
+#import "HopperCommon.h"
 
 static BOOL IsBitsSizeValid(size_t size);
 

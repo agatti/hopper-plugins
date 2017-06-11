@@ -26,10 +26,7 @@
 
 @import Foundation;
 
-#import "Hopper/Hopper.h"
-
 #import "Core.h"
-#import "Definition.h"
 
 static NSString *_Nonnull kMissingOperand =
     @"Missing operand fragment for index %d at address %llu";
@@ -45,7 +42,7 @@ static NSString *_Nonnull kMissingOperand =
     return nil;                                                                \
   }
 
-@protocol FRBInstructionFormatter <NSObject>
+@protocol InstructionFormatter <NSObject>
 
 - (NSString *_Nonnull)name;
 
@@ -59,6 +56,6 @@ formatOperand:(DisasmStruct *_Nonnull)disasm
 formatInstruction:(DisasmStruct *_Nonnull)disasm
            inFile:(NSObject<HPDisassembledFile> *_Nonnull)file
      withServices:(NSObject<HPHopperServices> *_Nonnull)services
-      andEncoding:(FRBEncodingType)encoding;
+      andEncoding:(EncodingType)encoding;
 
 @end

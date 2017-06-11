@@ -26,9 +26,9 @@
 
 #import "BaseContext.h"
 
-#import "FRBHopperCommon.h"
+#import "HopperCommon.h"
 
-@implementation ItFrobHopperHopperCommonBaseContext
+@implementation ItFrobHopperBaseContext
 
 - (NSObject<CPUDefinition> *)cpuDefinition {
   @throw [NSException

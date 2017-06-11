@@ -27,7 +27,7 @@
 #import "Definition.h"
 #import "Common.h"
 #import "Context.h"
-#import "FRBModelManager.h"
+#import "ModelManager.h"
 
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCUnusedClassInspection"

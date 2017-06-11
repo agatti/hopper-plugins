@@ -27,7 +27,7 @@
 #import "Definition.h"
 #import "Common.h"
 #import "Context.h"
-#import "FRBModelManager.h"
+#import "ModelManager.h"
 #import "NSDataWithFill.h"
 
 #pragma clang diagnostic push
@@ -196,7 +196,7 @@ static NSString *const kCPUModeAccumulator16Index16 = @"A16 I16";
                 andMode:(NSUInteger)cpuMode
                 forFile:(NSObject<HPDisassembledFile> *)file {
 
-  NSData *opcode = [(Class<FRBCPUProvider>)[self.modelManager
+  NSData *opcode = [(Class<CPUProvider>)[self.modelManager
       classForFamily:file.cpuFamily
             andModel:file.cpuSubFamily] nopOpcodeSignature];
 

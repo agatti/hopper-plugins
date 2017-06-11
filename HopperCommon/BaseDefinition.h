@@ -28,13 +28,13 @@
 
 #import <Hopper/Hopper.h>
 
-@class FRBModelManager;
+@class ItFrobHopperModelManager;
 
 /**
  * Concrete class to derive CPU Definition classes from, removing loads
  * of boilerplate.
  */
-@interface ItFrobHopperHopperCommonBaseDefinition : NSObject <CPUDefinition>
+@interface ItFrobHopperBaseDefinition : NSObject <CPUDefinition>
 
 /**
  * Hopper Services instance.
@@ -44,6 +44,6 @@
 /**
  * Model manager instance.
  */
-@property(strong, nonatomic, nonnull) FRBModelManager *modelManager;
+@property(strong, nonatomic, nonnull) ItFrobHopperModelManager *modelManager;
 
 @end

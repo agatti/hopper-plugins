@@ -26,8 +26,8 @@
 
 @import Foundation;
 
-#import "FRBInstructionFormatter.h"
+#import "InstructionFormatter.h"
 
-@interface ItFrobHopper8x300ASFormat : NSObject <FRBInstructionFormatter>
+@interface ItFrobHopper8x300ASFormat : NSObject <InstructionFormatter>
 
 @end

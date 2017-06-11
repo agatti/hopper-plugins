@@ -29,13 +29,13 @@
 #import <Hopper/Hopper.h>
 
 #import "BaseContext.h"
-#import "FRBCPUProvider.h"
+#import "CPUProvider.h"
 
 /**
  * CPU Context class for the 8x300 disassembler plugin.
  */
 @interface ItFrobHopper8x300Context
-    : ItFrobHopperHopperCommonBaseContext <CPUContext>
+    : ItFrobHopperBaseContext <CPUContext>
 
 /**
  * Creates an instance of the 8x300 CPU disassembler context.
@@ -50,7 +50,7 @@
 - (instancetype _Nonnull)
   initWithCPU:(NSObject<CPUDefinition> *_Nonnull)definition
       andFile:(NSObject<HPDisassembledFile> *_Nonnull)file
- withProvider:(NSObject<FRBCPUProvider> *_Nonnull)provider
+ withProvider:(NSObject<CPUProvider> *_Nonnull)provider
 usingServices:(NSObject<HPHopperServices> *_Nonnull)services;
 
 @end

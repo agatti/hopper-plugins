@@ -29,7 +29,7 @@
 #import <Hopper/Hopper.h>
 
 #import "BaseContext.h"
-#import "FRBCPUProvider.h"
+#import "CPUProvider.h"
 
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCUnusedClassInspection"
@@ -38,7 +38,7 @@
  * CPU Context class for the 6502 disassembler plugin.
  */
 @interface ItFrobHopperTMS1000Context
-    : ItFrobHopperHopperCommonBaseContext <CPUContext>
+    : ItFrobHopperBaseContext <CPUContext>
 
 /**
  * Creates an instance of the TMS1000 CPU disassembler context.
@@ -53,7 +53,7 @@
 - (instancetype _Nonnull)
   initWithCPU:(NSObject<CPUDefinition> *_Nonnull)definition
       andFile:(NSObject<HPDisassembledFile> *_Nonnull)file
- withProvider:(NSObject<FRBCPUProvider> *_Nonnull)provider
+ withProvider:(NSObject<CPUProvider> *_Nonnull)provider
 usingServices:(NSObject<HPHopperServices> *_Nonnull)services;
 
 @end

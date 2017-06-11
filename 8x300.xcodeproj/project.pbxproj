@@ -36,6 +36,7 @@
 		AB5F6E3F99227FE69F376190 /* MCCAPFormat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCCAPFormat.h; sourceTree = "<group>"; };
 		AB5F6E83D9E0C6728163EBAB /* MCCAPFormat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCCAPFormat.m; sourceTree = "<group>"; };
 		AB5F6ECA39ACB2E064486C1A /* ASFormat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASFormat.m; sourceTree = "<group>"; };
+		AB5F6F61826FBE2C3C0F38D7 /* InstructionFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InstructionFormatter.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +71,7 @@
 				AB5F6ECA39ACB2E064486C1A /* ASFormat.m */,
 				AB5F6E3F99227FE69F376190 /* MCCAPFormat.h */,
 				AB5F6E83D9E0C6728163EBAB /* MCCAPFormat.m */,
+				AB5F6F61826FBE2C3C0F38D7 /* InstructionFormatter.h */,
 			);
 			name = Formatters;
 			sourceTree = "<group>";

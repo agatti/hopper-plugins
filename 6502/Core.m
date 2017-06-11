@@ -26,7 +26,7 @@
 
 #import "Core.h"
 #import "FRB65xxHelpers.h"
-#import "FRBHopperCommon.h"
+#import "HopperCommon.h"
 
 @interface ItFrobHopper6502Base6502 ()
 

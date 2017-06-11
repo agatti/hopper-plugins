@@ -28,6 +28,6 @@
 
 #import "Core.h"
 
-@interface TMS1000 : Core <FRBCPUProvider>
+@interface TMS1000 : Core <CPUProvider>
 
 @end

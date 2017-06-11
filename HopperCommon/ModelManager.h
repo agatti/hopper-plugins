@@ -26,17 +26,22 @@
 
 @import Foundation;
 
-#import "Core.h"
 #import "CPUProvider.h"
 
-#pragma clang diagnostic push
-#pragma ide diagnostic ignored "OCUnusedClassInspection"
+@protocol CPUProvider;
 
-/**
- * Backend for Sunplus' 65S02 chip family.
- */
-@interface ItFrobHopperSunplus650265S02
-    : ItFrobHopper6502Base6502 <CPUProvider>
+@interface ItFrobHopperModelManager : NSObject
+
++ (instancetype _Nullable)modelManagerWithBundle:(NSBundle *_Nonnull)bundle;
+
+- (NSArray<NSString *> *_Nonnull)families;
+
+- (NSArray<NSString *> *_Nonnull)modelsForFamily:(NSString *_Nonnull)family;
+
+- (NSObject<CPUProvider> *_Nonnull)
+providerForFamily:(NSString *_Nonnull)family
+         andModel:(NSString *_Nonnull)model;
+
+- (Class<CPUProvider> _Nonnull)classForFamily:(NSString *_Nonnull)family
+                                        andModel:(NSString *_Nonnull)model;
 @end
-
-#pragma clang diagnostic pop

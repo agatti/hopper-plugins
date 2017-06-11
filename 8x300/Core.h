@@ -26,9 +26,9 @@
 
 @import Foundation;
 
+#import "HopperCommon.h"
+
 #import "Definition.h"
-#import "FRBCPUProvider.h"
-#import "FRBHopperCommon.h"
 
 /**
  * Available opcodes.
@@ -102,7 +102,7 @@ typedef NS_ENUM(NSUInteger, FRBRegister) {
 /**
  * Instruction encodings.
  */
-typedef NS_ENUM(uint32_t, FRBEncodingType) {
+typedef NS_ENUM(uint32_t, EncodingType) {
   EncodingSingle = 0,
   EncodingWithRotation,
   EncodingWithLength,
@@ -115,7 +115,7 @@ typedef NS_ENUM(uint32_t, FRBEncodingType) {
 /**
  * Base class for 8x300 CPU disassembler backends.
  */
-@interface ItFrobHopper8x300Base8x300 : NSObject <FRBCPUProvider>
+@interface ItFrobHopper8x300Base8x300 : NSObject <CPUProvider>
 
 /**
  * Handles a potential MOVE instruction.

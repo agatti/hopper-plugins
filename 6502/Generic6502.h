@@ -27,7 +27,7 @@
 @import Foundation;
 
 #import "Core.h"
-#import "FRBCPUProvider.h"
+#import "CPUProvider.h"
 
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCUnusedClassInspection"
@@ -36,7 +36,7 @@
  * Backend for the generic 6502 chip family.
  */
 @interface ItFrobHopper6502Generic6502
-    : ItFrobHopper6502Base6502 <FRBCPUProvider>
+    : ItFrobHopper6502Base6502 <CPUProvider>
 @end
 
 #pragma clang diagnostic pop

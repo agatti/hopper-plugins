@@ -35,7 +35,7 @@
 @property(strong, nonatomic, readonly, nonnull)
     NSObject<HPHopperServices> *services;
 @property(strong, nonatomic, readonly, nonnull)
-    NSObject<FRBCPUProvider> *provider;
+    NSObject<CPUProvider> *provider;
 
 @end
 
@@ -44,7 +44,7 @@
 - (instancetype _Nonnull)
   initWithCPU:(NSObject<CPUDefinition> *_Nonnull)definition
       andFile:(NSObject<HPDisassembledFile> *_Nonnull)file
- withProvider:(NSObject<FRBCPUProvider> *_Nonnull)provider
+ withProvider:(NSObject<CPUProvider> *_Nonnull)provider
 usingServices:(NSObject<HPHopperServices> *_Nonnull)services {
 
   if (self = [super init]) {

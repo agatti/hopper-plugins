@@ -26,8 +26,8 @@
 
 @import Foundation;
 
-#import "FRBCPUProvider.h"
-#import "FRBHopperCommon.h"
+#import "CPUProvider.h"
+#import "HopperCommon.h"
 
 #import "Common.h"
 
@@ -39,7 +39,7 @@ typedef struct {
   uintptr_t accumulatorType : 2;
 } FRBInstructionUserData;
 
-@interface ItFrobHopper65816Base65816 : NSObject <FRBCPUProvider>
+@interface ItFrobHopper65816Base65816 : NSObject <CPUProvider>
 
 - (const Opcode *_Nonnull)
   opcodeForFile:(NSObject<HPDisassembledFile> *_Nonnull)file

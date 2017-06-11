@@ -25,7 +25,7 @@
  */
 
 #import "Core.h"
-#import "FRBInstructionFormatter.h"
+#import "InstructionFormatter.h"
 
 #define OPCODE_FROM_WORD(word) ((FRBOpcode)((word) >> 13))
 
@@ -295,7 +295,7 @@ buildOperandString:(DisasmStruct *_Nonnull)disasm
       [file.cpuDefinition isKindOfClass:[ItFrobHopper8x300Definition class]],
       @"Invalid CPU definition class");
 
-  NSObject<FRBInstructionFormatter> *formatter =
+  NSObject<InstructionFormatter> *formatter =
       [(ItFrobHopper8x300Definition *)file.cpuDefinition
           formatterForSyntax:(FRBSyntaxType)file.userRequestedSyntaxIndex];
   NSAssert(formatter != nil, @"Missing formatter for syntax index");
@@ -316,7 +316,7 @@ buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
       [file.cpuDefinition isKindOfClass:[ItFrobHopper8x300Definition class]],
       @"Invalid CPU definition class");
 
-  NSObject<FRBInstructionFormatter> *formatter =
+  NSObject<InstructionFormatter> *formatter =
       [(ItFrobHopper8x300Definition *)file.cpuDefinition
           formatterForSyntax:(FRBSyntaxType)file.userRequestedSyntaxIndex];
   NSAssert(formatter != nil, @"Missing formatter for syntax index");
@@ -325,7 +325,7 @@ buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
       formatInstruction:disasm
                  inFile:file
            withServices:services
-            andEncoding:(FRBEncodingType)((InstructionMetadata *)&disasm
+            andEncoding:(EncodingType)((InstructionMetadata *)&disasm
                                               ->instruction.userData)
                             ->encoding];
 }

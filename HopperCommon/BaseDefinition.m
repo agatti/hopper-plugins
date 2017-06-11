@@ -26,13 +26,13 @@
 
 #import "BaseDefinition.h"
 
-#import "FRBHopperCommon.h"
-#import "FRBModelManager.h"
+#import "HopperCommon.h"
+#import "ModelManager.h"
 
 static NSString * const kDefaultCPUMode = @"Generic";
 static NSString * const kDefaultSyntax = @"Generic";
 
-@implementation ItFrobHopperHopperCommonBaseDefinition
+@implementation ItFrobHopperBaseDefinition
 
 - (Class)cpuContextClass {
     @throw [NSException
@@ -67,7 +67,7 @@ static NSString * const kDefaultSyntax = @"Generic";
 }
 
 - (int)addressSpaceWidthInBitsForCPUFamily:(NSString *)family andSubFamily:(NSString *)subFamily {
-    Class<FRBCPUProvider> class =
+    Class<CPUProvider> class =
             [self.modelManager classForFamily:family andModel:subFamily];
     return (class != nil) ? [class addressSpaceWidth] : 0;
 }
@@ -156,7 +156,7 @@ static NSString * const kDefaultSyntax = @"Generic";
     if (self = [super init]) {
         _services = services;
 
-        FRBModelManager *manager = [FRBModelManager
+        ItFrobHopperModelManager *manager = [ItFrobHopperModelManager
                 modelManagerWithBundle:[NSBundle bundleForClass:self.class]];
         if (!manager) {
             return nil;
