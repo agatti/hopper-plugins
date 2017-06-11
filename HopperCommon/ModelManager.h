@@ -28,8 +28,6 @@
 
 #import "CPUProvider.h"
 
-@protocol CPUProvider;
-
 @interface ItFrobHopperModelManager : NSObject
 
 + (instancetype _Nullable)modelManagerWithBundle:(NSBundle *_Nonnull)bundle;
@@ -38,10 +36,10 @@
 
 - (NSArray<NSString *> *_Nonnull)modelsForFamily:(NSString *_Nonnull)family;
 
-- (NSObject<CPUProvider> *_Nonnull)
+- (NSObject<ItFrobHopperCPUProvider> *_Nonnull)
 providerForFamily:(NSString *_Nonnull)family
          andModel:(NSString *_Nonnull)model;
 
-- (Class<CPUProvider> _Nonnull)classForFamily:(NSString *_Nonnull)family
+- (Class<ItFrobHopperCPUProvider> _Nonnull)classForFamily:(NSString *_Nonnull)family
                                         andModel:(NSString *_Nonnull)model;
 @end

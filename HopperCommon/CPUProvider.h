@@ -31,7 +31,7 @@
 /**
  * Protocol for CPU providers.
  */
-@protocol CPUProvider <NSObject>
+@protocol ItFrobHopperCPUProvider <NSObject>
 
 /**
  * Returns the family name for the CPU.

@@ -115,7 +115,7 @@ typedef NS_ENUM(uint32_t, EncodingType) {
 /**
  * Base class for 8x300 CPU disassembler backends.
  */
-@interface ItFrobHopper8x300Base8x300 : NSObject <CPUProvider>
+@interface ItFrobHopper8x300Base8x300 : NSObject <ItFrobHopperCPUProvider>
 
 /**
  * Handles a potential MOVE instruction.

@@ -36,7 +36,7 @@
  * Backend for Sunplus' 65N02 chip family.
  */
 @interface ItFrobHopperSunplus650265N02
-    : ItFrobHopper6502Base6502 <CPUProvider>
+    : ItFrobHopper6502Base6502 <ItFrobHopperCPUProvider>
 @end
 
 #pragma clang diagnostic pop

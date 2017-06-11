@@ -39,7 +39,7 @@ typedef struct {
   uintptr_t accumulatorType : 2;
 } FRBInstructionUserData;
 
-@interface ItFrobHopper65816Base65816 : NSObject <CPUProvider>
+@interface ItFrobHopper65816Base65816 : NSObject <ItFrobHopperCPUProvider>
 
 - (const Opcode *_Nonnull)
   opcodeForFile:(NSObject<HPDisassembledFile> *_Nonnull)file

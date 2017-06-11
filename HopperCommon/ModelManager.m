@@ -33,7 +33,7 @@
 
 @interface ItFrobHopperModelManager ()
 
-typedef NSDictionary<NSString *, Class <CPUProvider>> FRBModelItem;
+typedef NSDictionary<NSString *, Class <ItFrobHopperCPUProvider>> FRBModelItem;
 typedef NSDictionary<NSString *, FRBModelItem *> FRBModelsDictionary;
 
 @property(strong, nonatomic, readonly, nonnull) FRBModelsDictionary *providers;
@@ -58,14 +58,14 @@ typedef NSDictionary<NSString *, FRBModelItem *> FRBModelsDictionary;
     return self.providers[family].allKeys;
 }
 
-- (NSObject <CPUProvider> *_Nonnull)
+- (NSObject <ItFrobHopperCPUProvider> *_Nonnull)
 providerForFamily:(NSString *_Nonnull)family
          andModel:(NSString *_Nonnull)model {
     Class providerClass = [self classForFamily:family andModel:model];
-    return (NSObject <CPUProvider> *) [[providerClass alloc] init];
+    return (NSObject <ItFrobHopperCPUProvider> *) [[providerClass alloc] init];
 }
 
-- (Class <CPUProvider> _Nonnull)classForFamily:(NSString *_Nonnull)family
+- (Class <ItFrobHopperCPUProvider> _Nonnull)classForFamily:(NSString *_Nonnull)family
                                       andModel:(NSString *_Nonnull)model {
     return self.providers[family][model];
 }
@@ -88,7 +88,7 @@ providerForFamily:(NSString *_Nonnull)family
 - (FRBModelsDictionary *)enumerateProviders:(NSBundle *)bundle {
     unsigned int classCount;
     NSMutableDictionary *providers = [NSMutableDictionary new];
-    Protocol *protocol = @protocol(CPUProvider);
+    Protocol *protocol = @protocol(ItFrobHopperCPUProvider);
     const char **classNames = objc_copyClassNamesForImage(
             bundle.executablePath.UTF8String, &classCount);
 
@@ -99,7 +99,7 @@ providerForFamily:(NSString *_Nonnull)family
             continue;
         }
 
-        Class <CPUProvider> provider = (Class <CPUProvider>) class;
+        Class <ItFrobHopperCPUProvider> provider = (Class <ItFrobHopperCPUProvider>) class;
 
         if (![provider exported]) {
             continue;

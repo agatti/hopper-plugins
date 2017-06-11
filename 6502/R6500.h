@@ -35,7 +35,7 @@
 /**
  * Backend for Rockwell's R6500 chip family.
  */
-@interface ItFrobHopper6502R6500 : ItFrobHopper6502Base6502 <CPUProvider>
+@interface ItFrobHopper6502R6500 : ItFrobHopper6502Base6502 <ItFrobHopperCPUProvider>
 @end
 
 #pragma clang diagnostic pop

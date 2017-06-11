@@ -31,7 +31,7 @@
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCUnusedClassInspection"
 
-@interface TMS1100 : Core <CPUProvider>
+@interface TMS1100 : Core <ItFrobHopperCPUProvider>
 @end
 
 #pragma clang diagnostic pop

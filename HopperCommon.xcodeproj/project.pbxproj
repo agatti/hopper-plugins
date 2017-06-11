@@ -10,7 +10,6 @@
 		68259AFA19B710910060713A /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 68259AF919B710910060713A /* Cocoa.framework */; };
 		68259B2419B713170060713A /* NSDataWithFill.h in Headers */ = {isa = PBXBuildFile; fileRef = 68259B2219B713170060713A /* NSDataWithFill.h */; };
 		68259B2519B713170060713A /* NSDataWithFill.m in Sources */ = {isa = PBXBuildFile; fileRef = 68259B2319B713170060713A /* NSDataWithFill.m */; };
-		6828704A1A22EECA005B5412 /* CPUProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 682870491A22EECA005B5412 /* CPUProvider.h */; };
 		682E8A3C19C7AA4800E2BDC8 /* BaseContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 682E8A3A19C7AA4800E2BDC8 /* BaseContext.h */; };
 		682E8A3D19C7AA4800E2BDC8 /* BaseContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 682E8A3B19C7AA4800E2BDC8 /* BaseContext.m */; };
 		68A425501ECCD76F00FCA83C /* ModelManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 68A4254E1ECCD76F00FCA83C /* ModelManager.h */; };
@@ -19,6 +18,7 @@
 		68C0458C19C8706E005E1B4D /* OperandFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 68C0458A19C8706E005E1B4D /* OperandFormatter.m */; };
 		AB5F68E5E1C69BB693C9E9FD /* BaseDefinition.h in Headers */ = {isa = PBXBuildFile; fileRef = AB5F6DED1C772B93A64FA306 /* BaseDefinition.h */; };
 		AB5F6AA9E23F48193FBC726A /* BaseDefinition.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5F6815ECD9B929DB790E64 /* BaseDefinition.m */; };
+		AB5F6B6E5F437B0C37D8E218 /* CPUProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = AB5F6E412404A46B1AFFBFA5 /* CPUProvider.h */; };
 		AB5F6D088876F75A75A0828B /* Miscellaneous.h in Headers */ = {isa = PBXBuildFile; fileRef = AB5F6FF33884B7C388E208F6 /* Miscellaneous.h */; };
 		AB5F6EC090A4104D6BAF03D6 /* Miscellaneous.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5F6AB711E9EEAE8060D349 /* Miscellaneous.m */; };
 /* End PBXBuildFile section */
@@ -32,7 +32,6 @@
 		68259B0219B710910060713A /* HopperCommon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HopperCommon.h; sourceTree = "<group>"; };
 		68259B2219B713170060713A /* NSDataWithFill.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSDataWithFill.h; sourceTree = "<group>"; };
 		68259B2319B713170060713A /* NSDataWithFill.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSDataWithFill.m; sourceTree = "<group>"; };
-		682870491A22EECA005B5412 /* CPUProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPUProvider.h; sourceTree = "<group>"; };
 		682E8A3A19C7AA4800E2BDC8 /* BaseContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseContext.h; sourceTree = "<group>"; };
 		682E8A3B19C7AA4800E2BDC8 /* BaseContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseContext.m; sourceTree = "<group>"; };
 		68A4254E1ECCD76F00FCA83C /* ModelManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModelManager.h; sourceTree = "<group>"; };
@@ -42,6 +41,7 @@
 		AB5F6815ECD9B929DB790E64 /* BaseDefinition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseDefinition.m; sourceTree = "<group>"; };
 		AB5F6AB711E9EEAE8060D349 /* Miscellaneous.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Miscellaneous.m; sourceTree = "<group>"; };
 		AB5F6DED1C772B93A64FA306 /* BaseDefinition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseDefinition.h; sourceTree = "<group>"; };
+		AB5F6E412404A46B1AFFBFA5 /* CPUProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPUProvider.h; sourceTree = "<group>"; };
 		AB5F6FF33884B7C388E208F6 /* Miscellaneous.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Miscellaneous.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -103,13 +103,13 @@
 				682E8A3B19C7AA4800E2BDC8 /* BaseContext.m */,
 				68C0458919C8706E005E1B4D /* OperandFormatter.h */,
 				68C0458A19C8706E005E1B4D /* OperandFormatter.m */,
-				682870491A22EECA005B5412 /* CPUProvider.h */,
 				68A4254E1ECCD76F00FCA83C /* ModelManager.h */,
 				68A4254F1ECCD76F00FCA83C /* ModelManager.m */,
 				AB5F6815ECD9B929DB790E64 /* BaseDefinition.m */,
 				AB5F6DED1C772B93A64FA306 /* BaseDefinition.h */,
 				AB5F6FF33884B7C388E208F6 /* Miscellaneous.h */,
 				AB5F6AB711E9EEAE8060D349 /* Miscellaneous.m */,
+				AB5F6E412404A46B1AFFBFA5 /* CPUProvider.h */,
 			);
 			path = HopperCommon;
 			sourceTree = "<group>";
@@ -124,10 +124,10 @@
 				682E8A3C19C7AA4800E2BDC8 /* BaseContext.h in Headers */,
 				68259B2419B713170060713A /* NSDataWithFill.h in Headers */,
 				68C0458B19C8706E005E1B4D /* OperandFormatter.h in Headers */,
-				6828704A1A22EECA005B5412 /* CPUProvider.h in Headers */,
 				68A425501ECCD76F00FCA83C /* ModelManager.h in Headers */,
 				AB5F68E5E1C69BB693C9E9FD /* BaseDefinition.h in Headers */,
 				AB5F6D088876F75A75A0828B /* Miscellaneous.h in Headers */,
+				AB5F6B6E5F437B0C37D8E218 /* CPUProvider.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -196,7 +196,7 @@ static NSString *const kCPUModeAccumulator16Index16 = @"A16 I16";
                 andMode:(NSUInteger)cpuMode
                 forFile:(NSObject<HPDisassembledFile> *)file {
 
-  NSData *opcode = [(Class<CPUProvider>)[self.modelManager
+  NSData *opcode = [(Class<ItFrobHopperCPUProvider>)[self.modelManager
       classForFamily:file.cpuFamily
             andModel:file.cpuSubFamily] nopOpcodeSignature];
 

@@ -30,7 +30,7 @@
 
 #import "Common.h"
 
-@interface ItFrobHopper6502Base6502 : NSObject <CPUProvider>
+@interface ItFrobHopper6502Base6502 : NSObject <ItFrobHopperCPUProvider>
 
 - (Instruction)instructionForByte:(uint8_t)byte;
 

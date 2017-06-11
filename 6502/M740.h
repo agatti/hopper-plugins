@@ -35,7 +35,7 @@
 /**
  * Backend for the Mitsubishi M740 chip family.
  */
-@interface ItFrobHopper6502M740 : ItFrobHopper6502Base6502 <CPUProvider>
+@interface ItFrobHopper6502M740 : ItFrobHopper6502Base6502 <ItFrobHopperCPUProvider>
 @end
 
 #pragma clang diagnostic pop

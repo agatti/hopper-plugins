@@ -32,7 +32,7 @@
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCUnusedClassInspection"
 
-@interface ItFrobHopper65816M7700 : ItFrobHopper65816Base65816 <CPUProvider>
+@interface ItFrobHopper65816M7700 : ItFrobHopper65816Base65816 <ItFrobHopperCPUProvider>
 @end
 
 #pragma clang diagnostic pop

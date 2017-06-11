@@ -67,7 +67,7 @@ static NSString * const kDefaultSyntax = @"Generic";
 }
 
 - (int)addressSpaceWidthInBitsForCPUFamily:(NSString *)family andSubFamily:(NSString *)subFamily {
-    Class<CPUProvider> class =
+    Class<ItFrobHopperCPUProvider> class =
             [self.modelManager classForFamily:family andModel:subFamily];
     return (class != nil) ? [class addressSpaceWidth] : 0;
 }

@@ -35,7 +35,7 @@
 /**
  * Backend for WDC's W65C02S CPU.
  */
-@interface ItFrobHopper6502W65C02S : ItFrobHopper6502Base6502 <CPUProvider>
+@interface ItFrobHopper6502W65C02S : ItFrobHopper6502Base6502 <ItFrobHopperCPUProvider>
 @end
 
 #pragma clang diagnostic pop

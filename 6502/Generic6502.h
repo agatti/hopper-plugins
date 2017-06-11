@@ -36,7 +36,7 @@
  * Backend for the generic 6502 chip family.
  */
 @interface ItFrobHopper6502Generic6502
-    : ItFrobHopper6502Base6502 <CPUProvider>
+    : ItFrobHopper6502Base6502 <ItFrobHopperCPUProvider>
 @end
 
 #pragma clang diagnostic pop
