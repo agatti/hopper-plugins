@@ -24,10 +24,10 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import "FRBContext.h"
+#import "Context.h"
 #import "FRB65xxHelpers.h"
-#import "FRBBase.h"
-#import "FRBDefinition.h"
+#import "Common.h"
+#import "Definition.h"
 #import "FRBHopperCommon.h"
 #import "FRBOperandFormatter.h"
 

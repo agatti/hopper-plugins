@@ -29,6 +29,8 @@
 #import "FRBCPUProvider.h"
 #import "FRBHopperCommon.h"
 
+#import "Common.h"
+
 typedef struct {
   uintptr_t opcode : 7;
   uintptr_t haltsExecution : 1;
@@ -39,7 +41,7 @@ typedef struct {
 
 @interface ItFrobHopper65816Base65816 : NSObject <FRBCPUProvider>
 
-- (const struct FRBOpcode *_Nonnull)
+- (const Opcode *_Nonnull)
   opcodeForFile:(NSObject<HPDisassembledFile> *_Nonnull)file
       atAddress:(Address)address
 andFillMetadata:(FRBInstructionUserData *_Nonnull)metadata;

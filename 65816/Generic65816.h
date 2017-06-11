@@ -22,29 +22,18 @@
  CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
  OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
+ */
 
 @import Foundation;
 
-#import <Hopper/Hopper.h>
-
-#import "BaseDefinition.h"
+#import "Core.h"
+#import "FRBCPUProvider.h"
 
 #pragma clang diagnostic push
-#pragma ide diagnostic ignored "OCUnusedGlobalDeclarationInspection"
 #pragma ide diagnostic ignored "OCUnusedClassInspection"
 
-typedef NS_ENUM(NSUInteger, FRBCPUOperationMode) {
-  FRBCPUModeAccumulator8Index8 = 0,
-  FRBCPUModeAccumulator8Index16,
-  FRBCPUModeAccumulator16Index8,
-  FRBCPUModeAccumulator16Index16,
-
-  FRBCPUModeCount
-};
-
-@interface ItFrobHopper65816Definition : ItFrobHopperHopperCommonBaseDefinition <CPUDefinition>
-
+@interface ItFrobHopper65816Generic65816
+    : ItFrobHopper65816Base65816 <FRBCPUProvider>
 @end
 
 #pragma clang diagnostic pop

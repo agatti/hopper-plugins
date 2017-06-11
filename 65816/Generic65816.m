@@ -24,14 +24,14 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import "FRBGeneric65816.h"
-#import "FRBBase.h"
-#import "FRBBase65816.h"
+#import "Generic65816.h"
+#import "Common.h"
+#import "Core.h"
 
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCUnusedClassInspection"
 
-static const struct FRBOpcode kOpcodeTable[256];
+static const Opcode kOpcodeTable[256];
 
 static NSData *_Nonnull kNOPSequence;
 
@@ -58,7 +58,7 @@ static NSData *_Nonnull kNOPSequence;
   return 24;
 }
 
-- (const struct FRBOpcode *_Nonnull)
+- (const Opcode *_Nonnull)
   opcodeForFile:(NSObject<HPDisassembledFile> *_Nonnull)file
       atAddress:(Address)address
 andFillMetadata:(FRBInstructionUserData *_Nonnull)metadata {
@@ -74,7 +74,7 @@ andFillMetadata:(FRBInstructionUserData *_Nonnull)metadata {
 
 @end
 
-static const struct FRBOpcode kOpcodeTable[256] = {
+static const Opcode kOpcodeTable[256] = {
     {OpcodeBRK, ModeStack, N, S | P, AccumulatorDefault},
     {OpcodeORA, ModeDirectIndexedIndirect, A | D | X, A, AccumulatorDefault},
     {OpcodeCOP, ModeImmediate, S, S, AccumulatorDefault},

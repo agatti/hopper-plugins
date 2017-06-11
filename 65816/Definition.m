@@ -24,9 +24,9 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import "FRBDefinition.h"
-#import "FRBBase.h"
-#import "FRBContext.h"
+#import "Definition.h"
+#import "Common.h"
+#import "Context.h"
 #import "FRBModelManager.h"
 #import "NSDataWithFill.h"
 
@@ -126,7 +126,7 @@ static NSString *const kCPUModeAccumulator16Index16 = @"A16 I16";
 }
 
 - (NSUInteger)cpuModeCount {
-  return FRBCPUModeCount;
+  return CPUOperationModesCount;
 }
 
 - (NSArray *)cpuModeNames {

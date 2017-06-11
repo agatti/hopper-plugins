@@ -26,14 +26,13 @@
 
 @import Foundation;
 
-#import "FRBBase65816.h"
+#import "Core.h"
 #import "FRBCPUProvider.h"
 
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCUnusedClassInspection"
 
-@interface ItFrobHopper65816Generic65816
-    : ItFrobHopper65816Base65816 <FRBCPUProvider>
+@interface ItFrobHopper65816M7700 : ItFrobHopper65816Base65816 <FRBCPUProvider>
 @end
 
 #pragma clang diagnostic pop

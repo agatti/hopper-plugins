@@ -66,9 +66,9 @@ typedef NS_ENUM(NSUInteger, Mode) {
   ModeUnknown
 };
 
-static const size_t FRBAddressModesCount = ModeUnknown;
+static const size_t kAddressModesCount = ModeUnknown;
 
-static const size_t FRBOpcodeLength[FRBAddressModesCount] = {
+static const size_t kOpcodeLength[kAddressModesCount] = {
     3, 3, 3, 4, 4, 4, 4, 4, 2, 1, 1, 1, 3, 2, 3, 2,
     3, 4, 5, 3, 3, 2, 2, 2, 2, 2, 2, 2, 3, 2, 2, 3};
 
@@ -90,7 +90,7 @@ typedef NS_ENUM(NSUInteger, Category) {
   CategoryBlockTransfer
 };
 
-typedef NS_ENUM(NSUInteger, Opcode) {
+typedef NS_ENUM(NSUInteger, OpcodeType) {
   OpcodeADC = 0,
   OpcodeAND,
   OpcodeASL,
@@ -217,7 +217,7 @@ typedef NS_ENUM(NSUInteger, Opcode) {
   OpcodeUndocumented
 };
 
-static const size_t FRBUniqueOpcodesCount = OpcodeUndocumented;
+static const size_t kOpcodesCount = OpcodeUndocumented;
 
 typedef NS_ENUM(NSUInteger, Registers) {
   RegisterA = 0,
@@ -252,27 +252,27 @@ typedef NS_OPTIONS(NSUInteger, RegisterMask) {
 #define B RegisterB
 #define C RegisterC
 
-struct FRBInstruction {
+typedef struct {
   const char *const name;
   DisasmBranchType branchType;
   Category category;
-};
+} Instruction;
 
-typedef NS_ENUM(NSUInteger, FRBAccumulatorType) {
+typedef NS_ENUM(NSUInteger, AccumulatorType) {
   AccumulatorDefault = 0,
   AccumulatorA,
   AccumulatorB
 };
 
-struct FRBOpcode {
-  Opcode type;
+typedef struct {
+  OpcodeType type;
   Mode addressMode;
   RegisterMask readRegisters;
   RegisterMask writtenRegisters;
-  FRBAccumulatorType accumulatorType;
-};
+  AccumulatorType accumulatorType;
+} Opcode;
 
-static const struct FRBInstruction FRBInstructions[FRBUniqueOpcodesCount] = {
+static const Instruction kMnemonics[kOpcodesCount] = {
     {"ADC", DISASM_BRANCH_NONE, CategoryArithmetic},
     {"AND", DISASM_BRANCH_NONE, CategoryLogical},
     {"ASL", DISASM_BRANCH_NONE, CategoryShifts},

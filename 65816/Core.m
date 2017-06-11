@@ -24,10 +24,10 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import "FRBBase65816.h"
+#import "Core.h"
 #import "FRB65xxHelpers.h"
-#import "FRBBase.h"
-#import "FRBDefinition.h"
+#import "Common.h"
+#import "Definition.h"
 
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCUnusedClassInspection"
@@ -35,17 +35,17 @@
 @interface ItFrobHopper65816Base65816 ()
 
 - (void)updateShifts:(DisasmStruct *_Nonnull)disasm
-           forOpcode:(const struct FRBOpcode *_Nonnull)opcode;
+           forOpcode:(const Opcode *_Nonnull)opcode;
 
 - (void)setMemoryFlags:(DisasmStruct *_Nonnull)disasm
-        forInstruction:(const struct FRBInstruction *_Nonnull)instruction;
+        forInstruction:(const Instruction *_Nonnull)instruction;
 
-- (void)handleNonBranchOpcode:(const struct FRBOpcode *_Nonnull)opcode
+- (void)handleNonBranchOpcode:(const Opcode *_Nonnull)opcode
                     forDisasm:(DisasmStruct *_Nonnull)disasm
                     usingFile:(NSObject<HPDisassembledFile> *_Nonnull)file
                   andMetadata:(FRBInstructionUserData *_Nonnull)metadata;
 
-- (void)handleBranchOpcode:(const struct FRBOpcode *_Nonnull)opcode
+- (void)handleBranchOpcode:(const Opcode *_Nonnull)opcode
                  forDisasm:(DisasmStruct *_Nonnull)disasm
                  usingFile:(NSObject<HPDisassembledFile> *_Nonnull)file;
 
@@ -110,7 +110,7 @@ formatHexadecimal:(const DisasmOperand *_Nonnull)operand
 
   InitialiseDisasmStruct(structure);
   structure->instruction.pcRegisterValue = structure->virtualAddr;
-  const struct FRBOpcode *opcode = [self opcodeForFile:file
+  const Opcode *opcode = [self opcodeForFile:file
                                              atAddress:structure->virtualAddr
                                        andFillMetadata:&metadata];
   metadata.opcode = opcode->type;
@@ -123,7 +123,7 @@ formatHexadecimal:(const DisasmOperand *_Nonnull)operand
     return DISASM_UNKNOWN_OPCODE;
   }
 
-  struct FRBInstruction instruction = FRBInstructions[opcode->type];
+  Instruction instruction = kMnemonics[opcode->type];
   structure->instruction.branchType = instruction.branchType;
   strcpy(structure->instruction.mnemonic, instruction.name);
   strcpy(structure->instruction.unconditionalMnemonic, instruction.name);
@@ -171,21 +171,21 @@ formatHexadecimal:(const DisasmOperand *_Nonnull)operand
       opcode->readRegisters;
   structure->implicitlyWrittenRegisters[DISASM_OPERAND_GENERAL_REG_INDEX] =
       opcode->writtenRegisters;
-  structure->instruction.length = (uint8_t)FRBOpcodeLength[opcode->addressMode];
+  structure->instruction.length = (uint8_t)kOpcodeLength[opcode->addressMode];
 
   if (opcode->addressMode == ModeImmediate) {
-    FRBCPUOperationMode mode = (FRBCPUOperationMode)
+    CPUOperationMode mode = (CPUOperationMode)
         [file cpuModeAtVirtualAddress:structure->virtualAddr];
     NSUInteger registersMask = opcode->readRegisters | opcode->writtenRegisters;
 
     if (registersMask & (RegisterIndexX | RegisterIndexY)) {
-      if ((mode == FRBCPUModeAccumulator8Index16) ||
-          (mode == FRBCPUModeAccumulator16Index16)) {
+      if ((mode == CPUAccumulator8Index16) ||
+          (mode == CPUAccumulator16Index16)) {
         structure->instruction.length += 1;
       }
     } else {
-      if ((mode == FRBCPUModeAccumulator16Index8) ||
-          (mode == FRBCPUModeAccumulator16Index16)) {
+      if ((mode == CPUAccumulator16Index8) ||
+          (mode == CPUAccumulator16Index16)) {
         structure->instruction.length += 1;
       }
     }
@@ -342,7 +342,7 @@ buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
   FRBInstructionUserData *metadata =
       (FRBInstructionUserData *)&disasm->instruction.userData;
 
-  switch ((FRBAccumulatorType)metadata->accumulatorType) {
+  switch ((AccumulatorType)metadata->accumulatorType) {
   case AccumulatorA:
     if ((Mode)metadata->mode == ModeAccumulator) {
       [line appendRawString:@"A"];
@@ -639,7 +639,7 @@ buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wunused-parameter"
 
-- (const struct FRBOpcode *_Nonnull)
+- (const Opcode *_Nonnull)
   opcodeForFile:(NSObject<HPDisassembledFile> *_Nonnull)file
       atAddress:(Address)address
 andFillMetadata:(FRBInstructionUserData *_Nonnull)metadata {
@@ -656,7 +656,7 @@ andFillMetadata:(FRBInstructionUserData *_Nonnull)metadata {
 #pragma mark - Private methods
 
 - (void)updateShifts:(DisasmStruct *_Nonnull)disasm
-           forOpcode:(const struct FRBOpcode *_Nonnull)opcode {
+           forOpcode:(const Opcode *_Nonnull)opcode {
 
   switch (opcode->type) {
   case OpcodeASL:
@@ -686,7 +686,7 @@ andFillMetadata:(FRBInstructionUserData *_Nonnull)metadata {
 }
 
 - (void)setMemoryFlags:(DisasmStruct *_Nonnull)disasm
-        forInstruction:(const struct FRBInstruction *_Nonnull)instruction {
+        forInstruction:(const Instruction *_Nonnull)instruction {
 
   switch (instruction->category) {
   case CategoryLoad:
@@ -714,7 +714,7 @@ andFillMetadata:(FRBInstructionUserData *_Nonnull)metadata {
   }
 }
 
-- (void)handleNonBranchOpcode:(const struct FRBOpcode *_Nonnull)opcode
+- (void)handleNonBranchOpcode:(const Opcode *_Nonnull)opcode
                     forDisasm:(DisasmStruct *_Nonnull)disasm
                     usingFile:(NSObject<HPDisassembledFile> *_Nonnull)file
                   andMetadata:(FRBInstructionUserData *_Nonnull)metadata {
@@ -761,19 +761,19 @@ andFillMetadata:(FRBInstructionUserData *_Nonnull)metadata {
 
   case ModeImmediate: {
     NSUInteger registersMask = opcode->readRegisters | opcode->writtenRegisters;
-    FRBCPUOperationMode mode =
-        (FRBCPUOperationMode)[file cpuModeAtVirtualAddress:disasm->virtualAddr];
+    CPUOperationMode mode =
+        (CPUOperationMode)[file cpuModeAtVirtualAddress:disasm->virtualAddr];
 
     if (registersMask & (RegisterIndexX | RegisterIndexY)) {
-      if ((mode == FRBCPUModeAccumulator8Index16) ||
-          (mode == FRBCPUModeAccumulator16Index16)) {
+      if ((mode == CPUAccumulator8Index16) ||
+          (mode == CPUAccumulator16Index16)) {
         SetConstantOperand(file, disasm, 0, 16, baseOffset + 1);
       } else {
         SetConstantOperand(file, disasm, 0, 8, baseOffset + 1);
       }
     } else {
-      if ((mode == FRBCPUModeAccumulator16Index8) ||
-          (mode == FRBCPUModeAccumulator16Index16)) {
+      if ((mode == CPUAccumulator16Index8) ||
+          (mode == CPUAccumulator16Index16)) {
         SetConstantOperand(file, disasm, 0, 16, baseOffset + 1);
       } else {
         SetConstantOperand(file, disasm, 0, 8, baseOffset + 1);
@@ -852,7 +852,7 @@ andFillMetadata:(FRBInstructionUserData *_Nonnull)metadata {
   }
 
   disasm->operand[0].accessMode = DISASM_ACCESS_NONE;
-  const struct FRBInstruction instruction = FRBInstructions[opcode->type];
+  const Instruction instruction = kMnemonics[opcode->type];
 
   switch (opcode->addressMode) {
   case ModeImmediate:
@@ -869,7 +869,7 @@ andFillMetadata:(FRBInstructionUserData *_Nonnull)metadata {
   }
 }
 
-- (void)handleBranchOpcode:(const struct FRBOpcode *_Nonnull)opcode
+- (void)handleBranchOpcode:(const Opcode *_Nonnull)opcode
                  forDisasm:(DisasmStruct *_Nonnull)disasm
                  usingFile:(NSObject<HPDisassembledFile> *_Nonnull)file {
   switch (opcode->addressMode) {
