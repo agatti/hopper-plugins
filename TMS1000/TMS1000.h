@@ -28,6 +28,6 @@
 
 #import "Core.h"
 
-@interface TMS1000 : Core <ItFrobHopperCPUProvider>
+@interface TMS1000 : ItFrobHopperTMS1000Core <ItFrobHopperCPUProvider>
 
 @end

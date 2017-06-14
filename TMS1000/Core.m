@@ -36,7 +36,7 @@ static const uint8_t kFlipped2BitsTable[4] = {0b00, 0b10, 0b01, 0b11};
 static const uint8_t kFlipped3BitsTable[8] = {0b000, 0b100, 0b010, 0b110,
                                               0b001, 0b101, 0b011, 0b111};
 
-@interface Core ()
+@interface ItFrobHopperTMS1000Core ()
 
 - (uint8_t)flip2Bits:(uint8_t)bits;
 
@@ -46,7 +46,7 @@ static const uint8_t kFlipped3BitsTable[8] = {0b000, 0b100, 0b010, 0b110,
 
 @end
 
-@implementation Core
+@implementation ItFrobHopperTMS1000Core
 
 + (NSString *_Nonnull)family {
   @throw [NSException

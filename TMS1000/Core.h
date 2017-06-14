@@ -29,7 +29,7 @@
 #import "Common.h"
 #import "CPUProvider.h"
 
-@interface Core : NSObject <ItFrobHopperCPUProvider>
+@interface ItFrobHopperTMS1000Core : NSObject <ItFrobHopperCPUProvider>
 
 - (Instruction)instructionForByte:(uint8_t)byte;
 
