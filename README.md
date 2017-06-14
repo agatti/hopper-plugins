@@ -207,7 +207,7 @@ CPU backends currently supported: 6502, 65C02, 65N02, 65R02, 65S02, HuC6280, M74
 * Attempt to reject files too big for address-space reduced chip variants.
 * Add support for more 6502 variants if any are found in the wild.
 * Properly relocate files in the 64k address space with BSS sections around data segments.
-* Alternate syntax for extended opcodes.
+* Alternate syntax for extended opcodes (i.e. BBS0 &rarr; BBS 0,...).
 
 #### Future plans (need Hopper SDK changes):
 
@@ -302,8 +302,8 @@ CPU backends currently supported: 8x300, 8x305.
 #### Caveats
 
 * Rebuilding the test binaries requires having the [AS Macroassembler](http://www.alfsembler.de/) command line tools available in your `PATH` variable.
-* If MCCAP syntax is used, comments will still start with `;` instead than with `*` as expected.  As far as the author can see, this is something that cannot fixed by the plugin but by the Hopper authors directly.
-* The MCCAP does not support negation for constant operands, therefore attempting to mark a constant as negated will not yield anything.  Negation works as intended if using the AS syntax.
+* If MCCAP syntax is used, comments will still start with `;` rather than with `*` as expected.  As far as the author can see, this is something that cannot fixed by the plugin but by the Hopper authors directly.
+* The MCCAP syntax does not support negation for constant operands, therefore attempting to mark a constant as negated will not yield anything.  Negation works as intended if using the AS syntax.
 
 <hr/>
 
@@ -376,7 +376,7 @@ This tool plugin currently allows to map the full address space of the CPU chose
 
 ## Installation instructions:
 
-Checkout from Git, open `HopperPlugins.xcworkspace` in Xcode, select the plugin you are interested in and then let Xcode build the associated project; the plugin will be automatically copied to the appropriate paths (`~/Library/Application Support/Hopper/Plugins/v4/{CPUs,Loaders,Tools}`).  Once done, please close any open instances of Hopper and restart them.  That's all there is to it.
+Checkout from Git, open `HopperPlugins.xcworkspace` in Xcode/AppCode, select the plugin you are interested in and then let Xcode/AppCode build the associated project; the plugin will be automatically copied to the appropriate paths (`~/Library/Application Support/Hopper/Plugins/v4/{CPUs,Loaders,Tools}`).  Once done, please close any open instances of Hopper and restart them.  That's all there is to it.
 
 Keep in mind that these plugins require **Hopper 4.2.2** or later to work.  They may work on older versions but they are neither tested nor supported on anything older than v4.2.2.
 
