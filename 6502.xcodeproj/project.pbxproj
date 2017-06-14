@@ -43,7 +43,6 @@
 		683A4C1C197C8E4700B7F172 /* Definition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Definition.m; path = 6502/Definition.m; sourceTree = SOURCE_ROOT; };
 		683A4C20197C8E4700B7F172 /* Generic6502.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Generic6502.h; path = 6502/Generic6502.h; sourceTree = SOURCE_ROOT; };
 		683A4C21197C8E4700B7F172 /* Generic6502.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Generic6502.m; path = 6502/Generic6502.m; sourceTree = SOURCE_ROOT; };
-		683A4C2B197C8E5700B7F172 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.info; name = Info.plist; path = 6502/Info.plist; sourceTree = SOURCE_ROOT; };
 		685736A91985738B00D790A9 /* lib65xxCommon.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = lib65xxCommon.a; path = build/Debug/lib65xxCommon.a; sourceTree = "<group>"; };
 		6860A68819AAA0B600A9AC3B /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		6873AD75197F810400B46DB5 /* R6500.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = R6500.h; sourceTree = "<group>"; };
@@ -68,6 +67,7 @@
 		68F0A4DF19E0645A007037E2 /* 65S02.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = 65S02.m; sourceTree = "<group>"; };
 		68F0A4E019E0645A007037E2 /* SunPlus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SunPlus.h; sourceTree = "<group>"; };
 		68F0A4E119E0645A007037E2 /* SunPlus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SunPlus.m; sourceTree = "<group>"; };
+		AB5F64245C434541DF2C8797 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.info; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,22 +116,14 @@
 			isa = PBXGroup;
 			children = (
 				6873AD79197F863400B46DB5 /* Chips */,
-				6801368919706CC5004964BD /* Supporting Files */,
 				683A4C18197C8E4700B7F172 /* Common.h */,
 				683A4C19197C8E4700B7F172 /* Context.h */,
 				683A4C1A197C8E4700B7F172 /* Context.m */,
 				683A4C1B197C8E4700B7F172 /* Definition.h */,
 				683A4C1C197C8E4700B7F172 /* Definition.m */,
+				AB5F64245C434541DF2C8797 /* Info.plist */,
 			);
 			path = 6502;
-			sourceTree = "<group>";
-		};
-		6801368919706CC5004964BD /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				683A4C2B197C8E5700B7F172 /* Info.plist */,
-			);
-			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		6873AD79197F863400B46DB5 /* Chips */ = {

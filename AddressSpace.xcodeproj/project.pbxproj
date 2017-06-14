@@ -7,14 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		68DB8E0E1A20EFB900FC480C /* FRBAddressSpace.m in Sources */ = {isa = PBXBuildFile; fileRef = 68DB8E0D1A20EFB900FC480C /* FRBAddressSpace.m */; };
+		68DB8E0E1A20EFB900FC480C /* AddressSpace.m in Sources */ = {isa = PBXBuildFile; fileRef = 68DB8E0D1A20EFB900FC480C /* AddressSpace.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		68D591891A20EEE000E5117B /* AddressSpace.hopperTool */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AddressSpace.hopperTool; sourceTree = BUILT_PRODUCTS_DIR; };
-		68D5918D1A20EEE000E5117B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		68DB8E0C1A20EFB900FC480C /* FRBAddressSpace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRBAddressSpace.h; sourceTree = "<group>"; };
-		68DB8E0D1A20EFB900FC480C /* FRBAddressSpace.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRBAddressSpace.m; sourceTree = "<group>"; };
+		68DB8E0C1A20EFB900FC480C /* AddressSpace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressSpace.h; sourceTree = "<group>"; };
+		68DB8E0D1A20EFB900FC480C /* AddressSpace.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressSpace.m; sourceTree = "<group>"; };
+		AB5F657AF6D515A82318C357 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.info; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,19 +47,11 @@
 		68D5918B1A20EEE000E5117B /* AddressSpace */ = {
 			isa = PBXGroup;
 			children = (
-				68D5918C1A20EEE000E5117B /* Supporting Files */,
-				68DB8E0C1A20EFB900FC480C /* FRBAddressSpace.h */,
-				68DB8E0D1A20EFB900FC480C /* FRBAddressSpace.m */,
+				68DB8E0C1A20EFB900FC480C /* AddressSpace.h */,
+				68DB8E0D1A20EFB900FC480C /* AddressSpace.m */,
+				AB5F657AF6D515A82318C357 /* Info.plist */,
 			);
 			path = AddressSpace;
-			sourceTree = "<group>";
-		};
-		68D5918C1A20EEE000E5117B /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				68D5918D1A20EEE000E5117B /* Info.plist */,
-			);
-			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -145,7 +137,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				68DB8E0E1A20EFB900FC480C /* FRBAddressSpace.m in Sources */,
+				68DB8E0E1A20EFB900FC480C /* AddressSpace.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

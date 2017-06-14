@@ -31,11 +31,11 @@
 		68C0458619C832F6005E1B4D /* Generic8x300.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Generic8x300.m; sourceTree = "<group>"; };
 		68F19B0919C82CFE008F6CEA /* 8x300.hopperCPU */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = 8x300.hopperCPU; sourceTree = BUILT_PRODUCTS_DIR; };
 		68F19B0C19C82CFE008F6CEA /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
-		68F19B1019C82CFE008F6CEA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AB5F61CC2680600E4DC96E64 /* ASFormat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASFormat.h; sourceTree = "<group>"; };
 		AB5F6E3F99227FE69F376190 /* MCCAPFormat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCCAPFormat.h; sourceTree = "<group>"; };
 		AB5F6E83D9E0C6728163EBAB /* MCCAPFormat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCCAPFormat.m; sourceTree = "<group>"; };
 		AB5F6ECA39ACB2E064486C1A /* ASFormat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASFormat.m; sourceTree = "<group>"; };
+		AB5F6F59E2DC69F6648CA54E /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.info; path = Info.plist; sourceTree = "<group>"; };
 		AB5F6F61826FBE2C3C0F38D7 /* InstructionFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InstructionFormatter.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -107,21 +107,13 @@
 			children = (
 				68C0458219C82EE4005E1B4D /* Chips */,
 				68C539E81EE0A7440026B6B0 /* Formatters */,
-				68F19B0F19C82CFE008F6CEA /* Supporting Files */,
 				68C0457619C82D8A005E1B4D /* Context.h */,
 				68C0457719C82D8A005E1B4D /* Context.m */,
 				68C0457819C82D8A005E1B4D /* Definition.h */,
 				68C0457919C82D8A005E1B4D /* Definition.m */,
+				AB5F6F59E2DC69F6648CA54E /* Info.plist */,
 			);
 			path = 8x300;
-			sourceTree = "<group>";
-		};
-		68F19B0F19C82CFE008F6CEA /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				68F19B1019C82CFE008F6CEA /* Info.plist */,
-			);
-			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

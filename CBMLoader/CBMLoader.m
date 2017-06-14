@@ -24,8 +24,8 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import "FRBCBMLoader.h"
-#import "FRBBasicTokens.h"
+#import "CBMLoader.h"
+#import "BasicTokens.h"
 
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCUnusedClassInspection"
