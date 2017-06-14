@@ -13,6 +13,7 @@ Plugins currently available in the repository:
 **File loader plugins:**
 
 * [Commodore binaries](#commodore-file-loader-plugin)
+* [HEX binary files](#hex-binary-files)
 
 **Tool plugins:**
 
@@ -359,6 +360,25 @@ This file loader plugin allows you to load Commodore binaries in PRG format to b
 
 * Properly relocate files in the 64k address space with BSS sections around data segments.
 * Automatically fill labels for audio, video, and zero page locations and automatically create virtual segments for register banking.
+
+<hr/>
+
+### **HEX binary files**
+
+_version 0.0.1_
+
+This file loader plugin allows you to load binaries saved as ASCII HEX files.  Currently the plugin only support the following formats: Intel HEX.
+
+#### TODO for next version:
+
+* Add full support for segments in Intel HEX files.
+* Add support for Motorola S-Record files.
+* Add support for Tektronix HEX files.
+* Add support for MOS HEX files.
+
+#### Caveats:
+
+* The plugin cannot handle overlapping ranges, which can happen when flashing operations require writing memory out of order and hitting locations more than once.
 
 <hr/>
 
