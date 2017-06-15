@@ -33,7 +33,7 @@
 
 @interface ItFrobHopperModelManager ()
 
-typedef NSDictionary<NSString *, Class <ItFrobHopperCPUProvider>> FRBModelItem;
+typedef NSDictionary<NSString *, Class<ItFrobHopperCPUProvider>> FRBModelItem;
 typedef NSDictionary<NSString *, FRBModelItem *> FRBModelsDictionary;
 
 @property(strong, nonatomic, readonly, nonnull) FRBModelsDictionary *providers;
@@ -47,81 +47,83 @@ typedef NSDictionary<NSString *, FRBModelItem *> FRBModelsDictionary;
 #pragma mark - Public API
 
 + (instancetype _Nullable)modelManagerWithBundle:(NSBundle *_Nonnull)bundle {
-    return [[ItFrobHopperModelManager alloc] initWithBundle:bundle];
+  return [[ItFrobHopperModelManager alloc] initWithBundle:bundle];
 }
 
 - (NSArray<NSString *> *_Nonnull)families {
-    return self.providers.allKeys;
+  return self.providers.allKeys;
 }
 
 - (NSArray<NSString *> *_Nonnull)modelsForFamily:(NSString *_Nonnull)family {
-    return self.providers[family].allKeys;
+  return self.providers[family].allKeys;
 }
 
-- (NSObject <ItFrobHopperCPUProvider> *_Nonnull)
+- (NSObject<ItFrobHopperCPUProvider> *_Nonnull)
 providerForFamily:(NSString *_Nonnull)family
          andModel:(NSString *_Nonnull)model {
-    Class providerClass = [self classForFamily:family andModel:model];
-    return (NSObject <ItFrobHopperCPUProvider> *) [[providerClass alloc] init];
+  Class providerClass = [self classForFamily:family andModel:model];
+  return (NSObject<ItFrobHopperCPUProvider> *)[[providerClass alloc] init];
 }
 
-- (Class <ItFrobHopperCPUProvider> _Nonnull)classForFamily:(NSString *_Nonnull)family
-                                      andModel:(NSString *_Nonnull)model {
-    return self.providers[family][model];
+- (Class<ItFrobHopperCPUProvider> _Nonnull)
+classForFamily:(NSString *_Nonnull)family
+      andModel:(NSString *_Nonnull)model {
+  return self.providers[family][model];
 }
 
 #pragma mark - Private methods
 
 - (instancetype _Nullable)initWithBundle:(NSBundle *_Nonnull)bundle {
-    if (self = [super init]) {
-        NSDictionary *providersFound = [self enumerateProviders:bundle];
-        if (!providersFound) {
-            return nil;
-        }
-
-        _providers = providersFound;
+  if (self = [super init]) {
+    NSDictionary *providersFound = [self enumerateProviders:bundle];
+    if (!providersFound) {
+      return nil;
     }
 
-    return self;
+    _providers = providersFound;
+  }
+
+  return self;
 }
 
 - (FRBModelsDictionary *)enumerateProviders:(NSBundle *)bundle {
-    unsigned int classCount;
-    NSMutableDictionary *providers = [NSMutableDictionary new];
-    Protocol *protocol = @protocol(ItFrobHopperCPUProvider);
-    const char **classNames = objc_copyClassNamesForImage(
-            bundle.executablePath.UTF8String, &classCount);
+  unsigned int classCount;
+  NSMutableDictionary *providers = [NSMutableDictionary new];
+  Protocol *protocol = @protocol(ItFrobHopperCPUProvider);
+  const char **classNames = objc_copyClassNamesForImage(
+      bundle.executablePath.UTF8String, &classCount);
 
-    for (unsigned int index = 0; index < classCount; index++) {
-        Class class = NSClassFromString(@(classNames[index]));
+  for (unsigned int index = 0; index < classCount; index++) {
+    Class class = NSClassFromString(@(classNames[index]));
 
-        if (!class_conformsToProtocol(class, protocol)) {
-            continue;
-        }
-
-        Class <ItFrobHopperCPUProvider> provider = (Class <ItFrobHopperCPUProvider>) class;
-
-        if (![provider exported]) {
-            continue;
-        }
-
-        NSString *family = [provider family];
-        NSString *model = [provider model];
-
-        NSMutableDictionary *familyDictionary = [providers valueForKey:family];
-        if (!familyDictionary) {
-            familyDictionary = [NSMutableDictionary new];
-            [providers setValue:familyDictionary forKey:family];
-        }
-
-        if ([familyDictionary doesContain:model]) {
-            return nil;
-        }
-
-        [familyDictionary setValue:class forKey:model];
+    if (!class_conformsToProtocol(class, protocol)) {
+      continue;
     }
 
-    return providers.allKeys.count > 0 ? providers : nil;
+    Class<ItFrobHopperCPUProvider> provider =
+        (Class<ItFrobHopperCPUProvider>)class;
+
+    if (![provider exported]) {
+      continue;
+    }
+
+    NSString *family = [provider family];
+    NSString *model = [provider model];
+
+    NSMutableDictionary *familyDictionary = [providers valueForKey:family];
+    if (!familyDictionary) {
+      familyDictionary = [NSMutableDictionary new];
+      [providers setValue:familyDictionary forKey:family];
+    }
+
+    if ([familyDictionary doesContain:model]) {
+      return nil;
+    }
+
+    [familyDictionary setValue:class forKey:model];
+  }
+
+  return providers.allKeys.count > 0 ? providers : nil;
 }
 
 @end

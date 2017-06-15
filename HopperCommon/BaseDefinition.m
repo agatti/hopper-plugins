@@ -29,199 +29,212 @@
 #import "HopperCommon.h"
 #import "ModelManager.h"
 
-static NSString * const kDefaultCPUMode = @"Generic";
-static NSString * const kDefaultSyntax = @"Generic";
+static NSString *const kDefaultCPUMode = @"Generic";
+static NSString *const kDefaultSyntax = @"Generic";
 
 @implementation ItFrobHopperBaseDefinition
 
 - (Class)cpuContextClass {
-    @throw [NSException
-            exceptionWithName:NSInternalInconsistencyException
-                       reason:[NSString stringWithFormat:@"Forgot to override %s",
-                                       __PRETTY_FUNCTION__]
-                     userInfo:nil];
+  @throw [NSException
+      exceptionWithName:NSInternalInconsistencyException
+                 reason:[NSString stringWithFormat:@"Forgot to override %s",
+                                                   __PRETTY_FUNCTION__]
+               userInfo:nil];
 }
 
-- (NSObject <CPUContext> *)buildCPUContextForFile:(NSObject <HPDisassembledFile> *)file {
-    @throw [NSException
-            exceptionWithName:NSInternalInconsistencyException
-                       reason:[NSString stringWithFormat:@"Forgot to override %s",
-                                       __PRETTY_FUNCTION__]
-                     userInfo:nil];
+- (NSObject<CPUContext> *)buildCPUContextForFile:
+    (NSObject<HPDisassembledFile> *)file {
+  @throw [NSException
+      exceptionWithName:NSInternalInconsistencyException
+                 reason:[NSString stringWithFormat:@"Forgot to override %s",
+                                                   __PRETTY_FUNCTION__]
+               userInfo:nil];
 }
 
 - (NSArray<NSString *> *)cpuFamilies {
-    return [self.modelManager.families
-            sortedArrayUsingComparator:^NSComparisonResult(NSString *obj1,
-                    NSString *obj2) {
-                return [obj1 compare:obj2];
-            }];
+  return [self.modelManager.families
+      sortedArrayUsingComparator:^NSComparisonResult(NSString *obj1,
+                                                     NSString *obj2) {
+        return [obj1 compare:obj2];
+      }];
 }
 
 - (NSArray<NSString *> *)cpuSubFamiliesForFamily:(NSString *)family {
-    return [[self.modelManager modelsForFamily:family]
-            sortedArrayUsingComparator:^NSComparisonResult(NSString *obj1,
-                    NSString *obj2) {
-                return [obj1 compare:obj2];
-            }];
+  return [[self.modelManager modelsForFamily:family]
+      sortedArrayUsingComparator:^NSComparisonResult(NSString *obj1,
+                                                     NSString *obj2) {
+        return [obj1 compare:obj2];
+      }];
 }
 
-- (int)addressSpaceWidthInBitsForCPUFamily:(NSString *)family andSubFamily:(NSString *)subFamily {
-    Class<ItFrobHopperCPUProvider> class =
-            [self.modelManager classForFamily:family andModel:subFamily];
-    return (class != nil) ? [class addressSpaceWidth] : 0;
+- (int)addressSpaceWidthInBitsForCPUFamily:(NSString *)family
+                              andSubFamily:(NSString *)subFamily {
+  Class<ItFrobHopperCPUProvider> class =
+      [self.modelManager classForFamily:family andModel:subFamily];
+  return (class != nil) ? [class addressSpaceWidth] : 0;
 }
 
 - (CPUEndianess)endianess {
-    @throw [NSException
-            exceptionWithName:NSInternalInconsistencyException
-                       reason:[NSString stringWithFormat:@"Forgot to override %s",
-                                       __PRETTY_FUNCTION__]
-                     userInfo:nil];
+  @throw [NSException
+      exceptionWithName:NSInternalInconsistencyException
+                 reason:[NSString stringWithFormat:@"Forgot to override %s",
+                                                   __PRETTY_FUNCTION__]
+               userInfo:nil];
 }
 
 - (NSUInteger)syntaxVariantCount {
-    return 1;
+  return 1;
 }
 
 - (NSUInteger)cpuModeCount {
-    return 1;
+  return 1;
 }
 
 - (NSArray<NSString *> *)syntaxVariantNames {
-    return @[ kDefaultSyntax ];
+  return @[ kDefaultSyntax ];
 }
 
 - (NSArray<NSString *> *)cpuModeNames {
-    return @[ kDefaultCPUMode ];
+  return @[ kDefaultCPUMode ];
 }
 
 - (NSUInteger)registerClassCount {
-    @throw [NSException
-            exceptionWithName:NSInternalInconsistencyException
-                       reason:[NSString stringWithFormat:@"Forgot to override %s",
-                                       __PRETTY_FUNCTION__]
-                     userInfo:nil];
+  @throw [NSException
+      exceptionWithName:NSInternalInconsistencyException
+                 reason:[NSString stringWithFormat:@"Forgot to override %s",
+                                                   __PRETTY_FUNCTION__]
+               userInfo:nil];
 }
 
 - (NSUInteger)registerCountForClass:(RegClass)reg_class {
-    @throw [NSException
-            exceptionWithName:NSInternalInconsistencyException
-                       reason:[NSString stringWithFormat:@"Forgot to override %s",
-                                       __PRETTY_FUNCTION__]
-                     userInfo:nil];
+  @throw [NSException
+      exceptionWithName:NSInternalInconsistencyException
+                 reason:[NSString stringWithFormat:@"Forgot to override %s",
+                                                   __PRETTY_FUNCTION__]
+               userInfo:nil];
 }
 
-- (NSString *)registerIndexToString:(NSUInteger)reg ofClass:(RegClass)reg_class withBitSize:(NSUInteger)size position:(DisasmPosition)position andSyntaxIndex:(NSUInteger)syntaxIndex {
-    @throw [NSException
-            exceptionWithName:NSInternalInconsistencyException
-                       reason:[NSString stringWithFormat:@"Forgot to override %s",
-                                       __PRETTY_FUNCTION__]
-                     userInfo:nil];
+- (NSString *)registerIndexToString:(NSUInteger)reg
+                            ofClass:(RegClass)reg_class
+                        withBitSize:(NSUInteger)size
+                           position:(DisasmPosition)position
+                     andSyntaxIndex:(NSUInteger)syntaxIndex {
+  @throw [NSException
+      exceptionWithName:NSInternalInconsistencyException
+                 reason:[NSString stringWithFormat:@"Forgot to override %s",
+                                                   __PRETTY_FUNCTION__]
+               userInfo:nil];
 }
 
 - (NSString *)cpuRegisterStateMaskToString:(uint32_t)cpuState {
-    return @"";
+  return @"";
 }
 
-- (BOOL)registerIndexIsStackPointer:(NSUInteger)reg ofClass:(RegClass)reg_class {
-    return NO;
+- (BOOL)registerIndexIsStackPointer:(NSUInteger)reg
+                            ofClass:(RegClass)reg_class {
+  return NO;
 }
 
-- (BOOL)registerIndexIsFrameBasePointer:(NSUInteger)reg ofClass:(RegClass)reg_class {
-    return NO;
+- (BOOL)registerIndexIsFrameBasePointer:(NSUInteger)reg
+                                ofClass:(RegClass)reg_class {
+  return NO;
 }
 
 - (BOOL)registerIndexIsProgramCounter:(NSUInteger)reg {
-    return NO;
+  return NO;
 }
 
-- (NSString *)framePointerRegisterNameForFile:(NSObject <HPDisassembledFile> *)file {
-    return nil;
+- (NSString *)framePointerRegisterNameForFile:
+    (NSObject<HPDisassembledFile> *)file {
+  return nil;
 }
 
-- (NSData *)nopWithSize:(NSUInteger)size andMode:(NSUInteger)cpuMode forFile:(NSObject <HPDisassembledFile> *)file {
-    return nil;
+- (NSData *)nopWithSize:(NSUInteger)size
+                andMode:(NSUInteger)cpuMode
+                forFile:(NSObject<HPDisassembledFile> *)file {
+  return nil;
 }
 
-- (BOOL)canAssembleInstructionsForCPUFamily:(NSString *)family andSubFamily:(NSString *)subFamily {
-    return NO;
+- (BOOL)canAssembleInstructionsForCPUFamily:(NSString *)family
+                               andSubFamily:(NSString *)subFamily {
+  return NO;
 }
 
-- (BOOL)canDecompileProceduresForCPUFamily:(NSString *)family andSubFamily:(NSString *)subFamily {
-    return NO;
+- (BOOL)canDecompileProceduresForCPUFamily:(NSString *)family
+                              andSubFamily:(NSString *)subFamily {
+  return NO;
 }
 
-- (instancetype)initWithHopperServices:(NSObject <HPHopperServices> *)services {
-    if (self = [super init]) {
-        _services = services;
+- (instancetype)initWithHopperServices:(NSObject<HPHopperServices> *)services {
+  if (self = [super init]) {
+    _services = services;
 
-        ItFrobHopperModelManager *manager = [ItFrobHopperModelManager
-                modelManagerWithBundle:[NSBundle bundleForClass:self.class]];
-        if (!manager) {
-            return nil;
-        }
-
-        _modelManager = manager;
+    ItFrobHopperModelManager *manager = [ItFrobHopperModelManager
+        modelManagerWithBundle:[NSBundle bundleForClass:self.class]];
+    if (!manager) {
+      return nil;
     }
 
-    return self;
+    _modelManager = manager;
+  }
+
+  return self;
 }
 
 - (HopperUUID *)pluginUUID {
-    @throw [NSException
-            exceptionWithName:NSInternalInconsistencyException
-                       reason:[NSString stringWithFormat:@"Forgot to override %s",
-                                       __PRETTY_FUNCTION__]
-                     userInfo:nil];
+  @throw [NSException
+      exceptionWithName:NSInternalInconsistencyException
+                 reason:[NSString stringWithFormat:@"Forgot to override %s",
+                                                   __PRETTY_FUNCTION__]
+               userInfo:nil];
 }
 
 - (HopperPluginType)pluginType {
-    @throw [NSException
-            exceptionWithName:NSInternalInconsistencyException
-                       reason:[NSString stringWithFormat:@"Forgot to override %s",
-                                       __PRETTY_FUNCTION__]
-                     userInfo:nil];
+  @throw [NSException
+      exceptionWithName:NSInternalInconsistencyException
+                 reason:[NSString stringWithFormat:@"Forgot to override %s",
+                                                   __PRETTY_FUNCTION__]
+               userInfo:nil];
 }
 
 - (NSString *)pluginName {
-    @throw [NSException
-            exceptionWithName:NSInternalInconsistencyException
-                       reason:[NSString stringWithFormat:@"Forgot to override %s",
-                                       __PRETTY_FUNCTION__]
-                     userInfo:nil];
+  @throw [NSException
+      exceptionWithName:NSInternalInconsistencyException
+                 reason:[NSString stringWithFormat:@"Forgot to override %s",
+                                                   __PRETTY_FUNCTION__]
+               userInfo:nil];
 }
 
 - (NSString *)pluginDescription {
-    @throw [NSException
-            exceptionWithName:NSInternalInconsistencyException
-                       reason:[NSString stringWithFormat:@"Forgot to override %s",
-                                       __PRETTY_FUNCTION__]
-                     userInfo:nil];
+  @throw [NSException
+      exceptionWithName:NSInternalInconsistencyException
+                 reason:[NSString stringWithFormat:@"Forgot to override %s",
+                                                   __PRETTY_FUNCTION__]
+               userInfo:nil];
 }
 
 - (NSString *)pluginAuthor {
-    @throw [NSException
-            exceptionWithName:NSInternalInconsistencyException
-                       reason:[NSString stringWithFormat:@"Forgot to override %s",
-                                       __PRETTY_FUNCTION__]
-                     userInfo:nil];
+  @throw [NSException
+      exceptionWithName:NSInternalInconsistencyException
+                 reason:[NSString stringWithFormat:@"Forgot to override %s",
+                                                   __PRETTY_FUNCTION__]
+               userInfo:nil];
 }
 
 - (NSString *)pluginCopyright {
-    @throw [NSException
-            exceptionWithName:NSInternalInconsistencyException
-                       reason:[NSString stringWithFormat:@"Forgot to override %s",
-                                       __PRETTY_FUNCTION__]
-                     userInfo:nil];
+  @throw [NSException
+      exceptionWithName:NSInternalInconsistencyException
+                 reason:[NSString stringWithFormat:@"Forgot to override %s",
+                                                   __PRETTY_FUNCTION__]
+               userInfo:nil];
 }
 
 - (NSString *)pluginVersion {
-    @throw [NSException
-            exceptionWithName:NSInternalInconsistencyException
-                       reason:[NSString stringWithFormat:@"Forgot to override %s",
-                                       __PRETTY_FUNCTION__]
-                     userInfo:nil];
+  @throw [NSException
+      exceptionWithName:NSInternalInconsistencyException
+                 reason:[NSString stringWithFormat:@"Forgot to override %s",
+                                                   __PRETTY_FUNCTION__]
+               userInfo:nil];
 }
 
 @end

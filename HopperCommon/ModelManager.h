@@ -40,6 +40,7 @@
 providerForFamily:(NSString *_Nonnull)family
          andModel:(NSString *_Nonnull)model;
 
-- (Class<ItFrobHopperCPUProvider> _Nonnull)classForFamily:(NSString *_Nonnull)family
-                                        andModel:(NSString *_Nonnull)model;
+- (Class<ItFrobHopperCPUProvider> _Nonnull)
+classForFamily:(NSString *_Nonnull)family
+      andModel:(NSString *_Nonnull)model;
 @end

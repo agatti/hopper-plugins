@@ -29,7 +29,6 @@
 #import "Common.h"
 #import "Definition.h"
 #import "HopperCommon.h"
-#import "OperandFormatter.h"
 
 @interface ItFrobHopper65816Context ()
 

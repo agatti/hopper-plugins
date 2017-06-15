@@ -52,7 +52,7 @@
  * Internal exception identifier.
  */
 static NSString *_Nonnull FRBHopperExceptionName =
-        @"it.frob.hopper.internalexception";
+    @"it.frob.hopper.internalexception";
 
 /**
  * Initialises the given DisasmStruct structure.
@@ -83,8 +83,8 @@ int64_t SignedValue(NSNumber *_Nonnull value, size_t size);
  * @param[in] format  the new format for the argument.
  */
 void SetDefaultFormatForArgument(NSObject<HPDisassembledFile> *_Nonnull file,
-        Address address, int operand,
-        ArgFormat format);
+                                 Address address, int operand,
+                                 ArgFormat format);
 
 /**
  * Adds an inline comment at the given address if none is already present.
@@ -94,7 +94,7 @@ void SetDefaultFormatForArgument(NSObject<HPDisassembledFile> *_Nonnull file,
  * @param[in] comment the comment contents.
  */
 void AddInlineCommentIfEmpty(NSObject<HPDisassembledFile> *_Nonnull file,
-        Address address, NSString *_Nonnull comment);
+                             Address address, NSString *_Nonnull comment);
 
 /**
  * Resolves the name assigned to the given address, regardless of whether it is
@@ -106,4 +106,4 @@ void AddInlineCommentIfEmpty(NSObject<HPDisassembledFile> *_Nonnull file,
  * @return the assigned name if any is present, or nil otherwise.
  */
 NSString *_Nullable ResolveNameForAddress(
-        NSObject<HPDisassembledFile> *_Nonnull file, Address address);
+    NSObject<HPDisassembledFile> *_Nonnull file, Address address);
