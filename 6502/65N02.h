@@ -26,8 +26,8 @@
 
 @import Foundation;
 
-#import "Core.h"
 #import "CPUProvider.h"
+#import "Core.h"
 
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCUnusedClassInspection"

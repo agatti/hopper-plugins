@@ -24,34 +24,21 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import "M740.h"
-#import "FRB65xxHelpers.h"
+#import "M37450.h"
 
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCUnusedClassInspection"
 
-#define BRK_BYTE_MARKER 0x00
-#define PLP_BYTE_MARKER 0x28
-
 static const Opcode kOpcodeTable[256];
 
-@interface ItFrobHopper6502M740 ()
-
-- (void)
-setPositionalArgumentInStructure:(DisasmStruct *_Nonnull)structure
-                      forOperand:(NSUInteger)operand
-                          inFile:(NSObject<HPDisassembledFile> *_Nonnull)file;
-
-@end
-
-@implementation ItFrobHopper6502M740
+@implementation ItFrobHopper6502M37450
 
 + (NSString *_Nonnull)family {
   return @"Mitsubishi";
 }
 
 + (NSString *_Nonnull)model {
-  return @"MELPS740";
+  return @"M37450";
 }
 
 + (BOOL)exported {
@@ -62,228 +49,8 @@ setPositionalArgumentInStructure:(DisasmStruct *_Nonnull)structure
   return 16;
 }
 
-- (void)updateFlags:(DisasmStruct *)structure
-     forInstruction:(const Instruction *_Nonnull)instruction {
-
-  /*
-   * This is a hack for the M740, which has an extra flag.  Currently Hopper
-   * does not allow to add or remove custom CPU flags so we have to piggyback
-   * on the ARM/Thumb register switcher which is still available on non-ARM CPU
-   * backends (although it really shouldn't).
-   */
-
-  switch (instruction->opcode->type) {
-  case OpcodeSET:
-    structure->instruction.eflags.TF_flag = DISASM_EFLAGS_SET;
-    break;
-
-  case OpcodeCLT:
-    structure->instruction.eflags.TF_flag = DISASM_EFLAGS_RESET;
-    break;
-
-  case OpcodeCLW:
-    structure->instruction.eflags.OF_flag = DISASM_EFLAGS_RESET;
-    break;
-
-  default:
-    break;
-  }
-}
-
 - (const Opcode *_Nonnull)opcodeForByte:(uint8_t)byte {
   return &kOpcodeTable[byte];
-}
-
-- (int)processStructure:(DisasmStruct *_Nonnull)structure
-                 onFile:(NSObject<HPDisassembledFile> *_Nonnull)file {
-  int result = [super processStructure:structure onFile:file];
-  return (result == 1) &&
-                 ((structure->instruction.userData == BRK_BYTE_MARKER) ||
-                  (structure->instruction.userData == PLP_BYTE_MARKER))
-             ? 2
-             : result;
-}
-
-- (NSObject<HPASMLine> *_Nullable)
-buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
-                    inFile:(NSObject<HPDisassembledFile> *_Nonnull)file
-                       raw:(BOOL)raw
-              withServices:(NSObject<HPHopperServices> *_Nonnull)services {
-  NSObject<HPASMLine> *_Nullable line =
-      [super buildCompleteOperandString:disasm
-                                 inFile:file
-                                    raw:raw
-                           withServices:services];
-  if (line) {
-    return line;
-  }
-
-  const Instruction instruction =
-      [self instructionForByte:(uint8_t)disasm->instruction.userData];
-  switch (instruction.opcode->addressMode) {
-  case ModeAccumulatorBitRelative:
-    line = [services blankASMLine];
-    [line appendDecimalNumber:disasm->operand[0].immediateValue];
-    [line appendRawString:@",A,"];
-    [line append:[self buildOperandString:disasm
-                          forOperandIndex:1
-                                   inFile:file
-                                      raw:raw
-                             withServices:services]];
-    break;
-
-  case ModeZeroPageBit:
-    line = [services blankASMLine];
-    [line appendDecimalNumber:disasm->operand[0].immediateValue];
-    [line appendRawString:@","];
-    [line append:[self buildOperandString:disasm
-                          forOperandIndex:1
-                                   inFile:file
-                                      raw:raw
-                             withServices:services]];
-    break;
-
-  case ModeZeroPageBitRelative:
-    line = [services blankASMLine];
-    [line appendDecimalNumber:disasm->operand[0].immediateValue];
-    [line appendRawString:@","];
-    [line append:[self buildOperandString:disasm
-                          forOperandIndex:1
-                                   inFile:file
-                                      raw:raw
-                             withServices:services]];
-    [line appendRawString:@","];
-    [line append:[self buildOperandString:disasm
-                          forOperandIndex:2
-                                   inFile:file
-                                      raw:raw
-                             withServices:services]];
-    break;
-
-  case ModeAccumulatorBit:
-    line = [services blankASMLine];
-    [line appendDecimalNumber:disasm->operand[0].immediateValue];
-    [line appendRawString:@",A"];
-    break;
-
-  case ModeSpecialPage:
-    line = [services blankASMLine];
-    [line appendRawString:@"\\"];
-    [line append:[self buildOperandString:disasm
-                          forOperandIndex:0
-                                   inFile:file
-                                      raw:raw
-                             withServices:services]];
-    break;
-
-  case ModeDirectMemoryAccess:
-    line = [services blankASMLine];
-    [line append:[self buildOperandString:disasm
-                          forOperandIndex:0
-                                   inFile:file
-                                      raw:raw
-                             withServices:services]];
-    [line appendRawString:@","];
-    [line append:[self buildOperandString:disasm
-                          forOperandIndex:1
-                                   inFile:file
-                                      raw:raw
-                             withServices:services]];
-    break;
-
-  default:
-    break;
-  }
-
-  return line;
-}
-
-- (BOOL)decodeNonBranch:(DisasmStruct *_Nonnull)structure
-         forInstruction:(const Instruction *_Nonnull)instruction
-                 inFile:(NSObject<HPDisassembledFile> *_Nonnull)file {
-  if ([super decodeNonBranch:structure
-              forInstruction:instruction
-                      inFile:file]) {
-    return YES;
-  }
-
-  switch (instruction->opcode->addressMode) {
-  case ModeAccumulatorBit:
-    [self setPositionalArgumentInStructure:structure forOperand:0 inFile:file];
-    break;
-
-  case ModeZeroPageBit:
-    [self setPositionalArgumentInStructure:structure forOperand:0 inFile:file];
-    SetAddressOperand(file, structure, 1, 8, 16, 1, 0);
-    break;
-
-  case ModeDirectMemoryAccess:
-    SetConstantOperand(file, structure, 0, 8, 1);
-    SetAddressOperand(file, structure, 1, 8, 16, 2, 0);
-    break;
-
-  default:
-    return NO;
-  }
-
-  return YES;
-}
-
-- (BOOL)decodeBranch:(DisasmStruct *_Nonnull)structure
-      forInstruction:(const Instruction *_Nonnull)instruction
-              inFile:(NSObject<HPDisassembledFile> *_Nonnull)file {
-  if ([super decodeBranch:structure forInstruction:instruction inFile:file]) {
-    return YES;
-  }
-
-  switch (instruction->opcode->addressMode) {
-  case ModeAccumulatorBitRelative:
-    [self setPositionalArgumentInStructure:structure forOperand:0 inFile:file];
-
-    structure->instruction.addressValue =
-        SetRelativeAddressOperand(file, structure, 1, 8, 16, 1);
-    structure->operand[1].isBranchDestination = YES;
-    break;
-
-  case ModeZeroPageBitRelative:
-    [self setPositionalArgumentInStructure:structure forOperand:0 inFile:file];
-
-    SetAddressOperand(file, structure, 1, 8, 16, 1, 0);
-
-    structure->instruction.addressValue =
-        SetRelativeAddressOperand(file, structure, 2, 8, 16, 2);
-    structure->operand[2].isBranchDestination = YES;
-    break;
-
-  case ModeSpecialPage:
-    structure->operand[0].immediateValue =
-        0xFF00 + [file readUInt8AtVirtualAddress:structure->virtualAddr + 1];
-    structure->operand[0].isBranchDestination = YES;
-    structure->operand[0].type = DISASM_OPERAND_CONSTANT_TYPE;
-    structure->operand[0].size = 16;
-    structure->operand[0].isBranchDestination = YES;
-    structure->instruction.addressValue =
-        (Address)structure->operand[0].immediateValue;
-    break;
-
-  default:
-    return NO;
-  }
-
-  return YES;
-}
-
-- (void)
-setPositionalArgumentInStructure:(DisasmStruct *_Nonnull)structure
-                      forOperand:(NSUInteger)operand
-                          inFile:(NSObject<HPDisassembledFile> *_Nonnull)file {
-  structure->operand[operand].immediateValue =
-      (int64_t)(structure->instruction.userData >> 5);
-  structure->operand[operand].type = DISASM_OPERAND_CONSTANT_TYPE;
-  structure->operand[operand].size = 3;
-  [file setFormat:Format_Decimal
-           forArgument:0
-      atVirtualAddress:structure->virtualAddr];
 }
 
 @end
@@ -420,7 +187,7 @@ static const Opcode kOpcodeTable[256] = {
 
     {OpcodeRTS, ModeStack, _NR, _NR},
     {OpcodeADC, ModeZeroPageIndexedIndirect, A | X, A},
-    _,
+    {OpcodeMUL, ModeZeroPageIndexedX, A | X, A | S},
     {OpcodeBBS, ModeAccumulatorBitRelative, A, _NR},
     {OpcodeTST, ModeZeroPage, _NR, _NR},
     {OpcodeADC, ModeZeroPage, A, A},
@@ -572,7 +339,7 @@ static const Opcode kOpcodeTable[256] = {
 
     {OpcodeCPX, ModeImmediate, X, _NR},
     {OpcodeSBC, ModeZeroPageIndexedIndirect, A | X, A},
-    _,
+    {OpcodeDIV, ModeZeroPageIndexedX, A | X, A | S},
     {OpcodeBBS, ModeAccumulatorBitRelative, A, _NR},
     {OpcodeCPX, ModeZeroPage, X, _NR},
     {OpcodeSBC, ModeZeroPage, A, A},

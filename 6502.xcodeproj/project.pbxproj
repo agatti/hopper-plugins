@@ -26,6 +26,7 @@
 		68F0A4E319E0645A007037E2 /* 65R02.m in Sources */ = {isa = PBXBuildFile; fileRef = 68F0A4DD19E0645A007037E2 /* 65R02.m */; };
 		68F0A4E419E0645A007037E2 /* 65S02.m in Sources */ = {isa = PBXBuildFile; fileRef = 68F0A4DF19E0645A007037E2 /* 65S02.m */; };
 		68F0A4E519E0645A007037E2 /* SunPlus.m in Sources */ = {isa = PBXBuildFile; fileRef = 68F0A4E119E0645A007037E2 /* SunPlus.m */; };
+		AB5F6C0FF17C334E91B1C6B6 /* M37450.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5F6ABAEFE4B18A24814EAE /* M37450.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -67,7 +68,9 @@
 		68F0A4DF19E0645A007037E2 /* 65S02.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = 65S02.m; sourceTree = "<group>"; };
 		68F0A4E019E0645A007037E2 /* SunPlus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SunPlus.h; sourceTree = "<group>"; };
 		68F0A4E119E0645A007037E2 /* SunPlus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SunPlus.m; sourceTree = "<group>"; };
+		AB5F610F00F8A60BF6AC726C /* M37450.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = M37450.h; sourceTree = "<group>"; };
 		AB5F64245C434541DF2C8797 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.info; path = Info.plist; sourceTree = "<group>"; };
+		AB5F6ABAEFE4B18A24814EAE /* M37450.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = M37450.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -157,6 +160,8 @@
 				688E0142197C949E00C9DC94 /* W65C02S.m */,
 				682870461A22D5AB005B5412 /* Core.h */,
 				682870471A22D5AB005B5412 /* Core.m */,
+				AB5F610F00F8A60BF6AC726C /* M37450.h */,
+				AB5F6ABAEFE4B18A24814EAE /* M37450.m */,
 			);
 			name = Chips;
 			sourceTree = "<group>";
@@ -244,6 +249,7 @@
 				68BFF68919AC467800025CDE /* R65C29.m in Sources */,
 				683372EA197C909B002B432E /* Generic65C02.m in Sources */,
 				68B87E0A19AB975400BEE286 /* R65C02.m in Sources */,
+				AB5F6C0FF17C334E91B1C6B6 /* M37450.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

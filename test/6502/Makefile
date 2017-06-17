@@ -29,7 +29,8 @@ ASL=asl
 P2BIN=p2bin
 RM=rm
 TEST_FILES=6502jumps.s 6502opcodes.s 65c02jumps.s 65c02opcodes.s \
-	   r6500opcodes.s r65c02opcodes.s w65c02sopcodes.s
+	   m37450opcodes.s m740opcodes.s r6500opcodes.s r65c02opcodes.s \
+	   w65c02sopcodes.s
 OBJECT_FILES=$(patsubst %.s,%.p,$(TEST_FILES))
 BINARY_FILES=$(patsubst %.p,%.bin,$(OBJECT_FILES))
 

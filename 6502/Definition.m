@@ -63,7 +63,7 @@
 }
 
 - (NSString *)pluginVersion {
-  return @"0.2.0";
+  return @"0.2.1";
 }
 
 #pragma mark - CPUDefinition protocol implementation

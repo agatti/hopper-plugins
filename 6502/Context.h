@@ -34,8 +34,7 @@
 /**
  * CPU Context class for the 6502 disassembler plugin.
  */
-@interface ItFrobHopper6502Context
-    : ItFrobHopperBaseContext <CPUContext>
+@interface ItFrobHopper6502Context : ItFrobHopperBaseContext <CPUContext>
 
 /**
  * Creates an instance of the 6502 CPU disassembler context.

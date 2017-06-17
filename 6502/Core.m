@@ -368,18 +368,6 @@ buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
     return line;
   }
 
-  case ModeSpecialPage: {
-    NSObject<HPASMLine> *line = [services blankASMLine];
-    [line appendRawString:@"\\"];
-    [line append:[self buildOperandString:disasm
-                          forOperandIndex:0
-                                   inFile:file
-                                      raw:raw
-                             withServices:services]];
-
-    return line;
-  }
-
   case ModeUnknown:
   default:
     return nil;
@@ -413,7 +401,10 @@ buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
   if (instruction.mnemonic->branchType == DISASM_BRANCH_NONE) {
     [self decodeNonBranch:structure forInstruction:&instruction inFile:file];
   } else {
-    [self decodeBranch:structure forInstruction:&instruction inFile:file];
+    if (!
+        [self decodeBranch:structure forInstruction:&instruction inFile:file]) {
+      return DISASM_UNKNOWN_OPCODE;
+    }
   }
 
   return structure->instruction.length;
@@ -479,7 +470,7 @@ buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
   }
 }
 
-- (void)decodeNonBranch:(DisasmStruct *_Nonnull)structure
+- (BOOL)decodeNonBranch:(DisasmStruct *_Nonnull)structure
          forInstruction:(const Instruction *_Nonnull)instruction
                  inFile:(NSObject<HPDisassembledFile> *_Nonnull)file {
   switch (instruction->opcode->addressMode) {
@@ -552,13 +543,11 @@ buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
   default: {
     NSString *exceptionFormat = @"Internal error: non-branch opcode at address "
                                 @"$%04llX with address mode %ld found";
-    @throw [NSException
-        exceptionWithName:FRBHopperExceptionName
-                   reason:[NSString stringWithFormat:exceptionFormat,
-                                                     structure->virtualAddr,
-                                                     (unsigned long)instruction
-                                                         ->opcode->addressMode]
-                 userInfo:nil];
+
+    NSLog(exceptionFormat, structure->virtualAddr,
+          (unsigned long)instruction->opcode->addressMode,
+          instruction->mnemonic->name);
+    return NO;
   }
   }
 
@@ -575,9 +564,11 @@ buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
     break;
   }
   }
+
+  return YES;
 }
 
-- (void)decodeBranch:(DisasmStruct *_Nonnull)structure
+- (BOOL)decodeBranch:(DisasmStruct *_Nonnull)structure
       forInstruction:(const Instruction *_Nonnull)instruction
               inFile:(NSObject<HPDisassembledFile> *_Nonnull)file {
 
@@ -585,7 +576,6 @@ buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
   case ModeAbsolute:
   case ModeAbsoluteIndirect:
   case ModeAbsoluteIndexedIndirect:
-  case ModeSpecialPage:
     structure->operand[0].immediateValue =
         [file readUInt16AtVirtualAddress:structure->virtualAddr + 1];
     structure->operand[0].isBranchDestination = YES;
@@ -619,6 +609,12 @@ buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
     structure->operand[2].isBranchDestination = YES;
     break;
 
+  case ModeZeroPageIndirect:
+    structure->instruction.addressValue =
+        SetAddressOperand(file, structure, 0, 8, 8, 1, 0);
+    structure->operand[0].isBranchDestination = YES;
+    break;
+
   case ModeStack:
     break;
 
@@ -626,17 +622,14 @@ buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
   default: {
     NSString *exceptionFormat = @"Internal error: branch opcode at address "
                                 @"$%04llX with address mode %ld found (%s)";
-    @throw [NSException
-        exceptionWithName:FRBHopperExceptionName
-                   reason:[NSString
-                              stringWithFormat:exceptionFormat,
-                                               structure->virtualAddr,
-                                               (unsigned long)instruction
-                                                   ->opcode->addressMode,
-                                               instruction->mnemonic->name]
-                 userInfo:nil];
+    NSLog(exceptionFormat, structure->virtualAddr,
+          (unsigned long)instruction->opcode->addressMode,
+          instruction->mnemonic->name);
+    return NO;
   }
   }
+
+  return YES;
 }
 
 - (void)setMemoryFlags:(DisasmStruct *_Nonnull)structure

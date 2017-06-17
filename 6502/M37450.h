@@ -24,30 +24,19 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import <Foundation/Foundation.h>
+@import Foundation;
 
 #import "CPUProvider.h"
+#import "M740.h"
 
-#import "Common.h"
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "OCUnusedClassInspection"
 
-@interface ItFrobHopper6502Base6502 : NSObject <ItFrobHopperCPUProvider>
-
-- (Instruction)instructionForByte:(uint8_t)byte;
-
-- (const Opcode *_Nonnull)opcodeForByte:(uint8_t)byte;
-
-- (void)updateFlags:(DisasmStruct *_Nonnull)structure
-     forInstruction:(const Instruction *_Nonnull)instruction;
-
-- (BOOL)decodeNonBranch:(DisasmStruct *_Nonnull)structure
-         forInstruction:(const Instruction *_Nonnull)instruction
-                 inFile:(NSObject<HPDisassembledFile> *_Nonnull)file;
-
-- (BOOL)decodeBranch:(DisasmStruct *_Nonnull)structure
-      forInstruction:(const Instruction *_Nonnull)instruction
-              inFile:(NSObject<HPDisassembledFile> *_Nonnull)file;
-
-- (void)setMemoryFlags:(DisasmStruct *_Nonnull)structure
-        forInstruction:(const Instruction *_Nonnull)instruction;
-
+/**
+ * Backend for the Mitsubishi M740 chip family.
+ */
+@interface ItFrobHopper6502M37450
+    : ItFrobHopper6502M740 <ItFrobHopperCPUProvider>
 @end
+
+#pragma clang diagnostic pop
