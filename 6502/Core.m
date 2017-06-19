@@ -115,7 +115,9 @@ buildOperandString:(DisasmStruct *_Nonnull)disasm
 
     switch (RAW_FORMAT(format)) {
     case Format_Address:
-      if (ResolveNameForAddress(file, disasm->instruction.addressValue)) {
+      if ([HopperUtilities
+              resolveNameForAddress:disasm->instruction.addressValue
+                             inFile:file]) {
         [line append:[file formatNumber:value
                                      at:disasm->virtualAddr
                             usingFormat:format
@@ -157,7 +159,9 @@ buildOperandString:(DisasmStruct *_Nonnull)disasm
 
     switch (RAW_FORMAT(format)) {
     case Format_Address:
-      if (ResolveNameForAddress(file, disasm->instruction.addressValue)) {
+      if ([HopperUtilities
+              resolveNameForAddress:disasm->instruction.addressValue
+                             inFile:file]) {
         [line append:[file formatNumber:value
                                      at:disasm->virtualAddr
                             usingFormat:format
@@ -376,8 +380,7 @@ buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
 
 - (int)processStructure:(DisasmStruct *_Nonnull)structure
                  onFile:(NSObject<HPDisassembledFile> *_Nonnull)file {
-
-  InitialiseDisasmStruct(structure);
+  [HopperUtilities initialiseStructure:structure];
   structure->instruction.pcRegisterValue = structure->virtualAddr;
   const uint8_t byte = [file readUInt8AtVirtualAddress:structure->virtualAddr];
   const Instruction instruction = [self instructionForByte:byte];

@@ -30,3 +30,5 @@
 #import "Miscellaneous.h"
 #import "ModelManager.h"
 #import "NSDataWithFill.h"
+
+#define HopperUtilities ItFrobHopperCommonHopperUtilities

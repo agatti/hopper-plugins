@@ -25,9 +25,9 @@
  */
 
 #import "Core.h"
-#import "FRB65xxHelpers.h"
-#import "Common.h"
 #import "Definition.h"
+#import "FRB65xxHelpers.h"
+#import "HopperCommon.h"
 
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCUnusedClassInspection"
@@ -108,11 +108,11 @@ formatHexadecimal:(const DisasmOperand *_Nonnull)operand
 
   FRBInstructionUserData metadata;
 
-  InitialiseDisasmStruct(structure);
+  [HopperUtilities initialiseStructure:structure];
   structure->instruction.pcRegisterValue = structure->virtualAddr;
   const Opcode *opcode = [self opcodeForFile:file
-                                             atAddress:structure->virtualAddr
-                                       andFillMetadata:&metadata];
+                                   atAddress:structure->virtualAddr
+                             andFillMetadata:&metadata];
   metadata.opcode = opcode->type;
   metadata.haltsExecution =
       (metadata.opcode == OpcodeSTP || metadata.opcode == OpcodeBRK) ? 1 : 0;
@@ -174,8 +174,8 @@ formatHexadecimal:(const DisasmOperand *_Nonnull)operand
   structure->instruction.length = (uint8_t)kOpcodeLength[opcode->addressMode];
 
   if (opcode->addressMode == ModeImmediate) {
-    CPUOperationMode mode = (CPUOperationMode)
-        [file cpuModeAtVirtualAddress:structure->virtualAddr];
+    CPUOperationMode mode =
+        (CPUOperationMode)[file cpuModeAtVirtualAddress:structure->virtualAddr];
     NSUInteger registersMask = opcode->readRegisters | opcode->writtenRegisters;
 
     if (registersMask & (RegisterIndexX | RegisterIndexY)) {
@@ -255,7 +255,9 @@ buildOperandString:(DisasmStruct *_Nonnull)disasm
 
     switch (RAW_FORMAT(format)) {
     case Format_Address:
-      if (ResolveNameForAddress(file, disasm->instruction.addressValue)) {
+      if ([HopperUtilities
+              resolveNameForAddress:disasm->instruction.addressValue
+                             inFile:file]) {
         [line append:[file formatNumber:value
                                      at:disasm->virtualAddr
                             usingFormat:format
@@ -297,7 +299,9 @@ buildOperandString:(DisasmStruct *_Nonnull)disasm
 
     switch (RAW_FORMAT(format)) {
     case Format_Address:
-      if (ResolveNameForAddress(file, disasm->instruction.addressValue)) {
+      if ([HopperUtilities
+              resolveNameForAddress:disasm->instruction.addressValue
+                             inFile:file]) {
         [line append:[file formatNumber:value
                                      at:disasm->virtualAddr
                             usingFormat:format
@@ -742,7 +746,10 @@ andFillMetadata:(FRBInstructionUserData *_Nonnull)metadata {
         DISASM_OPERAND_MEMORY_TYPE | DISASM_OPERAND_ABSOLUTE;
     disasm->operand[0].size = 24;
     disasm->operand[0].immediateValue = address;
-    SetDefaultFormatForArgument(file, disasm->virtualAddr, 0, Format_Address);
+    [HopperUtilities setDefaultFormat:Format_Address
+                          forArgument:0
+                            atAddress:disasm->virtualAddr
+                               inFile:file];
     break;
   }
 

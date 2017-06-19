@@ -34,8 +34,7 @@
 /**
  * CPU Context class for the 65816 disassembler plugin.
  */
-@interface ItFrobHopper65816Context
-    : ItFrobHopperBaseContext <CPUContext>
+@interface ItFrobHopper65816Context : ItFrobHopperBaseContext <CPUContext>
 
 /**
  * Creates an instance of the 65816 CPU disassembler context.

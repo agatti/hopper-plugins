@@ -26,6 +26,9 @@
 
 #import "TMS1000.h"
 
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "OCUnusedClassInspection"
+
 static const Instruction kOpcodes[256];
 
 @implementation TMS1000
@@ -316,3 +319,5 @@ static const Instruction kOpcodes[256] = {{OpcodeCOMX, InstructionEncodingIV},
                                           {OpcodeCALL, InstructionEncodingI},
                                           {OpcodeCALL, InstructionEncodingI},
                                           {OpcodeCALL, InstructionEncodingI}};
+
+#pragma clang diagnostic pop

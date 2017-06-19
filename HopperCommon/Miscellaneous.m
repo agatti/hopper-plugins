@@ -29,18 +29,63 @@
 static NSString *const kSignedSizeErrorFormat =
     @"Internal error: invalid signed value size %zu";
 
-void InitialiseDisasmStruct(DisasmStruct *disasmStruct) {
-  memset(&disasmStruct->instruction, 0x00, sizeof(DisasmInstruction));
+@implementation ItFrobHopperCommonHopperUtilities
+
++ (void)initialiseStructure:(DisasmStruct *_Nonnull)structure {
+  memset(&structure->instruction, 0x00, sizeof(DisasmInstruction));
 
   for (int index = 0; index < DISASM_MAX_OPERANDS; index++) {
-    memset(&disasmStruct->operand[index], 0x00, sizeof(DisasmOperand));
-    disasmStruct->operand[index].type = DISASM_OPERAND_NO_OPERAND;
+    memset(&structure->operand[index], 0x00, sizeof(DisasmOperand));
+    structure->operand[index].type = DISASM_OPERAND_NO_OPERAND;
   }
-  memset(disasmStruct->implicitlyReadRegisters, 0x00,
-         sizeof(disasmStruct->implicitlyReadRegisters));
-  memset(disasmStruct->implicitlyWrittenRegisters, 0x00,
-         sizeof(disasmStruct->implicitlyWrittenRegisters));
+  memset(structure->implicitlyReadRegisters, 0x00,
+         sizeof(structure->implicitlyReadRegisters));
+  memset(structure->implicitlyWrittenRegisters, 0x00,
+         sizeof(structure->implicitlyWrittenRegisters));
 }
+
++ (void)setDefaultFormat:(ArgFormat)format
+             forArgument:(NSUInteger)argument
+               atAddress:(Address)address
+                  inFile:(NSObject<HPDisassembledFile> *_Nonnull)file {
+
+  if ([file formatForArgument:argument atVirtualAddress:address] !=
+      Format_Default) {
+    return;
+  }
+
+  [file setFormat:format forArgument:argument atVirtualAddress:address];
+}
+
++ (void)addInlineCommentIfEmpty:(NSString *_Nonnull)comment
+                      atAddress:(Address)address
+                         inFile:(NSObject<HPDisassembledFile> *_Nonnull)file {
+
+  if ([file inlineCommentAtVirtualAddress:address]) {
+    return;
+  }
+
+  [file setInlineComment:comment
+        atVirtualAddress:address
+                  reason:CCReason_Automatic];
+}
+
++ (NSString *_Nullable)
+resolveNameForAddress:(Address)address
+               inFile:(NSObject<HPDisassembledFile> *_Nonnull)file {
+
+  NSString *_Nullable name = [file nameForVirtualAddress:address];
+  if (name == nil) {
+    NSObject<HPProcedure> *_Nullable procedure = [file procedureAt:address];
+    if (procedure != nil) {
+      name = [procedure localLabelAtAddress:address];
+    }
+  }
+
+  return name;
+}
+
+@end
 
 int64_t SignedValue(NSNumber *value, size_t size) {
   if (size > 32) {
@@ -56,42 +101,4 @@ int64_t SignedValue(NSNumber *value, size_t size) {
 
   int64_t output = (int64_t)(value.unsignedLongLongValue & sizeMask);
   return (output & negativeBitMask) ? output - (1 << size) : output;
-}
-
-void SetDefaultFormatForArgument(NSObject<HPDisassembledFile> *file,
-                                 Address address, int argument,
-                                 ArgFormat format) {
-
-  if ([file formatForArgument:(NSUInteger)argument atVirtualAddress:address] !=
-      Format_Default) {
-    return;
-  }
-
-  [file setFormat:format
-           forArgument:(NSUInteger)argument
-      atVirtualAddress:address];
-}
-
-void AddInlineCommentIfEmpty(NSObject<HPDisassembledFile> *_Nonnull file,
-                             Address address, NSString *_Nonnull comment) {
-  if ([file inlineCommentAtVirtualAddress:address]) {
-    return;
-  }
-
-  [file setInlineComment:comment
-        atVirtualAddress:address
-                  reason:CCReason_Automatic];
-}
-
-NSString *_Nullable ResolveNameForAddress(
-    NSObject<HPDisassembledFile> *_Nonnull file, Address address) {
-  NSString *_Nullable name = [file nameForVirtualAddress:address];
-  if (name == nil) {
-    NSObject<HPProcedure> *_Nullable procedure = [file procedureAt:address];
-    if (procedure != nil) {
-      name = [procedure localLabelAtAddress:address];
-    }
-  }
-
-  return name;
 }

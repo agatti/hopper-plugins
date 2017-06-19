@@ -34,8 +34,7 @@
 /**
  * CPU Context class for the 8x300 disassembler plugin.
  */
-@interface ItFrobHopper8x300Context
-    : ItFrobHopperBaseContext <CPUContext>
+@interface ItFrobHopper8x300Context : ItFrobHopperBaseContext <CPUContext>
 
 /**
  * Creates an instance of the 8x300 CPU disassembler context.

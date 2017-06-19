@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2014-2015, Alessandro Gatti - frob.it
+ Copyright (c) 2014-2017, Alessandro Gatti - frob.it
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -25,9 +25,9 @@
  */
 
 #import "Context.h"
-#import "FRB65xxHelpers.h"
 #import "Common.h"
 #import "Definition.h"
+#import "FRB65xxHelpers.h"
 #import "HopperCommon.h"
 
 @interface ItFrobHopper65816Context ()
@@ -47,7 +47,8 @@
 
 - (instancetype)initWithCPU:(NSObject<CPUDefinition> *_Nonnull)definition
                     andFile:(NSObject<HPDisassembledFile> *_Nonnull)file
-               withProvider:(NSObject<ItFrobHopperCPUProvider> *_Nonnull)provider
+               withProvider:
+                   (NSObject<ItFrobHopperCPUProvider> *_Nonnull)provider
               usingServices:(NSObject<HPHopperServices> *_Nonnull)services {
   if (self = [super init]) {
     _definition = definition;

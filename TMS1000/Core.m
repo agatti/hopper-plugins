@@ -27,24 +27,13 @@
 #import "Core.h"
 #import "HopperCommon.h"
 
-static const uint8_t kFlipped4BitsTable[16] = {
+static const uint8_t kFlippedBitsTable[16] = {
     0b0000, 0b1000, 0b0100, 0b1100, 0b0010, 0b1010, 0b0110, 0b1110,
     0b0001, 0b1001, 0b0101, 0b1101, 0b0011, 0b1011, 0b0111, 0b1111};
 
-static const uint8_t kFlipped2BitsTable[4] = {0b00, 0b10, 0b01, 0b11};
-
-static const uint8_t kFlipped3BitsTable[8] = {0b000, 0b100, 0b010, 0b110,
-                                              0b001, 0b101, 0b011, 0b111};
-
-@interface ItFrobHopperTMS1000Core ()
-
-- (uint8_t)flip2Bits:(uint8_t)bits;
-
-- (uint8_t)flip3Bits:(uint8_t)bits;
-
-- (uint8_t)flip4Bits:(uint8_t)bits;
-
-@end
+#define FLIPPED4BITS(index) (kFlippedBitsTable[index & 0x0F])
+#define FLIPPED3BITS(index) (kFlippedBitsTable[index & 0x07] >> 1)
+#define FLIPPED2BITS(index) (kFlippedBitsTable[index & 0x03] >> 2)
 
 @implementation ItFrobHopperTMS1000Core
 
@@ -83,7 +72,7 @@ static const uint8_t kFlipped3BitsTable[8] = {0b000, 0b100, 0b010, 0b110,
   const Instruction instruction = [self instructionForByte:opcodeByte];
   const Opcode *opcode = &kMnemonics[instruction.opcode];
 
-  InitialiseDisasmStruct(structure);
+  [HopperUtilities initialiseStructure:structure];
   structure->instruction.pcRegisterValue = structure->virtualAddr;
 
   structure->instruction.branchType = opcode->branchType;
@@ -105,11 +94,13 @@ static const uint8_t kFlipped3BitsTable[8] = {0b000, 0b100, 0b010, 0b110,
 
     if ([file segmentForVirtualAddress:structure->instruction.addressValue] ==
         nil) {
-      AddInlineCommentIfEmpty(
-          file, structure->virtualAddr,
-          [NSString stringWithFormat:@"Jumping out of mapped memory (%X)",
-                                     (unsigned int)
-                                         structure->instruction.addressValue]);
+      [HopperUtilities
+          addInlineCommentIfEmpty:
+              [NSString stringWithFormat:@"Jumping out of mapped memory (%X)",
+                                         (unsigned int)structure->instruction
+                                             .addressValue]
+                        atAddress:structure->virtualAddr
+                           inFile:file];
 
       structure->operand[0].isBranchDestination = NO;
     } else {
@@ -120,15 +111,13 @@ static const uint8_t kFlipped3BitsTable[8] = {0b000, 0b100, 0b010, 0b110,
   case InstructionEncodingII:
     structure->operand[0].type = DISASM_OPERAND_CONSTANT_TYPE;
     structure->operand[0].size = 4;
-    structure->operand[0].immediateValue =
-        [self flip4Bits:(uint8_t)(opcodeByte & 0x0F)];
+    structure->operand[0].immediateValue = FLIPPED4BITS(opcodeByte);
     break;
 
   case InstructionEncodingIII:
     structure->operand[0].type = DISASM_OPERAND_CONSTANT_TYPE;
     structure->operand[0].size = 2;
-    structure->operand[0].immediateValue =
-        [self flip2Bits:(uint8_t)(opcodeByte & 0x03)] & 0x03;
+    structure->operand[0].immediateValue = FLIPPED2BITS(opcodeByte);
     break;
 
   case InstructionEncodingIV:
@@ -136,9 +125,8 @@ static const uint8_t kFlipped3BitsTable[8] = {0b000, 0b100, 0b010, 0b110,
 
   case InstructionEncodingV:
     structure->operand[0].type = DISASM_OPERAND_CONSTANT_TYPE;
-    structure->operand[0].size = 2;
-    structure->operand[0].immediateValue =
-        [self flip3Bits:(uint8_t)(opcodeByte & 0x07)] & 0x07;
+    structure->operand[0].size = 3;
+    structure->operand[0].immediateValue = FLIPPED3BITS(opcodeByte);
     break;
   }
 
@@ -208,18 +196,6 @@ buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
   }
 
   return nil;
-}
-
-- (uint8_t)flip2Bits:(uint8_t)bits {
-  return kFlipped2BitsTable[bits & 0x03];
-}
-
-- (uint8_t)flip3Bits:(uint8_t)bits {
-  return kFlipped3BitsTable[bits & 0x07];
-}
-
-- (uint8_t)flip4Bits:(uint8_t)bits {
-  return kFlipped4BitsTable[bits & 0x0F];
 }
 
 - (Instruction)instructionForByte:(uint8_t)byte {

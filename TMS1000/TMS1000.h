@@ -28,6 +28,11 @@
 
 #import "Core.h"
 
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "OCUnusedClassInspection"
+
 @interface TMS1000 : ItFrobHopperTMS1000Core <ItFrobHopperCPUProvider>
 
 @end
+
+#pragma clang diagnostic pop

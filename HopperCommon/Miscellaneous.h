@@ -54,12 +54,53 @@
 static NSString *_Nonnull FRBHopperExceptionName =
     @"it.frob.hopper.internalexception";
 
+@interface ItFrobHopperCommonHopperUtilities : NSObject
+
 /**
  * Initialises the given DisasmStruct structure.
  *
- * @param[in] disasmStruct the structure to initialise.
+ * @param[in] structure the structure to initialise.
  */
-void InitialiseDisasmStruct(DisasmStruct *_Nonnull disasmStruct);
++ (void)initialiseStructure:(DisasmStruct *_Nonnull)structure;
+
+/**
+ * Changes format for the given argument, if it is still set as default.
+ *
+ * @param[in] file     the file to operate on.
+ * @param[in] address  the instruction address.
+ * @param[in] argument the index of the argument to change.
+ * @param[in] format   the new format for the argument.
+ */
++ (void)setDefaultFormat:(ArgFormat)format
+             forArgument:(NSUInteger)argument
+               atAddress:(Address)address
+                  inFile:(NSObject<HPDisassembledFile> *_Nonnull)file;
+
+/**
+ * Adds an inline comment at the given address if none is already present.
+ *
+ * @param[in] file    the file to operate on
+ * @param[in] address the instruction address.
+ * @param[in] comment the comment contents.
+ */
++ (void)addInlineCommentIfEmpty:(NSString *_Nonnull)comment
+                      atAddress:(Address)address
+                         inFile:(NSObject<HPDisassembledFile> *_Nonnull)file;
+
+/**
+ * Resolves the name assigned to the given address, regardless of whether it is
+ * local or global.
+ *
+ * @param[in] file    the file to operate on.
+ * @param[in] address the address to examine.
+ *
+ * @return the assigned name if any is present, or nil otherwise.
+ */
++ (NSString *_Nullable)
+resolveNameForAddress:(Address)address
+               inFile:(NSObject<HPDisassembledFile> *_Nonnull)file;
+
+@end
 
 /**
  * Extracts a signed value out of the given NSNumber instance.
@@ -73,37 +114,3 @@ void InitialiseDisasmStruct(DisasmStruct *_Nonnull disasmStruct);
  * @return the signed value representation of the given NSNumber instance.
  */
 int64_t SignedValue(NSNumber *_Nonnull value, size_t size);
-
-/**
- * Changes format for the given argument, if it is still set as default.
- *
- * @param[in] file    the file to operate on.
- * @param[in] address the instruction address.
- * @param[in] operand the index of the argument to change.
- * @param[in] format  the new format for the argument.
- */
-void SetDefaultFormatForArgument(NSObject<HPDisassembledFile> *_Nonnull file,
-                                 Address address, int operand,
-                                 ArgFormat format);
-
-/**
- * Adds an inline comment at the given address if none is already present.
- *
- * @param[in] file    the file to operate on
- * @param[in] address the instruction address.
- * @param[in] comment the comment contents.
- */
-void AddInlineCommentIfEmpty(NSObject<HPDisassembledFile> *_Nonnull file,
-                             Address address, NSString *_Nonnull comment);
-
-/**
- * Resolves the name assigned to the given address, regardless of whether it is
- * local or global.
- *
- * @param[in] file    the file to operate on.
- * @param[in] address the address to examine.
- *
- * @return the assigned name if any is present, or nil otherwise.
- */
-NSString *_Nullable ResolveNameForAddress(
-    NSObject<HPDisassembledFile> *_Nonnull file, Address address);

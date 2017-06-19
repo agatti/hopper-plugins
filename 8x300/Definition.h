@@ -75,7 +75,8 @@ typedef struct {
 /**
  * CPU Definition class for the 8x300 disassembler plugin.
  */
-@interface ItFrobHopper8x300Definition : ItFrobHopperBaseDefinition <CPUDefinition>
+@interface ItFrobHopper8x300Definition
+    : ItFrobHopperBaseDefinition <CPUDefinition>
 
 /**
  * Returns the appropriate instruction formatter for the given syntax type.

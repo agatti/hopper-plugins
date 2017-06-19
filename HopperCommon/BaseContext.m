@@ -40,7 +40,7 @@
 
 - (void)initDisasmStructure:(DisasmStruct *)disasm
             withSyntaxIndex:(NSUInteger)syntaxIndex {
-  InitialiseDisasmStruct(disasm);
+  [HopperUtilities initialiseStructure:disasm];
 }
 
 - (Address)adjustCodeAddress:(Address)address {

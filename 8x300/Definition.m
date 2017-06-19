@@ -27,8 +27,8 @@
 #import "Definition.h"
 #import "ASFormat.h"
 #import "Context.h"
-#import "ModelManager.h"
 #import "MCCAPFormat.h"
+#import "ModelManager.h"
 #import "NSDataWithFill.h"
 
 #pragma clang diagnostic push
@@ -129,8 +129,7 @@ static const char *kRegisterNames[] = {
   NSMutableArray *names =
       [[NSMutableArray alloc] initWithCapacity:self.formatterInstances.count];
 
-  for (NSObject<InstructionFormatter> *formatter in self
-           .formatterInstances) {
+  for (NSObject<InstructionFormatter> *formatter in self.formatterInstances) {
     [names addObject:formatter.name];
   }
 

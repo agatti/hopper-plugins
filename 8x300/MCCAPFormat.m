@@ -26,8 +26,8 @@
 
 #import "HopperCommon.h"
 
-#import "MCCAPFormat.h"
 #import "Definition.h"
+#import "MCCAPFormat.h"
 
 /**
  * MCCAP binary formatter bits table.

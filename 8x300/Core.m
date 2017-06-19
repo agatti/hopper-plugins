@@ -187,7 +187,7 @@ static const char *kOpcodeNames[OpcodesCount] = {"MOVE", "ADD",  "AND",  "XOR",
 - (int)processStructure:(DisasmStruct *_Nonnull)structure
                  onFile:(NSObject<HPDisassembledFile> *_Nonnull)file {
 
-  InitialiseDisasmStruct(structure);
+  [HopperUtilities initialiseStructure:structure];
 
   BOOL result;
   uint16_t opcodeWord =
@@ -321,13 +321,13 @@ buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
           formatterForSyntax:(FRBSyntaxType)file.userRequestedSyntaxIndex];
   NSAssert(formatter != nil, @"Missing formatter for syntax index");
 
-  return [formatter
-      formatInstruction:disasm
-                 inFile:file
-           withServices:services
-            andEncoding:(EncodingType)((InstructionMetadata *)&disasm
-                                              ->instruction.userData)
-                            ->encoding];
+  return
+      [formatter formatInstruction:disasm
+                            inFile:file
+                      withServices:services
+                       andEncoding:(EncodingType)((InstructionMetadata *)&disasm
+                                                      ->instruction.userData)
+                                       ->encoding];
 }
 
 #pragma mark - Private methods
@@ -390,7 +390,10 @@ buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
   structure->implicitlyWrittenRegisters[DISASM_OPERAND_GENERAL_REG_INDEX] =
       (uint32_t)((1 << destinationRegister) | RegisterFlagOVF);
 
-  SetDefaultFormatForArgument(file, structure->virtualAddr, 1, Format_Decimal);
+  [HopperUtilities setDefaultFormat:Format_Decimal
+                        forArgument:1
+                          atAddress:structure->virtualAddr
+                             inFile:file];
 
   metadata->opcode = OPCODE_FROM_WORD(opcode);
 
@@ -460,7 +463,10 @@ buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
     structure->instruction.addressValue = address;
   }
 
-  SetDefaultFormatForArgument(file, structure->virtualAddr, 2, Format_Decimal);
+  [HopperUtilities setDefaultFormat:Format_Decimal
+                        forArgument:2
+                          atAddress:structure->virtualAddr
+                             inFile:file];
 
   metadata->encoding = EncodingOffsetWithLength;
   metadata->opcode = OPCODE_FROM_WORD(opcode);
@@ -513,28 +519,41 @@ buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
                       (structure->operand[0].immediateValue * 2);
   }
 
-  SetDefaultFormatForArgument(file, structure->virtualAddr, 2, Format_Decimal);
+  [HopperUtilities setDefaultFormat:Format_Decimal
+                        forArgument:2
+                          atAddress:structure->virtualAddr
+                             inFile:file];
 
   structure->instruction.addressValue = resolvedAddress;
 
   if ([file segmentForVirtualAddress:structure->instruction.addressValue] ==
       nil) {
-    AddInlineCommentIfEmpty(
-        file, structure->virtualAddr,
-        [NSString stringWithFormat:@"Switch table out of mapped memory (%X)",
-                                   (unsigned int)
-                                       structure->instruction.addressValue]);
+    [HopperUtilities
+        addInlineCommentIfEmpty:
+            [NSString
+                stringWithFormat:@"Switch table out of mapped memory (%X)",
+                                 (unsigned int)
+                                     structure->instruction.addressValue]
+                      atAddress:structure->virtualAddr
+                         inFile:file];
   } else {
-    AddInlineCommentIfEmpty(
-        file, structure->instruction.addressValue,
-        [NSString stringWithFormat:@"Switch table for %X",
-                                   (unsigned int)structure->virtualAddr]);
+    [HopperUtilities
+        addInlineCommentIfEmpty:[NSString
+                                    stringWithFormat:@"Switch table for %X",
+                                                     (unsigned int)
+                                                         structure->instruction
+                                                             .addressValue]
+                      atAddress:structure->virtualAddr
+                         inFile:file];
   }
 
   [[file segmentForVirtualAddress:structure->virtualAddr]
       addReferencesToAddress:structure->instruction.addressValue
                  fromAddress:structure->virtualAddr];
-  SetDefaultFormatForArgument(file, structure->virtualAddr, 0, Format_Address);
+  [HopperUtilities setDefaultFormat:Format_Address
+                        forArgument:0
+                          atAddress:structure->virtualAddr
+                             inFile:file];
 
   metadata->opcode = OPCODE_FROM_WORD(opcode);
 
@@ -574,8 +593,10 @@ buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
     structure->operand[2].immediateValue = (opcode >> 5) & 0b111;
     structure->operand[2].size = 3;
 
-    SetDefaultFormatForArgument(file, structure->virtualAddr, 2,
-                                Format_Decimal);
+    [HopperUtilities setDefaultFormat:Format_Decimal
+                          forArgument:2
+                            atAddress:structure->virtualAddr
+                               inFile:file];
 
     metadata->encoding = EncodingAssignmentWithLength;
   }
@@ -620,12 +641,13 @@ buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
 
   if ([file segmentForVirtualAddress:structure->instruction.addressValue] ==
       nil) {
-    AddInlineCommentIfEmpty(
-        file, structure->virtualAddr,
-        [NSString stringWithFormat:@"Jumping out of mapped memory (%X)",
-                                   (unsigned int)
-                                       structure->instruction.addressValue]);
-
+    [HopperUtilities
+        addInlineCommentIfEmpty:
+            [NSString stringWithFormat:@"Jumping out of mapped memory (%X)",
+                                       (unsigned int)
+                                           structure->instruction.addressValue]
+                      atAddress:structure->virtualAddr
+                         inFile:file];
     structure->operand[0].isBranchDestination = NO;
   } else {
     structure->operand[0].isBranchDestination = YES;

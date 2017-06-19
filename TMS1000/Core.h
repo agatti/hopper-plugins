@@ -26,8 +26,8 @@
 
 @import Foundation;
 
-#import "Common.h"
 #import "CPUProvider.h"
+#import "Common.h"
 
 @interface ItFrobHopperTMS1000Core : NSObject <ItFrobHopperCPUProvider>
 

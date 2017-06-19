@@ -102,7 +102,7 @@ typedef NS_ENUM(NSUInteger, OpcodeCategory) {
  */
 typedef NS_ENUM(NSUInteger, OpcodeType) {
   OpcodeADC = 0,
-  OpcodeADD,  // R65C19
+  OpcodeADD, // R65C19
   OpcodeAND,
   OpcodeASL,
   OpcodeASR,  // R65C19
@@ -133,34 +133,34 @@ typedef NS_ENUM(NSUInteger, OpcodeType) {
   OpcodeBMI,
   OpcodeBNE,
   OpcodeBPL,
-  OpcodeBRA,  // 65C02, W65C02S, R6500, R65C19, and Hu6280
+  OpcodeBRA, // 65C02, W65C02S, R6500, R65C19, and Hu6280
   OpcodeBRK,
   OpcodeBVC,
   OpcodeBVS,
-  OpcodeCLA,  // Hu6280
-  OpcodeCLB,  // M740 and M37450
+  OpcodeCLA, // Hu6280
+  OpcodeCLB, // M740 and M37450
   OpcodeCLC,
   OpcodeCLD,
   OpcodeCLI,
-  OpcodeCLT,  // M740 and M37450
+  OpcodeCLT, // M740 and M37450
   OpcodeCLV,
-  OpcodeCLW,  // R65C19
-  OpcodeCLX,  // Hu6280
-  OpcodeCLY,  // Hu6280
+  OpcodeCLW, // R65C19
+  OpcodeCLX, // Hu6280
+  OpcodeCLY, // Hu6280
   OpcodeCMP,
-  OpcodeCOM,  // M740 and M37450
+  OpcodeCOM, // M740 and M37450
   OpcodeCPX,
   OpcodeCPY,
-  OpcodeCSH,  // Hu6280
-  OpcodeCSL,  // Hu6280
+  OpcodeCSH, // Hu6280
+  OpcodeCSL, // Hu6280
   OpcodeDEC,
   OpcodeDEX,
   OpcodeDEY,
-  OpcodeDIV,  // M37450
+  OpcodeDIV, // M37450
   OpcodeEOR,
-  OpcodeEXC,  // R65C19
+  OpcodeEXC, // R65C19
   OpcodeINC,
-  OpcodeINI,  // R65C19
+  OpcodeINI, // R65C19
   OpcodeINX,
   OpcodeINY,
   OpcodeJMP,
@@ -174,31 +174,31 @@ typedef NS_ENUM(NSUInteger, OpcodeType) {
   OpcodeJSB6, // R65C19
   OpcodeJSB7, // R65C19
   OpcodeJSR,
-  OpcodeLAB,  // R65C19
-  OpcodeLAI,  // R65C19
-  OpcodeLAN,  // R65C19
+  OpcodeLAB, // R65C19
+  OpcodeLAI, // R65C19
+  OpcodeLAN, // R65C19
   OpcodeLDA,
-  OpcodeLDM,  // M740 and M37450
+  OpcodeLDM, // M740 and M37450
   OpcodeLDX,
   OpcodeLDY,
-  OpcodeLII,  // R65C19
+  OpcodeLII, // R65C19
   OpcodeLSR,
-  OpcodeMPA,  // R65C19
-  OpcodeMPY,  // R65C19
-  OpcodeMUL,  // R65C29 and M37450
-  OpcodeNEG,  // R65C19
+  OpcodeMPA, // R65C19
+  OpcodeMPY, // R65C19
+  OpcodeMUL, // R65C29 and M37450
+  OpcodeNEG, // R65C19
   OpcodeNOP,
-  OpcodeNXT,  // R65C19
+  OpcodeNXT, // R65C19
   OpcodeORA,
   OpcodePHA,
-  OpcodePHI,  // R65C19
+  OpcodePHI, // R65C19
   OpcodePHP,
-  OpcodePHW,  // R65C19
-  OpcodePHX,  // 65C02, W65C02S, R6500, R65C19, R65C29, and Hu6280
-  OpcodePHY,  // 65C02, W65C02S, R6500, R65C19, R65C29, and Hu6280
-  OpcodePIA,  // R65C19
+  OpcodePHW, // R65C19
+  OpcodePHX, // 65C02, W65C02S, R6500, R65C19, R65C29, and Hu6280
+  OpcodePHY, // 65C02, W65C02S, R6500, R65C19, R65C29, and Hu6280
+  OpcodePIA, // R65C19
   OpcodePLA,
-  OpcodePLI,  // R65C19
+  OpcodePLI, // R65C19
   OpcodePLP,
   OpcodePLW,  // R65C19
   OpcodePLX,  // 65C02, W65C02S, R6500, R65C19, R65C29, and Hu6280
@@ -217,14 +217,14 @@ typedef NS_ENUM(NSUInteger, OpcodeType) {
   OpcodeRND,  // R65C19
   OpcodeROL,
   OpcodeROR,
-  OpcodeRRF,  // M740 and M37450
+  OpcodeRRF, // M740 and M37450
   OpcodeRTI,
   OpcodeRTS,
-  OpcodeSAX,  // Hu6280
-  OpcodeSAY,  // Hu6280
-  OpcodeSBA,  // R65C19
+  OpcodeSAX, // Hu6280
+  OpcodeSAY, // Hu6280
+  OpcodeSBA, // R65C19
   OpcodeSBC,
-  OpcodeSEB,  // M740 and M37450
+  OpcodeSEB, // M740 and M37450
   OpcodeSEC,
   OpcodeSED,
   OpcodeSEI,
@@ -241,33 +241,33 @@ typedef NS_ENUM(NSUInteger, OpcodeType) {
   OpcodeST1,  // Hu6280
   OpcodeST2,  // Hu6280
   OpcodeSTA,
-  OpcodeSTI,  // R65C19
-  OpcodeSTP,  // W65C02S, M740, and M37450
+  OpcodeSTI, // R65C19
+  OpcodeSTP, // W65C02S, M740, and M37450
   OpcodeSTX,
   OpcodeSTY,
-  OpcodeSTZ,  // 65C02, W65C02S, R6500, and Hu6280
-  OpcodeSXY,  // Hu6280
-  OpcodeTAI,  // Hu6280
-  OpcodeTAM,  // Hu6280
-  OpcodeTAW,  // R65C19
+  OpcodeSTZ, // 65C02, W65C02S, R6500, and Hu6280
+  OpcodeSXY, // Hu6280
+  OpcodeTAI, // Hu6280
+  OpcodeTAM, // Hu6280
+  OpcodeTAW, // R65C19
   OpcodeTAX,
   OpcodeTAY,
-  OpcodeTIP,  // R65C19
-  OpcodeTDD,  // Hu6280
-  OpcodeTIA,  // Hu6280
-  OpcodeTII,  // Hu6280
-  OpcodeTIN,  // Hu6280
-  OpcodeTMA,  // Hu6280
-  OpcodeTRB,  // 65C02, W65C02S, R6500, and Hu6280
-  OpcodeTSB,  // 65C02, W65C02S, R6500, and Hu6280
-  OpcodeTST,  // Hu6280, M740, and M37450
+  OpcodeTIP, // R65C19
+  OpcodeTDD, // Hu6280
+  OpcodeTIA, // Hu6280
+  OpcodeTII, // Hu6280
+  OpcodeTIN, // Hu6280
+  OpcodeTMA, // Hu6280
+  OpcodeTRB, // 65C02, W65C02S, R6500, and Hu6280
+  OpcodeTSB, // 65C02, W65C02S, R6500, and Hu6280
+  OpcodeTST, // Hu6280, M740, and M37450
   OpcodeTSX,
-  OpcodeTWA,  // R65C19
+  OpcodeTWA, // R65C19
   OpcodeTXA,
   OpcodeTXS,
   OpcodeTYA,
-  OpcodeWAI,  // W65C02S
-  OpcodeWIT,  // M740 and M37450
+  OpcodeWAI, // W65C02S
+  OpcodeWIT, // M740 and M37450
 
   OpcodeUndocumented
 };
