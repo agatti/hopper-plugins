@@ -49,21 +49,21 @@ static NSMutableData *_Nullable newDataForFillerByte(const uint8_t filler,
 static NSMutableData *_Nullable newDataForFillerData(
     const NSData *_Nonnull data, NSUInteger length);
 
-NSData *_Nullable NSDataWithFiller(const uint8_t filler, NSUInteger length) {
+NSData *_Nullable ItFrobHopperCommonNSDataWithFiller(const uint8_t filler, NSUInteger length) {
   return newDataForFillerByte(filler, length);
 }
 
-NSMutableData *_Nullable NSMutableDataWithFiller(const uint8_t filler,
+NSMutableData *_Nullable ItFrobHopperCommonNSMutableDataWithFiller(const uint8_t filler,
                                                  NSUInteger length) {
   return newDataForFillerByte(filler, length);
 }
 
-NSData *_Nullable NSDataWithFillerData(const NSData *_Nonnull data,
+NSData *_Nullable ItFrobHopperCommonNSDataWithFillerData(const NSData *_Nonnull data,
                                        NSUInteger length) {
   return newDataForFillerData(data, length);
 }
 
-NSMutableData *_Nullable NSMutableDataWithFillerData(
+NSMutableData *_Nullable ItFrobHopperCommonNSMutableDataWithFillerData(
     const NSData *_Nonnull data, NSUInteger length) {
   return newDataForFillerData(data, length);
 }

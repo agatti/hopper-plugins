@@ -52,7 +52,7 @@
  * @return a NSData instance using the given filler or nil if there is no
  *         memory.
  */
-NSData *_Nullable NSDataWithFiller(const uint8_t filler, NSUInteger length);
+NSData *_Nullable ItFrobHopperCommonNSDataWithFiller(const uint8_t filler, NSUInteger length);
 
 /**
  * Returns a NSMutableData object with the given size and filled with the
@@ -64,7 +64,7 @@ NSData *_Nullable NSDataWithFiller(const uint8_t filler, NSUInteger length);
  * @return a NSMutableData instance using the given filler or nil if there is
  *         no memory.
  */
-NSMutableData *_Nullable NSMutableDataWithFiller(const uint8_t filler,
+NSMutableData *_Nullable ItFrobHopperCommonNSMutableDataWithFiller(const uint8_t filler,
                                                  NSUInteger length);
 
 /**
@@ -80,7 +80,7 @@ NSMutableData *_Nullable NSMutableDataWithFiller(const uint8_t filler,
  * @return a NSData instance using the given filler or nil if there is no
  *         memory.
  */
-NSData *_Nullable NSDataWithFillerData(const NSData *_Nonnull data,
+NSData *_Nullable ItFrobHopperCommonNSDataWithFillerData(const NSData *_Nonnull data,
                                        NSUInteger length);
 
 /**
@@ -96,5 +96,5 @@ NSData *_Nullable NSDataWithFillerData(const NSData *_Nonnull data,
  * @return a NSMutableData instance using the given filler or nil if there is no
  *         memory.
  */
-NSMutableData *_Nullable NSMutableDataWithFillerData(
+NSMutableData *_Nullable ItFrobHopperCommonNSMutableDataWithFillerData(
     const NSData *_Nonnull data, NSUInteger length);

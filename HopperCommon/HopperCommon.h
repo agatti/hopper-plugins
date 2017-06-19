@@ -32,3 +32,7 @@
 #import "NSDataWithFill.h"
 
 #define HopperUtilities ItFrobHopperCommonHopperUtilities
+#define NSDataWithFiller ItFrobHopperCommonNSDataWithFiller
+#define NSMutableDataWithFiller ItFrobHopperCommonNSMutableDataWithFiller
+#define NSDataWithFillerData ItFrobHopperCommonNSDataWithFillerData
+#define NSMutableDataWithFillerData ItFrobHopperCommonNSMutableDataWithFillerData
