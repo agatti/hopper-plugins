@@ -38,7 +38,7 @@
 - (NSArray<NSObject<HPBasicBlock> *> *)allExitBlocks;
 
 // Stack
-- (int16_t)stackPointerOffsetAt:(Address)address;
+- (int32_t)stackPointerOffsetAt:(Address)address;
 
 // Local Labels
 - (BOOL)hasLocalLabelAtAddress:(Address)address;
