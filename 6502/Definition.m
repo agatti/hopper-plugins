@@ -175,7 +175,7 @@
 
 - (NSData *)nopWithSize:(NSUInteger)size
                 andMode:(NSUInteger)cpuMode
-                forFile:(id<HPDisassembledFile>)file {
+                forFile:(NSObject<HPDisassembledFile> *)file {
 
   uint8_t nop =
       (uint8_t)([file.cpuFamily isEqualToString:@"Sunplus"] ? 0xF2 : 0xEA);

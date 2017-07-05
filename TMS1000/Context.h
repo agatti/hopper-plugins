@@ -35,7 +35,7 @@
 #pragma ide diagnostic ignored "OCUnusedClassInspection"
 
 /**
- * CPU Context class for the 6502 disassembler plugin.
+ * CPU Context class for the TMS1000 disassembler plugin.
  */
 @interface ItFrobHopperTMS1000Context : ItFrobHopperBaseContext <CPUContext>
 
@@ -47,7 +47,7 @@
  * @param[in] provider   the CPU disassembly provider instance.
  * @param[in] services   the Hopper Services instance.
  *
- * @return an instance of ItFrobTMS1000Context.
+ * @return an instance of ItFrobHopperTMS1000Context.
  */
 - (instancetype _Nonnull)
   initWithCPU:(NSObject<CPUDefinition> *_Nonnull)definition

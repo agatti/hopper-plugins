@@ -154,7 +154,7 @@
 
 - (NSData *)nopWithSize:(NSUInteger)size
                 andMode:(NSUInteger)cpuMode
-                forFile:(id<HPDisassembledFile>)file {
+                forFile:(NSObject<HPDisassembledFile> *)file {
   return [NSData data];
 }
 
