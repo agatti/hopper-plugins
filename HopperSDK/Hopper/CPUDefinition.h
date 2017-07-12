@@ -1,7 +1,7 @@
 //
 // Hopper Disassembler SDK
 //
-// (c)2016 - Cryptic Apps SARL. All Rights Reserved.
+// (c)2017 - Cryptic Apps SARL. All Rights Reserved.
 // https://www.hopperapp.com
 //
 // THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY
@@ -46,6 +46,9 @@
 - (BOOL)registerIndexIsStackPointer:(NSUInteger)reg ofClass:(RegClass)reg_class;
 - (BOOL)registerIndexIsFrameBasePointer:(NSUInteger)reg ofClass:(RegClass)reg_class;
 - (BOOL)registerIndexIsProgramCounter:(NSUInteger)reg;
+/// Returns true for each special registers, like "CRx" or "DRx" X86 registers for instance
+- (BOOL)registerHasSideEffectForIndex:(NSUInteger)reg andClass:(RegClass)reg_class;
+
 // Returns the name of the frame pointer register, ie, "bp" for x86, or "r7" for ARM.
 - (NSString *)framePointerRegisterNameForFile:(NSObject<HPDisassembledFile>*)file;
 

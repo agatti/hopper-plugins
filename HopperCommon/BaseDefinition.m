@@ -144,6 +144,11 @@ static NSString *const kDefaultSyntax = @"Generic";
   return NO;
 }
 
+- (BOOL)registerHasSideEffectForIndex:(NSUInteger)reg
+                             andClass:(RegClass)reg_class {
+  return NO;
+}
+
 - (NSString *)framePointerRegisterNameForFile:
     (NSObject<HPDisassembledFile> *)file {
   return nil;

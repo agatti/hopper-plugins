@@ -1,7 +1,7 @@
 //
 // Hopper Disassembler SDK
 //
-// (c)2016 - Cryptic Apps SARL. All Rights Reserved.
+// (c)2017 - Cryptic Apps SARL. All Rights Reserved.
 // https://www.hopperapp.com
 //
 // THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY
@@ -26,7 +26,9 @@
 - (void)appendSpacesUntil:(NSUInteger)minLength withMinimumAdded:(NSUInteger)minAdded;
 - (void)append:(nullable NSObject<HPASMLine> *)line;
 
+- (void)appendMnemonic:(nonnull NSString *)name isJump:(BOOL)isJump;
 - (void)appendMnemonic:(nonnull NSString *)name;
+- (void)appendJumpMnemonic:(nonnull NSString *)name;
 - (void)appendRegister:(nonnull NSString *)name;
 - (void)appendRegister:(nonnull NSString *)name ofClass:(RegClass)regCls andIndex:(NSUInteger)regIndex;
 - (void)appendName:(nonnull NSString *)name atAddress:(Address)address;
@@ -37,6 +39,7 @@
 - (void)appendCFString:(nonnull NSString *)string;
 - (void)appendClass:(nonnull NSString *)string;
 - (void)appendSelector:(nonnull NSString *)string;
+- (void)appendProtocol:(nonnull NSString *)string;
 - (void)appendAddress:(Address)address;
 - (void)appendFormattedAddress:(nonnull NSString *)string withValue:(Address)addressValue;
 - (void)appendHexByte:(uint8_t)byte;

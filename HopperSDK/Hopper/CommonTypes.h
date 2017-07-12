@@ -1,7 +1,7 @@
 //
 // Hopper Disassembler SDK
 //
-// (c)2016 - Cryptic Apps SARL. All Rights Reserved.
+// (c)2017 - Cryptic Apps SARL. All Rights Reserved.
 // https://www.hopperapp.com
 //
 // THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY
@@ -157,6 +157,10 @@ HP_BEGIN_DECL_ENUM(NSUInteger, RegClass) {
     RegClass_X86_MMX,
     RegClass_X86_SSE,
     RegClass_X86_AVX,
+    RegClass_X86_CR,
+    RegClass_X86_DR,
+    RegClass_X86_Special,
+    RegClass_X86_MemMgmt,
     RegClass_X86_SEG,
 
     // ARM

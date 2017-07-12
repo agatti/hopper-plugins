@@ -27,8 +27,8 @@
 #import "Definition.h"
 #import "Common.h"
 #import "Context.h"
-#import "ModelManager.h"
 #import "HopperCommon.h"
+#import "ModelManager.h"
 
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCUnusedClassInspection"

@@ -52,7 +52,7 @@ CPU backends currently supported: 6502, 65C02, 65N02, 65R02, 65S02, HuC6280, MEL
 <tr><td>HKE65SC105</td><td>Generic &rarr; 65C02</td><td><a href="http://pdf.datasheetarchive.com/datasheetsmain/Datasheets-112/DSAP0049001.pdf">Datasheet</a></td></tr>
 <tr><td rowspan="2">HudsonSoft</td><td>HuC6280</td><td>HudsonSoft &rarr; HuC6280</td><td>N/A</td></tr>
 <tr><td>HuC6280A</td><td>HudsonSoft &rarr; HuC6280</td><td>N/A</td></tr>
-<tr><td rowspan="17">Mitsubishi</td><td>M37408</td><td>Mitsubishi &rarr; M740</td><td><a href="http://pdf.datasheetarchive.com/indexerfiles/Datasheet-03/DSA0039232.pdf">Datasheet</a></td></tr>
+<tr><td rowspan="17">Mitsubishi</td><td>M37408</td><td>Mitsubishi &rarr; MELPS740</td><td><a href="http://pdf.datasheetarchive.com/indexerfiles/Datasheet-03/DSA0039232.pdf">Datasheet</a></td></tr>
 <tr><td>M37409</td><td>Mitsubishi &rarr; MELPS740</td><td><a href="http://pdf.datasheetarchive.com/indexerfiles/Datasheet-03/DSA0039232.pdf">Datasheet</a></td></tr>
 <tr><td>M37410</td><td>Mitsubishi &rarr; MELPS740</td><td><a href="http://pdf.datasheetarchive.com/indexerfiles/Datasheet-03/DSA0039232.pdf">Datasheet</a></td></tr>
 <tr><td>M37412</td><td>Mitsubishi &rarr; MELPS740</td><td><a href="http://pdf.datasheetarchive.com/indexerfiles/Datasheet-03/DSA0039232.pdf">Datasheet</a></td></tr>
@@ -400,7 +400,7 @@ This tool plugin currently allows to map the full address space of the CPU chose
 
 Checkout from Git, open `HopperPlugins.xcworkspace` in Xcode/AppCode, select the plugin you are interested in and then let Xcode/AppCode build the associated project; the plugin will be automatically copied to the appropriate paths (`~/Library/Application Support/Hopper/Plugins/v4/{CPUs,Loaders,Tools}`).  Once done, please close any open instances of Hopper and restart them.  That's all there is to it.
 
-Keep in mind that these plugins require **Hopper 4.2.2** or later to work.  They may work on older versions but they are neither tested nor supported on anything older than v4.2.2.
+Keep in mind that these plugins require **Hopper 4.2.8** or later to work.  They may work on older versions but they are neither tested nor supported on anything older than v4.2.8.
 
 If you are unable or unwilling to update your Hopper installation from v3 to v4 then build the code marked by the `v3api` git tag.  However, since the Hopper author allowed free upgrades from v3 licences to v4 licenses, v3 plugins are effectively unsupported as of v4 release.  It is strongly suggested to update your Hopper installation at your earliest opportunity.
 

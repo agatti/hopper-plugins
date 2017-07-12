@@ -280,7 +280,8 @@ buildMnemonicString:(DisasmStruct *_Nonnull)disasm
        withServices:(NSObject<HPHopperServices> *_Nonnull)services {
 
   NSObject<HPASMLine> *line = [services blankASMLine];
-  [line appendMnemonic:@(disasm->instruction.mnemonic)];
+  [line appendMnemonic:@(disasm->instruction.mnemonic)
+                isJump:disasm->instruction.branchType != DISASM_BRANCH_NONE];
   return line;
 }
 
