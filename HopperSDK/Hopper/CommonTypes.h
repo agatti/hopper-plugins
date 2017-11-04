@@ -68,12 +68,14 @@ HP_BEGIN_DECL_ENUM(uint8_t, ByteType) {
     Type_ASCII,
     Type_Unicode,
 
-    Type_Data,      /// METATYPE : Only used for searching, no bytes have this type!
+    Type_Align = 0x3F,
+
+    Type_Data = 0x40,      /// METATYPE : Only used for searching, no bytes have this type!
     
     Type_Code,
     Type_Procedure,
 
-    Type_Structure
+    Type_Structure,
 }
 HP_END_DECL_ENUM(ByteType);
 
@@ -116,6 +118,8 @@ HP_BEGIN_DECL_ENUM(NSUInteger, ArgFormat) {
 
     Format_Structured,
     Format_Enum,
+
+    Format_AddressDiff,
 
     Format_Negate = 0x20,
     Format_LeadingZeroes = 0x40,
@@ -210,7 +214,8 @@ HP_END_DECL_ENUM(DFTAddressWidth);
 
 HP_BEGIN_DECL_OPTIONS(NSUInteger, FileLoaderOptions) {
     FLS_None = 0,
-    FLS_ParseObjectiveC = 1
+    FLS_ParseObjectiveC = 1,
+    FLS_ParseExceptions = 2
 }
 HP_END_DECL_OPTIONS(FileLoaderOptions);
 

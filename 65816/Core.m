@@ -349,19 +349,11 @@ buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
 
   switch ((AccumulatorType)metadata->accumulatorType) {
   case AccumulatorA:
-    if ((Mode)metadata->mode == ModeAccumulator) {
-      [line appendRawString:@"A"];
-    } else {
-      [line appendRawString:@"A,"];
-    }
+    [line appendRawString:(Mode) metadata->mode == ModeAccumulator ? @"A" : @"A,"];
     break;
 
   case AccumulatorB:
-    if ((Mode)metadata->mode == ModeAccumulator) {
-      [line appendRawString:@"B"];
-    } else {
-      [line appendRawString:@"B,"];
-    }
+    [line appendRawString:(Mode) metadata->mode == ModeAccumulator ? @"B" : @"B,"];
     break;
 
   case AccumulatorDefault:
