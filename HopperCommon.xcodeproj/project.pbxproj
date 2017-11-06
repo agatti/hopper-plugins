@@ -97,13 +97,13 @@
 				68259B2319B713170060713A /* NSDataWithFill.m */,
 				682E8A3A19C7AA4800E2BDC8 /* BaseContext.h */,
 				682E8A3B19C7AA4800E2BDC8 /* BaseContext.m */,
+				AB5F6E412404A46B1AFFBFA5 /* CPUProvider.h */,
 				68A4254E1ECCD76F00FCA83C /* ModelManager.h */,
 				68A4254F1ECCD76F00FCA83C /* ModelManager.m */,
-				AB5F6815ECD9B929DB790E64 /* BaseDefinition.m */,
 				AB5F6DED1C772B93A64FA306 /* BaseDefinition.h */,
+				AB5F6815ECD9B929DB790E64 /* BaseDefinition.m */,
 				AB5F6FF33884B7C388E208F6 /* Miscellaneous.h */,
 				AB5F6AB711E9EEAE8060D349 /* Miscellaneous.m */,
-				AB5F6E412404A46B1AFFBFA5 /* CPUProvider.h */,
 			);
 			path = HopperCommon;
 			sourceTree = "<group>";
