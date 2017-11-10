@@ -1,17 +1,17 @@
 /*
  Copyright (c) 2014-2017, Alessandro Gatti - frob.it
  All rights reserved.
- 
+
  Redistribution and use in source and binary forms, with or without
  modification, are permitted provided that the following conditions are met:
- 
+
  1. Redistributions of source code must retain the above copyright notice, this
  list of conditions and the following disclaimer.
- 
+
  2. Redistributions in binary form must reproduce the above copyright notice,
  this list of conditions and the following disclaimer in the documentation
  and/or other materials provided with the distribution.
- 
+
  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -28,21 +28,28 @@
 
 #import <Hopper/Hopper.h>
 
-@protocol HPHopperServices;
+@interface ItFrobHopperCommonHopper65xxUtilities : NSObject
 
-Address SetAddressOperand(NSObject<HPDisassembledFile> *_Nonnull file,
-                          DisasmStruct *_Nonnull disasm, NSUInteger operand,
-                          uint32_t size, uint32_t effectiveSize,
-                          uint32_t offset, uint32_t indexRegisters);
++ (Address)fillAddressOperand:(NSUInteger)operand
+                       inFile:(NSObject<HPDisassembledFile> *_Nonnull)file
+                    forStruct:(DisasmStruct *_Nonnull)disasm
+                     withSize:(NSUInteger)size
+             andEffectiveSize:(NSUInteger)effectiveSize
+                   withOffset:(NSUInteger)offset
+      usingIndexRegistersMask:(NSUInteger)indexRegisters;
 
-Address SetRelativeAddressOperand(NSObject<HPDisassembledFile> *_Nonnull file,
-                                  DisasmStruct *_Nonnull disasm,
-                                  NSUInteger operand, uint32_t size,
-                                  uint32_t effectiveSize, uint32_t offset);
++ (Address)fillRelativeAddressOperand:(NSUInteger)operand
+                               inFile:(NSObject<HPDisassembledFile> *_Nonnull)file
+                            forStruct:(DisasmStruct *_Nonnull)disasm
+                             withSize:(NSUInteger)size
+                     andEffectiveSize:(NSUInteger)effectiveSize
+                           withOffset:(NSUInteger)offset;
 
-void SetConstantOperand(NSObject<HPDisassembledFile> *_Nonnull file,
-                        DisasmStruct *_Nonnull disasm, int operand,
-                        uint32_t size, uint32_t offset);
++ (void)fillConstantOperand:(NSUInteger)operand
+                     inFile:(NSObject<HPDisassembledFile> *_Nonnull)file
+                  forStruct:(DisasmStruct *_Nonnull)disasm
+                   withSize:(NSUInteger)size
+                  andOffset:(NSUInteger)offset;
 
 /**
  * Calculates the signed displacement for the given branch target value.
@@ -51,7 +58,7 @@ void SetConstantOperand(NSObject<HPDisassembledFile> *_Nonnull file,
  *
  * @return the calculated relative displacement.
  */
-int64_t CalculateRelativeJumpTarget(int64_t target);
++ (int64_t)calculateRelativeJumpTarget:(int64_t)target;
 
 /**
  * Formats a hexadecimal value using 6502-like notation.
@@ -67,6 +74,9 @@ int64_t CalculateRelativeJumpTarget(int64_t target);
  *
  * @return the formatted string or nil if an invalid number of bits is used.
  */
-NSString *_Nullable FormatHexadecimalValue(int64_t value, BOOL isSigned,
-                                           BOOL hasLeadingZeroes,
-                                           uint32_t bits);
++ (NSString *_Nullable)formatHexadecimalValue:(int64_t)value
+                                displaySigned:(BOOL)isSigned
+                            showLeadingZeroes:(BOOL)hasLeadingZeroes
+                                   usingWidth:(NSUInteger)bits;
+
+@end

@@ -158,7 +158,7 @@ static const char *kOpcodeNames[OpcodesCount] = {"MOVE", "ADD",  "AND",  "XOR",
 
 + (NSString *_Nonnull)family {
   @throw [NSException
-      exceptionWithName:FRBHopperExceptionName
+      exceptionWithName:HopperPluginExceptionName
                  reason:[NSString stringWithFormat:@"Forgot to implement %s",
                                                    __PRETTY_FUNCTION__]
                userInfo:nil];
@@ -166,7 +166,7 @@ static const char *kOpcodeNames[OpcodesCount] = {"MOVE", "ADD",  "AND",  "XOR",
 
 + (NSString *_Nonnull)model {
   @throw [NSException
-      exceptionWithName:FRBHopperExceptionName
+      exceptionWithName:HopperPluginExceptionName
                  reason:[NSString stringWithFormat:@"Forgot to implement %s",
                                                    __PRETTY_FUNCTION__]
                userInfo:nil];
@@ -178,7 +178,7 @@ static const char *kOpcodeNames[OpcodesCount] = {"MOVE", "ADD",  "AND",  "XOR",
 
 + (int)addressSpaceWidth {
   @throw [NSException
-      exceptionWithName:FRBHopperExceptionName
+      exceptionWithName:HopperPluginExceptionName
                  reason:[NSString stringWithFormat:@"Forgot to implement %s",
                                                    __PRETTY_FUNCTION__]
                userInfo:nil];

@@ -1,17 +1,17 @@
 /*
  Copyright (c) 2014-2017, Alessandro Gatti - frob.it
  All rights reserved.
- 
+
  Redistribution and use in source and binary forms, with or without
  modification, are permitted provided that the following conditions are met:
- 
+
  1. Redistributions of source code must retain the above copyright notice, this
  list of conditions and the following disclaimer.
- 
+
  2. Redistributions in binary form must reproduce the above copyright notice,
  this list of conditions and the following disclaimer in the documentation
  and/or other materials provided with the distribution.
- 
+
  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -26,7 +26,6 @@
 
 #import "Core.h"
 #import "Definition.h"
-#import "FRB65xxHelpers.h"
 #import "HopperCommon.h"
 
 #pragma clang diagnostic push
@@ -69,7 +68,7 @@ formatHexadecimal:(const DisasmOperand *_Nonnull)operand
 
 + (NSString *_Nonnull)family {
   @throw [NSException
-      exceptionWithName:FRBHopperExceptionName
+      exceptionWithName:HopperPluginExceptionName
                  reason:[NSString stringWithFormat:@"Forgot to override %s",
                                                    __PRETTY_FUNCTION__]
                userInfo:nil];
@@ -77,7 +76,7 @@ formatHexadecimal:(const DisasmOperand *_Nonnull)operand
 
 + (NSString *_Nonnull)model {
   @throw [NSException
-      exceptionWithName:FRBHopperExceptionName
+      exceptionWithName:HopperPluginExceptionName
                  reason:[NSString stringWithFormat:@"Forgot to override %s",
                                                    __PRETTY_FUNCTION__]
                userInfo:nil];
@@ -89,7 +88,7 @@ formatHexadecimal:(const DisasmOperand *_Nonnull)operand
 
 + (int)addressSpaceWidth {
   @throw [NSException
-      exceptionWithName:FRBHopperExceptionName
+      exceptionWithName:HopperPluginExceptionName
                  reason:[NSString stringWithFormat:@"Forgot to override %s",
                                                    __PRETTY_FUNCTION__]
                userInfo:nil];
@@ -97,7 +96,7 @@ formatHexadecimal:(const DisasmOperand *_Nonnull)operand
 
 + (NSData *_Nonnull)nopOpcodeSignature {
   @throw [NSException
-      exceptionWithName:FRBHopperExceptionName
+      exceptionWithName:HopperPluginExceptionName
                  reason:[NSString stringWithFormat:@"Forgot to override %s",
                                                    __PRETTY_FUNCTION__]
                userInfo:nil];
@@ -349,11 +348,13 @@ buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
 
   switch ((AccumulatorType)metadata->accumulatorType) {
   case AccumulatorA:
-    [line appendRawString:(Mode) metadata->mode == ModeAccumulator ? @"A" : @"A,"];
+    [line
+        appendRawString:(Mode)metadata->mode == ModeAccumulator ? @"A" : @"A,"];
     break;
 
   case AccumulatorB:
-    [line appendRawString:(Mode) metadata->mode == ModeAccumulator ? @"B" : @"B,"];
+    [line
+        appendRawString:(Mode)metadata->mode == ModeAccumulator ? @"B" : @"B,"];
     break;
 
   case AccumulatorDefault:
@@ -642,7 +643,7 @@ buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
 andFillMetadata:(FRBInstructionUserData *_Nonnull)metadata {
 
   @throw [NSException
-      exceptionWithName:FRBHopperExceptionName
+      exceptionWithName:HopperPluginExceptionName
                  reason:[NSString stringWithFormat:@"Forgot to override %s",
                                                    __PRETTY_FUNCTION__]
                userInfo:nil];
@@ -721,7 +722,13 @@ andFillMetadata:(FRBInstructionUserData *_Nonnull)metadata {
   switch (opcode->addressMode) {
   case ModeAbsolute:
   case ModeAbsoluteIndirect:
-    SetAddressOperand(file, disasm, 0, 16, 24, baseOffset + 1, 0);
+    [Hopper65xxUtilities fillAddressOperand:0
+                                     inFile:file
+                                  forStruct:disasm
+                                   withSize:16
+                           andEffectiveSize:24
+                                 withOffset:baseOffset + 1
+                    usingIndexRegistersMask:0];
     break;
 
   case ModeProgramCounterRelativeLong: {
@@ -739,24 +746,39 @@ andFillMetadata:(FRBInstructionUserData *_Nonnull)metadata {
         DISASM_OPERAND_MEMORY_TYPE | DISASM_OPERAND_ABSOLUTE;
     disasm->operand[0].size = 24;
     disasm->operand[0].immediateValue = address;
-    [HopperUtilities setDefaultFormat:Format_Address
-                          forArgument:0
-                            atAddress:disasm->virtualAddr
-                               inFile:file];
+    disasm->operand[0].userData[0] = (uint8_t)Format_Address;
     break;
   }
 
   case ModeAbsoluteLong:
   case ModeAbsoluteLongIndexed:
-    SetAddressOperand(file, disasm, 0, 24, 24, baseOffset + 1, 0);
+    [Hopper65xxUtilities fillAddressOperand:0
+                                     inFile:file
+                                  forStruct:disasm
+                                   withSize:24
+                           andEffectiveSize:24
+                                 withOffset:baseOffset + 1
+                    usingIndexRegistersMask:0];
     break;
 
   case ModeAbsoluteIndexedX:
-    SetAddressOperand(file, disasm, 0, 16, 24, baseOffset + 1, RegisterX);
+    [Hopper65xxUtilities fillAddressOperand:0
+                                     inFile:file
+                                  forStruct:disasm
+                                   withSize:16
+                           andEffectiveSize:24
+                                 withOffset:baseOffset + 1
+                    usingIndexRegistersMask:RegisterX];
     break;
 
   case ModeAbsoluteIndexedY:
-    SetAddressOperand(file, disasm, 0, 16, 24, baseOffset + 1, RegisterY);
+    [Hopper65xxUtilities fillAddressOperand:0
+                                     inFile:file
+                                  forStruct:disasm
+                                   withSize:16
+                           andEffectiveSize:24
+                                 withOffset:baseOffset + 1
+                    usingIndexRegistersMask:RegisterY];
     break;
 
   case ModeImmediate: {
@@ -767,16 +789,32 @@ andFillMetadata:(FRBInstructionUserData *_Nonnull)metadata {
     if (registersMask & (RegisterIndexX | RegisterIndexY)) {
       if ((mode == CPUAccumulator8Index16) ||
           (mode == CPUAccumulator16Index16)) {
-        SetConstantOperand(file, disasm, 0, 16, baseOffset + 1);
+        [Hopper65xxUtilities fillConstantOperand:0
+                                          inFile:file
+                                       forStruct:disasm
+                                        withSize:16
+                                       andOffset:baseOffset + 1];
       } else {
-        SetConstantOperand(file, disasm, 0, 8, baseOffset + 1);
+        [Hopper65xxUtilities fillConstantOperand:0
+                                          inFile:file
+                                       forStruct:disasm
+                                        withSize:8
+                                       andOffset:baseOffset + 1];
       }
     } else {
       if ((mode == CPUAccumulator16Index8) ||
           (mode == CPUAccumulator16Index16)) {
-        SetConstantOperand(file, disasm, 0, 16, baseOffset + 1);
+        [Hopper65xxUtilities fillConstantOperand:0
+                                          inFile:file
+                                       forStruct:disasm
+                                        withSize:16
+                                       andOffset:baseOffset + 1];
       } else {
-        SetConstantOperand(file, disasm, 0, 8, baseOffset + 1);
+        [Hopper65xxUtilities fillConstantOperand:0
+                                          inFile:file
+                                       forStruct:disasm
+                                        withSize:8
+                                       andOffset:baseOffset + 1];
       }
     }
 
@@ -785,7 +823,13 @@ andFillMetadata:(FRBInstructionUserData *_Nonnull)metadata {
 
   case ModeDirectIndexedX:
   case ModeDirectIndexedIndirect:
-    SetAddressOperand(file, disasm, 0, 8, 24, baseOffset + 1, RegisterX);
+    [Hopper65xxUtilities fillAddressOperand:0
+                                     inFile:file
+                                  forStruct:disasm
+                                   withSize:8
+                           andEffectiveSize:24
+                                 withOffset:baseOffset + 1
+                    usingIndexRegistersMask:RegisterX];
     break;
 
   case ModeDirect:
@@ -794,43 +838,113 @@ andFillMetadata:(FRBInstructionUserData *_Nonnull)metadata {
   case ModeStackRelativeIndirectIndexed:
   case ModeDirectIndirectLong:
   case ModeDirectIndirectLongIndexed:
-    SetAddressOperand(file, disasm, 0, 8, 24, baseOffset + 1, 0);
+    [Hopper65xxUtilities fillAddressOperand:0
+                                     inFile:file
+                                  forStruct:disasm
+                                   withSize:8
+                           andEffectiveSize:24
+                                 withOffset:baseOffset + 1
+                    usingIndexRegistersMask:0];
     break;
 
   case ModeDirectIndexedY:
   case ModeDirectIndirectIndexedY:
-    SetAddressOperand(file, disasm, 0, 8, 24, baseOffset + 1, RegisterY);
+    [Hopper65xxUtilities fillAddressOperand:0
+                                     inFile:file
+                                  forStruct:disasm
+                                   withSize:8
+                           andEffectiveSize:24
+                                 withOffset:baseOffset + 1
+                    usingIndexRegistersMask:RegisterY];
     break;
 
   case ModeBlockMove:
-    SetConstantOperand(file, disasm, 0, 8, baseOffset + 1);
-    SetConstantOperand(file, disasm, 1, 8, baseOffset + 1 + sizeof(uint8_t));
+    [Hopper65xxUtilities fillConstantOperand:0
+                                      inFile:file
+                                   forStruct:disasm
+                                    withSize:8
+                                   andOffset:baseOffset + 1];
+    [Hopper65xxUtilities fillConstantOperand:1
+                                      inFile:file
+                                   forStruct:disasm
+                                    withSize:8
+                                   andOffset:baseOffset + 2];
     break;
 
   case ModeDirectMemoryAccess:
   case ModeDirectBitAddressing:
-    SetAddressOperand(file, disasm, 1, 8, 24, baseOffset + 1, 0);
-    SetConstantOperand(file, disasm, 0, 8, baseOffset + 1 + sizeof(uint8_t));
+    [Hopper65xxUtilities fillConstantOperand:0
+                                      inFile:file
+                                   forStruct:disasm
+                                    withSize:8
+                                   andOffset:baseOffset + 2];
+    [Hopper65xxUtilities fillAddressOperand:1
+                                     inFile:file
+                                  forStruct:disasm
+                                   withSize:8
+                           andEffectiveSize:24
+                                 withOffset:baseOffset + 1
+                    usingIndexRegistersMask:0];
     break;
 
   case ModeDirectMemoryAccessIndexed:
-    SetAddressOperand(file, disasm, 1, 8, 24, baseOffset + 1, RegisterX);
-    SetConstantOperand(file, disasm, 0, 8, baseOffset + 1 + sizeof(uint8_t));
+    [Hopper65xxUtilities fillConstantOperand:0
+                                      inFile:file
+                                   forStruct:disasm
+                                    withSize:8
+                                   andOffset:baseOffset + 2];
+    [Hopper65xxUtilities fillAddressOperand:1
+                                     inFile:file
+                                  forStruct:disasm
+                                   withSize:8
+                           andEffectiveSize:24
+                                 withOffset:baseOffset + 1
+                    usingIndexRegistersMask:RegisterX];
     break;
 
   case ModeAbsoluteBitAddressing:
-    SetAddressOperand(file, disasm, 1, 16, 24, baseOffset + 1, 0);
-    SetConstantOperand(file, disasm, 0, 8, baseOffset + 1 + sizeof(uint16_t));
+    [Hopper65xxUtilities fillConstantOperand:0
+                                      inFile:file
+                                   forStruct:disasm
+                                    withSize:8
+                                   andOffset:baseOffset + 3];
+    [Hopper65xxUtilities fillAddressOperand:1
+                                     inFile:file
+                                  forStruct:disasm
+                                   withSize:16
+                           andEffectiveSize:24
+                                 withOffset:baseOffset + 1
+                    usingIndexRegistersMask:0];
     break;
 
   case ModeAbsoluteMemoryAddress:
-    SetAddressOperand(file, disasm, 1, 16, 24, baseOffset + 1, 0);
-    SetConstantOperand(file, disasm, 0, 8, baseOffset + 1 + sizeof(uint16_t));
+    [Hopper65xxUtilities fillConstantOperand:0
+                                      inFile:file
+                                   forStruct:disasm
+                                    withSize:8
+                                   andOffset:baseOffset + 3];
+    [Hopper65xxUtilities fillAddressOperand:1
+                                     inFile:file
+                                  forStruct:disasm
+                                   withSize:16
+                           andEffectiveSize:24
+                                 withOffset:baseOffset + 1
+                    usingIndexRegistersMask:0];
     break;
 
   case ModeAbsoluteMemoryAddressIndexed:
-    SetAddressOperand(file, disasm, 1, 16, 24, baseOffset + 1, RegisterX);
-    SetConstantOperand(file, disasm, 0, 8, baseOffset + 1 + sizeof(uint16_t));
+    [Hopper65xxUtilities fillConstantOperand:0
+                                      inFile:file
+                                   forStruct:disasm
+                                    withSize:8
+                                   andOffset:baseOffset + 3];
+    [Hopper65xxUtilities fillAddressOperand:1
+                                     inFile:file
+                                  forStruct:disasm
+                                   withSize:16
+                           andEffectiveSize:24
+                                 withOffset:baseOffset + 1
+                    usingIndexRegistersMask:RegisterX];
     break;
 
   case ModeAccumulator:
@@ -843,7 +957,7 @@ andFillMetadata:(FRBInstructionUserData *_Nonnull)metadata {
         @"Internal error: non-branch opcode with address mode %lu found";
 
     @throw [NSException
-        exceptionWithName:FRBHopperExceptionName
+        exceptionWithName:HopperPluginExceptionName
                    reason:[NSString stringWithFormat:exceptionFormat,
                                                      (unsigned long)opcode->
                                                      addressMode]
@@ -875,7 +989,11 @@ andFillMetadata:(FRBInstructionUserData *_Nonnull)metadata {
   switch (opcode->addressMode) {
 
   case ModeAbsoluteLong:
-    SetConstantOperand(file, disasm, 0, 24, 1);
+    [Hopper65xxUtilities fillConstantOperand:0
+                                      inFile:file
+                                   forStruct:disasm
+                                    withSize:24
+                                   andOffset:1];
     disasm->instruction.addressValue =
         (Address)disasm->operand[0].immediateValue;
     disasm->operand[0].isBranchDestination = YES;
@@ -883,14 +1001,24 @@ andFillMetadata:(FRBInstructionUserData *_Nonnull)metadata {
 
   case ModeDirectIndirect:
     disasm->instruction.addressValue =
-        SetAddressOperand(file, disasm, 0, 8, 24, 1, 0);
+        [Hopper65xxUtilities fillAddressOperand:0
+                                         inFile:file
+                                      forStruct:disasm
+                                       withSize:8
+                               andEffectiveSize:24
+                                     withOffset:1
+                        usingIndexRegistersMask:0];
     disasm->operand[0].isBranchDestination = YES;
     break;
 
   case ModeAbsolute:
   case ModeAbsoluteIndirect:
   case ModeAbsoluteIndexedIndirect:
-    SetConstantOperand(file, disasm, 0, 16, 1);
+    [Hopper65xxUtilities fillConstantOperand:0
+                                      inFile:file
+                                   forStruct:disasm
+                                    withSize:16
+                                   andOffset:1];
     disasm->instruction.addressValue =
         (Address)disasm->operand[0].immediateValue;
     disasm->operand[0].isBranchDestination = YES;
@@ -898,7 +1026,12 @@ andFillMetadata:(FRBInstructionUserData *_Nonnull)metadata {
 
   case ModeProgramCounterRelative:
     disasm->instruction.addressValue =
-        SetRelativeAddressOperand(file, disasm, 0, 8, 24, 1);
+        [Hopper65xxUtilities fillRelativeAddressOperand:0
+                                                 inFile:file
+                                              forStruct:disasm
+                                               withSize:8
+                                       andEffectiveSize:24
+                                             withOffset:1];
     disasm->operand[0].isBranchDestination = YES;
     break;
 
@@ -922,18 +1055,48 @@ andFillMetadata:(FRBInstructionUserData *_Nonnull)metadata {
   }
 
   case ModeDirectBitAddressingProgramCounterRelative:
-    SetAddressOperand(file, disasm, 1, 8, 24, 1, 0);
-    SetConstantOperand(file, disasm, 0, 8, 1 + sizeof(uint8_t));
-    disasm->instruction.addressValue = SetRelativeAddressOperand(
-        file, disasm, 2, 8, 24, 1 + (sizeof(uint8_t) * 2));
+    [Hopper65xxUtilities fillConstantOperand:0
+                                      inFile:file
+                                   forStruct:disasm
+                                    withSize:8
+                                   andOffset:2];
+    [Hopper65xxUtilities fillAddressOperand:1
+                                     inFile:file
+                                  forStruct:disasm
+                                   withSize:8
+                           andEffectiveSize:24
+                                 withOffset:1
+                    usingIndexRegistersMask:0];
+    disasm->instruction.addressValue =
+        [Hopper65xxUtilities fillRelativeAddressOperand:2
+                                                 inFile:file
+                                              forStruct:disasm
+                                               withSize:8
+                                       andEffectiveSize:24
+                                             withOffset:3];
     disasm->operand[2].isBranchDestination = YES;
     break;
 
   case ModeDirectBitAddressingAbsolute:
-    SetAddressOperand(file, disasm, 1, 16, 24, 1, 0);
-    SetConstantOperand(file, disasm, 0, 8, 1 + sizeof(uint16_t));
-    disasm->instruction.addressValue = SetRelativeAddressOperand(
-        file, disasm, 2, 8, 24, 1 + (sizeof(uint8_t) + sizeof(uint16_t)));
+    [Hopper65xxUtilities fillConstantOperand:0
+                                      inFile:file
+                                   forStruct:disasm
+                                    withSize:8
+                                   andOffset:3];
+    [Hopper65xxUtilities fillAddressOperand:1
+                                     inFile:file
+                                  forStruct:disasm
+                                   withSize:16
+                           andEffectiveSize:24
+                                 withOffset:1
+                    usingIndexRegistersMask:0];
+    disasm->instruction.addressValue =
+        [Hopper65xxUtilities fillRelativeAddressOperand:2
+                                                 inFile:file
+                                              forStruct:disasm
+                                               withSize:8
+                                       andEffectiveSize:24
+                                             withOffset:4];
     disasm->operand[2].isBranchDestination = YES;
     break;
 
@@ -945,7 +1108,7 @@ andFillMetadata:(FRBInstructionUserData *_Nonnull)metadata {
     NSString *exceptionFormat =
         @"Internal error: branch opcode with address mode %lu found";
     @throw [NSException
-        exceptionWithName:FRBHopperExceptionName
+        exceptionWithName:HopperPluginExceptionName
                    reason:[NSString stringWithFormat:exceptionFormat,
                                                      (unsigned long)opcode->
                                                      addressMode]
@@ -963,12 +1126,15 @@ static NSString *_Nonnull const kValueTooLarge = @"Invalid bits count (%d)";
                             hasLeadingZeroes:(BOOL)hasLeadingZeroes
                                      andSize:(uint32_t)size {
 
-  NSString *formattedValue =
-      FormatHexadecimalValue(value, isSigned, hasLeadingZeroes, size);
+  NSString *_Nullable formattedValue =
+      [Hopper65xxUtilities formatHexadecimalValue:value
+                                    displaySigned:isSigned
+                                showLeadingZeroes:hasLeadingZeroes
+                                       usingWidth:size];
 
   if (!formattedValue) {
     @throw [NSException
-        exceptionWithName:FRBHopperExceptionName
+        exceptionWithName:HopperPluginExceptionName
                    reason:[NSString stringWithFormat:kValueTooLarge, size]
                  userInfo:nil];
   }

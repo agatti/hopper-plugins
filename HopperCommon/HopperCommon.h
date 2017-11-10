@@ -30,9 +30,12 @@
 #import "Miscellaneous.h"
 #import "ModelManager.h"
 #import "NSDataWithFill.h"
+#import "65xxUtilities.h"
 
 #define HopperUtilities ItFrobHopperCommonHopperUtilities
 #define NSDataWithFiller ItFrobHopperCommonNSDataWithFiller
 #define NSMutableDataWithFiller ItFrobHopperCommonNSMutableDataWithFiller
 #define NSDataWithFillerData ItFrobHopperCommonNSDataWithFillerData
 #define NSMutableDataWithFillerData ItFrobHopperCommonNSMutableDataWithFillerData
+#define Hopper65xxUtilities ItFrobHopperCommonHopper65xxUtilities
+#define HopperPluginExceptionName ItFrobHopperCommonHopperPluginExceptionName

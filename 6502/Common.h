@@ -1,17 +1,17 @@
 /*
  Copyright (c) 2014-2017, Alessandro Gatti - frob.it
  All rights reserved.
- 
+
  Redistribution and use in source and binary forms, with or without
  modification, are permitted provided that the following conditions are met:
- 
+
  1. Redistributions of source code must retain the above copyright notice, this
  list of conditions and the following disclaimer.
- 
+
  2. Redistributions in binary form must reproduce the above copyright notice,
  this list of conditions and the following disclaimer in the documentation
  and/or other materials provided with the distribution.
- 
+
  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -340,7 +340,7 @@ static const Mnemonic kMnemonics[kOpcodesCount] = {
     {"BBR5", DISASM_BRANCH_JE, OpcodeCategoryBranches, NO},
     {"BBR6", DISASM_BRANCH_JE, OpcodeCategoryBranches, NO},
     {"BBR7", DISASM_BRANCH_JE, OpcodeCategoryBranches, NO},
-    {"BBS", DISASM_BRANCH_JE, OpcodeCategoryBranches, NO},
+    {"BBS", DISASM_BRANCH_JNE, OpcodeCategoryBranches, NO},
     {"BBS0", DISASM_BRANCH_JNE, OpcodeCategoryBranches, NO},
     {"BBS1", DISASM_BRANCH_JNE, OpcodeCategoryBranches, NO},
     {"BBS2", DISASM_BRANCH_JNE, OpcodeCategoryBranches, NO},

@@ -33,9 +33,6 @@
       <FileRef
          location = "group:HopperCommon.xcodeproj">
       </FileRef>
-      <FileRef
-         location = "group:65xxCommon.xcodeproj">
-      </FileRef>
    </Group>
    <Group
       location = "container:"

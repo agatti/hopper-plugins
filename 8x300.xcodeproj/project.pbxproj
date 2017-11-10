@@ -56,10 +56,10 @@
 			children = (
 				683CF0AC19FB8AF500CCABAE /* Core.h */,
 				683CF0AD19FB8AF500CCABAE /* Core.m */,
-				683CF0A919FB89E700CCABAE /* Generic8x305.h */,
-				683CF0AA19FB89E700CCABAE /* Generic8x305.m */,
 				68C0458519C832F6005E1B4D /* Generic8x300.h */,
 				68C0458619C832F6005E1B4D /* Generic8x300.m */,
+				683CF0A919FB89E700CCABAE /* Generic8x305.h */,
+				683CF0AA19FB89E700CCABAE /* Generic8x305.m */,
 			);
 			name = Chips;
 			sourceTree = "<group>";
@@ -69,9 +69,9 @@
 			children = (
 				AB5F61CC2680600E4DC96E64 /* ASFormat.h */,
 				AB5F6ECA39ACB2E064486C1A /* ASFormat.m */,
+				AB5F6F61826FBE2C3C0F38D7 /* InstructionFormatter.h */,
 				AB5F6E3F99227FE69F376190 /* MCCAPFormat.h */,
 				AB5F6E83D9E0C6728163EBAB /* MCCAPFormat.m */,
-				AB5F6F61826FBE2C3C0F38D7 /* InstructionFormatter.h */,
 			);
 			name = Formatters;
 			sourceTree = "<group>";

@@ -39,7 +39,7 @@ static const uint8_t kFlippedBitsTable[16] = {
 
 + (NSString *_Nonnull)family {
   @throw [NSException
-      exceptionWithName:FRBHopperExceptionName
+      exceptionWithName:HopperPluginExceptionName
                  reason:[NSString stringWithFormat:@"Forgot to implement %s",
                                                    __PRETTY_FUNCTION__]
                userInfo:nil];
@@ -47,7 +47,7 @@ static const uint8_t kFlippedBitsTable[16] = {
 
 + (NSString *_Nonnull)model {
   @throw [NSException
-      exceptionWithName:FRBHopperExceptionName
+      exceptionWithName:HopperPluginExceptionName
                  reason:[NSString stringWithFormat:@"Forgot to implement %s",
                                                    __PRETTY_FUNCTION__]
                userInfo:nil];
@@ -59,7 +59,7 @@ static const uint8_t kFlippedBitsTable[16] = {
 
 + (int)addressSpaceWidth {
   @throw [NSException
-      exceptionWithName:FRBHopperExceptionName
+      exceptionWithName:HopperPluginExceptionName
                  reason:[NSString stringWithFormat:@"Forgot to implement %s",
                                                    __PRETTY_FUNCTION__]
                userInfo:nil];
@@ -196,7 +196,7 @@ buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
 
 - (Instruction)instructionForByte:(uint8_t)byte {
   @throw [NSException
-      exceptionWithName:FRBHopperExceptionName
+      exceptionWithName:HopperPluginExceptionName
                  reason:[NSString stringWithFormat:@"Forgot to override %s",
                                                    __PRETTY_FUNCTION__]
                userInfo:nil];

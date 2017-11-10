@@ -1,17 +1,17 @@
 /*
  Copyright (c) 2014-2017, Alessandro Gatti - frob.it
  All rights reserved.
- 
+
  Redistribution and use in source and binary forms, with or without
  modification, are permitted provided that the following conditions are met:
- 
+
  1. Redistributions of source code must retain the above copyright notice, this
  list of conditions and the following disclaimer.
- 
+
  2. Redistributions in binary form must reproduce the above copyright notice,
  this list of conditions and the following disclaimer in the documentation
  and/or other materials provided with the distribution.
- 
+
  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -25,7 +25,7 @@
  */
 
 #import "M740.h"
-#import "FRB65xxHelpers.h"
+#import "HopperCommon.h"
 
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCUnusedClassInspection"
@@ -214,12 +214,28 @@ buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
 
   case ModeZeroPageBit:
     [self setPositionalArgumentInStructure:structure forOperand:0 inFile:file];
-    SetAddressOperand(file, structure, 1, 8, 16, 1, 0);
+    [Hopper65xxUtilities fillAddressOperand:1
+                                     inFile:file
+                                  forStruct:structure
+                                   withSize:8
+                           andEffectiveSize:16
+                                 withOffset:1
+                    usingIndexRegistersMask:0];
     break;
 
   case ModeDirectMemoryAccess:
-    SetConstantOperand(file, structure, 0, 8, 1);
-    SetAddressOperand(file, structure, 1, 8, 16, 2, 0);
+    [Hopper65xxUtilities fillConstantOperand:0
+                                      inFile:file
+                                   forStruct:structure
+                                    withSize:8
+                                   andOffset:1];
+    [Hopper65xxUtilities fillAddressOperand:1
+                                     inFile:file
+                                  forStruct:structure
+                                   withSize:8
+                           andEffectiveSize:16
+                                 withOffset:2
+                    usingIndexRegistersMask:0];
     break;
 
   default:
@@ -239,19 +255,32 @@ buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
   switch (instruction->opcode->addressMode) {
   case ModeAccumulatorBitRelative:
     [self setPositionalArgumentInStructure:structure forOperand:0 inFile:file];
-
     structure->instruction.addressValue =
-        SetRelativeAddressOperand(file, structure, 1, 8, 16, 1);
+        [Hopper65xxUtilities fillRelativeAddressOperand:1
+                                                 inFile:file
+                                              forStruct:structure
+                                               withSize:8
+                                       andEffectiveSize:16
+                                             withOffset:1];
     structure->operand[1].isBranchDestination = YES;
     break;
 
   case ModeZeroPageBitRelative:
     [self setPositionalArgumentInStructure:structure forOperand:0 inFile:file];
-
-    SetAddressOperand(file, structure, 1, 8, 16, 1, 0);
-
+    [Hopper65xxUtilities fillAddressOperand:1
+                                     inFile:file
+                                  forStruct:structure
+                                   withSize:8
+                           andEffectiveSize:16
+                                 withOffset:1
+                    usingIndexRegistersMask:0];
     structure->instruction.addressValue =
-        SetRelativeAddressOperand(file, structure, 2, 8, 16, 2);
+        [Hopper65xxUtilities fillRelativeAddressOperand:2
+                                                 inFile:file
+                                              forStruct:structure
+                                               withSize:8
+                                       andEffectiveSize:16
+                                             withOffset:2];
     structure->operand[2].isBranchDestination = YES;
     break;
 

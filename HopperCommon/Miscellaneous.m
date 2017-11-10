@@ -24,7 +24,11 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#import "HopperCommon.h"
 #import "Miscellaneous.h"
+
+NSString *_Nonnull ItFrobHopperCommonHopperPluginExceptionName =
+@"it.frob.hopper.internalexception";
 
 static NSString *const kSignedSizeErrorFormat =
     @"Internal error: invalid signed value size %zu";
@@ -90,7 +94,7 @@ resolveNameForAddress:(Address)address
 int64_t SignedValue(NSNumber *value, size_t size) {
   if (size > 32) {
     @throw [NSException
-        exceptionWithName:FRBHopperExceptionName
+        exceptionWithName:HopperPluginExceptionName
                    reason:[NSString
                               stringWithFormat:kSignedSizeErrorFormat, size]
                  userInfo:nil];

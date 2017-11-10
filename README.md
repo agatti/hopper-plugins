@@ -23,7 +23,7 @@ Plugins currently available in the repository:
 
 ### **6502 CPU Plugin**
 
-_version 0.2.1_
+_version 0.2.2_
 
 This CPU core plugin allows you to disassemble 6502/65C02 code, used in loads of home computers of the 70s, 80s, and early 90s, and in industrial automation or other specialised tasks where an MCU is needed.
 
@@ -226,7 +226,7 @@ CPU backends currently supported: 6502, 65C02, 65N02, 65R02, 65S02, HuC6280, MEL
 
 ### **65816 CPU Plugin**
 
-_version 0.2.0_
+_version 0.2.1_
 
 This CPU core plugin allows you to disassemble 65816/65802 code, used in some of home computers of the 80s, and early 90s, for industrial automation or other specialised tasks where a microcontroller is needed, and in the Super Nintendo/Super Famicom games console.
 

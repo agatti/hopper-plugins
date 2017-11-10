@@ -51,8 +51,7 @@
 /**
  * Internal exception identifier.
  */
-static NSString *_Nonnull FRBHopperExceptionName =
-    @"it.frob.hopper.internalexception";
+extern NSString *_Nonnull ItFrobHopperCommonHopperPluginExceptionName;
 
 @interface ItFrobHopperCommonHopperUtilities : NSObject
 

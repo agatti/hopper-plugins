@@ -1,17 +1,17 @@
 /*
  Copyright (c) 2014-2017, Alessandro Gatti - frob.it
  All rights reserved.
- 
+
  Redistribution and use in source and binary forms, with or without
  modification, are permitted provided that the following conditions are met:
- 
+
  1. Redistributions of source code must retain the above copyright notice, this
  list of conditions and the following disclaimer.
- 
+
  2. Redistributions in binary form must reproduce the above copyright notice,
  this list of conditions and the following disclaimer in the documentation
  and/or other materials provided with the distribution.
- 
+
  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -25,7 +25,6 @@
  */
 
 #import "Core.h"
-#import "FRB65xxHelpers.h"
 #import "HopperCommon.h"
 
 @interface ItFrobHopper6502Base6502 ()
@@ -50,7 +49,7 @@ formatHexadecimal:(const DisasmOperand *_Nonnull)operand
 
 + (NSString *_Nonnull)family {
   @throw [NSException
-      exceptionWithName:FRBHopperExceptionName
+      exceptionWithName:HopperPluginExceptionName
                  reason:[NSString stringWithFormat:@"Forgot to implement %s",
                                                    __PRETTY_FUNCTION__]
                userInfo:nil];
@@ -58,7 +57,7 @@ formatHexadecimal:(const DisasmOperand *_Nonnull)operand
 
 + (NSString *_Nonnull)model {
   @throw [NSException
-      exceptionWithName:FRBHopperExceptionName
+      exceptionWithName:HopperPluginExceptionName
                  reason:[NSString stringWithFormat:@"Forgot to implement %s",
                                                    __PRETTY_FUNCTION__]
                userInfo:nil];
@@ -70,7 +69,7 @@ formatHexadecimal:(const DisasmOperand *_Nonnull)operand
 
 + (int)addressSpaceWidth {
   @throw [NSException
-      exceptionWithName:FRBHopperExceptionName
+      exceptionWithName:HopperPluginExceptionName
                  reason:[NSString stringWithFormat:@"Forgot to implement %s",
                                                    __PRETTY_FUNCTION__]
                userInfo:nil];
@@ -431,7 +430,7 @@ buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
 
 - (const Opcode *_Nonnull)opcodeForByte:(uint8_t)byte {
   @throw [NSException
-      exceptionWithName:FRBHopperExceptionName
+      exceptionWithName:HopperPluginExceptionName
                  reason:[NSString stringWithFormat:@"Forgot to override %s",
                                                    __PRETTY_FUNCTION__]
                userInfo:nil];
@@ -480,63 +479,157 @@ buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
   switch (instruction->opcode->addressMode) {
   case ModeAbsolute:
   case ModeAbsoluteIndirect:
-    SetAddressOperand(file, structure, 0, 16, 16, 1, 0);
+    [Hopper65xxUtilities fillAddressOperand:0
+                                     inFile:file
+                                  forStruct:structure
+                                   withSize:16
+                           andEffectiveSize:16
+                                 withOffset:1
+                    usingIndexRegistersMask:0];
     break;
 
   case ModeAbsoluteIndexedX:
-    SetAddressOperand(file, structure, 0, 16, 16, 1, RegisterX);
+    [Hopper65xxUtilities fillAddressOperand:0
+                                     inFile:file
+                                  forStruct:structure
+                                   withSize:16
+                           andEffectiveSize:16
+                                 withOffset:1
+                    usingIndexRegistersMask:RegisterX];
     break;
 
   case ModeAbsoluteIndexedY:
-    SetAddressOperand(file, structure, 0, 16, 16, 1, RegisterY);
+    [Hopper65xxUtilities fillAddressOperand:0
+                                     inFile:file
+                                  forStruct:structure
+                                   withSize:16
+                           andEffectiveSize:16
+                                 withOffset:1
+                    usingIndexRegistersMask:RegisterY];
     break;
 
   case ModeImmediate:
-    SetConstantOperand(file, structure, 0, 8, 1);
+    [Hopper65xxUtilities fillConstantOperand:0
+                                      inFile:file
+                                   forStruct:structure
+                                    withSize:8
+                                   andOffset:1];
     break;
 
   case ModeZeroPageIndirect:
   case ModeZeroPage:
-    SetAddressOperand(file, structure, 0, 8, 16, 1, 0);
+    [Hopper65xxUtilities fillAddressOperand:0
+                                     inFile:file
+                                  forStruct:structure
+                                   withSize:8
+                           andEffectiveSize:16
+                                 withOffset:1
+                    usingIndexRegistersMask:0];
     break;
 
   case ModeZeroPageIndexedIndirect:
   case ModeZeroPageIndexedX:
   case ModeZeroPageIndirectIndexedX:
-    SetAddressOperand(file, structure, 0, 8, 16, 1, RegisterX);
+    [Hopper65xxUtilities fillAddressOperand:0
+                                     inFile:file
+                                  forStruct:structure
+                                   withSize:8
+                           andEffectiveSize:16
+                                 withOffset:1
+                    usingIndexRegistersMask:RegisterX];
     break;
 
   case ModeZeroPageIndexedY:
   case ModeZeroPageIndirectIndexedY:
-    SetAddressOperand(file, structure, 0, 8, 16, 1, RegisterY);
+    [Hopper65xxUtilities fillAddressOperand:0
+                                     inFile:file
+                                  forStruct:structure
+                                   withSize:8
+                           andEffectiveSize:16
+                                 withOffset:1
+                    usingIndexRegistersMask:RegisterY];
     break;
 
   case ModeBlockTransfer:
-    SetAddressOperand(file, structure, 0, 16, 16, 1, 0);
-    SetAddressOperand(file, structure, 1, 16, 16, 1 + sizeof(uint16_t), 0);
-    SetConstantOperand(file, structure, 2, 16, 1 + sizeof(uint16_t) * 2);
+    [Hopper65xxUtilities fillAddressOperand:0
+                                     inFile:file
+                                  forStruct:structure
+                                   withSize:16
+                           andEffectiveSize:16
+                                 withOffset:1
+                    usingIndexRegistersMask:0];
+    [Hopper65xxUtilities fillAddressOperand:1
+                                     inFile:file
+                                  forStruct:structure
+                                   withSize:16
+                           andEffectiveSize:16
+                                 withOffset:3
+                    usingIndexRegistersMask:0];
+    [Hopper65xxUtilities fillConstantOperand:2
+                                      inFile:file
+                                   forStruct:structure
+                                    withSize:16
+                                   andOffset:5];
     break;
 
   case ModeImmediateZeroPage:
-    SetConstantOperand(file, structure, 0, 8, 1);
-    SetAddressOperand(file, structure, 1, 8, 16, 1 + sizeof(uint8_t), 0);
+    [Hopper65xxUtilities fillConstantOperand:0
+                                      inFile:file
+                                   forStruct:structure
+                                    withSize:8
+                                   andOffset:1];
+    [Hopper65xxUtilities fillAddressOperand:1
+                                     inFile:file
+                                  forStruct:structure
+                                   withSize:8
+                           andEffectiveSize:16
+                                 withOffset:2
+                    usingIndexRegistersMask:0];
     break;
 
   case ModeImmediateZeroPageX:
-    SetConstantOperand(file, structure, 0, 8, 1);
-    SetAddressOperand(file, structure, 1, 8, 16, 1 + sizeof(uint8_t),
-                      RegisterX);
+    [Hopper65xxUtilities fillConstantOperand:0
+                                      inFile:file
+                                   forStruct:structure
+                                    withSize:8
+                                   andOffset:1];
+    [Hopper65xxUtilities fillAddressOperand:1
+                                     inFile:file
+                                  forStruct:structure
+                                   withSize:8
+                           andEffectiveSize:16
+                                 withOffset:2
+                    usingIndexRegistersMask:RegisterX];
     break;
 
   case ModeImmediateAbsolute:
-    SetConstantOperand(file, structure, 0, 8, 1);
-    SetAddressOperand(file, structure, 1, 16, 16, 1 + sizeof(uint8_t), 0);
+    [Hopper65xxUtilities fillConstantOperand:0
+                                      inFile:file
+                                   forStruct:structure
+                                    withSize:8
+                                   andOffset:1];
+    [Hopper65xxUtilities fillAddressOperand:1
+                                     inFile:file
+                                  forStruct:structure
+                                   withSize:16
+                           andEffectiveSize:16
+                                 withOffset:2
+                    usingIndexRegistersMask:0];
     break;
 
   case ModeImmediateAbsoluteX:
-    SetConstantOperand(file, structure, 0, 8, 1);
-    SetAddressOperand(file, structure, 1, 16, 16, 1 + sizeof(uint8_t),
-                      RegisterX);
+    [Hopper65xxUtilities fillConstantOperand:0
+                                      inFile:file
+                                   forStruct:structure
+                                    withSize:8
+                                   andOffset:1];
+    [Hopper65xxUtilities fillAddressOperand:1
+                                     inFile:file
+                                  forStruct:structure
+                                   withSize:16
+                           andEffectiveSize:16
+                                 withOffset:2
+                    usingIndexRegistersMask:RegisterX];
     break;
 
   case ModeAccumulator:
@@ -591,31 +684,68 @@ buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
 
   case ModeProgramCounterRelative: {
     structure->instruction.addressValue =
-        SetRelativeAddressOperand(file, structure, 0, 8, 16, 1);
+        [Hopper65xxUtilities fillRelativeAddressOperand:0
+                                                 inFile:file
+                                              forStruct:structure
+                                               withSize:8
+                                       andEffectiveSize:16
+                                             withOffset:1];
     structure->operand[0].isBranchDestination = YES;
     break;
   }
 
   case ModeZeroPageProgramCounterRelative: {
-    SetAddressOperand(file, structure, 0, 8, 16, 1, 0);
-    structure->instruction.addressValue = SetRelativeAddressOperand(
-        file, structure, 1, 8, 16, 1 + sizeof(uint8_t));
+    [Hopper65xxUtilities fillAddressOperand:0
+                                     inFile:file
+                                  forStruct:structure
+                                   withSize:8
+                           andEffectiveSize:16
+                                 withOffset:1
+                    usingIndexRegistersMask:0];
+    structure->instruction.addressValue =
+        [Hopper65xxUtilities fillRelativeAddressOperand:1
+                                                 inFile:file
+                                              forStruct:structure
+                                               withSize:8
+                                       andEffectiveSize:16
+                                             withOffset:2];
     structure->operand[1].isBranchDestination = YES;
 
     break;
   }
 
   case ModeBitsProgramCounterAbsolute:
-    SetAddressOperand(file, structure, 0, 16, 16, 1, 0);
-    SetConstantOperand(file, structure, 1, 8, 1 + sizeof(uint16_t));
-    structure->instruction.addressValue = SetRelativeAddressOperand(
-        file, structure, 2, 8, 16, 1 + sizeof(uint16_t) + sizeof(uint8_t));
+    [Hopper65xxUtilities fillAddressOperand:0
+                                     inFile:file
+                                  forStruct:structure
+                                   withSize:16
+                           andEffectiveSize:16
+                                 withOffset:1
+                    usingIndexRegistersMask:0];
+    [Hopper65xxUtilities fillConstantOperand:1
+                                      inFile:file
+                                   forStruct:structure
+                                    withSize:8
+                                   andOffset:3];
+    structure->instruction.addressValue =
+        [Hopper65xxUtilities fillRelativeAddressOperand:2
+                                                 inFile:file
+                                              forStruct:structure
+                                               withSize:8
+                                       andEffectiveSize:16
+                                             withOffset:4];
     structure->operand[2].isBranchDestination = YES;
     break;
 
   case ModeZeroPageIndirect:
     structure->instruction.addressValue =
-        SetAddressOperand(file, structure, 0, 8, 8, 1, 0);
+        [Hopper65xxUtilities fillAddressOperand:0
+                                         inFile:file
+                                      forStruct:structure
+                                       withSize:8
+                               andEffectiveSize:8
+                                     withOffset:1
+                        usingIndexRegistersMask:0];
     structure->operand[0].isBranchDestination = YES;
     break;
 
@@ -673,11 +803,14 @@ static NSString *_Nonnull const kValueTooLarge = @"Invalid bits count (%d)";
                                      andSize:(uint32_t)size {
 
   NSString *formattedValue =
-      FormatHexadecimalValue(value, isSigned, hasLeadingZeroes, size);
+      [Hopper65xxUtilities formatHexadecimalValue:value
+                                    displaySigned:isSigned
+                                showLeadingZeroes:hasLeadingZeroes
+                                       usingWidth:size];
 
   if (!formattedValue) {
     @throw [NSException
-        exceptionWithName:FRBHopperExceptionName
+        exceptionWithName:HopperPluginExceptionName
                    reason:[NSString stringWithFormat:kValueTooLarge, size]
                  userInfo:nil];
   }
