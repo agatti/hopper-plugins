@@ -272,7 +272,7 @@ CPU backends currently supported: 65816, MELPS 7700.
 
 ### **8x300 CPU Plugin**
 
-_version 0.1.0_
+_version 0.1.1_
 
 This CPU core plugin allows you to disassemble 8x300 code, used in early signal processing equipment in the 70s and early 80s.
 

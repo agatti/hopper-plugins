@@ -1,17 +1,17 @@
 /*
  Copyright (c) 2014-2017, Alessandro Gatti - frob.it
  All rights reserved.
- 
+
  Redistribution and use in source and binary forms, with or without
  modification, are permitted provided that the following conditions are met:
- 
+
  1. Redistributions of source code must retain the above copyright notice, this
  list of conditions and the following disclaimer.
- 
+
  2. Redistributions in binary form must reproduce the above copyright notice,
  this list of conditions and the following disclaimer in the documentation
  and/or other materials provided with the distribution.
- 
+
  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -66,7 +66,6 @@ static const char *kOpcodeNames[OpcodesCount] = {"MOVE", "ADD",  "AND",  "XOR",
  * @return YES if a valid ALU instruction was found, NO otherwise.
  */
 - (BOOL)handleALUInstruction:(DisasmStruct *_Nonnull)structure
-                      onFile:(NSObject<HPDisassembledFile> *_Nonnull)file
                   withOpcode:(uint16_t)opcode
                     metadata:(InstructionMetadata *_Nonnull)metadata;
 
@@ -92,7 +91,6 @@ static const char *kOpcodeNames[OpcodesCount] = {"MOVE", "ADD",  "AND",  "XOR",
  * @return YES if a valid NZT instruction was found, NO otherwise.
  */
 - (BOOL)handleNZTInstruction:(DisasmStruct *_Nonnull)structure
-                      onFile:(NSObject<HPDisassembledFile> *_Nonnull)file
                   withOpcode:(uint16_t)opcode
                     metadata:(InstructionMetadata *_Nonnull)metadata;
 
@@ -107,7 +105,6 @@ static const char *kOpcodeNames[OpcodesCount] = {"MOVE", "ADD",  "AND",  "XOR",
  * @return YES if a valid XEC instruction was found, NO otherwise.
  */
 - (BOOL)handleXECInstruction:(DisasmStruct *_Nonnull)structure
-                      onFile:(NSObject<HPDisassembledFile> *_Nonnull)file
                   withOpcode:(uint16_t)opcode
                     metadata:(InstructionMetadata *_Nonnull)metadata;
 
@@ -133,7 +130,6 @@ static const char *kOpcodeNames[OpcodesCount] = {"MOVE", "ADD",  "AND",  "XOR",
  * @return YES if a valid XMIT instruction was found, NO otherwise.
  */
 - (BOOL)handleXMITInstruction:(DisasmStruct *_Nonnull)structure
-                       onFile:(NSObject<HPDisassembledFile> *_Nonnull)file
                    withOpcode:(uint16_t)opcode
                      metadata:(InstructionMetadata *_Nonnull)metadata;
 
@@ -148,7 +144,6 @@ static const char *kOpcodeNames[OpcodesCount] = {"MOVE", "ADD",  "AND",  "XOR",
  * @return YES if a valid JMP instruction was found, NO otherwise.
  */
 - (BOOL)handleJMPInstruction:(DisasmStruct *_Nonnull)structure
-                      onFile:(NSObject<HPDisassembledFile> *_Nonnull)file
                   withOpcode:(uint16_t)opcode
                     metadata:(InstructionMetadata *_Nonnull)metadata;
 
@@ -296,9 +291,9 @@ buildOperandString:(DisasmStruct *_Nonnull)disasm
       [file.cpuDefinition isKindOfClass:[ItFrobHopper8x300Definition class]],
       @"Invalid CPU definition class");
 
-  NSObject<InstructionFormatter> *formatter =
+  NSObject<ItFrobHopper8x300InstructionFormatter> *formatter =
       [(ItFrobHopper8x300Definition *)file.cpuDefinition
-          formatterForSyntax:(FRBSyntaxType)file.userRequestedSyntaxIndex];
+          formatterForSyntax:(SyntaxType)file.userRequestedSyntaxIndex];
   NSAssert(formatter != nil, @"Missing formatter for syntax index");
 
   return [formatter formatOperand:disasm
@@ -317,9 +312,9 @@ buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
       [file.cpuDefinition isKindOfClass:[ItFrobHopper8x300Definition class]],
       @"Invalid CPU definition class");
 
-  NSObject<InstructionFormatter> *formatter =
+  NSObject<ItFrobHopper8x300InstructionFormatter> *formatter =
       [(ItFrobHopper8x300Definition *)file.cpuDefinition
-          formatterForSyntax:(FRBSyntaxType)file.userRequestedSyntaxIndex];
+          formatterForSyntax:(SyntaxType)file.userRequestedSyntaxIndex];
   NSAssert(formatter != nil, @"Missing formatter for syntax index");
 
   return
@@ -334,7 +329,6 @@ buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
 #pragma mark - Private methods
 
 - (BOOL)handleALUInstruction:(DisasmStruct *_Nonnull)structure
-                      onFile:(NSObject<HPDisassembledFile> *_Nonnull)file
                   withOpcode:(uint16_t)opcode
                     metadata:(InstructionMetadata *_Nonnull)metadata {
 
@@ -391,10 +385,9 @@ buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
   structure->implicitlyWrittenRegisters[DISASM_OPERAND_GENERAL_REG_INDEX] =
       (uint32_t)((1 << destinationRegister) | RegisterFlagOVF);
 
-  [HopperUtilities setDefaultFormat:Format_Decimal
-                        forArgument:1
-                          atAddress:structure->virtualAddr
-                             inFile:file];
+  ((OperandMetadata *)&(
+       structure->operand[1].userData[OPERAND_USERDATA_METADATA_INDEX]))
+      ->defaultFormat = Format_Decimal;
 
   metadata->opcode = OPCODE_FROM_WORD(opcode);
 
@@ -416,7 +409,6 @@ buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
 }
 
 - (BOOL)handleNZTInstruction:(DisasmStruct *_Nonnull)structure
-                      onFile:(NSObject<HPDisassembledFile> *_Nonnull)file
                   withOpcode:(uint16_t)opcode
                     metadata:(InstructionMetadata *_Nonnull)metadata {
 
@@ -464,10 +456,9 @@ buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
     structure->instruction.addressValue = address;
   }
 
-  [HopperUtilities setDefaultFormat:Format_Decimal
-                        forArgument:2
-                          atAddress:structure->virtualAddr
-                             inFile:file];
+  ((OperandMetadata *)&(
+       structure->operand[2].userData[OPERAND_USERDATA_METADATA_INDEX]))
+      ->defaultFormat = Format_Decimal;
 
   metadata->encoding = EncodingOffsetWithLength;
   metadata->opcode = OPCODE_FROM_WORD(opcode);
@@ -476,7 +467,6 @@ buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
 }
 
 - (BOOL)handleXECInstruction:(DisasmStruct *_Nonnull)structure
-                      onFile:(NSObject<HPDisassembledFile> *_Nonnull)file
                   withOpcode:(uint16_t)opcode
                     metadata:(InstructionMetadata *_Nonnull)metadata {
 
@@ -520,41 +510,17 @@ buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
                       (structure->operand[0].immediateValue * 2);
   }
 
-  [HopperUtilities setDefaultFormat:Format_Decimal
-                        forArgument:2
-                          atAddress:structure->virtualAddr
-                             inFile:file];
+  ((OperandMetadata *)&(
+       structure->operand[2].userData[OPERAND_USERDATA_METADATA_INDEX]))
+      ->defaultFormat = Format_Decimal;
 
   structure->instruction.addressValue = resolvedAddress;
+  structure->operand[0].isBranchDestination = YES;
+  structure->instruction.branchType = DISASM_BRANCH_JMP;
 
-  if ([file segmentForVirtualAddress:structure->instruction.addressValue] ==
-      nil) {
-    [HopperUtilities
-        addInlineCommentIfEmpty:
-            [NSString
-                stringWithFormat:@"Switch table out of mapped memory (%X)",
-                                 (unsigned int)
-                                     structure->instruction.addressValue]
-                      atAddress:structure->virtualAddr
-                         inFile:file];
-  } else {
-    [HopperUtilities
-        addInlineCommentIfEmpty:[NSString
-                                    stringWithFormat:@"Switch table for %X",
-                                                     (unsigned int)
-                                                         structure->instruction
-                                                             .addressValue]
-                      atAddress:structure->virtualAddr
-                         inFile:file];
-  }
-
-  [[file segmentForVirtualAddress:structure->virtualAddr]
-      addReferencesToAddress:structure->instruction.addressValue
-                 fromAddress:structure->virtualAddr];
-  [HopperUtilities setDefaultFormat:Format_Address
-                        forArgument:0
-                          atAddress:structure->virtualAddr
-                             inFile:file];
+  ((OperandMetadata *)&(
+       structure->operand[0].userData[OPERAND_USERDATA_METADATA_INDEX]))
+      ->defaultFormat = Format_Address;
 
   metadata->opcode = OPCODE_FROM_WORD(opcode);
 
@@ -562,7 +528,6 @@ buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
 }
 
 - (BOOL)handleXMITInstruction:(DisasmStruct *_Nonnull)structure
-                       onFile:(NSObject<HPDisassembledFile> *_Nonnull)file
                    withOpcode:(uint16_t)opcode
                      metadata:(InstructionMetadata *_Nonnull)metadata {
 
@@ -594,10 +559,9 @@ buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
     structure->operand[2].immediateValue = (opcode >> 5) & 0b111;
     structure->operand[2].size = 3;
 
-    [HopperUtilities setDefaultFormat:Format_Decimal
-                          forArgument:2
-                            atAddress:structure->virtualAddr
-                               inFile:file];
+    ((OperandMetadata *)&(
+         structure->operand[2].userData[OPERAND_USERDATA_METADATA_INDEX]))
+        ->defaultFormat = Format_Decimal;
 
     metadata->encoding = EncodingAssignmentWithLength;
   }
@@ -623,7 +587,6 @@ buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
 }
 
 - (BOOL)handleJMPInstruction:(DisasmStruct *_Nonnull)structure
-                      onFile:(NSObject<HPDisassembledFile> *_Nonnull)file
                   withOpcode:(uint16_t)opcode
                     metadata:(InstructionMetadata *_Nonnull)metadata {
 
@@ -639,20 +602,11 @@ buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
   structure->operand[0].accessMode = DISASM_ACCESS_NONE;
   structure->instruction.branchType = DISASM_BRANCH_JMP;
   structure->instruction.addressValue = address * 2;
+  ((OperandMetadata *)&(
+       structure->operand[0].userData[OPERAND_USERDATA_METADATA_INDEX]))
+      ->defaultFormat = Format_Address;
 
-  if ([file segmentForVirtualAddress:structure->instruction.addressValue] ==
-      nil) {
-    [HopperUtilities
-        addInlineCommentIfEmpty:
-            [NSString stringWithFormat:@"Jumping out of mapped memory (%X)",
-                                       (unsigned int)
-                                           structure->instruction.addressValue]
-                      atAddress:structure->virtualAddr
-                         inFile:file];
-    structure->operand[0].isBranchDestination = NO;
-  } else {
-    structure->operand[0].isBranchDestination = YES;
-  }
+  structure->operand[0].isBranchDestination = YES;
 
   metadata->opcode = OPCODE_FROM_WORD(opcode);
   metadata->encoding = EncodingSingle;
@@ -677,10 +631,8 @@ buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
                   onFile:(NSObject<HPDisassembledFile> *_Nonnull)file
                 metadata:(InstructionMetadata *_Nonnull)metadata {
 
-  return [self handleALUInstruction:structure
-                             onFile:file
-                         withOpcode:opcode
-                           metadata:metadata];
+  return
+      [self handleALUInstruction:structure withOpcode:opcode metadata:metadata];
 }
 
 - (BOOL)handleADDOpcode:(uint16_t)opcode
@@ -688,10 +640,8 @@ buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
                  onFile:(NSObject<HPDisassembledFile> *_Nonnull)file
                metadata:(InstructionMetadata *_Nonnull)metadata {
 
-  BOOL result = [self handleALUInstruction:structure
-                                    onFile:file
-                                withOpcode:opcode
-                                  metadata:metadata];
+  BOOL result =
+      [self handleALUInstruction:structure withOpcode:opcode metadata:metadata];
 
   if (result) {
     structure->implicitlyReadRegisters[DISASM_OPERAND_GENERAL_REG_INDEX] |=
@@ -706,10 +656,8 @@ buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
                  onFile:(NSObject<HPDisassembledFile> *_Nonnull)file
                metadata:(InstructionMetadata *_Nonnull)metadata {
 
-  BOOL result = [self handleALUInstruction:structure
-                                    onFile:file
-                                withOpcode:opcode
-                                  metadata:metadata];
+  BOOL result =
+      [self handleALUInstruction:structure withOpcode:opcode metadata:metadata];
 
   if (result) {
     structure->implicitlyReadRegisters[DISASM_OPERAND_GENERAL_REG_INDEX] |=
@@ -724,10 +672,8 @@ buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
                  onFile:(NSObject<HPDisassembledFile> *_Nonnull)file
                metadata:(InstructionMetadata *_Nonnull)metadata {
 
-  BOOL result = [self handleALUInstruction:structure
-                                    onFile:file
-                                withOpcode:opcode
-                                  metadata:metadata];
+  BOOL result =
+      [self handleALUInstruction:structure withOpcode:opcode metadata:metadata];
 
   if (result) {
     structure->implicitlyReadRegisters[DISASM_OPERAND_GENERAL_REG_INDEX] |=
@@ -742,10 +688,8 @@ buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
                  onFile:(NSObject<HPDisassembledFile> *_Nonnull)file
                metadata:(InstructionMetadata *_Nonnull)metadata {
 
-  return [self handleXECInstruction:structure
-                             onFile:file
-                         withOpcode:opcode
-                           metadata:metadata];
+  return
+      [self handleXECInstruction:structure withOpcode:opcode metadata:metadata];
 }
 
 - (BOOL)handleNZTOpcode:(uint16_t)opcode
@@ -753,10 +697,8 @@ buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
                  onFile:(NSObject<HPDisassembledFile> *_Nonnull)file
                metadata:(InstructionMetadata *_Nonnull)metadata {
 
-  return [self handleNZTInstruction:structure
-                             onFile:file
-                         withOpcode:opcode
-                           metadata:metadata];
+  return
+      [self handleNZTInstruction:structure withOpcode:opcode metadata:metadata];
 }
 
 - (BOOL)handleXMITOpcode:(uint16_t)opcode
@@ -765,7 +707,6 @@ buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
                 metadata:(InstructionMetadata *_Nonnull)metadata {
 
   return [self handleXMITInstruction:structure
-                              onFile:file
                           withOpcode:opcode
                             metadata:metadata];
 }
@@ -775,10 +716,8 @@ buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
                  onFile:(NSObject<HPDisassembledFile> *_Nonnull)file
                metadata:(InstructionMetadata *_Nonnull)metadata {
 
-  return [self handleJMPInstruction:structure
-                             onFile:file
-                         withOpcode:opcode
-                           metadata:metadata];
+  return
+      [self handleJMPInstruction:structure withOpcode:opcode metadata:metadata];
 }
 
 @end

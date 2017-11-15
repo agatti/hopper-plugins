@@ -28,7 +28,7 @@
 ASL=asl
 P2BIN=p2bin
 RM=rm
-TEST_FILES=opcodes.s switch.s synthetic8x300.s synthetic8x305.s
+TEST_FILES=jump.s opcodes.s switch.s synthetic8x300.s synthetic8x305.s
 OBJECT_FILES=$(patsubst %.s,%.p,$(TEST_FILES))
 BINARY_FILES=$(patsubst %.p,%.bin,$(OBJECT_FILES))
 

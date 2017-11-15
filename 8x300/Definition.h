@@ -1,17 +1,17 @@
 /*
  Copyright (c) 2014-2017, Alessandro Gatti - frob.it
  All rights reserved.
- 
+
  Redistribution and use in source and binary forms, with or without
  modification, are permitted provided that the following conditions are met:
- 
+
  1. Redistributions of source code must retain the above copyright notice, this
  list of conditions and the following disclaimer.
- 
+
  2. Redistributions in binary form must reproduce the above copyright notice,
  this list of conditions and the following disclaimer in the documentation
  and/or other materials provided with the distribution.
- 
+
  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -26,11 +26,12 @@
 
 @import Foundation;
 
-@protocol InstructionFormatter;
+@protocol ItFrobHopper8x300InstructionFormatter;
 
+#import "HopperCommon/HopperCommon.h"
 #import <Hopper/Hopper.h>
 
-#import "BaseDefinition.h"
+#import "Common.h"
 
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCUnusedClassInspection"
@@ -38,39 +39,17 @@
 /**
  * Available syntaxes for instruction output.
  */
-typedef NS_ENUM(NSUInteger, FRBSyntaxType) {
+typedef NS_ENUM(NSUInteger, SyntaxType) {
 
   /** Output syntax follows AS Macro Assembler's. */
-  SyntaxAS = 0,
+  SyntaxTypeAS = 0,
 
   /** Output syntax follows Signetics' MCCAP. */
-  SyntaxMCCAP,
+  SyntaxTypeMCCAP,
 
   /** How many syntaxes are available. */
-  SyntaxCount
+  SyntaxTypeCount
 };
-
-/**
- * Instruction metadata.
- */
-typedef struct {
-
-  /** Opcode identifier. */
-  uintptr_t opcode : 4;
-
-  /** Instruction encoding. */
-  uintptr_t encoding : 3;
-
-  /** Flag indicating whether the instruction halts execution or not. */
-  uintptr_t haltsExecution : 1;
-
-  /** Reserved. */
-  uintptr_t reserved : 8;
-
-  /** The raw instruction bits. */
-  uintptr_t instruction : 16;
-
-} InstructionMetadata;
 
 /**
  * CPU Definition class for the 8x300 disassembler plugin.
@@ -86,8 +65,8 @@ typedef struct {
  * @return an object implementing FRBInstructionFormatter or nil if the syntax
  * type is invalid.
  */
-- (NSObject<InstructionFormatter> *_Nullable)formatterForSyntax:
-    (FRBSyntaxType)syntaxType;
+- (NSObject<ItFrobHopper8x300InstructionFormatter> *_Nullable)
+formatterForSyntax:(SyntaxType)syntaxType;
 
 @end
 

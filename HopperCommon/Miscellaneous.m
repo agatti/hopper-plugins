@@ -38,7 +38,7 @@ static NSString *const kSignedSizeErrorFormat =
 + (void)initialiseStructure:(DisasmStruct *_Nonnull)structure {
   memset(&structure->instruction, 0x00, sizeof(DisasmInstruction));
 
-  for (int index = 0; index < DISASM_MAX_OPERANDS; index++) {
+  for (NSUInteger index = 0; index < DISASM_MAX_OPERANDS; index++) {
     memset(&structure->operand[index], 0x00, sizeof(DisasmOperand));
     structure->operand[index].type = DISASM_OPERAND_NO_OPERAND;
   }

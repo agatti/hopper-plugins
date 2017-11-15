@@ -26,13 +26,41 @@
 
 @import Foundation;
 
-#import "Core.h"
+#import <Hopper/Hopper.h>
 
-#pragma clang diagnostic push
-#pragma ide diagnostic ignored "OCUnusedClassInspection"
+#define OPERAND_USERDATA_METADATA_INDEX 0
 
-@interface ItFrobHopper8x300Generic8x305
-    : ItFrobHopper8x300Base8x300 <ItFrobHopperCPUProvider>
-@end
+/**
+ * Instruction metadata.
+ */
+typedef struct {
 
-#pragma clang diagnostic pop
+  /** Opcode identifier. */
+  uintptr_t opcode : 4;
+
+  /** Instruction encoding. */
+  uintptr_t encoding : 3;
+
+  /** Flag indicating whether the instruction halts execution or not. */
+  uintptr_t haltsExecution : 1;
+
+  /** Reserved. */
+  uintptr_t reserved : 8;
+
+  /** The raw instruction bits. */
+  uintptr_t instruction : 16;
+
+} InstructionMetadata;
+
+/**
+ * Operand metadata.
+ */
+typedef struct {
+
+  /** Default format for operand. */
+  uint64_t defaultFormat : 8;
+
+  /** Reserved. */
+  uint64_t reserved : 56;
+
+} OperandMetadata;

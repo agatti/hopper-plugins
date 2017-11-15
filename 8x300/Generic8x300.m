@@ -1,17 +1,17 @@
 /*
  Copyright (c) 2014-2017, Alessandro Gatti - frob.it
  All rights reserved.
- 
+
  Redistribution and use in source and binary forms, with or without
  modification, are permitted provided that the following conditions are met:
- 
+
  1. Redistributions of source code must retain the above copyright notice, this
  list of conditions and the following disclaimer.
- 
+
  2. Redistributions in binary form must reproduce the above copyright notice,
  this list of conditions and the following disclaimer in the documentation
  and/or other materials provided with the distribution.
- 
+
  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -38,7 +38,7 @@
  *
  * @return YES if the given register identifier is valid, NO otherwise.
  */
-- (BOOL)isRegisterValid:(uint)registerNumber;
+- (BOOL)isRegisterValid:(NSUInteger)registerNumber;
 
 /**
  * Performs some additional checks to make sure the ALU opcode is valid.
@@ -49,6 +49,14 @@
  */
 - (BOOL)isValidALUOpcode:(uint16_t)opcode;
 
+/**
+ * Performs some additional checks to make sure the target in the opcode is
+ * valid.
+ *
+ * @param[in] opcode the opcode word to check.
+ *
+ * @return YES if the given opcode's target is valid, NO otherwise.
+ */
 - (BOOL)isValidTargetOpcode:(uint16_t)opcode;
 
 @end
@@ -73,7 +81,7 @@
 
 #pragma mark - Private methods
 
-- (BOOL)isRegisterValid:(uint)registerNumber {
+- (BOOL)isRegisterValid:(NSUInteger)registerNumber {
   switch (registerNumber) {
   case RegisterR12:
   case RegisterR13:
@@ -91,8 +99,8 @@
   int sourceRegister = (opcode >> 8) & 0x001F;
   int destinationRegister = opcode & 0x001F;
 
-  if (![self isRegisterValid:(uint)sourceRegister] ||
-      ![self isRegisterValid:(uint)destinationRegister]) {
+  if (![self isRegisterValid:(NSUInteger)sourceRegister] ||
+      ![self isRegisterValid:(NSUInteger)destinationRegister]) {
     return NO;
   }
 
@@ -133,7 +141,7 @@
 }
 
 - (BOOL)isValidTargetOpcode:(uint16_t)opcode {
-  uint registerId = (uint)((opcode >> 8) & 0x001F);
+  NSUInteger registerId = (NSUInteger)((opcode >> 8) & 0x001F);
 
   return [self isRegisterValid:registerId] &&
          !(((opcode & 0x1000) == 0x0000) &&
@@ -213,7 +221,7 @@
                   onFile:(NSObject<HPDisassembledFile> *_Nonnull)file
                 metadata:(InstructionMetadata *_Nonnull)metadata {
 
-  uint registerId = (uint)((opcode >> 8) & 0b11111);
+  NSUInteger registerId = (NSUInteger)((opcode >> 8) & 0b11111);
   return !(![self isRegisterValid:registerId] ||
            (((opcode & 0x1000) == 0x0000) && (registerId == RegisterIVL))) &&
          [super handleXMITOpcode:opcode

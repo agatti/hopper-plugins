@@ -1,17 +1,17 @@
 /*
  Copyright (c) 2014-2017, Alessandro Gatti - frob.it
  All rights reserved.
- 
+
  Redistribution and use in source and binary forms, with or without
  modification, are permitted provided that the following conditions are met:
- 
+
  1. Redistributions of source code must retain the above copyright notice, this
  list of conditions and the following disclaimer.
- 
+
  2. Redistributions in binary form must reproduce the above copyright notice,
  this list of conditions and the following disclaimer in the documentation
  and/or other materials provided with the distribution.
- 
+
  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -24,12 +24,12 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import "Definition.h"
+#import "HopperCommon/HopperCommon.h"
+
 #import "ASFormat.h"
 #import "Context.h"
+#import "Definition.h"
 #import "MCCAPFormat.h"
-#import "ModelManager.h"
-#import "NSDataWithFill.h"
 
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCUnusedClassInspection"
@@ -50,7 +50,8 @@ static const char *kRegisterNames[] = {
  * Instruction formatter instances.
  */
 @property(strong, nonatomic, nonnull)
-    NSArray<NSObject<InstructionFormatter> *> *formatterInstances;
+    NSArray<NSObject<ItFrobHopper8x300InstructionFormatter> *>
+        *formatterInstances;
 
 @end
 
@@ -93,7 +94,7 @@ static const char *kRegisterNames[] = {
 }
 
 - (NSString *)pluginVersion {
-  return @"0.1.0";
+  return @"0.1.1";
 }
 
 #pragma mark - CPUDefinition protocol implementation
@@ -118,7 +119,7 @@ static const char *kRegisterNames[] = {
 }
 
 - (NSUInteger)syntaxVariantCount {
-  return SyntaxCount;
+  return SyntaxTypeCount;
 }
 
 - (NSUInteger)cpuModeCount {
@@ -129,7 +130,8 @@ static const char *kRegisterNames[] = {
   NSMutableArray *names =
       [[NSMutableArray alloc] initWithCapacity:self.formatterInstances.count];
 
-  for (NSObject<InstructionFormatter> *formatter in self.formatterInstances) {
+  for (NSObject<ItFrobHopper8x300InstructionFormatter> *formatter in self
+           .formatterInstances) {
     [names addObject:formatter.name];
   }
 
@@ -167,9 +169,9 @@ static const char *kRegisterNames[] = {
   return NSDataWithFiller(0, size);
 }
 
-- (NSObject<InstructionFormatter> *_Nullable)formatterForSyntax:
-    (FRBSyntaxType)syntaxType {
-  return (syntaxType != SyntaxAS) && (syntaxType != SyntaxMCCAP)
+- (NSObject<ItFrobHopper8x300InstructionFormatter> *_Nullable)
+formatterForSyntax:(SyntaxType)syntaxType {
+  return (syntaxType != SyntaxTypeAS) && (syntaxType != SyntaxTypeMCCAP)
              ? nil
              : self.formatterInstances[syntaxType];
 }

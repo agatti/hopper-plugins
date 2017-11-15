@@ -1,17 +1,17 @@
 /*
  Copyright (c) 2014-2017, Alessandro Gatti - frob.it
  All rights reserved.
- 
+
  Redistribution and use in source and binary forms, with or without
  modification, are permitted provided that the following conditions are met:
- 
+
  1. Redistributions of source code must retain the above copyright notice, this
  list of conditions and the following disclaimer.
- 
+
  2. Redistributions in binary form must reproduce the above copyright notice,
  this list of conditions and the following disclaimer in the documentation
  and/or other materials provided with the distribution.
- 
+
  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -25,6 +25,7 @@
  */
 
 #import "Context.h"
+#import "Common.h"
 #import "Core.h"
 
 @interface ItFrobHopper8x300Context ()
@@ -118,6 +119,77 @@ buildCompleteOperandString:(DisasmStruct *)disasm
                                     inFile:file
                                        raw:raw
                               withServices:self.services];
+}
+
+- (void)performInstructionSpecificAnalysis:(DisasmStruct *)disasm
+                              forProcedure:(NSObject<HPProcedure> *)procedure
+                                 inSegment:(NSObject<HPSegment> *)segment {
+
+  NSUInteger operandIndex = 0;
+  while (operandIndex < DISASM_MAX_OPERANDS) {
+    OperandMetadata *data =
+        (OperandMetadata *)&(disasm->operand[operandIndex]
+                                 .userData[OPERAND_USERDATA_METADATA_INDEX]);
+    ArgFormat format = (ArgFormat)data->defaultFormat;
+    switch (RAW_FORMAT(format)) {
+    case Format_Decimal:
+    case Format_Hexadecimal:
+    case Format_Address:
+      [self.file setFormat:format
+               forArgument:operandIndex
+          atVirtualAddress:disasm->virtualAddr];
+      break;
+
+    default:
+      break;
+    }
+
+    operandIndex++;
+  }
+}
+
+- (void)performBranchesAnalysis:(DisasmStruct *)disasm
+           computingNextAddress:(Address *)next
+                    andBranches:(NSMutableArray<NSNumber *> *)branches
+                   forProcedure:(NSObject<HPProcedure> *)procedure
+                     basicBlock:(NSObject<HPBasicBlock> *)basicBlock
+                      ofSegment:(NSObject<HPSegment> *)segment
+                calledAddresses:(NSMutableArray<NSNumber *> *)calledAddresses
+                      callsites:
+                          (NSMutableArray<NSNumber *> *)callSitesAddresses {
+
+  InstructionMetadata *metadata =
+      (InstructionMetadata *)&disasm->instruction.userData;
+  BOOL isSwitch = metadata->opcode == OpcodeXEC;
+
+  if ([self.file segmentForVirtualAddress:disasm->instruction.addressValue] ==
+      nil) {
+    if (isSwitch) {
+      [HopperUtilities
+          addInlineCommentIfEmpty:
+              [NSString stringWithFormat:@"Switch out of mapped memory (0x%lX)",
+                                         (unsigned long)
+                                             disasm->instruction.addressValue]
+                        atAddress:disasm->virtualAddr
+                           inFile:self.file];
+    } else {
+      [HopperUtilities
+          addInlineCommentIfEmpty:
+              [NSString
+                  stringWithFormat:@"Jumping out of mapped memory (0x%lX)",
+                                   (unsigned long)
+                                       disasm->instruction.addressValue]
+                        atAddress:disasm->virtualAddr
+                           inFile:self.file];
+    }
+
+    return;
+  }
+
+  if (isSwitch) {
+    [segment addReferencesToAddress:disasm->instruction.addressValue
+                        fromAddress:disasm->virtualAddr];
+  }
 }
 
 @end

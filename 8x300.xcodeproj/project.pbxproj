@@ -22,6 +22,7 @@
 		683CF0AA19FB89E700CCABAE /* Generic8x305.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Generic8x305.m; sourceTree = "<group>"; };
 		683CF0AC19FB8AF500CCABAE /* Core.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Core.h; sourceTree = "<group>"; };
 		683CF0AD19FB8AF500CCABAE /* Core.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Core.m; sourceTree = "<group>"; };
+		6847754D1FBC4AF400D50CA3 /* Common.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Common.h; sourceTree = "<group>"; };
 		68C0457619C82D8A005E1B4D /* Context.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Context.h; sourceTree = "<group>"; };
 		68C0457719C82D8A005E1B4D /* Context.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Context.m; sourceTree = "<group>"; };
 		68C0457819C82D8A005E1B4D /* Definition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Definition.h; sourceTree = "<group>"; };
@@ -107,6 +108,7 @@
 			children = (
 				68C0458219C82EE4005E1B4D /* Chips */,
 				68C539E81EE0A7440026B6B0 /* Formatters */,
+				6847754D1FBC4AF400D50CA3 /* Common.h */,
 				68C0457619C82D8A005E1B4D /* Context.h */,
 				68C0457719C82D8A005E1B4D /* Context.m */,
 				68C0457819C82D8A005E1B4D /* Definition.h */,
@@ -320,7 +322,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_BUNDLE_IDENTIFIER = "it.frob.hopper.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/HopperCommon";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)";
 				WRAPPER_EXTENSION = hopperCPU;
 			};
 			name = Debug;
@@ -346,7 +348,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_BUNDLE_IDENTIFIER = "it.frob.hopper.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/HopperCommon";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)";
 				WRAPPER_EXTENSION = hopperCPU;
 			};
 			name = Release;
