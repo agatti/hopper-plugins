@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 48;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -14,7 +14,6 @@
 		683A4C24197C8E4700B7F172 /* Context.m in Sources */ = {isa = PBXBuildFile; fileRef = 683A4C1A197C8E4700B7F172 /* Context.m */; };
 		683A4C25197C8E4700B7F172 /* Definition.m in Sources */ = {isa = PBXBuildFile; fileRef = 683A4C1C197C8E4700B7F172 /* Definition.m */; };
 		683A4C27197C8E4700B7F172 /* Generic6502.m in Sources */ = {isa = PBXBuildFile; fileRef = 683A4C21197C8E4700B7F172 /* Generic6502.m */; };
-		685736AA1985738C00D790A9 /* lib65xxCommon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 685736A91985738B00D790A9 /* lib65xxCommon.a */; };
 		6873AD77197F810400B46DB5 /* R6500.m in Sources */ = {isa = PBXBuildFile; fileRef = 6873AD76197F810400B46DB5 /* R6500.m */; };
 		6873AD7D197F8E7A00B46DB5 /* HuC6280.m in Sources */ = {isa = PBXBuildFile; fileRef = 6873AD7C197F8E7A00B46DB5 /* HuC6280.m */; };
 		688E0143197C949E00C9DC94 /* W65C02S.m in Sources */ = {isa = PBXBuildFile; fileRef = 688E0142197C949E00C9DC94 /* W65C02S.m */; };
@@ -35,23 +34,21 @@
 		68259B2019B712DF0060713A /* libHopperCommon.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libHopperCommon.a; path = "../../Library/Developer/Xcode/DerivedData/HopperPlugins-fzslwhyufvevicghqykcwcprlbow/Build/Products/Debug/libHopperCommon.a"; sourceTree = "<group>"; };
 		682870461A22D5AB005B5412 /* Core.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Core.h; sourceTree = "<group>"; };
 		682870471A22D5AB005B5412 /* Core.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Core.m; sourceTree = "<group>"; };
-		683372E8197C909B002B432E /* Generic65C02.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Generic65C02.h; path = 6502/Generic65C02.h; sourceTree = SOURCE_ROOT; };
-		683372E9197C909B002B432E /* Generic65C02.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Generic65C02.m; path = 6502/Generic65C02.m; sourceTree = SOURCE_ROOT; };
-		683A4C18197C8E4700B7F172 /* Common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Common.h; path = 6502/Common.h; sourceTree = SOURCE_ROOT; };
-		683A4C19197C8E4700B7F172 /* Context.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Context.h; path = 6502/Context.h; sourceTree = SOURCE_ROOT; };
-		683A4C1A197C8E4700B7F172 /* Context.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Context.m; path = 6502/Context.m; sourceTree = SOURCE_ROOT; };
-		683A4C1B197C8E4700B7F172 /* Definition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Definition.h; path = 6502/Definition.h; sourceTree = SOURCE_ROOT; };
-		683A4C1C197C8E4700B7F172 /* Definition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Definition.m; path = 6502/Definition.m; sourceTree = SOURCE_ROOT; };
-		683A4C20197C8E4700B7F172 /* Generic6502.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Generic6502.h; path = 6502/Generic6502.h; sourceTree = SOURCE_ROOT; };
-		683A4C21197C8E4700B7F172 /* Generic6502.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Generic6502.m; path = 6502/Generic6502.m; sourceTree = SOURCE_ROOT; };
-		685736A91985738B00D790A9 /* lib65xxCommon.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = lib65xxCommon.a; path = build/Debug/lib65xxCommon.a; sourceTree = "<group>"; };
-		6860A68819AAA0B600A9AC3B /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		683372E8197C909B002B432E /* Generic65C02.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Generic65C02.h; sourceTree = "<group>"; };
+		683372E9197C909B002B432E /* Generic65C02.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Generic65C02.m; sourceTree = "<group>"; };
+		683A4C18197C8E4700B7F172 /* Common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Common.h; sourceTree = "<group>"; };
+		683A4C19197C8E4700B7F172 /* Context.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Context.h; sourceTree = "<group>"; };
+		683A4C1A197C8E4700B7F172 /* Context.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Context.m; sourceTree = "<group>"; };
+		683A4C1B197C8E4700B7F172 /* Definition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Definition.h; sourceTree = "<group>"; };
+		683A4C1C197C8E4700B7F172 /* Definition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Definition.m; sourceTree = "<group>"; };
+		683A4C20197C8E4700B7F172 /* Generic6502.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Generic6502.h; sourceTree = "<group>"; };
+		683A4C21197C8E4700B7F172 /* Generic6502.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Generic6502.m; sourceTree = "<group>"; };
 		6873AD75197F810400B46DB5 /* R6500.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = R6500.h; sourceTree = "<group>"; };
 		6873AD76197F810400B46DB5 /* R6500.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = R6500.m; sourceTree = "<group>"; };
 		6873AD7B197F8E7A00B46DB5 /* HuC6280.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HuC6280.h; sourceTree = "<group>"; };
 		6873AD7C197F8E7A00B46DB5 /* HuC6280.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HuC6280.m; sourceTree = "<group>"; };
-		688E0141197C949E00C9DC94 /* W65C02S.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = W65C02S.h; path = 6502/W65C02S.h; sourceTree = SOURCE_ROOT; };
-		688E0142197C949E00C9DC94 /* W65C02S.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = W65C02S.m; path = 6502/W65C02S.m; sourceTree = SOURCE_ROOT; };
+		688E0141197C949E00C9DC94 /* W65C02S.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = W65C02S.h; sourceTree = "<group>"; };
+		688E0142197C949E00C9DC94 /* W65C02S.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = W65C02S.m; sourceTree = "<group>"; };
 		68AE6EFD19ACE4370020D445 /* M740.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = M740.h; sourceTree = "<group>"; };
 		68AE6EFE19ACE4370020D445 /* M740.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = M740.m; sourceTree = "<group>"; };
 		68B87E0719AB975400BEE286 /* R65C02.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = R65C02.h; sourceTree = "<group>"; };
@@ -79,7 +76,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				68259B2119B712DF0060713A /* libHopperCommon.a in Frameworks */,
-				685736AA1985738C00D790A9 /* lib65xxCommon.a in Frameworks */,
 				6801368719706CC5004964BD /* CoreFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -94,7 +90,9 @@
 				6801368519706CC5004964BD /* Frameworks */,
 				6801368419706CC5004964BD /* Products */,
 			);
+			indentWidth = 2;
 			sourceTree = "<group>";
+			tabWidth = 2;
 		};
 		6801368419706CC5004964BD /* Products */ = {
 			isa = PBXGroup;
@@ -108,9 +106,7 @@
 			isa = PBXGroup;
 			children = (
 				68259B2019B712DF0060713A /* libHopperCommon.a */,
-				685736A91985738B00D790A9 /* lib65xxCommon.a */,
 				6801368619706CC5004964BD /* CoreFoundation.framework */,
-				6860A68819AAA0B600A9AC3B /* XCTest.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -196,7 +192,7 @@
 				ORGANIZATIONNAME = "Alessandro Gatti - frob.it";
 			};
 			buildConfigurationList = 6801367E19706CC5004964BD /* Build configuration list for PBXProject "6502" */;
-			compatibilityVersion = "Xcode 3.2";
+			compatibilityVersion = "Xcode 8.0";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (

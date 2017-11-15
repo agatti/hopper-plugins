@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 48;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -64,7 +64,9 @@
 				68259AF819B710910060713A /* Frameworks */,
 				68259AF719B710910060713A /* Products */,
 			);
+			indentWidth = 2;
 			sourceTree = "<group>";
+			tabWidth = 2;
 		};
 		68259AF719B710910060713A /* Products */ = {
 			isa = PBXGroup;
@@ -161,7 +163,7 @@
 				ORGANIZATIONNAME = "Alessandro Gatti - frob.it";
 			};
 			buildConfigurationList = 68259AF119B710910060713A /* Build configuration list for PBXProject "HopperCommon" */;
-			compatibilityVersion = "Xcode 3.2";
+			compatibilityVersion = "Xcode 8.0";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (

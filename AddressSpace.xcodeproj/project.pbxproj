@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 48;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -34,7 +34,9 @@
 				68D5918B1A20EEE000E5117B /* AddressSpace */,
 				68D5918A1A20EEE000E5117B /* Products */,
 			);
+			indentWidth = 2;
 			sourceTree = "<group>";
+			tabWidth = 2;
 		};
 		68D5918A1A20EEE000E5117B /* Products */ = {
 			isa = PBXGroup;
@@ -90,7 +92,7 @@
 				};
 			};
 			buildConfigurationList = 68D591841A20EEE000E5117B /* Build configuration list for PBXProject "AddressSpace" */;
-			compatibilityVersion = "Xcode 3.2";
+			compatibilityVersion = "Xcode 8.0";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (

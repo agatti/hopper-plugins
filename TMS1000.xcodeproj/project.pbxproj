@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 48;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -71,7 +71,9 @@
 				AB5F6CB86A5E300B41A91E05 /* TMS1000 */,
 				68A38A201EEC5B4A004A50E1 /* Frameworks */,
 			);
+			indentWidth = 2;
 			sourceTree = "<group>";
+			tabWidth = 2;
 		};
 		AB5F6923025B87A275C5C26B /* Chips */ = {
 			isa = PBXGroup;
@@ -131,7 +133,7 @@
 				ORGANIZATIONNAME = "Alessandro Gatti - frob.it";
 			};
 			buildConfigurationList = AB5F6E703787811EDE9C7BD1 /* Build configuration list for PBXProject "TMS1000" */;
-			compatibilityVersion = "Xcode 3.2";
+			compatibilityVersion = "Xcode 8.0";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (

@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 48;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -36,7 +36,9 @@
 				68C7B3791971407D0067434B /* Frameworks */,
 				68C7B3781971407D0067434B /* Products */,
 			);
+			indentWidth = 2;
 			sourceTree = "<group>";
+			tabWidth = 2;
 		};
 		68C7B3781971407D0067434B /* Products */ = {
 			isa = PBXGroup;
@@ -95,7 +97,7 @@
 				ORGANIZATIONNAME = "Alessandro Gatti - frob.it";
 			};
 			buildConfigurationList = 68C7B3721971407D0067434B /* Build configuration list for PBXProject "HexLoader" */;
-			compatibilityVersion = "Xcode 3.2";
+			compatibilityVersion = "Xcode 8.0";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (

@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 48;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -84,7 +84,9 @@
 				68F19B0B19C82CFE008F6CEA /* Frameworks */,
 				68F19B0A19C82CFE008F6CEA /* Products */,
 			);
+			indentWidth = 2;
 			sourceTree = "<group>";
+			tabWidth = 2;
 		};
 		68F19B0A19C82CFE008F6CEA /* Products */ = {
 			isa = PBXGroup;
@@ -148,7 +150,7 @@
 				ORGANIZATIONNAME = "Alessandro Gatti - frob.it";
 			};
 			buildConfigurationList = 68F19B0419C82CFE008F6CEA /* Build configuration list for PBXProject "8x300" */;
-			compatibilityVersion = "Xcode 3.2";
+			compatibilityVersion = "Xcode 8.0";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
