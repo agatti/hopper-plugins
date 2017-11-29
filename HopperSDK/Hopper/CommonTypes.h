@@ -68,6 +68,9 @@ HP_BEGIN_DECL_ENUM(uint8_t, ByteType) {
     Type_ASCII,
     Type_Unicode,
 
+    Type_ExternAddress = 0x3D,
+    Type_ExternFunction = 0x3E,
+
     Type_Align = 0x3F,
 
     Type_Data = 0x40,      /// METATYPE : Only used for searching, no bytes have this type!

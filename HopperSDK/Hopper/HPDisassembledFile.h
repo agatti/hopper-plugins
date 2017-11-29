@@ -110,6 +110,8 @@ typedef void (^FileLoadingCallbackInfo)(NSString *desc, float progress);
 - (NSObject<HPProcedure> *)procedureAt:(Address)address;
 - (void)removeProcedure:(NSObject<HPProcedure> *)procedure;
 - (void)removeProcedureAt:(Address)address;
+- (NSObject<HPProcedure> *)makeProcedureAt:(Address)address;
+- (void)makeProceduresRecursivelyStartingAt:(Address)address;
 
 // Colors
 - (BOOL)hasColorAt:(Address)address;
