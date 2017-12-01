@@ -29,6 +29,7 @@
 @protocol ItFrobHopper8x300InstructionFormatter;
 
 #import "HopperCommon/HopperCommon.h"
+
 #import <Hopper/Hopper.h>
 
 #import "Common.h"

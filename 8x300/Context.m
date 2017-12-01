@@ -28,6 +28,9 @@
 #import "Common.h"
 #import "Core.h"
 
+NSString *_Nonnull ItFrobHopper8x300MissingOperand =
+    @"Missing operand fragment for index %d at address %llu";
+
 @interface ItFrobHopper8x300Context ()
 
 @property(strong, nonatomic, readonly, nonnull)
@@ -85,7 +88,7 @@ usingServices:(NSObject<HPHopperServices> *_Nonnull)services {
 }
 
 - (BOOL)instructionMayBeASwitchStatement:(DisasmStruct *)disasmStruct {
-  return ((FRBOpcode)(disasmStruct->instruction.userData >> 8)) == OpcodeXEC;
+  return ((Opcode)(disasmStruct->instruction.userData >> 8)) == OpcodeXEC;
 }
 
 - (BOOL)instructionHaltsExecutionFlow:(DisasmStruct *)disasm {
@@ -165,20 +168,26 @@ buildCompleteOperandString:(DisasmStruct *)disasm
   if ([self.file segmentForVirtualAddress:disasm->instruction.addressValue] ==
       nil) {
     if (isSwitch) {
+      static NSString *switchOutOfBounds =
+          @"Switch out of mapped memory (0x%lX)";
+
       [HopperUtilities
-          addInlineCommentIfEmpty:
-              [NSString stringWithFormat:@"Switch out of mapped memory (0x%lX)",
-                                         (unsigned long)
-                                             disasm->instruction.addressValue]
+          addInlineCommentIfEmpty:[NSString
+                                      stringWithFormat:switchOutOfBounds,
+                                                       (unsigned long)
+                                                           disasm->instruction
+                                                               .addressValue]
                         atAddress:disasm->virtualAddr
                            inFile:self.file];
     } else {
+      static NSString *jumpOutOfBounds = @"Jump out of mapped memory (0x%lX)";
+
       [HopperUtilities
-          addInlineCommentIfEmpty:
-              [NSString
-                  stringWithFormat:@"Jumping out of mapped memory (0x%lX)",
-                                   (unsigned long)
-                                       disasm->instruction.addressValue]
+          addInlineCommentIfEmpty:[NSString
+                                      stringWithFormat:jumpOutOfBounds,
+                                                       (unsigned long)
+                                                           disasm->instruction
+                                                               .addressValue]
                         atAddress:disasm->virtualAddr
                            inFile:self.file];
     }

@@ -39,7 +39,8 @@
       usingIndexRegistersMask:(NSUInteger)indexRegisters;
 
 + (Address)fillRelativeAddressOperand:(NSUInteger)operand
-                               inFile:(NSObject<HPDisassembledFile> *_Nonnull)file
+                               inFile:
+                                   (NSObject<HPDisassembledFile> *_Nonnull)file
                             forStruct:(DisasmStruct *_Nonnull)disasm
                              withSize:(NSUInteger)size
                      andEffectiveSize:(NSUInteger)effectiveSize

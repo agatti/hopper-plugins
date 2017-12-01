@@ -33,7 +33,7 @@
 /**
  * Available opcodes.
  */
-typedef NS_ENUM(NSUInteger, FRBOpcode) {
+typedef NS_ENUM(NSUInteger, Opcode) {
 
   // Real opcodes.
 
@@ -62,7 +62,7 @@ typedef NS_ENUM(NSUInteger, FRBOpcode) {
 /**
  * Available registers.
  */
-typedef NS_ENUM(NSUInteger, FRBRegister) {
+typedef NS_ENUM(NSUInteger, Register) {
   RegisterAUX = 0,
   RegisterR1,
   RegisterR2,

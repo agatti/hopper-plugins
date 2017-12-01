@@ -27,7 +27,7 @@
 #import "Core.h"
 #import "InstructionFormatter.h"
 
-#define OPCODE_FROM_WORD(word) ((FRBOpcode)((word) >> 13))
+#define OPCODE_FROM_WORD(word) ((Opcode)((word) >> 13))
 
 typedef NS_OPTIONS(NSUInteger, RegisterFlags) {
   RegisterFlagAUX = 1 << RegisterAUX,

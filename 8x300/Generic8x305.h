@@ -33,6 +33,7 @@
 
 @interface ItFrobHopper8x300Generic8x305
     : ItFrobHopper8x300Base8x300 <ItFrobHopperCPUProvider>
+
 @end
 
 #pragma clang diagnostic pop

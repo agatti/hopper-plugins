@@ -28,8 +28,7 @@
 
 #import "Core.h"
 
-static NSString *_Nonnull kMissingOperand =
-    @"Missing operand fragment for index %d at address %llu";
+extern NSString *_Nonnull ItFrobHopper8x300MissingOperand;
 
 #define GET_OPERAND(name, disasm, index, file, services)                       \
   NSObject<HPASMLine> *name = [self formatOperand:disasm                       \
@@ -37,8 +36,9 @@ static NSString *_Nonnull kMissingOperand =
                                            inFile:file                         \
                                      withServices:services];                   \
   if (!name) {                                                                 \
-    [services logMessage:[NSString stringWithFormat:kMissingOperand, index,    \
-                                                    disasm->virtualAddr]];     \
+    [services                                                                  \
+        logMessage:[NSString stringWithFormat:ItFrobHopper8x300MissingOperand, \
+                                              index, disasm->virtualAddr]];    \
     return nil;                                                                \
   }
 
