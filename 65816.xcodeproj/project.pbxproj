@@ -12,7 +12,6 @@
 		684A726B1985692100955AF5 /* Context.m in Sources */ = {isa = PBXBuildFile; fileRef = 684A72521985692100955AF5 /* Context.m */; };
 		684A726C1985692100955AF5 /* Definition.m in Sources */ = {isa = PBXBuildFile; fileRef = 684A72541985692100955AF5 /* Definition.m */; };
 		684A72731985692100955AF5 /* Generic65816.m in Sources */ = {isa = PBXBuildFile; fileRef = 684A72671985692100955AF5 /* Generic65816.m */; };
-		68AD4F1819A4B3AA00E0EBE2 /* lib65xxCommon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 68AD4F1719A4B3AA00E0EBE2 /* lib65xxCommon.a */; };
 		AB5F651D93A3EB5105ECE046 /* M7700.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5F65B3B3DFD0FC117EB079 /* M7700.m */; };
 		AB5F66A47539716CB882262A /* Core.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5F613FF40E8C4968612B10 /* Core.m */; };
 /* End PBXBuildFile section */
@@ -42,7 +41,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				68259B2E19B738E00060713A /* libHopperCommon.a in Frameworks */,
-				68AD4F1819A4B3AA00E0EBE2 /* lib65xxCommon.a in Frameworks */,
 				684A7243198568DC00955AF5 /* CoreFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -234,7 +232,7 @@
 					"$(SRCROOT)/HopperSDK",
 				);
 				LIBRARY_SEARCH_PATHS = "$(BUILT_PRODUCTS_DIR)";
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/65xxCommon";
@@ -285,7 +283,7 @@
 					"$(SRCROOT)/HopperSDK",
 				);
 				LIBRARY_SEARCH_PATHS = "$(BUILT_PRODUCTS_DIR)";
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				SDKROOT = macosx;
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/65xxCommon";
 			};
@@ -302,6 +300,7 @@
 					"$(inherited)",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/HopperPlugins-fzslwhyufvevicghqykcwcprlbow/Build/Products/Debug",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_BUNDLE_IDENTIFIER = "it.frob.hopper.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/65xxCommon $(SRCROOT)/HopperCommon";
@@ -320,6 +319,7 @@
 					"$(inherited)",
 					"$(USER_LIBRARY_DIR)/Developer/Xcode/DerivedData/HopperPlugins-fzslwhyufvevicghqykcwcprlbow/Build/Products/Debug",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_BUNDLE_IDENTIFIER = "it.frob.hopper.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/65xxCommon $(SRCROOT)/HopperCommon";
