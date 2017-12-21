@@ -217,8 +217,8 @@ HP_END_DECL_ENUM(DFTAddressWidth);
 
 HP_BEGIN_DECL_OPTIONS(NSUInteger, FileLoaderOptions) {
     FLS_None = 0,
-    FLS_ParseObjectiveC = 1,
-    FLS_ParseExceptions = 2
+    FLS_ParseObjectiveC = (1 << 0),
+    FLS_ParseExceptions = (1 << 1)
 }
 HP_END_DECL_OPTIONS(FileLoaderOptions);
 
