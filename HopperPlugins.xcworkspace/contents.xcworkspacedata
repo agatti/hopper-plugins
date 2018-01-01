@@ -21,6 +21,9 @@
       location = "container:"
       name = "Loaders">
       <FileRef
+         location = "group:A2Loader.xcodeproj">
+      </FileRef>
+      <FileRef
          location = "group:HexLoader.xcodeproj">
       </FileRef>
       <FileRef

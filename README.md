@@ -12,6 +12,7 @@ Plugins currently available in the repository:
 
 **File loader plugins:**
 
+* [Apple 2](#apple-ii-file-loader-plugin)
 * [Commodore binaries](#commodore-file-loader-plugin)
 * [HEX binary files](#hex-binary-files)
 
@@ -343,6 +344,27 @@ CPU backends currently supported: TMS1000, TMS1100.
 
 <hr/>
 
+### **Apple II File Loader Plugin**
+
+_version 0.0.1_
+
+This file loader plugin allows you to load Apple ][ binaries in A2 format to be disassembled (or basically anything you can either `BLOAD` or `BRUN`). _(Please note that the plugin depends on the 6502 CPU core to be installed in order to work properly)_
+
+#### TODO for next version:
+
+* Add support for containers (Disk and Tape images).
+* Add extra RAM/ROM sections depending on the chosen machine model.
+* Automatically set predefined RAM/ROM labels according to Apple's development manual.
+
+#### Caveats:
+
+* The plugin currently defaults to use a 65c02 disassembler core even on machines that used a plain 6502, this will be fixed once a target machine selector will be implemented in the loader.
+* The plugin can not handle BASIC files.
+
+#### Future plans (need Hopper SDK changes):
+
+* Automatically create virtual segments for Apple IIe, IIc, and IIgs bank-switched RAM.
+
 ### **Commodore File Loader Plugin**
 
 _version 0.2.2_
@@ -400,7 +422,7 @@ This tool plugin currently allows to map the full address space of the CPU chose
 
 Checkout from Git, open `HopperPlugins.xcworkspace` in Xcode/AppCode, select the plugin you are interested in and then let Xcode/AppCode build the associated project; the plugin will be automatically copied to the appropriate paths (`~/Library/Application Support/Hopper/Plugins/v4/{CPUs,Loaders,Tools}`).  Once done, please close any open instances of Hopper and restart them.  That's all there is to it.
 
-Keep in mind that these plugins require **Hopper 4.3.6** or later to work.  They may work on older versions but they are neither tested nor supported on anything older than v4.3.6.
+Keep in mind that these plugins require **Hopper 4.3.11** or later to work.  They may work on older versions but they are neither tested nor supported on anything older than v4.3.11.
 
 If you are unable or unwilling to update your Hopper installation from v3 to v4 then build the code marked by the `v3api` git tag.  However, since the Hopper author allowed free upgrades from v3 licences to v4 licenses, v3 plugins are effectively unsupported as of v4 release.  It is strongly suggested to update your Hopper installation at your earliest opportunity.
 
