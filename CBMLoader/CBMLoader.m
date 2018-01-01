@@ -222,9 +222,8 @@ typedef NS_ENUM(NSUInteger, BasicVersion) {
 
   uint16 startingAddress = OSReadLittleInt16(data.bytes, 0);
   unsigned long size = data.length - 2;
-  uint16 endingAddress = (uint16)((startingAddress + size) & 0xFFFF);
-
-  if (endingAddress > 65535) {
+  
+  if ((startingAddress + size) > 65535) {
     [self.services
         logMessage:[NSString stringWithFormat:@"File too big: %lu bytes",
                                               data.length]];
