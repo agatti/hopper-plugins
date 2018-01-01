@@ -19,8 +19,13 @@
 
 @property (nonatomic, copy) NSString *segmentName;
 
-@property (nonatomic) uint64_t fileOffset;
-@property (nonatomic) uint64_t fileLength;
+@property (nonatomic, assign) uint64_t fileOffset;
+@property (nonatomic, assign) uint64_t fileLength;
+@property (nonatomic, assign) uint64_t flags;
+
+@property (nonatomic, assign) BOOL readable, writable, executable;
+
+- (NSUInteger)segmentIndex;
 
 - (BOOL)hasMappedData;
 - (NSData *)mappedData;
@@ -28,6 +33,7 @@
 
 - (Address)startAddress;
 - (Address)endAddress;
+- (Address)endMappedDataAddress;
 - (size_t)length;
 
 - (BOOL)containsVirtualAddress:(Address)virtualAddress;
