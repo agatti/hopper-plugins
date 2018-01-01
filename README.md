@@ -30,6 +30,8 @@ This CPU core plugin allows you to disassemble 6502/65C02 code, used in loads of
 
 CPU backends currently supported: 6502, 65C02, 65N02, 65R02, 65S02, HuC6280, MELPS740, M37450, R6500, R65C02, R65C19, R65C29, SunPlus, W65C02S.
 
+<details>
+<summary>Supported CPUs list</summary>
 <table>
 <thead>
 <tr><th>Manufacturer</th><th>Model</th><th>Provider</th><th>Datasheet</th></tr>
@@ -199,6 +201,7 @@ CPU backends currently supported: 6502, 65C02, 65N02, 65R02, 65S02, HuC6280, MEL
 <tr><td>WT6512F</td><td>Generic &rarr; 6502</td><td><a href="#">N/A</td></tr>
 </tbody>
 </table>
+</details>
 
 #### TODO for next version(s):
 
@@ -233,6 +236,8 @@ This CPU core plugin allows you to disassemble 65816/65802 code, used in some of
 
 CPU backends currently supported: 65816, MELPS 7700.
 
+<details>
+<summary>Supported CPUs list</summary>
 <table>
 <thead>
 <tr><th>Manufacturer</th><th>Model</th><th>Provider</th><th>Datasheet</th></tr>
@@ -250,6 +255,7 @@ CPU backends currently supported: 65816, MELPS 7700.
 <tr><td>M37906M8C</td><td>Mitsubishi &rarr; M7700</td><td><a href="https://www.renesas.com/zh-tw/doc/products/mpumcu/001/e7906mxx.pdf">Datasheet</a></td></tr>
 </tbody>
 </table>
+</details>
 
 #### TODO for next version:
 
@@ -279,6 +285,8 @@ This CPU core plugin allows you to disassemble 8x300 code, used in early signal 
 
 CPU backends currently supported: 8x300, 8x305.
 
+<details>
+<summary>Supported CPUs list</summary>
 <table>
 <thead>
 <tr><th>Manufacturer</th><th>Model</th><th>Provider</th><th>Datasheet</th></tr>
@@ -296,6 +304,7 @@ CPU backends currently supported: 8x300, 8x305.
 <tr><td>N8X305I</td><td>Generic &rarr; 8x305</td><td><a href="http://pdf.datasheetarchive.com/indexerfiles/Scans-063/DSA2IH00137808.pdf">Datasheet</a></td></tr>
 <tr><td>N8X305N</td><td>Generic &rarr; 8x305</td><td><a href="http://pdf.datasheetarchive.com/indexerfiles/Scans-063/DSA2IH00137808.pdf">Datasheet</a></td></tr>
 </table>
+</details>
 
 #### TODO for next version:
 
@@ -319,6 +328,8 @@ This CPU core plugin allows you to disassemble Texas Instruments' TMS1000 series
 
 CPU backends currently supported: TMS1000, TMS1100.
 
+<details>
+<summary>Supported CPUs list</summary>
 <table>
 <thead>
 <tr><th>Manufacturer</th><th>Model</th><th>Provider</th><th>Datasheet</th></tr>
@@ -331,6 +342,7 @@ CPU backends currently supported: TMS1000, TMS1100.
 <tr><td>TMS1270</td><td>Texas Instruments &rarr; TMS1000</td><td><a href="https://en.wikichip.org/w/images/f/ff/TMS1000_Series_Programmer%27s_reference_manual.pdf">Datasheet</td></tr>
 <tr><td>TMS1300</td><td>Texas Instruments &rarr; TMS1100</td><td><a href="https://en.wikichip.org/w/images/f/ff/TMS1000_Series_Programmer%27s_reference_manual.pdf">Datasheet</td></tr>
 </table>
+</details>
 
 #### TODO for next version:
 
