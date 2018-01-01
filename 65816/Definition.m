@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2014-2017, Alessandro Gatti - frob.it
+ Copyright (c) 2014-2018, Alessandro Gatti - frob.it
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -96,7 +96,7 @@ static NSString *const kCPUModeAccumulator16Index16 = @"A16 I16";
 }
 
 - (NSString *)pluginCopyright {
-  return @"©2014-2017 Alessandro Gatti";
+  return @"©2014-2018 Alessandro Gatti";
 }
 
 - (NSString *)pluginVersion {
