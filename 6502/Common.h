@@ -102,10 +102,15 @@ typedef NS_ENUM(NSUInteger, OpcodeCategory) {
  */
 typedef NS_ENUM(NSUInteger, OpcodeType) {
   OpcodeADC = 0,
-  OpcodeADD, // R65C19
+  OpcodeADD,  // R65C19
+  OpcodeAHX,  // MOS6510
+  OpcodeALR,  // MOS6510
+  OpcodeANC,  // MOS6510
   OpcodeAND,
+  OpcodeARR,  // MOS6510
   OpcodeASL,
   OpcodeASR,  // R65C19
+  OpcodeAXS,  // MOS6510
   OpcodeBAR,  // R65C19
   OpcodeBAS,  // R65C19
   OpcodeBBC,  // M740 and M37450
@@ -133,36 +138,38 @@ typedef NS_ENUM(NSUInteger, OpcodeType) {
   OpcodeBMI,
   OpcodeBNE,
   OpcodeBPL,
-  OpcodeBRA, // 65C02, W65C02S, R6500, R65C19, and Hu6280
+  OpcodeBRA,  // 65C02, W65C02S, R6500, R65C19, and Hu6280
   OpcodeBRK,
   OpcodeBVC,
   OpcodeBVS,
-  OpcodeCLA, // Hu6280
-  OpcodeCLB, // M740 and M37450
+  OpcodeCLA,  // Hu6280
+  OpcodeCLB,  // M740 and M37450
   OpcodeCLC,
   OpcodeCLD,
   OpcodeCLI,
-  OpcodeCLT, // M740 and M37450
+  OpcodeCLT,  // M740 and M37450
   OpcodeCLV,
-  OpcodeCLW, // R65C19
-  OpcodeCLX, // Hu6280
-  OpcodeCLY, // Hu6280
+  OpcodeCLW,  // R65C19
+  OpcodeCLX,  // Hu6280
+  OpcodeCLY,  // Hu6280
   OpcodeCMP,
-  OpcodeCOM, // M740 and M37450
+  OpcodeCOM,  // M740 and M37450
   OpcodeCPX,
   OpcodeCPY,
-  OpcodeCSH, // Hu6280
-  OpcodeCSL, // Hu6280
+  OpcodeCSH,  // Hu6280
+  OpcodeCSL,  // Hu6280
+  OpcodeDCP,  // MOS6510
   OpcodeDEC,
   OpcodeDEX,
   OpcodeDEY,
-  OpcodeDIV, // M37450
+  OpcodeDIV,  // M37450
   OpcodeEOR,
-  OpcodeEXC, // R65C19
+  OpcodeEXC,  // R65C19
   OpcodeINC,
-  OpcodeINI, // R65C19
+  OpcodeINI,  // R65C19
   OpcodeINX,
   OpcodeINY,
+  OpcodeISC,  // MOS6510
   OpcodeJMP,
   OpcodeJPI,  // R65C19
   OpcodeJSB0, // R65C19
@@ -174,31 +181,34 @@ typedef NS_ENUM(NSUInteger, OpcodeType) {
   OpcodeJSB6, // R65C19
   OpcodeJSB7, // R65C19
   OpcodeJSR,
-  OpcodeLAB, // R65C19
-  OpcodeLAI, // R65C19
-  OpcodeLAN, // R65C19
+  OpcodeKIL,  // MOS6510
+  OpcodeLAB,  // R65C19
+  OpcodeLAI,  // R65C19
+  OpcodeLAN,  // R65C19
+  OpcodeLAS,  // MOS6510
+  OpcodeLAX,  // MOS6510
   OpcodeLDA,
-  OpcodeLDM, // M740 and M37450
+  OpcodeLDM,  // M740 and M37450
   OpcodeLDX,
   OpcodeLDY,
-  OpcodeLII, // R65C19
+  OpcodeLII,  // R65C19
   OpcodeLSR,
-  OpcodeMPA, // R65C19
-  OpcodeMPY, // R65C19
-  OpcodeMUL, // R65C29 and M37450
-  OpcodeNEG, // R65C19
+  OpcodeMPA,  // R65C19
+  OpcodeMPY,  // R65C19
+  OpcodeMUL,  // R65C29 and M37450
+  OpcodeNEG,  // R65C19
   OpcodeNOP,
-  OpcodeNXT, // R65C19
+  OpcodeNXT,  // R65C19
   OpcodeORA,
   OpcodePHA,
-  OpcodePHI, // R65C19
+  OpcodePHI,  // R65C19
   OpcodePHP,
-  OpcodePHW, // R65C19
-  OpcodePHX, // 65C02, W65C02S, R6500, R65C19, R65C29, and Hu6280
-  OpcodePHY, // 65C02, W65C02S, R6500, R65C19, R65C29, and Hu6280
-  OpcodePIA, // R65C19
+  OpcodePHW,  // R65C19
+  OpcodePHX,  // 65C02, W65C02S, R6500, R65C19, R65C29, and Hu6280
+  OpcodePHY,  // 65C02, W65C02S, R6500, R65C19, R65C29, and Hu6280
+  OpcodePIA,  // R65C19
   OpcodePLA,
-  OpcodePLI, // R65C19
+  OpcodePLI,  // R65C19
   OpcodePLP,
   OpcodePLW,  // R65C19
   OpcodePLX,  // 65C02, W65C02S, R6500, R65C19, R65C29, and Hu6280
@@ -206,6 +216,7 @@ typedef NS_ENUM(NSUInteger, OpcodeType) {
   OpcodePSH,  // R65C19
   OpcodePUL,  // R65C19
   OpcodeRBA,  // R65C19
+  OpcodeRLA,  // MOS6510
   OpcodeRMB0, // W65C02S, R6500, R65C19, R65C29, and Hu6280
   OpcodeRMB1, // W65C02S, R6500, R65C19, R65C29, and Hu6280
   OpcodeRMB2, // W65C02S, R6500, R65C19, R65C29, and Hu6280
@@ -217,18 +228,22 @@ typedef NS_ENUM(NSUInteger, OpcodeType) {
   OpcodeRND,  // R65C19
   OpcodeROL,
   OpcodeROR,
-  OpcodeRRF, // M740 and M37450
+  OpcodeRRA,  // MOS6510
+  OpcodeRRF,  // M740 and M37450
   OpcodeRTI,
   OpcodeRTS,
-  OpcodeSAX, // Hu6280
-  OpcodeSAY, // Hu6280
-  OpcodeSBA, // R65C19
+  OpcodeSAX,  // Hu6280 and MOS6510
+  OpcodeSAY,  // Hu6280
+  OpcodeSBA,  // R65C19
   OpcodeSBC,
-  OpcodeSEB, // M740 and M37450
+  OpcodeSEB,  // M740 and M37450
   OpcodeSEC,
   OpcodeSED,
   OpcodeSEI,
   OpcodeSET,  // Hu6280
+  OpcodeSHX,  // MOS6510
+  OpcodeSHY,  // MOS6510
+  OpcodeSLO,  // MOS6510
   OpcodeSMB0, // W65C02S, R6500, R65C19, R65C29, and Hu6280
   OpcodeSMB1, // W65C02S, R6500, R65C19, R65C29, and Hu6280
   OpcodeSMB2, // W65C02S, R6500, R65C19, R65C29, and Hu6280
@@ -237,37 +252,40 @@ typedef NS_ENUM(NSUInteger, OpcodeType) {
   OpcodeSMB5, // W65C02S, R6500, R65C19, R65C29, and Hu6280
   OpcodeSMB6, // W65C02S, R6500, R65C19, R65C29, and Hu6280
   OpcodeSMB7, // W65C02S, R6500, R65C19, R65C29, and Hu6280
+  OpcodeSRE,  // MOS6510
   OpcodeST0,  // Hu6280
   OpcodeST1,  // Hu6280
   OpcodeST2,  // Hu6280
   OpcodeSTA,
-  OpcodeSTI, // R65C19
-  OpcodeSTP, // W65C02S, M740, and M37450
+  OpcodeSTI,  // R65C19
+  OpcodeSTP,  // W65C02S, M740, and M37450
   OpcodeSTX,
   OpcodeSTY,
-  OpcodeSTZ, // 65C02, W65C02S, R6500, and Hu6280
-  OpcodeSXY, // Hu6280
-  OpcodeTAI, // Hu6280
-  OpcodeTAM, // Hu6280
-  OpcodeTAW, // R65C19
+  OpcodeSTZ,  // 65C02, W65C02S, R6500, and Hu6280
+  OpcodeSXY,  // Hu6280
+  OpcodeTAI,  // Hu6280
+  OpcodeTAM,  // Hu6280
+  OpcodeTAS,  // MOS6510
+  OpcodeTAW,  // R65C19
   OpcodeTAX,
   OpcodeTAY,
-  OpcodeTIP, // R65C19
-  OpcodeTDD, // Hu6280
-  OpcodeTIA, // Hu6280
-  OpcodeTII, // Hu6280
-  OpcodeTIN, // Hu6280
-  OpcodeTMA, // Hu6280
-  OpcodeTRB, // 65C02, W65C02S, R6500, and Hu6280
-  OpcodeTSB, // 65C02, W65C02S, R6500, and Hu6280
-  OpcodeTST, // Hu6280, M740, and M37450
+  OpcodeTIP,  // R65C19
+  OpcodeTDD,  // Hu6280
+  OpcodeTIA,  // Hu6280
+  OpcodeTII,  // Hu6280
+  OpcodeTIN,  // Hu6280
+  OpcodeTMA,  // Hu6280
+  OpcodeTRB,  // 65C02, W65C02S, R6500, and Hu6280
+  OpcodeTSB,  // 65C02, W65C02S, R6500, and Hu6280
+  OpcodeTST,  // Hu6280, M740, and M37450
   OpcodeTSX,
-  OpcodeTWA, // R65C19
+  OpcodeTWA,  // R65C19
   OpcodeTXA,
   OpcodeTXS,
   OpcodeTYA,
-  OpcodeWAI, // W65C02S
-  OpcodeWIT, // M740 and M37450
+  OpcodeWAI,  // W65C02S
+  OpcodeWIT,  // M740 and M37450
+  OpcodeXAA,  // MOS6510
 
   OpcodeUndocumented
 };
@@ -326,9 +344,14 @@ typedef struct {
 static const Mnemonic kMnemonics[kOpcodesCount] = {
     {"ADC", DISASM_BRANCH_NONE, OpcodeCategoryArithmetic, NO},
     {"ADD", DISASM_BRANCH_NONE, OpcodeCategoryArithmetic, NO},
+    {"AHX", DISASM_BRANCH_NONE, OpcodeCategoryArithmetic, NO},
+    {"ANC", DISASM_BRANCH_NONE, OpcodeCategoryArithmetic, NO},
     {"AND", DISASM_BRANCH_NONE, OpcodeCategoryLogical, NO},
+    {"ALR", DISASM_BRANCH_NONE, OpcodeCategoryArithmetic, NO},
+    {"ARR", DISASM_BRANCH_NONE, OpcodeCategoryArithmetic, NO},
     {"ASL", DISASM_BRANCH_NONE, OpcodeCategoryShifts, NO},
     {"ASR", DISASM_BRANCH_NONE, OpcodeCategoryShifts, NO},
+    {"AXS", DISASM_BRANCH_NONE, OpcodeCategoryArithmetic, NO},
     {"BAR", DISASM_BRANCH_JE, OpcodeCategoryBranches, NO},
     {"BAS", DISASM_BRANCH_JNE, OpcodeCategoryBranches, NO},
     {"BBC", DISASM_BRANCH_JE, OpcodeCategoryBranches, NO},
@@ -376,6 +399,7 @@ static const Mnemonic kMnemonics[kOpcodesCount] = {
     {"CPY", DISASM_BRANCH_NONE, OpcodeCategoryComparison, NO},
     {"CSH", DISASM_BRANCH_NONE, OpcodeCategorySystem, NO},
     {"CSL", DISASM_BRANCH_NONE, OpcodeCategorySystem, NO},
+    {"DCP", DISASM_BRANCH_NONE, OpcodeCategoryArithmetic, NO},
     {"DEC", DISASM_BRANCH_NONE, OpcodeCategoryIncrementDecrement, NO},
     {"DEX", DISASM_BRANCH_NONE, OpcodeCategoryIncrementDecrement, NO},
     {"DEY", DISASM_BRANCH_NONE, OpcodeCategoryIncrementDecrement, NO},
@@ -386,6 +410,7 @@ static const Mnemonic kMnemonics[kOpcodesCount] = {
     {"INI", DISASM_BRANCH_NONE, OpcodeCategoryIncrementDecrement, NO},
     {"INX", DISASM_BRANCH_NONE, OpcodeCategoryIncrementDecrement, NO},
     {"INY", DISASM_BRANCH_NONE, OpcodeCategoryIncrementDecrement, NO},
+    {"ISC", DISASM_BRANCH_NONE, OpcodeCategoryArithmetic, NO},
     {"JMP", DISASM_BRANCH_JMP, OpcodeCategoryJumps, NO},
     {"JPI", DISASM_BRANCH_JMP, OpcodeCategoryJumps, NO},
     {"JSB0", DISASM_BRANCH_CALL, OpcodeCategoryJumps, NO},
@@ -397,9 +422,12 @@ static const Mnemonic kMnemonics[kOpcodesCount] = {
     {"JSB6", DISASM_BRANCH_CALL, OpcodeCategoryJumps, NO},
     {"JSB7", DISASM_BRANCH_CALL, OpcodeCategoryJumps, NO},
     {"JSR", DISASM_BRANCH_CALL, OpcodeCategoryJumps, NO},
+    {"KIL", DISASM_BRANCH_NONE, OpcodeCategorySystem, YES},
     {"LAB", DISASM_BRANCH_NONE, OpcodeCategoryLoad, NO},
     {"LAI", DISASM_BRANCH_NONE, OpcodeCategoryLoad, NO},
     {"LAN", DISASM_BRANCH_NONE, OpcodeCategoryLoad, NO},
+    {"LAS", DISASM_BRANCH_NONE, OpcodeCategoryLoad, NO},
+    {"LAX", DISASM_BRANCH_NONE, OpcodeCategoryLoad, NO},
     {"LDA", DISASM_BRANCH_NONE, OpcodeCategoryLoad, NO},
     {"LDM", DISASM_BRANCH_NONE, OpcodeCategoryLoad, NO},
     {"LDX", DISASM_BRANCH_NONE, OpcodeCategoryLoad, NO},
@@ -429,6 +457,7 @@ static const Mnemonic kMnemonics[kOpcodesCount] = {
     {"PSH", DISASM_BRANCH_NONE, OpcodeCategoryStack, NO},
     {"PUL", DISASM_BRANCH_NONE, OpcodeCategoryStack, NO},
     {"RBA", DISASM_BRANCH_NONE, OpcodeCategoryStore, NO},
+    {"RLA", DISASM_BRANCH_NONE, OpcodeCategoryArithmetic, NO},
     {"RMB0", DISASM_BRANCH_NONE, OpcodeCategoryStore, NO},
     {"RMB1", DISASM_BRANCH_NONE, OpcodeCategoryStore, NO},
     {"RMB2", DISASM_BRANCH_NONE, OpcodeCategoryStore, NO},
@@ -440,6 +469,7 @@ static const Mnemonic kMnemonics[kOpcodesCount] = {
     {"RND", DISASM_BRANCH_NONE, OpcodeCategoryArithmetic, NO},
     {"ROL", DISASM_BRANCH_NONE, OpcodeCategoryShifts, NO},
     {"ROR", DISASM_BRANCH_NONE, OpcodeCategoryShifts, NO},
+    {"RRA", DISASM_BRANCH_NONE, OpcodeCategoryArithmetic, NO},
     {"RRF", DISASM_BRANCH_NONE, OpcodeCategoryShifts, NO},
     {"RTI", DISASM_BRANCH_RET, OpcodeCategorySystem, NO},
     {"RTS", DISASM_BRANCH_RET, OpcodeCategorySystem, NO},
@@ -452,6 +482,9 @@ static const Mnemonic kMnemonics[kOpcodesCount] = {
     {"SED", DISASM_BRANCH_NONE, OpcodeCategoryStatusFlagChanges, NO},
     {"SEI", DISASM_BRANCH_NONE, OpcodeCategoryStatusFlagChanges, NO},
     {"SET", DISASM_BRANCH_NONE, OpcodeCategoryStatusFlagChanges, NO},
+    {"SHX", DISASM_BRANCH_NONE, OpcodeCategoryStore, NO},
+    {"SHY", DISASM_BRANCH_NONE, OpcodeCategoryStore, NO},
+    {"SLO", DISASM_BRANCH_NONE, OpcodeCategoryArithmetic, NO},
     {"SMB0", DISASM_BRANCH_NONE, OpcodeCategoryStore, NO},
     {"SMB1", DISASM_BRANCH_NONE, OpcodeCategoryStore, NO},
     {"SMB2", DISASM_BRANCH_NONE, OpcodeCategoryStore, NO},
@@ -460,6 +493,7 @@ static const Mnemonic kMnemonics[kOpcodesCount] = {
     {"SMB5", DISASM_BRANCH_NONE, OpcodeCategoryStore, NO},
     {"SMB6", DISASM_BRANCH_NONE, OpcodeCategoryStore, NO},
     {"SMB7", DISASM_BRANCH_NONE, OpcodeCategoryStore, NO},
+    {"SRE", DISASM_BRANCH_NONE, OpcodeCategoryArithmetic, NO},
     {"ST0", DISASM_BRANCH_NONE, OpcodeCategoryStore, NO},
     {"ST1", DISASM_BRANCH_NONE, OpcodeCategoryStore, NO},
     {"ST2", DISASM_BRANCH_NONE, OpcodeCategoryStore, NO},
@@ -472,6 +506,7 @@ static const Mnemonic kMnemonics[kOpcodesCount] = {
     {"SXY", DISASM_BRANCH_NONE, OpcodeCategoryRegisterTransfers, NO},
     {"TAI", DISASM_BRANCH_NONE, OpcodeCategoryBlockTransfer, NO},
     {"TAM", DISASM_BRANCH_NONE, OpcodeCategoryStore, NO},
+    {"TAS", DISASM_BRANCH_NONE, OpcodeCategoryArithmetic, NO},
     {"TAW", DISASM_BRANCH_NONE, OpcodeCategoryRegisterTransfers, NO},
     {"TAX", DISASM_BRANCH_NONE, OpcodeCategoryRegisterTransfers, NO},
     {"TAY", DISASM_BRANCH_NONE, OpcodeCategoryRegisterTransfers, NO},
@@ -490,4 +525,5 @@ static const Mnemonic kMnemonics[kOpcodesCount] = {
     {"TXS", DISASM_BRANCH_NONE, OpcodeCategoryRegisterTransfers, NO},
     {"TYA", DISASM_BRANCH_NONE, OpcodeCategoryRegisterTransfers, NO},
     {"WAI", DISASM_BRANCH_NONE, OpcodeCategorySystem, NO},
-    {"WIT", DISASM_BRANCH_NONE, OpcodeCategorySystem, YES}};
+    {"WIT", DISASM_BRANCH_NONE, OpcodeCategorySystem, YES},
+    {"XAA", DISASM_BRANCH_NONE, OpcodeCategoryArithmetic, NO}};

@@ -128,10 +128,10 @@
     case RegisterY:
       return @"Y";
 
-    // Until the SDK allows to manipulate the stack pointer
-    // directly, we have to consider the stack pointer as a
-    // general purpose register for the sake of block register
-    // usage markers.
+      // Until the SDK allows to manipulate the stack pointer
+      // directly, we have to consider the stack pointer as a
+      // general purpose register for the sake of block register
+      // usage markers.
 
     case RegisterS:
       return @"S";
@@ -139,7 +139,7 @@
     case RegisterP:
       return @"P";
 
-    // R65C19 extended registers.
+      // R65C19 extended registers.
 
     case RegisterW:
       return @"W";

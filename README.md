@@ -28,7 +28,7 @@ _version 0.2.2_
 
 This CPU core plugin allows you to disassemble 6502/65C02 code, used in loads of home computers of the 70s, 80s, and early 90s, and in industrial automation or other specialised tasks where an MCU is needed.
 
-CPU backends currently supported: 6502, 65C02, 65N02, 65R02, 65S02, HuC6280, MELPS740, M37450, R6500, R65C02, R65C19, R65C29, SunPlus, W65C02S.
+CPU backends currently supported: 6502, 65C02, 65N02, 65R02, 65S02, HuC6280, MELPS740, MOS6510, M37450, R6500, R65C02, R65C19, R65C29, SunPlus, W65C02S.
 
 <details>
 <summary>Supported CPUs list</summary>
@@ -80,7 +80,7 @@ CPU backends currently supported: 6502, 65C02, 65N02, 65R02, 65S02, HuC6280, MEL
 <tr><td>6507</td><td>Generic &rarr; 6502</td><td><a href="http://archive.6502.org/datasheets/mos_6500_mpu_nov_1985.pdf">Datasheet</a></td></tr>
 <tr><td>6508</td><td>Generic &rarr; 6502</td><td><a href="http://6502.org/documents/datasheets/mos/mos_6508_mpu.pdf">Datasheet</a></td></tr>
 <tr><td>6509</td><td>Generic &rarr; 6502</td><td><a href="http://6502.org/documents/datasheets/mos/mos_6509_mpu.pdf">Datasheet</a></td></tr>
-<tr><td>6510</td><td>Generic &rarr; 6502</td><td><a href="http://archive.6502.org/datasheets/mos_6510_mpu_nov_1982.pdf">Datasheet</a></td></tr>
+<tr><td>6510</td><td>MOS &rarr; 6510</td><td><a href="http://archive.6502.org/datasheets/mos_6510_mpu_nov_1982.pdf">Datasheet</a></td></tr>
 <tr><td>6512</td><td>Generic &rarr; 6502</td><td><a href="http://archive.6502.org/datasheets/mos_6500_mpu_nov_1985.pdf">Datasheet</a></td></tr>
 <tr><td>6513</td><td>Generic &rarr; 6502</td><td><a href="http://archive.6502.org/datasheets/mos_6500_mpu_nov_1985.pdf">Datasheet</a></td></tr>
 <tr><td>6514</td><td>Generic &rarr; 6502</td><td><a href="http://archive.6502.org/datasheets/mos_6500_mpu_nov_1985.pdf">Datasheet</a></td></tr>
@@ -210,6 +210,7 @@ CPU backends currently supported: 6502, 65C02, 65N02, 65R02, 65S02, HuC6280, MEL
 * Write tests for the HuC6280 backend.
 * Write tests for the R65C19 backend.
 * Write tests for the R65C29 backend.
+* Write tests for the MOS6510 backend.
 * Properly handle the extra registers present in the R65C19 variant.
 * Attempt to reject files too big for address-space reduced chip variants.
 * Add support for more 6502 variants if any are found in the wild.
@@ -223,7 +224,7 @@ CPU backends currently supported: 6502, 65C02, 65N02, 65R02, 65S02, HuC6280, MEL
 
 #### Caveats:
 
-* Undocumented opcodes for the generic 6502 core are not supported (and this is not going to change in the near future).
+* Undocumented opcodes are supported only in the MOS 6510 core, as it is quite unlikely that people used them on general applications.  The MOS 6510 is used in the Commodore C64 microcomputer, where all sort of trickery is commonly used.
 * Rebuilding the test binaries requires having the [AS Macroassembler](http://www.alfsembler.de/) command line tools available in your `PATH` variable.
 
 <hr/>

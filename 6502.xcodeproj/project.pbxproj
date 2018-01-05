@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		6801368719706CC5004964BD /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6801368619706CC5004964BD /* CoreFoundation.framework */; };
+		681647E81FFED45500121980 /* MOS6510.m in Sources */ = {isa = PBXBuildFile; fileRef = 681647E71FFED45500121980 /* MOS6510.m */; };
 		68259B2119B712DF0060713A /* libHopperCommon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 68259B2019B712DF0060713A /* libHopperCommon.a */; };
 		682870481A22D5AB005B5412 /* Core.m in Sources */ = {isa = PBXBuildFile; fileRef = 682870471A22D5AB005B5412 /* Core.m */; };
 		683372EA197C909B002B432E /* Generic65C02.m in Sources */ = {isa = PBXBuildFile; fileRef = 683372E9197C909B002B432E /* Generic65C02.m */; };
@@ -31,6 +32,8 @@
 /* Begin PBXFileReference section */
 		6801368319706CC5004964BD /* 6502.hopperCPU */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = 6502.hopperCPU; sourceTree = BUILT_PRODUCTS_DIR; };
 		6801368619706CC5004964BD /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		681647E61FFED45500121980 /* MOS6510.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOS6510.h; sourceTree = "<group>"; };
+		681647E71FFED45500121980 /* MOS6510.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MOS6510.m; sourceTree = "<group>"; };
 		68259B2019B712DF0060713A /* libHopperCommon.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libHopperCommon.a; path = "../../Library/Developer/Xcode/DerivedData/HopperPlugins-fzslwhyufvevicghqykcwcprlbow/Build/Products/Debug/libHopperCommon.a"; sourceTree = "<group>"; };
 		682870461A22D5AB005B5412 /* Core.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Core.h; sourceTree = "<group>"; };
 		682870471A22D5AB005B5412 /* Core.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Core.m; sourceTree = "<group>"; };
@@ -146,6 +149,8 @@
 				AB5F6ABAEFE4B18A24814EAE /* M37450.m */,
 				68AE6EFD19ACE4370020D445 /* M740.h */,
 				68AE6EFE19ACE4370020D445 /* M740.m */,
+				681647E61FFED45500121980 /* MOS6510.h */,
+				681647E71FFED45500121980 /* MOS6510.m */,
 				6873AD75197F810400B46DB5 /* R6500.h */,
 				6873AD76197F810400B46DB5 /* R6500.m */,
 				68B87E0719AB975400BEE286 /* R65C02.h */,
@@ -240,6 +245,7 @@
 				6873AD7D197F8E7A00B46DB5 /* HuC6280.m in Sources */,
 				683A4C27197C8E4700B7F172 /* Generic6502.m in Sources */,
 				68F0A4E419E0645A007037E2 /* 65S02.m in Sources */,
+				681647E81FFED45500121980 /* MOS6510.m in Sources */,
 				6873AD77197F810400B46DB5 /* R6500.m in Sources */,
 				68F0A4E519E0645A007037E2 /* SunPlus.m in Sources */,
 				68BFF68919AC467800025CDE /* R65C29.m in Sources */,
