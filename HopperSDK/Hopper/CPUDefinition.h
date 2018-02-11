@@ -43,14 +43,14 @@
 - (NSUInteger)registerCountForClass:(RegClass)reg_class;
 - (NSString *)registerIndexToString:(NSUInteger)reg ofClass:(RegClass)reg_class withBitSize:(NSUInteger)size position:(DisasmPosition)position andSyntaxIndex:(NSUInteger)syntaxIndex;
 - (NSString *)cpuRegisterStateMaskToString:(uint32_t)cpuState;
-- (BOOL)registerIndexIsStackPointer:(NSUInteger)reg ofClass:(RegClass)reg_class;
-- (BOOL)registerIndexIsFrameBasePointer:(NSUInteger)reg ofClass:(RegClass)reg_class;
-- (BOOL)registerIndexIsProgramCounter:(NSUInteger)reg;
+- (BOOL)registerIndexIsStackPointer:(NSUInteger)reg ofClass:(RegClass)reg_class cpuMode:(uint8_t)cpuMode file:(NSObject<HPDisassembledFile> *)file;
+- (BOOL)registerIndexIsFrameBasePointer:(NSUInteger)reg ofClass:(RegClass)reg_class cpuMode:(uint8_t)cpuMode file:(NSObject<HPDisassembledFile> *)file;
+- (BOOL)registerIndexIsProgramCounter:(NSUInteger)reg cpuMode:(uint8_t)cpuMode file:(NSObject<HPDisassembledFile> *)file;
 /// Returns true for each special registers, like "CRx" or "DRx" X86 registers for instance
 - (BOOL)registerHasSideEffectForIndex:(NSUInteger)reg andClass:(RegClass)reg_class;
 
 // Returns the name of the frame pointer register, ie, "bp" for x86, or "r7" for ARM.
-- (NSString *)framePointerRegisterNameForFile:(NSObject<HPDisassembledFile>*)file;
+- (NSString *)framePointerRegisterNameForFile:(NSObject<HPDisassembledFile>*)file cpuMode:(uint8_t)cpuMode;
 
 /// Returns a array of bytes that represents a NOP instruction of a given size.
 - (NSData *)nopWithSize:(NSUInteger)size andMode:(NSUInteger)cpuMode forFile:(NSObject<HPDisassembledFile> *)file;

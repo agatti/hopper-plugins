@@ -27,7 +27,6 @@
 #import "BaseDefinition.h"
 
 #import "HopperCommon.h"
-#import "ModelManager.h"
 
 static NSString *const kDefaultCPUMode = @"Generic";
 static NSString *const kDefaultSyntax = @"Generic";
@@ -131,16 +130,22 @@ static NSString *const kDefaultSyntax = @"Generic";
 }
 
 - (BOOL)registerIndexIsStackPointer:(NSUInteger)reg
-                            ofClass:(RegClass)reg_class {
+                            ofClass:(RegClass)reg_class
+                            cpuMode:(uint8_t)cpuMode
+                               file:(NSObject<HPDisassembledFile> *)file {
   return NO;
 }
 
 - (BOOL)registerIndexIsFrameBasePointer:(NSUInteger)reg
-                                ofClass:(RegClass)reg_class {
+                                ofClass:(RegClass)reg_class
+                                cpuMode:(uint8_t)cpuMode
+                                   file:(NSObject<HPDisassembledFile> *)file {
   return NO;
 }
 
-- (BOOL)registerIndexIsProgramCounter:(NSUInteger)reg {
+- (BOOL)registerIndexIsProgramCounter:(NSUInteger)reg
+                              cpuMode:(uint8_t)cpuMode
+                                 file:(NSObject<HPDisassembledFile> *)file {
   return NO;
 }
 
@@ -150,7 +155,8 @@ static NSString *const kDefaultSyntax = @"Generic";
 }
 
 - (NSString *)framePointerRegisterNameForFile:
-    (NSObject<HPDisassembledFile> *)file {
+                  (NSObject<HPDisassembledFile> *)file
+                                      cpuMode:(uint8_t)cpuMode {
   return nil;
 }
 
