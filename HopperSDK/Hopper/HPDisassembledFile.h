@@ -100,7 +100,9 @@ typedef void (^FileLoadingCallbackInfo)(NSString *desc, float progress);
 
 // Instruction Operand Format
 - (ArgFormat)formatForArgument:(NSUInteger)argIndex atVirtualAddress:(Address)virtualAddress;
+- (Address)formatRelativeToForArgument:(NSUInteger)argIndex atVirtualAddress:(Address)virtualAddress;
 - (void)setFormat:(ArgFormat)format forArgument:(NSUInteger)argIndex atVirtualAddress:(Address)virtualAddress;
+- (void)setFormat:(ArgFormat)format relativeTo:(Address)relTo forArgument:(NSUInteger)argIndex atVirtualAddress:(Address)virtualAddress;
 
 // Format a number
 - (NSObject<HPASMLine> *)formatNumber:(uint64_t)immediate at:(Address)address usingFormat:(ArgFormat)format andBitSize:(uint64_t)bitSize;
