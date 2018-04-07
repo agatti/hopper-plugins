@@ -12,10 +12,20 @@
 
 #import "CommonTypes.h"
 
-@protocol HPCallReference
+@protocol HPTypeStructField
 
-- (CallReferenceType)type;
-- (Address)from;
-- (Address)to;
+- (NSString *)name;
+- (void)setName:(NSString *)name;
+
+- (NSString *)comment;
+- (void)setComment:(NSString *)comment;
+
+- (ArgFormat)displayFormat;
+- (void)setDisplayFormat:(ArgFormat)displayFormat;
+
+- (NSUInteger)fieldIndex;
+- (NSString *)string;
+- (NSString *)shortString;
 
 @end
+

@@ -1,7 +1,7 @@
 //
 // Hopper Disassembler SDK
 //
-// (c)2017 - Cryptic Apps SARL. All Rights Reserved.
+// (c) Cryptic Apps SARL. All Rights Reserved.
 // https://www.hopperapp.com
 //
 // THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY
@@ -16,6 +16,7 @@
 @protocol HPBasicBlock;
 @protocol HPSegment;
 @protocol HPCallReference;
+@protocol HPMethodSignature;
 @protocol CPUContext;
 
 @protocol HPProcedure
@@ -48,6 +49,11 @@
 - (void)removeLocalLabelAtAddress:(Address)address;
 - (Address)addressOfLocalLabel:(NSString *)name;
 
+// Rename register
+- (void)renameRegisterOfClass:(RegClass)regCls andIndex:(NSUInteger)regIndex to:(NSString *)name;
+- (NSString *)nameOverrideForRegisterOfClass:(RegClass)regCls andIndex:(NSUInteger)regIndex;
+- (void)clearNameOverrideForRegisterOfClass:(RegClass)regCls andIndex:(NSUInteger)regIndex;
+
 // Call Graph
 - (NSArray<NSObject<HPCallReference> *> *)allCallers;
 - (NSArray<NSObject<HPCallReference> *> *)allCallees;
@@ -59,6 +65,14 @@
 - (NSString *)variableNameForDisplacement:(int64_t)disp;
 - (BOOL)setVariableName:(NSString *)name forDisplacement:(int64_t)disp;
 - (NSString *)resolvedVariableNameForDisplacement:(int64_t)disp usingCPUContext:(NSObject<CPUContext> *)cpuContext;
+
+// Signature
+- (NSObject<HPMethodSignature> *)signature;
+- (void)setSignature:(NSObject<HPMethodSignature> *)signature reason:(SignatureCreationReason)reason;
+- (void)setSignature:(NSObject<HPMethodSignature> *)signature propagatingSignature:(BOOL)propagateSignature reason:(SignatureCreationReason)reason;
+- (CallingConvention)callingConvention;
+- (CallingConvention)resolvedCallingConvention;
+- (void)setCallingConvention:(CallingConvention)cc;
 
 // Tags
 - (void)addTag:(NSObject<HPTag> *)tag;

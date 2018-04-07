@@ -1,7 +1,7 @@
 //
 // Hopper Disassembler SDK
 //
-// (c)2017 - Cryptic Apps SARL. All Rights Reserved.
+// (c) Cryptic Apps SARL. All Rights Reserved.
 // https://www.hopperapp.com
 //
 // THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY

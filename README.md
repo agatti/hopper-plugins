@@ -361,7 +361,7 @@ CPU backends currently supported: TMS1000, TMS1100.
 
 _version 0.0.1_
 
-This file loader plugin allows you to load Apple ][ binaries in A2 format to be disassembled (or basically anything you can either `BLOAD` or `BRUN`). _(Please note that the plugin depends on the 6502 CPU core to be installed in order to work properly)_
+This file loader plugin allows you to load Apple ][ binaries in A2 format to be disassembled (or basically anything you can either `BLOAD` or `BRUN`). _(Please note that the plugin depends on the 6502 CPU core being installed in order to work properly)_
 
 #### TODO for next version:
 
@@ -382,7 +382,7 @@ This file loader plugin allows you to load Apple ][ binaries in A2 format to be 
 
 _version 0.2.2_
 
-This file loader plugin allows you to load Commodore binaries in PRG format to be disassembled.  _(Please note that the plugin depends on the 6502 CPU core to be installed in order to work properly)_
+This file loader plugin allows you to load Commodore binaries in PRG format to be disassembled.  _(Please note that the plugin depends on the 6502 CPU core being installed in order to work properly)_
 
 #### TODO for next version:
 
@@ -435,7 +435,7 @@ This tool plugin currently allows to map the full address space of the CPU chose
 
 Checkout from Git, open `HopperPlugins.xcworkspace` in Xcode/AppCode, select the plugin you are interested in and then let Xcode/AppCode build the associated project; the plugin will be automatically copied to the appropriate paths (`~/Library/Application Support/Hopper/Plugins/v4/{CPUs,Loaders,Tools}`).  Once done, please close any open instances of Hopper and restart them.  That's all there is to it.
 
-Keep in mind that these plugins require **Hopper 4.3.15** or later to work.  They may work on older versions but they are neither tested nor supported on anything older than v4.3.15.
+Keep in mind that these plugins require **Hopper 4.3.18** or later to work.  They may work on older versions but they are neither tested nor supported on anything older than v4.3.18.
 
 If you are unable or unwilling to update your Hopper installation from v3 to v4 then build the code marked by the `v3api` git tag.  However, since the Hopper author allowed free upgrades from v3 licences to v4 licenses, v3 plugins are effectively unsupported as of v4 release.  It is strongly suggested to update your Hopper installation at your earliest opportunity.
 

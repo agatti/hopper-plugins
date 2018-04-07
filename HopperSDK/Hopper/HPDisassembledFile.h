@@ -1,7 +1,7 @@
 //
 // Hopper Disassembler SDK
 //
-// (c)2017 - Cryptic Apps SARL. All Rights Reserved.
+// (c) Cryptic Apps SARL. All Rights Reserved.
 // https://www.hopperapp.com
 //
 // THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY
@@ -13,13 +13,15 @@
 #import "CommonTypes.h"
 
 @class HopperUUID;
+
 @protocol CPUDefinition;
+@protocol CPUContext;
 @protocol HPSegment;
 @protocol HPSection;
 @protocol HPProcedure;
 @protocol HPTag;
-@protocol CPUContext;
 @protocol HPASMLine;
+@protocol HPTypeDesc;
 
 typedef void (^FileLoadingCallbackInfo)(NSString *desc, float progress);
 
@@ -170,5 +172,71 @@ typedef void (^FileLoadingCallbackInfo)(NSString *desc, float progress);
 - (void)beginUndoRedoTransactionWithName:(NSString *)name;
 - (void)endUndoRedoTransaction;
 - (void)discardUndoRedoTransaction;
+
+// Types
+- (NSObject<HPTypeDesc> *)voidType;
+- (NSObject<HPTypeDesc> *)int8Type;
+- (NSObject<HPTypeDesc> *)uint8Type;
+- (NSObject<HPTypeDesc> *)int16Type;
+- (NSObject<HPTypeDesc> *)uint16Type;
+- (NSObject<HPTypeDesc> *)int32Type;
+- (NSObject<HPTypeDesc> *)uint32Type;
+- (NSObject<HPTypeDesc> *)int64Type;
+- (NSObject<HPTypeDesc> *)uint64Type;
+- (NSObject<HPTypeDesc> *)floatType;
+- (NSObject<HPTypeDesc> *)doubleType;
+- (NSObject<HPTypeDesc> *)intType;
+- (NSObject<HPTypeDesc> *)uintType;
+- (NSObject<HPTypeDesc> *)longType;
+- (NSObject<HPTypeDesc> *)ulongType;
+- (NSObject<HPTypeDesc> *)longlongType;
+- (NSObject<HPTypeDesc> *)ulonglongType;
+- (NSObject<HPTypeDesc> *)charType;
+- (NSObject<HPTypeDesc> *)ucharType;
+- (NSObject<HPTypeDesc> *)shortType;
+- (NSObject<HPTypeDesc> *)ushortType;
+- (NSObject<HPTypeDesc> *)boolType;
+
+- (NSObject<HPTypeDesc> *)voidPtrType;
+- (NSObject<HPTypeDesc> *)int8PtrType;
+- (NSObject<HPTypeDesc> *)uint8PtrType;
+- (NSObject<HPTypeDesc> *)int16PtrType;
+- (NSObject<HPTypeDesc> *)uint16PtrType;
+- (NSObject<HPTypeDesc> *)int32PtrType;
+- (NSObject<HPTypeDesc> *)uint32PtrType;
+- (NSObject<HPTypeDesc> *)int64PtrType;
+- (NSObject<HPTypeDesc> *)uint64PtrType;
+- (NSObject<HPTypeDesc> *)floatPtrType;
+- (NSObject<HPTypeDesc> *)doublePtrType;
+- (NSObject<HPTypeDesc> *)intPtrType;
+- (NSObject<HPTypeDesc> *)uintPtrType;
+- (NSObject<HPTypeDesc> *)longPtrType;
+- (NSObject<HPTypeDesc> *)ulongPtrType;
+- (NSObject<HPTypeDesc> *)longlongPtrType;
+- (NSObject<HPTypeDesc> *)ulonglongPtrType;
+- (NSObject<HPTypeDesc> *)charPtrType;
+- (NSObject<HPTypeDesc> *)ucharPtrType;
+- (NSObject<HPTypeDesc> *)shortPtrType;
+- (NSObject<HPTypeDesc> *)ushortPtrType;
+- (NSObject<HPTypeDesc> *)boolPtrType;
+
+- (NSObject<HPTypeDesc> *)structureType; /// Build a new empty struct
+- (NSObject<HPTypeDesc> *)unionType;     /// Build a new empty union
+- (NSObject<HPTypeDesc> *)enumType;      /// Build a new empty enum
+
+- (NSObject<HPTypeDesc> *)pointerTypeOn:(NSObject<HPTypeDesc> *)base;   /// Find the type, or build a new one.
+- (NSObject<HPTypeDesc> *)arrayTypeOf:(NSObject<HPTypeDesc> *)base withCount:(NSUInteger)count;
+
+- (BOOL)hasStructureDefinedAt:(Address)address;
+- (void)defineStructure:(NSObject<HPTypeDesc> *)type at:(Address)address;
+- (NSObject<HPTypeDesc> *)structureTypeAt:(Address)address;
+
+- (NSArray<NSObject<HPTypeDesc> *> *)typeDatabase;
+- (NSObject<HPTypeDesc> *)typeWithName:(NSString *)name;
+- (NSArray<NSObject<HPTypeDesc> *> *)allStructuredTypes;
+- (NSArray<NSObject<HPTypeDesc> *> *)allEnumTypes;
+
+- (BOOL)importTypesFromData:(NSData *)data;
+- (NSData *)exportTypes;
 
 @end
