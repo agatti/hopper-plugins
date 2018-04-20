@@ -107,6 +107,9 @@
 /// Example: the "LEA" x86 instruction.
 - (BOOL)instructionOnlyLoadsAddress:(DisasmStruct *)disasmStruct;
 
+/// Return YES if the instruction uses float.
+- (BOOL)instructionManipulatesFloat:(DisasmStruct *)disasmStruct;
+
 /// Return YES if the instruction may be used to build a switch/case statement.
 /// For instance, for the Intel processor, it returns YES for the "JMP reg" and the "JMP [xxx+reg*4]" instructions,
 /// and for the Am processor, it returns YES for the "TBB" and "TBH" instructions.

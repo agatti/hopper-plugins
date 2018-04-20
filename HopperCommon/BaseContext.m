@@ -134,6 +134,10 @@
   return NO;
 }
 
+- (BOOL)instructionManipulatesFloat:(DisasmStruct *)disasmStruct {
+  return NO;
+}
+
 - (BOOL)instructionMayBeASwitchStatement:(DisasmStruct *)disasmStruct {
   return NO;
 }
