@@ -46,7 +46,7 @@ typedef void (^FileLoadingCallbackInfo)(NSString *desc, float progress);
 - (void)addEntryPoint:(Address)address;
 - (void)addPotentialProcedure:(Address)address;
 - (Address)firstEntryPoint;
-- (NSArray<NSNumber *> *)entryPoints;
+- (NSArray<NSNumber *> *)entryPointAddresses;
 
 // Get access to segments and sections
 - (NSArray<NSObject<HPSegment> *> *)segments;

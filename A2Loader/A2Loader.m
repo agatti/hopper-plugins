@@ -1,17 +1,17 @@
 /*
  Copyright (c) 2014-2018, Alessandro Gatti - frob.it
  All rights reserved.
- 
+
  Redistribution and use in source and binary forms, with or without
  modification, are permitted provided that the following conditions are met:
- 
+
  1. Redistributions of source code must retain the above copyright notice, this
  list of conditions and the following disclaimer.
- 
+
  2. Redistributions in binary form must reproduce the above copyright notice,
  this list of conditions and the following disclaimer in the documentation
  and/or other materials provided with the distribution.
- 
+
  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -120,7 +120,8 @@ static NSString *kCPUSubFamily = @"65c02";
 
   NSData *fileData = [NSData dataWithBytes:data.bytes + 4 length:size];
 
-  NSObject<HPSegment> *segment = [file addSegmentAt:startingAddress size:MAX(size, dataLength)];
+  NSObject<HPSegment> *segment =
+      [file addSegmentAt:startingAddress size:MAX(size, dataLength)];
   segment.mappedData = fileData;
   segment.segmentName = @"CODE";
   segment.fileOffset = 4;
@@ -158,7 +159,7 @@ static NSString *kCPUSubFamily = @"65c02";
 }
 
 - (void)fixupRebasedFile:(NSObject<HPDisassembledFile> *)file
-               withSlide:(int64_t)slide 
+               withSlide:(int64_t)slide
         originalFileData:(NSData *)fileData {
 }
 

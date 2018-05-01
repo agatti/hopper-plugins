@@ -130,14 +130,14 @@ buildCompleteOperandString:(DisasmStruct *)disasm
   while (operandIndex < DISASM_MAX_OPERANDS) {
     ArgFormat format = (ArgFormat)disasm->operand[operandIndex].userData[0];
     switch (RAW_FORMAT(format)) {
-      case Format_Address:
-        [self.file setFormat:format
-                 forArgument:operandIndex
-            atVirtualAddress:disasm->virtualAddr];
-            break;
+    case Format_Address:
+      [self.file setFormat:format
+               forArgument:operandIndex
+          atVirtualAddress:disasm->virtualAddr];
+      break;
 
-      default:
-        break;
+    default:
+      break;
     }
 
     operandIndex++;

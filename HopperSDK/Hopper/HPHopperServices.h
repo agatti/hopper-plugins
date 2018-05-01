@@ -18,6 +18,7 @@
 @protocol HPDocument;
 @protocol HPDetectedFileType;
 @protocol HPLoaderOptionComponents;
+@protocol HPCallDestination;
 
 @protocol HPHopperServices
 
@@ -59,5 +60,9 @@
 - (NSObject<HPLoaderOptionComponents> *)checkboxComponentWithLabel:(NSString *)label checked:(BOOL)checked;
 - (NSObject<HPLoaderOptionComponents> *)stringListComponentWithLabel:(NSString *)label andList:(NSArray<NSString *> *)strings;
 - (NSObject<HPLoaderOptionComponents> *)comboBoxComponentWithLabel:(NSString *)label andList:(NSArray<NSString *> *)strings;
+
+// Call Destination
+- (NSObject<HPCallDestination> *)callDestination:(Address)address;
+- (NSObject<HPCallDestination> *)callDestination:(Address)address withCPUMode:(uint8_t)cpuMode;
 
 @end

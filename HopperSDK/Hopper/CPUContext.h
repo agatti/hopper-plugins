@@ -18,6 +18,7 @@
 @protocol HPBasicBlock;
 @protocol HPDisassembledFile;
 @protocol HPASMLine;
+@protocol HPCallDestination;
 @protocol CPUDefinition;
 
 @class Decompiler;
@@ -110,6 +111,11 @@
 /// Return YES if the instruction uses float.
 - (BOOL)instructionManipulatesFloat:(DisasmStruct *)disasmStruct;
 
+/// This method is called on branching instruction (like CALL on x86, or BL on ARM).
+/// If the instruction condition the CPU mode of the target address, the method should return YES, and set the cpuMode given in argument.
+/// Otherwise, return NO if you don't know if the CPU mode is altered.
+- (BOOL)instructionConditionCPUModeAtTargetAddress:(DisasmStruct *)disasmStruct resultCPUMode:(uint8_t *)cpuMode;
+
 /// Return YES if the instruction may be used to build a switch/case statement.
 /// For instance, for the Intel processor, it returns YES for the "JMP reg" and the "JMP [xxx+reg*4]" instructions,
 /// and for the Am processor, it returns YES for the "TBB" and "TBH" instructions.
@@ -119,8 +125,8 @@
 /// The "*next" value is already set to the address which follows the instruction if the jump does not occurs.
 /// The "branches" array is filled by NSNumber objects. The values are the addresses where the instruction can jump. Only the
 /// jumps that occur in the same procedure are put here (for instance, CALL instruction targets are not put in this array).
-/// The "calledAddresses" array is filled by NSNumber objects of addresses that are the target of a "CALL like" instruction, ie
-/// all the jumps which go outside of the procedure.
+/// The "calledAddresses" array is filled by objects conforming to the HPCallDestination protocol of addresses that are
+/// the target of a "CALL like" instruction, ie all the jumps which go outside of the procedure.
 /// The "callSiteAddresses" contains NSNumber of the addresses of the "CALL" instructions.
 /// The purpose of this method is to compute additional destinations.
 /// Most of the time, Hopper already found the destinations, so there is no need to do more.
@@ -131,7 +137,7 @@
                    forProcedure:(NSObject<HPProcedure> *)procedure
                      basicBlock:(NSObject<HPBasicBlock> *)basicBlock
                       ofSegment:(NSObject<HPSegment> *)segment
-                calledAddresses:(NSMutableArray<NSNumber *> *)calledAddresses
+                calledAddresses:(NSMutableArray<NSObject<HPCallDestination> *> *)calledAddresses
                       callsites:(NSMutableArray<NSNumber *> *)callSitesAddresses;
 
 /// If you need a specific analysis, this method will be called once the previous branch analysis is performed.

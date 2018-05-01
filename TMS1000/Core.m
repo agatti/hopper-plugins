@@ -186,12 +186,13 @@ buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
                        raw:(BOOL)raw
               withServices:(NSObject<HPHopperServices> *_Nonnull)services {
 
-  return disasm->operand[0].type != DISASM_OPERAND_NO_OPERAND ?
-          [self buildOperandString:disasm
-                   forOperandIndex:0
-                            inFile:file
-                               raw:raw
-                      withServices:services] : [services blankASMLine];
+  return disasm->operand[0].type != DISASM_OPERAND_NO_OPERAND
+             ? [self buildOperandString:disasm
+                        forOperandIndex:0
+                                 inFile:file
+                                    raw:raw
+                           withServices:services]
+             : [services blankASMLine];
 }
 
 - (Instruction)instructionForByte:(uint8_t)byte {
