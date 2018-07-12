@@ -97,6 +97,10 @@ static const char *kRegisterNames[] = {
   return @"0.1.1";
 }
 
+- (NSString *)commandLineIdentifier {
+  return @"8x300";
+}
+
 #pragma mark - CPUDefinition protocol implementation
 
 - (Class)cpuContextClass {

@@ -75,8 +75,8 @@ static NSString *const kSignedSizeErrorFormat =
 }
 
 + (NSString *_Nullable)
-resolveNameForAddress:(Address)address
-               inFile:(NSObject<HPDisassembledFile> *_Nonnull)file {
+    resolveNameForAddress:(Address)address
+                   inFile:(NSObject<HPDisassembledFile> *_Nonnull)file {
 
   NSString *_Nullable name = [file nameForVirtualAddress:address];
   if (name == nil) {

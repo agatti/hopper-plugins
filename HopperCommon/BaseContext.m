@@ -194,9 +194,9 @@
 }
 
 - (NSObject<HPASMLine> *)
-buildCompleteOperandString:(DisasmStruct *)disasm
-                    inFile:(NSObject<HPDisassembledFile> *)file
-                       raw:(BOOL)raw {
+    buildCompleteOperandString:(DisasmStruct *)disasm
+                        inFile:(NSObject<HPDisassembledFile> *)file
+                           raw:(BOOL)raw {
   @throw [NSException
       exceptionWithName:NSInternalInconsistencyException
                  reason:[NSString stringWithFormat:@"Forgot to override %s",

@@ -37,10 +37,10 @@
 - (NSArray<NSString *> *_Nonnull)modelsForFamily:(NSString *_Nonnull)family;
 
 - (NSObject<ItFrobHopperCPUProvider> *_Nonnull)
-providerForFamily:(NSString *_Nonnull)family
-         andModel:(NSString *_Nonnull)model;
+    providerForFamily:(NSString *_Nonnull)family
+             andModel:(NSString *_Nonnull)model;
 
 - (Class<ItFrobHopperCPUProvider> _Nonnull)
-classForFamily:(NSString *_Nonnull)family
-      andModel:(NSString *_Nonnull)model;
+    classForFamily:(NSString *_Nonnull)family
+          andModel:(NSString *_Nonnull)model;
 @end

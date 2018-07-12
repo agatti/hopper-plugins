@@ -79,6 +79,10 @@ static NSString *kCPUSubFamily = @"65c02";
   return @"0.0.1";
 }
 
+- (NSString *)commandLineIdentifier {
+    return @"a2";
+}
+
 - (BOOL)canLoadDebugFiles {
   return NO;
 }

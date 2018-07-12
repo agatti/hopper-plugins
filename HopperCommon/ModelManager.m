@@ -59,15 +59,15 @@ typedef NSDictionary<NSString *, FRBModelItem *> FRBModelsDictionary;
 }
 
 - (NSObject<ItFrobHopperCPUProvider> *_Nonnull)
-providerForFamily:(NSString *_Nonnull)family
-         andModel:(NSString *_Nonnull)model {
+    providerForFamily:(NSString *_Nonnull)family
+             andModel:(NSString *_Nonnull)model {
   Class providerClass = [self classForFamily:family andModel:model];
   return (NSObject<ItFrobHopperCPUProvider> *)[[providerClass alloc] init];
 }
 
 - (Class<ItFrobHopperCPUProvider> _Nonnull)
-classForFamily:(NSString *_Nonnull)family
-      andModel:(NSString *_Nonnull)model {
+    classForFamily:(NSString *_Nonnull)family
+          andModel:(NSString *_Nonnull)model {
   return self.providers[family][model];
 }
 

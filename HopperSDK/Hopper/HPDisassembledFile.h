@@ -34,6 +34,8 @@ typedef void (^FileLoadingCallbackInfo)(NSString *desc, float progress);
 @property (strong) NSObject<CPUDefinition> *cpuDefinition;
 @property (readonly) NSUInteger userRequestedSyntaxIndex;
 
+- (NSString *)originalFilePath;
+
 // Methods essentially used by Loader plugin
 - (NSUInteger)addressSpaceWidthInBits;
 - (void)setAddressSpaceWidthInBits:(NSUInteger)bits;

@@ -248,4 +248,12 @@ static NSString *const kDefaultSyntax = @"Generic";
                userInfo:nil];
 }
 
+- (NSString *)commandLineIdentifier {
+  @throw [NSException
+      exceptionWithName:NSInternalInconsistencyException
+                 reason:[NSString stringWithFormat:@"Forgot to override %s",
+                                                   __PRETTY_FUNCTION__]
+               userInfo:nil];
+}
+
 @end

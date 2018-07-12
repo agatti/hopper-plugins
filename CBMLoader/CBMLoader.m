@@ -143,6 +143,10 @@ typedef NS_ENUM(NSUInteger, BasicVersion) {
   return @"0.2.2";
 }
 
+- (NSString *)commandLineIdentifier {
+  return @"cbm";
+}
+
 - (BOOL)canLoadDebugFiles {
   return NO;
 }

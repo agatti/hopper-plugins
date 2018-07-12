@@ -65,6 +65,10 @@
   return @"0.2.2";
 }
 
+- (NSString *)commandLineIdentifier {
+  return @"6502";
+}
+
 #pragma mark - CPUDefinition protocol implementation
 
 - (Class)cpuContextClass {

@@ -96,8 +96,8 @@ extern NSString *_Nonnull ItFrobHopperCommonHopperPluginExceptionName;
  * @return the assigned name if any is present, or nil otherwise.
  */
 + (NSString *_Nullable)
-resolveNameForAddress:(Address)address
-               inFile:(NSObject<HPDisassembledFile> *_Nonnull)file;
+    resolveNameForAddress:(Address)address
+                   inFile:(NSObject<HPDisassembledFile> *_Nonnull)file;
 
 @end
 

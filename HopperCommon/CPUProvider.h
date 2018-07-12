@@ -95,21 +95,21 @@
 - (BOOL)haltsExecutionFlow:(const DisasmStruct *_Nonnull)structure;
 
 - (NSObject<HPASMLine> *_Nonnull)
-buildMnemonicString:(DisasmStruct *_Nonnull)disasm
-             inFile:(NSObject<HPDisassembledFile> *_Nonnull)file
-       withServices:(NSObject<HPHopperServices> *_Nonnull)services;
+    buildMnemonicString:(DisasmStruct *_Nonnull)disasm
+                 inFile:(NSObject<HPDisassembledFile> *_Nonnull)file
+           withServices:(NSObject<HPHopperServices> *_Nonnull)services;
 
 - (NSObject<HPASMLine> *_Nullable)
-buildOperandString:(DisasmStruct *_Nonnull)disasm
-   forOperandIndex:(NSUInteger)operandIndex
-            inFile:(NSObject<HPDisassembledFile> *_Nonnull)file
-               raw:(BOOL)raw
-      withServices:(NSObject<HPHopperServices> *_Nonnull)services;
+    buildOperandString:(DisasmStruct *_Nonnull)disasm
+       forOperandIndex:(NSUInteger)operandIndex
+                inFile:(NSObject<HPDisassembledFile> *_Nonnull)file
+                   raw:(BOOL)raw
+          withServices:(NSObject<HPHopperServices> *_Nonnull)services;
 
 - (NSObject<HPASMLine> *_Nullable)
-buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
-                    inFile:(NSObject<HPDisassembledFile> *_Nonnull)file
-                       raw:(BOOL)raw
-              withServices:(NSObject<HPHopperServices> *_Nonnull)services;
+    buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
+                        inFile:(NSObject<HPDisassembledFile> *_Nonnull)file
+                           raw:(BOOL)raw
+                  withServices:(NSObject<HPHopperServices> *_Nonnull)services;
 
 @end

@@ -92,6 +92,10 @@ static NSString *kUnmappedSectionName = @"BSS";
   return @"0.0.2";
 }
 
+- (NSString *)commandLineIdentifier {
+  return @"addressspace";
+}
+
 - (void)mapWholeAddressSpace:(id)sender {
   NSObject<HPDocument> *document = self.services.currentDocument;
 
