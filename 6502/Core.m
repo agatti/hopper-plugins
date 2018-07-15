@@ -35,10 +35,10 @@
                                      andSize:(uint32_t)size;
 
 - (NSObject<HPASMLine> *_Nonnull)
-formatHexadecimal:(const DisasmOperand *_Nonnull)operand
-           inLine:(NSObject<HPASMLine> *_Nonnull)line
-         isSigned:(BOOL)isSigned
- hasLeadingZeroes:(BOOL)hasLeadingZeroes;
+    formatHexadecimal:(const DisasmOperand *_Nonnull)operand
+               inLine:(NSObject<HPASMLine> *_Nonnull)line
+             isSigned:(BOOL)isSigned
+     hasLeadingZeroes:(BOOL)hasLeadingZeroes;
 
 - (NSObject<HPASMLine> *_Nonnull)formatAddress:(Address)address
                                         inLine:
@@ -76,9 +76,9 @@ formatHexadecimal:(const DisasmOperand *_Nonnull)operand
 }
 
 - (NSObject<HPASMLine> *_Nonnull)
-buildMnemonicString:(DisasmStruct *_Nonnull)disasm
-             inFile:(NSObject<HPDisassembledFile> *_Nonnull)file
-       withServices:(NSObject<HPHopperServices> *_Nonnull)services {
+    buildMnemonicString:(DisasmStruct *_Nonnull)disasm
+                 inFile:(NSObject<HPDisassembledFile> *_Nonnull)file
+           withServices:(NSObject<HPHopperServices> *_Nonnull)services {
 
   NSObject<HPASMLine> *line = [services blankASMLine];
   [line appendMnemonic:@(disasm->instruction.mnemonic)
@@ -87,11 +87,11 @@ buildMnemonicString:(DisasmStruct *_Nonnull)disasm
 }
 
 - (NSObject<HPASMLine> *_Nullable)
-buildOperandString:(DisasmStruct *_Nonnull)disasm
-   forOperandIndex:(NSUInteger)operandIndex
-            inFile:(NSObject<HPDisassembledFile> *_Nonnull)file
-               raw:(BOOL)raw
-      withServices:(NSObject<HPHopperServices> *_Nonnull)services {
+    buildOperandString:(DisasmStruct *_Nonnull)disasm
+       forOperandIndex:(NSUInteger)operandIndex
+                inFile:(NSObject<HPDisassembledFile> *_Nonnull)file
+                   raw:(BOOL)raw
+          withServices:(NSObject<HPHopperServices> *_Nonnull)services {
 
   if ((operandIndex >= DISASM_MAX_OPERANDS) ||
       (disasm->operand[operandIndex].type == DISASM_OPERAND_NO_OPERAND)) {
@@ -197,10 +197,10 @@ buildOperandString:(DisasmStruct *_Nonnull)disasm
 }
 
 - (NSObject<HPASMLine> *_Nullable)
-buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
-                    inFile:(NSObject<HPDisassembledFile> *_Nonnull)file
-                       raw:(BOOL)raw
-              withServices:(NSObject<HPHopperServices> *_Nonnull)services {
+    buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
+                        inFile:(NSObject<HPDisassembledFile> *_Nonnull)file
+                           raw:(BOOL)raw
+                  withServices:(NSObject<HPHopperServices> *_Nonnull)services {
 
   const Instruction instruction =
       [self instructionForByte:(uint8_t)disasm->instruction.userData];
@@ -819,10 +819,10 @@ static NSString *_Nonnull const kValueTooLarge = @"Invalid bits count (%d)";
 }
 
 - (NSObject<HPASMLine> *_Nonnull)
-formatHexadecimal:(const DisasmOperand *_Nonnull)operand
-           inLine:(NSObject<HPASMLine> *_Nonnull)line
-         isSigned:(BOOL)isSigned
- hasLeadingZeroes:(BOOL)hasLeadingZeroes {
+    formatHexadecimal:(const DisasmOperand *_Nonnull)operand
+               inLine:(NSObject<HPASMLine> *_Nonnull)line
+             isSigned:(BOOL)isSigned
+     hasLeadingZeroes:(BOOL)hasLeadingZeroes {
 
   [line
       appendFormattedNumber:[self formatHexadecimalValue:operand->immediateValue

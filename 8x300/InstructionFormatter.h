@@ -47,15 +47,15 @@ extern NSString *_Nonnull ItFrobHopper8x300MissingOperand;
 - (NSString *_Nonnull)name;
 
 - (NSObject<HPASMLine> *_Nullable)
-formatOperand:(DisasmStruct *_Nonnull)disasm
-      atIndex:(NSUInteger)operandIndex
-       inFile:(NSObject<HPDisassembledFile> *_Nonnull)file
- withServices:(NSObject<HPHopperServices> *_Nonnull)services;
+    formatOperand:(DisasmStruct *_Nonnull)disasm
+          atIndex:(NSUInteger)operandIndex
+           inFile:(NSObject<HPDisassembledFile> *_Nonnull)file
+     withServices:(NSObject<HPHopperServices> *_Nonnull)services;
 
 - (NSObject<HPASMLine> *_Nullable)
-formatInstruction:(DisasmStruct *_Nonnull)disasm
-           inFile:(NSObject<HPDisassembledFile> *_Nonnull)file
-     withServices:(NSObject<HPHopperServices> *_Nonnull)services
-      andEncoding:(EncodingType)encoding;
+    formatInstruction:(DisasmStruct *_Nonnull)disasm
+               inFile:(NSObject<HPDisassembledFile> *_Nonnull)file
+         withServices:(NSObject<HPHopperServices> *_Nonnull)services
+          andEncoding:(EncodingType)encoding;
 
 @end

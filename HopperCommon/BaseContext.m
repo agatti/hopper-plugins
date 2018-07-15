@@ -234,4 +234,13 @@
   return nil;
 }
 
+- (uint8_t)cpuModeForNextInstruction:(DisasmStruct *)disasmStruct {
+  return 0;
+}
+
+- (BOOL)instructionConditionsCPUModeAtTargetAddress:(DisasmStruct *)disasmStruct
+                                      resultCPUMode:(uint8_t *)cpuMode {
+  return NO;
+}
+
 @end

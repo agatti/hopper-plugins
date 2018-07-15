@@ -27,6 +27,10 @@
 #import "CBMLoader.h"
 #import "BasicTokens.h"
 
+#if HOPPER_CURRENT_SDK_VERSION != 1
+#error "Unsupported SDK version"
+#endif /* HOPPER_CURRENT_SDK_VERSION */
+
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCUnusedClassInspection"
 
@@ -145,6 +149,10 @@ typedef NS_ENUM(NSUInteger, BasicVersion) {
 
 - (NSString *)commandLineIdentifier {
   return @"cbm";
+}
+
++ (int)sdkVersion {
+  return HOPPER_CURRENT_SDK_VERSION;
 }
 
 - (BOOL)canLoadDebugFiles {

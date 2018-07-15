@@ -26,6 +26,10 @@
 
 #import "HexLoader.h"
 
+#if HOPPER_CURRENT_SDK_VERSION != 1
+#error "Unsupported SDK version"
+#endif /* HOPPER_CURRENT_SDK_VERSION */
+
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCUnusedClassInspection"
 
@@ -171,6 +175,10 @@ static const uint8_t kHexTable[16] = {'0', '1', '2', '3', '4', '5', '6', '7',
 
 - (NSString *)commandLineIdentifier {
   return @"hex";
+}
+
++ (int)sdkVersion {
+  return HOPPER_CURRENT_SDK_VERSION;
 }
 
 - (BOOL)canLoadDebugFiles {

@@ -67,7 +67,7 @@ typedef NS_ENUM(NSUInteger, SyntaxType) {
  * type is invalid.
  */
 - (NSObject<ItFrobHopper8x300InstructionFormatter> *_Nullable)
-formatterForSyntax:(SyntaxType)syntaxType;
+    formatterForSyntax:(SyntaxType)syntaxType;
 
 @end
 

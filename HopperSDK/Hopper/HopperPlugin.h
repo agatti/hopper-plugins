@@ -13,12 +13,18 @@
 #import <Foundation/Foundation.h>
 #import "CommonTypes.h"
 
+#define HOPPER_CURRENT_SDK_VERSION  1
+
 @class HopperUUID;
 @protocol HPHopperServices;
 
 @protocol HopperPlugin <NSObject>
 
 - (instancetype)initWithHopperServices:(NSObject<HPHopperServices> *)services;
+
+/// Should return the HOPPER_CURRENT_SDK_VERSION constant.
+/// This is used by Hopper to know the SDK version which was used when the plugin was compiled.
++ (int)sdkVersion;
 
 - (HopperUUID *)pluginUUID;
 - (HopperPluginType)pluginType;

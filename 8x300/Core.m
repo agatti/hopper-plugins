@@ -270,9 +270,9 @@ static const char *kOpcodeNames[OpcodesCount] = {"MOVE", "ADD",  "AND",  "XOR",
 }
 
 - (NSObject<HPASMLine> *_Nonnull)
-buildMnemonicString:(DisasmStruct *_Nonnull)disasm
-             inFile:(NSObject<HPDisassembledFile> *_Nonnull)file
-       withServices:(NSObject<HPHopperServices> *_Nonnull)services {
+    buildMnemonicString:(DisasmStruct *_Nonnull)disasm
+                 inFile:(NSObject<HPDisassembledFile> *_Nonnull)file
+           withServices:(NSObject<HPHopperServices> *_Nonnull)services {
 
   NSObject<HPASMLine> *line = [services blankASMLine];
   [line appendMnemonic:@(disasm->instruction.mnemonic)
@@ -281,11 +281,11 @@ buildMnemonicString:(DisasmStruct *_Nonnull)disasm
 }
 
 - (NSObject<HPASMLine> *_Nullable)
-buildOperandString:(DisasmStruct *_Nonnull)disasm
-   forOperandIndex:(NSUInteger)operandIndex
-            inFile:(NSObject<HPDisassembledFile> *_Nonnull)file
-               raw:(BOOL)raw
-      withServices:(NSObject<HPHopperServices> *_Nonnull)services {
+    buildOperandString:(DisasmStruct *_Nonnull)disasm
+       forOperandIndex:(NSUInteger)operandIndex
+                inFile:(NSObject<HPDisassembledFile> *_Nonnull)file
+                   raw:(BOOL)raw
+          withServices:(NSObject<HPHopperServices> *_Nonnull)services {
 
   NSAssert(
       [file.cpuDefinition isKindOfClass:[ItFrobHopper8x300Definition class]],
@@ -303,10 +303,10 @@ buildOperandString:(DisasmStruct *_Nonnull)disasm
 }
 
 - (NSObject<HPASMLine> *_Nullable)
-buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
-                    inFile:(NSObject<HPDisassembledFile> *_Nonnull)file
-                       raw:(BOOL)raw
-              withServices:(NSObject<HPHopperServices> *_Nonnull)services {
+    buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
+                        inFile:(NSObject<HPDisassembledFile> *_Nonnull)file
+                           raw:(BOOL)raw
+                  withServices:(NSObject<HPHopperServices> *_Nonnull)services {
 
   NSAssert(
       [file.cpuDefinition isKindOfClass:[ItFrobHopper8x300Definition class]],

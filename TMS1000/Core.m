@@ -138,9 +138,9 @@ static const uint8_t kFlippedBitsTable[16] = {
 }
 
 - (NSObject<HPASMLine> *_Nonnull)
-buildMnemonicString:(DisasmStruct *_Nonnull)disasm
-             inFile:(NSObject<HPDisassembledFile> *_Nonnull)file
-       withServices:(NSObject<HPHopperServices> *_Nonnull)services {
+    buildMnemonicString:(DisasmStruct *_Nonnull)disasm
+                 inFile:(NSObject<HPDisassembledFile> *_Nonnull)file
+           withServices:(NSObject<HPHopperServices> *_Nonnull)services {
 
   NSObject<HPASMLine> *line = [services blankASMLine];
   [line appendMnemonic:@(disasm->instruction.mnemonic)
@@ -149,11 +149,11 @@ buildMnemonicString:(DisasmStruct *_Nonnull)disasm
 }
 
 - (NSObject<HPASMLine> *_Nullable)
-buildOperandString:(DisasmStruct *_Nonnull)disasm
-   forOperandIndex:(NSUInteger)operandIndex
-            inFile:(NSObject<HPDisassembledFile> *_Nonnull)file
-               raw:(BOOL)raw
-      withServices:(NSObject<HPHopperServices> *_Nonnull)services {
+    buildOperandString:(DisasmStruct *_Nonnull)disasm
+       forOperandIndex:(NSUInteger)operandIndex
+                inFile:(NSObject<HPDisassembledFile> *_Nonnull)file
+                   raw:(BOOL)raw
+          withServices:(NSObject<HPHopperServices> *_Nonnull)services {
 
   if ((operandIndex >= DISASM_MAX_OPERANDS) ||
       (disasm->operand[operandIndex].type == DISASM_OPERAND_NO_OPERAND)) {
@@ -181,10 +181,10 @@ buildOperandString:(DisasmStruct *_Nonnull)disasm
 }
 
 - (NSObject<HPASMLine> *_Nullable)
-buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
-                    inFile:(NSObject<HPDisassembledFile> *_Nonnull)file
-                       raw:(BOOL)raw
-              withServices:(NSObject<HPHopperServices> *_Nonnull)services {
+    buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
+                        inFile:(NSObject<HPDisassembledFile> *_Nonnull)file
+                           raw:(BOOL)raw
+                  withServices:(NSObject<HPHopperServices> *_Nonnull)services {
 
   return disasm->operand[0].type != DISASM_OPERAND_NO_OPERAND
              ? [self buildOperandString:disasm

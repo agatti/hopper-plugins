@@ -54,10 +54,10 @@
                                      andSize:(uint32_t)size;
 
 - (NSObject<HPASMLine> *_Nonnull)
-formatHexadecimal:(const DisasmOperand *_Nonnull)operand
-           inLine:(NSObject<HPASMLine> *_Nonnull)line
-         isSigned:(BOOL)isSigned
- hasLeadingZeroes:(BOOL)hasLeadingZeroes;
+    formatHexadecimal:(const DisasmOperand *_Nonnull)operand
+               inLine:(NSObject<HPASMLine> *_Nonnull)line
+             isSigned:(BOOL)isSigned
+     hasLeadingZeroes:(BOOL)hasLeadingZeroes;
 
 - (NSObject<HPASMLine> *_Nonnull)formatAddress:(Address)address
                                         inLine:
@@ -166,13 +166,18 @@ formatHexadecimal:(const DisasmOperand *_Nonnull)operand
     }
   }
 
+  if ((opcode->type == OpcodeREP) || (opcode->type == OpcodeSEP)) {
+    structure->instruction.specialFlags.changeNextInstrMode = YES;
+  }
+
   structure->implicitlyReadRegisters[DISASM_OPERAND_GENERAL_REG_INDEX] =
       opcode->readRegisters;
   structure->implicitlyWrittenRegisters[DISASM_OPERAND_GENERAL_REG_INDEX] =
       opcode->writtenRegisters;
   structure->instruction.length = (uint8_t)kOpcodeLength[opcode->addressMode];
 
-  if (opcode->addressMode == ModeImmediate) {
+  if ((opcode->addressMode == ModeImmediate) && (opcode->type != OpcodeREP) &&
+      (opcode->type != OpcodeSEP)) {
     CPUOperationMode mode =
         (CPUOperationMode)[file cpuModeAtVirtualAddress:structure->virtualAddr];
     NSUInteger registersMask = opcode->readRegisters | opcode->writtenRegisters;
@@ -216,9 +221,9 @@ formatHexadecimal:(const DisasmOperand *_Nonnull)operand
 }
 
 - (NSObject<HPASMLine> *_Nonnull)
-buildMnemonicString:(DisasmStruct *_Nonnull)disasm
-             inFile:(NSObject<HPDisassembledFile> *_Nonnull)file
-       withServices:(NSObject<HPHopperServices> *_Nonnull)services {
+    buildMnemonicString:(DisasmStruct *_Nonnull)disasm
+                 inFile:(NSObject<HPDisassembledFile> *_Nonnull)file
+           withServices:(NSObject<HPHopperServices> *_Nonnull)services {
 
   NSObject<HPASMLine> *line = [services blankASMLine];
   [line appendMnemonic:@(disasm->instruction.mnemonic)
@@ -227,11 +232,11 @@ buildMnemonicString:(DisasmStruct *_Nonnull)disasm
 }
 
 - (NSObject<HPASMLine> *_Nullable)
-buildOperandString:(DisasmStruct *_Nonnull)disasm
-   forOperandIndex:(NSUInteger)operandIndex
-            inFile:(NSObject<HPDisassembledFile> *_Nonnull)file
-               raw:(BOOL)raw
-      withServices:(NSObject<HPHopperServices> *_Nonnull)services {
+    buildOperandString:(DisasmStruct *_Nonnull)disasm
+       forOperandIndex:(NSUInteger)operandIndex
+                inFile:(NSObject<HPDisassembledFile> *_Nonnull)file
+                   raw:(BOOL)raw
+          withServices:(NSObject<HPHopperServices> *_Nonnull)services {
 
   if ((operandIndex >= DISASM_MAX_OPERANDS) ||
       (disasm->operand[operandIndex].type == DISASM_OPERAND_NO_OPERAND)) {
@@ -337,10 +342,10 @@ buildOperandString:(DisasmStruct *_Nonnull)disasm
 }
 
 - (NSObject<HPASMLine> *_Nullable)
-buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
-                    inFile:(NSObject<HPDisassembledFile> *_Nonnull)file
-                       raw:(BOOL)raw
-              withServices:(NSObject<HPHopperServices> *_Nonnull)services {
+    buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
+                        inFile:(NSObject<HPDisassembledFile> *_Nonnull)file
+                           raw:(BOOL)raw
+                  withServices:(NSObject<HPHopperServices> *_Nonnull)services {
 
   NSObject<HPASMLine> *line = [services blankASMLine];
   FRBInstructionUserData *metadata =
@@ -638,9 +643,9 @@ buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
 #pragma clang diagnostic ignored "-Wunused-parameter"
 
 - (const Opcode *_Nonnull)
-  opcodeForFile:(NSObject<HPDisassembledFile> *_Nonnull)file
-      atAddress:(Address)address
-andFillMetadata:(FRBInstructionUserData *_Nonnull)metadata {
+      opcodeForFile:(NSObject<HPDisassembledFile> *_Nonnull)file
+          atAddress:(Address)address
+    andFillMetadata:(FRBInstructionUserData *_Nonnull)metadata {
 
   @throw [NSException
       exceptionWithName:HopperPluginExceptionName
@@ -785,6 +790,9 @@ andFillMetadata:(FRBInstructionUserData *_Nonnull)metadata {
     NSUInteger registersMask = opcode->readRegisters | opcode->writtenRegisters;
     CPUOperationMode mode =
         (CPUOperationMode)[file cpuModeAtVirtualAddress:disasm->virtualAddr];
+    if ((opcode->type == OpcodeSEP) || (opcode->type == OpcodeREP)) {
+      mode = CPUAccumulator8Index8;
+    }
 
     if (registersMask & (RegisterIndexX | RegisterIndexY)) {
       if ((mode == CPUAccumulator8Index16) ||
@@ -1143,10 +1151,10 @@ static NSString *_Nonnull const kValueTooLarge = @"Invalid bits count (%d)";
 }
 
 - (NSObject<HPASMLine> *_Nonnull)
-formatHexadecimal:(const DisasmOperand *_Nonnull)operand
-           inLine:(NSObject<HPASMLine> *_Nonnull)line
-         isSigned:(BOOL)isSigned
- hasLeadingZeroes:(BOOL)hasLeadingZeroes {
+    formatHexadecimal:(const DisasmOperand *_Nonnull)operand
+               inLine:(NSObject<HPASMLine> *_Nonnull)line
+             isSigned:(BOOL)isSigned
+     hasLeadingZeroes:(BOOL)hasLeadingZeroes {
 
   [line
       appendFormattedNumber:[self formatHexadecimalValue:operand->immediateValue

@@ -66,9 +66,9 @@ static NSData *_Nonnull kNOPSequence;
 }
 
 - (const Opcode *_Nonnull)
-  opcodeForFile:(NSObject<HPDisassembledFile> *_Nonnull)file
-      atAddress:(Address)address
-andFillMetadata:(FRBInstructionUserData *_Nonnull)metadata {
+      opcodeForFile:(NSObject<HPDisassembledFile> *_Nonnull)file
+          atAddress:(Address)address
+    andFillMetadata:(FRBInstructionUserData *_Nonnull)metadata {
 
   uint8_t byte = [file readUInt8AtVirtualAddress:address];
   switch (byte) {

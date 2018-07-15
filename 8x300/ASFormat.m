@@ -33,10 +33,10 @@
 }
 
 - (NSObject<HPASMLine> *_Nullable)
-formatOperand:(DisasmStruct *_Nonnull)disasm
-      atIndex:(NSUInteger)operandIndex
-       inFile:(NSObject<HPDisassembledFile> *_Nonnull)file
- withServices:(NSObject<HPHopperServices> *_Nonnull)services {
+    formatOperand:(DisasmStruct *_Nonnull)disasm
+          atIndex:(NSUInteger)operandIndex
+           inFile:(NSObject<HPDisassembledFile> *_Nonnull)file
+     withServices:(NSObject<HPHopperServices> *_Nonnull)services {
 
   if ((operandIndex >= DISASM_MAX_OPERANDS) ||
       (disasm->operand[operandIndex].type == DISASM_OPERAND_NO_OPERAND)) {
@@ -103,10 +103,10 @@ formatOperand:(DisasmStruct *_Nonnull)disasm
 }
 
 - (NSObject<HPASMLine> *_Nullable)
-formatInstruction:(DisasmStruct *_Nonnull)disasm
-           inFile:(NSObject<HPDisassembledFile> *_Nonnull)file
-     withServices:(NSObject<HPHopperServices> *_Nonnull)services
-      andEncoding:(EncodingType)encoding {
+    formatInstruction:(DisasmStruct *_Nonnull)disasm
+               inFile:(NSObject<HPDisassembledFile> *_Nonnull)file
+         withServices:(NSObject<HPHopperServices> *_Nonnull)services
+          andEncoding:(EncodingType)encoding {
 
   NSObject<HPASMLine> *line = [services blankASMLine];
 

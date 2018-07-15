@@ -28,13 +28,11 @@
 ASL=asl
 P2BIN=p2bin
 RM=rm
-TEST_FILES=65816opcodes.s 65816per.s 65816modes.s \
-	   m7700opcodesa8i8.s m7700opcodesa8i16.s \
-	   m7700opcodesa16i8.s m7700opcodesa16i16.s \
-	   m7700table42a8i8.s m7700table42a8i16.s \
-	   m7700table42a16i8.s m7700table42a16i16.s \
-	   m7700table89a8i8.s m7700table89a8i16.s \
-	   m7700table89a16i8.s m7700table89a16i16.s
+TEST_FILES=65816opcodes.s 65816per.s 65816modes.s 65816width.s \
+	   m7700opcodesa8i8.s m7700opcodesa8i16.s m7700opcodesa16i8.s \
+	   m7700opcodesa16i16.s m7700table42a8i8.s m7700table42a8i16.s \
+	   m7700table42a16i8.s m7700table42a16i16.s m7700table89a8i8.s \
+	   m7700table89a8i16.s m7700table89a16i8.s m7700table89a16i16.s
 OBJECT_FILES=$(patsubst %.s,%.p,$(TEST_FILES))
 BINARY_FILES=$(patsubst %.p,%.bin,$(OBJECT_FILES))
 

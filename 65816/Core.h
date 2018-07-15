@@ -42,8 +42,8 @@ typedef struct {
 @interface ItFrobHopper65816Base65816 : NSObject <ItFrobHopperCPUProvider>
 
 - (const Opcode *_Nonnull)
-  opcodeForFile:(NSObject<HPDisassembledFile> *_Nonnull)file
-      atAddress:(Address)address
-andFillMetadata:(FRBInstructionUserData *_Nonnull)metadata;
+      opcodeForFile:(NSObject<HPDisassembledFile> *_Nonnull)file
+          atAddress:(Address)address
+    andFillMetadata:(FRBInstructionUserData *_Nonnull)metadata;
 
 @end

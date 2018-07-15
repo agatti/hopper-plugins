@@ -80,7 +80,11 @@ static NSString *kCPUSubFamily = @"65c02";
 }
 
 - (NSString *)commandLineIdentifier {
-    return @"a2";
+  return @"a2";
+}
+
++ (int)sdkVersion {
+  return HOPPER_CURRENT_SDK_VERSION;
 }
 
 - (BOOL)canLoadDebugFiles {

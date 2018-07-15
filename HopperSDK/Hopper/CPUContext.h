@@ -112,9 +112,13 @@
 - (BOOL)instructionManipulatesFloat:(DisasmStruct *)disasmStruct;
 
 /// This method is called on branching instruction (like CALL on x86, or BL on ARM).
-/// If the instruction condition the CPU mode of the target address, the method should return YES, and set the cpuMode given in argument.
+/// If the instruction conditions the CPU mode of the target address, the method should return YES, and set the cpuMode given in argument.
 /// Otherwise, return NO if you don't know if the CPU mode is altered.
-- (BOOL)instructionConditionCPUModeAtTargetAddress:(DisasmStruct *)disasmStruct resultCPUMode:(uint8_t *)cpuMode;
+- (BOOL)instructionConditionsCPUModeAtTargetAddress:(DisasmStruct *)disasmStruct resultCPUMode:(uint8_t *)cpuMode;
+
+/// This method is called during the analysis when the field disasm.instruction.specialFlags.changeNextInstrMode is set in order
+/// to determine the future CPU mode for the next instruction.
+- (uint8_t)cpuModeForNextInstruction:(DisasmStruct *)disasmStruct;
 
 /// Return YES if the instruction may be used to build a switch/case statement.
 /// For instance, for the Intel processor, it returns YES for the "JMP reg" and the "JMP [xxx+reg*4]" instructions,

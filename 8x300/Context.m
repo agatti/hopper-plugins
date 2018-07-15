@@ -47,10 +47,10 @@ NSString *_Nonnull ItFrobHopper8x300MissingOperand =
 @implementation ItFrobHopper8x300Context
 
 - (instancetype _Nonnull)
-  initWithCPU:(NSObject<CPUDefinition> *_Nonnull)definition
-      andFile:(NSObject<HPDisassembledFile> *_Nonnull)file
- withProvider:(NSObject<ItFrobHopperCPUProvider> *_Nonnull)provider
-usingServices:(NSObject<HPHopperServices> *_Nonnull)services {
+      initWithCPU:(NSObject<CPUDefinition> *_Nonnull)definition
+          andFile:(NSObject<HPDisassembledFile> *_Nonnull)file
+     withProvider:(NSObject<ItFrobHopperCPUProvider> *_Nonnull)provider
+    usingServices:(NSObject<HPHopperServices> *_Nonnull)services {
 
   if (self = [super init]) {
     _definition = definition;
@@ -104,9 +104,9 @@ usingServices:(NSObject<HPHopperServices> *_Nonnull)services {
 }
 
 - (NSObject<HPASMLine> *)
-buildCompleteOperandString:(DisasmStruct *)disasm
-                    inFile:(NSObject<HPDisassembledFile> *)file
-                       raw:(BOOL)raw {
+    buildCompleteOperandString:(DisasmStruct *)disasm
+                        inFile:(NSObject<HPDisassembledFile> *)file
+                           raw:(BOOL)raw {
   return [self.provider buildCompleteOperandString:disasm
                                             inFile:file
                                                raw:raw

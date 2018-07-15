@@ -28,6 +28,10 @@
 
 #import "HopperCommon.h"
 
+#if HOPPER_CURRENT_SDK_VERSION != 1
+#error "Unsupported SDK version"
+#endif /* HOPPER_CURRENT_SDK_VERSION */
+
 static NSString *const kDefaultCPUMode = @"Generic";
 static NSString *const kDefaultSyntax = @"Generic";
 
@@ -254,6 +258,10 @@ static NSString *const kDefaultSyntax = @"Generic";
                  reason:[NSString stringWithFormat:@"Forgot to override %s",
                                                    __PRETTY_FUNCTION__]
                userInfo:nil];
+}
+
++ (int)sdkVersion {
+  return HOPPER_CURRENT_SDK_VERSION;
 }
 
 @end

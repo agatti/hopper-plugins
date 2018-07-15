@@ -50,10 +50,10 @@
  * @return an instance of ItFrobHopperTMS1000Context.
  */
 - (instancetype _Nonnull)
-  initWithCPU:(NSObject<CPUDefinition> *_Nonnull)definition
-      andFile:(NSObject<HPDisassembledFile> *_Nonnull)file
- withProvider:(NSObject<ItFrobHopperCPUProvider> *_Nonnull)provider
-usingServices:(NSObject<HPHopperServices> *_Nonnull)services;
+      initWithCPU:(NSObject<CPUDefinition> *_Nonnull)definition
+          andFile:(NSObject<HPDisassembledFile> *_Nonnull)file
+     withProvider:(NSObject<ItFrobHopperCPUProvider> *_Nonnull)provider
+    usingServices:(NSObject<HPHopperServices> *_Nonnull)services;
 
 @end
 

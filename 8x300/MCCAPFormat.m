@@ -38,22 +38,22 @@ static const int64_t kBinaryBitsTable[] = {0x01, 0x02, 0x04, 0x08,
 @interface ItFrobHopper8x300MCCAPFormat ()
 
 - (NSObject<HPASMLine> *_Nonnull)
-formatMCCAPBinary:(const DisasmOperand *_Nonnull)operand
-           inLine:(NSObject<HPASMLine> *_Nonnull)line
-         isSigned:(BOOL)isSigned
- hasLeadingZeroes:(BOOL)hasLeadingZeroes;
+    formatMCCAPBinary:(const DisasmOperand *_Nonnull)operand
+               inLine:(NSObject<HPASMLine> *_Nonnull)line
+             isSigned:(BOOL)isSigned
+     hasLeadingZeroes:(BOOL)hasLeadingZeroes;
 
 - (NSObject<HPASMLine> *_Nonnull)
-formatMCCAPHexadecimal:(const DisasmOperand *_Nonnull)operand
-                inLine:(NSObject<HPASMLine> *_Nonnull)line
-              isSigned:(BOOL)isSigned
-      hasLeadingZeroes:(BOOL)hasLeadingZeroes;
+    formatMCCAPHexadecimal:(const DisasmOperand *_Nonnull)operand
+                    inLine:(NSObject<HPASMLine> *_Nonnull)line
+                  isSigned:(BOOL)isSigned
+          hasLeadingZeroes:(BOOL)hasLeadingZeroes;
 
 - (NSObject<HPASMLine> *_Nonnull)
-formatMCCAPOctal:(const DisasmOperand *_Nonnull)operand
-          inLine:(NSObject<HPASMLine> *_Nonnull)line
-        isSigned:(BOOL)isSigned
-hasLeadingZeroes:(BOOL)hasLeadingZeroes;
+    formatMCCAPOctal:(const DisasmOperand *_Nonnull)operand
+              inLine:(NSObject<HPASMLine> *_Nonnull)line
+            isSigned:(BOOL)isSigned
+    hasLeadingZeroes:(BOOL)hasLeadingZeroes;
 
 @end
 
@@ -64,10 +64,10 @@ hasLeadingZeroes:(BOOL)hasLeadingZeroes;
 }
 
 - (NSObject<HPASMLine> *_Nullable)
-formatOperand:(DisasmStruct *_Nonnull)disasm
-      atIndex:(NSUInteger)operandIndex
-       inFile:(NSObject<HPDisassembledFile> *_Nonnull)file
- withServices:(NSObject<HPHopperServices> *_Nonnull)services {
+    formatOperand:(DisasmStruct *_Nonnull)disasm
+          atIndex:(NSUInteger)operandIndex
+           inFile:(NSObject<HPDisassembledFile> *_Nonnull)file
+     withServices:(NSObject<HPHopperServices> *_Nonnull)services {
 
   if ((operandIndex >= DISASM_MAX_OPERANDS) ||
       (disasm->operand[operandIndex].type == DISASM_OPERAND_NO_OPERAND)) {
@@ -170,10 +170,10 @@ formatOperand:(DisasmStruct *_Nonnull)disasm
 }
 
 - (NSObject<HPASMLine> *_Nullable)
-formatInstruction:(DisasmStruct *_Nonnull)disasm
-           inFile:(NSObject<HPDisassembledFile> *_Nonnull)file
-     withServices:(NSObject<HPHopperServices> *_Nonnull)services
-      andEncoding:(EncodingType)encoding {
+    formatInstruction:(DisasmStruct *_Nonnull)disasm
+               inFile:(NSObject<HPDisassembledFile> *_Nonnull)file
+         withServices:(NSObject<HPHopperServices> *_Nonnull)services
+          andEncoding:(EncodingType)encoding {
 
   NSObject<HPASMLine> *line = [services blankASMLine];
 
@@ -267,10 +267,10 @@ formatInstruction:(DisasmStruct *_Nonnull)disasm
 #pragma mark - Operand formatting methods
 
 - (NSObject<HPASMLine> *_Nonnull)
-formatMCCAPBinary:(const DisasmOperand *_Nonnull)operand
-           inLine:(NSObject<HPASMLine> *_Nonnull)line
-         isSigned:(BOOL)isSigned
- hasLeadingZeroes:(BOOL)hasLeadingZeroes {
+    formatMCCAPBinary:(const DisasmOperand *_Nonnull)operand
+               inLine:(NSObject<HPASMLine> *_Nonnull)line
+             isSigned:(BOOL)isSigned
+     hasLeadingZeroes:(BOOL)hasLeadingZeroes {
 
   char buffer[8 + 1 + 1 + 1] = {0};
   int64_t value;
@@ -318,10 +318,10 @@ formatMCCAPBinary:(const DisasmOperand *_Nonnull)operand
 }
 
 - (NSObject<HPASMLine> *_Nonnull)
-formatMCCAPHexadecimal:(const DisasmOperand *_Nonnull)operand
-                inLine:(NSObject<HPASMLine> *_Nonnull)line
-              isSigned:(BOOL)isSigned
-      hasLeadingZeroes:(BOOL)hasLeadingZeroes {
+    formatMCCAPHexadecimal:(const DisasmOperand *_Nonnull)operand
+                    inLine:(NSObject<HPASMLine> *_Nonnull)line
+                  isSigned:(BOOL)isSigned
+          hasLeadingZeroes:(BOOL)hasLeadingZeroes {
 
   char buffer[2 + 1 + 1] = {0};
   int64_t value;
@@ -352,10 +352,10 @@ formatMCCAPHexadecimal:(const DisasmOperand *_Nonnull)operand
 }
 
 - (NSObject<HPASMLine> *_Nonnull)
-formatMCCAPOctal:(const DisasmOperand *_Nonnull)operand
-          inLine:(NSObject<HPASMLine> *_Nonnull)line
-        isSigned:(BOOL)isSigned
-hasLeadingZeroes:(BOOL)hasLeadingZeroes {
+    formatMCCAPOctal:(const DisasmOperand *_Nonnull)operand
+              inLine:(NSObject<HPASMLine> *_Nonnull)line
+            isSigned:(BOOL)isSigned
+    hasLeadingZeroes:(BOOL)hasLeadingZeroes {
 
   char buffer[4 + 1 + 1 + 1] = {0};
   int64_t value;

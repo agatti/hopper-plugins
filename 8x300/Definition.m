@@ -61,9 +61,8 @@ static const char *kRegisterNames[] = {
 
 - (instancetype)initWithHopperServices:(NSObject<HPHopperServices> *)services {
   if (self = [super initWithHopperServices:services]) {
-    _formatterInstances = @[
-      [ItFrobHopper8x300ASFormat new], [ItFrobHopper8x300MCCAPFormat new]
-    ];
+    _formatterInstances =
+        @ [[ItFrobHopper8x300ASFormat new], [ItFrobHopper8x300MCCAPFormat new]];
   }
 
   return self;
@@ -126,10 +125,6 @@ static const char *kRegisterNames[] = {
   return SyntaxTypeCount;
 }
 
-- (NSUInteger)cpuModeCount {
-  return 1;
-}
-
 - (NSArray *)syntaxVariantNames {
   NSMutableArray *names =
       [[NSMutableArray alloc] initWithCapacity:self.formatterInstances.count];
@@ -140,10 +135,6 @@ static const char *kRegisterNames[] = {
   }
 
   return names;
-}
-
-- (NSArray *)cpuModeNames {
-  return @[ @"generic" ];
 }
 
 - (NSUInteger)registerClassCount {
@@ -174,7 +165,7 @@ static const char *kRegisterNames[] = {
 }
 
 - (NSObject<ItFrobHopper8x300InstructionFormatter> *_Nullable)
-formatterForSyntax:(SyntaxType)syntaxType {
+    formatterForSyntax:(SyntaxType)syntaxType {
   return (syntaxType != SyntaxTypeAS) && (syntaxType != SyntaxTypeMCCAP)
              ? nil
              : self.formatterInstances[syntaxType];

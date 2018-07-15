@@ -28,6 +28,8 @@ _version 0.2.2_
 
 This CPU core plugin allows you to disassemble 6502/65C02 code, used in loads of home computers of the 70s, 80s, and early 90s, and in industrial automation or other specialised tasks where an MCU is needed.
 
+This plugin can be referenced from the command line tool using `6502` as its identifer.
+
 CPU backends currently supported: 6502, 65C02, 65N02, 65R02, 65S02, HuC6280, MELPS740, MOS6510, M37450, R6500, R65C02, R65C19, R65C29, SunPlus, W65C02S.
 
 <details>
@@ -203,8 +205,6 @@ CPU backends currently supported: 6502, 65C02, 65N02, 65R02, 65S02, HuC6280, MEL
 </table>
 </details>
 
-This plugin can be referenced from the command line tool using ```6502``` as its identifer.
-
 #### TODO for next version(s):
 
 * Negation for hexadecimal, decimal, and octal types.
@@ -237,6 +237,8 @@ _version 0.2.1_
 
 This CPU core plugin allows you to disassemble 65816/65802 code, used in some of home computers of the 80s, and early 90s, for industrial automation or other specialised tasks where a microcontroller is needed, and in the Super Nintendo/Super Famicom games console.
 
+This plugin can be referenced from the command line tool using `65816` as its identifer.
+
 CPU backends currently supported: 65816, MELPS 7700.
 
 <details>
@@ -260,16 +262,14 @@ CPU backends currently supported: 65816, MELPS 7700.
 </table>
 </details>
 
-This plugin can be referenced from the command line tool using ```65816``` as its identifer.
-
 #### TODO for next version:
 
 * Add support for more 65816 variants if any are found in the wild.
 * Attempt to reject files too big for address-space reduced chip variants.
 * Expand the generic 65816 test suite.
-* Accumulator and index register width change propagation analysis.
 * Automatically add I/O register labels for MELPS 7700.
 * Properly relocate files in the entire address space with BSS sections around data segments.
+* Detect emulation bit being set or cleared.
 
 #### Future plans (need Hopper SDK changes):
 
@@ -287,6 +287,8 @@ This plugin can be referenced from the command line tool using ```65816``` as it
 _version 0.1.1_
 
 This CPU core plugin allows you to disassemble 8x300 code, used in early signal processing equipment in the 70s and early 80s.
+
+This plugin can be referenced from the command line tool using `8x300` as its identifer.
 
 CPU backends currently supported: 8x300, 8x305.
 
@@ -311,8 +313,6 @@ CPU backends currently supported: 8x300, 8x305.
 </table>
 </details>
 
-This plugin can be referenced from the command line tool using ```8x300``` as its identifer.
-
 #### TODO for next version:
 
 * Add support for more 8x300 variants if any are found in the wild.
@@ -333,6 +333,8 @@ _version 0.0.1_
 
 This CPU core plugin allows you to disassemble Texas Instruments' TMS1000 series code, used in early embedded equipment and terminals.
 
+This plugin can be referenced from the command line tool using `tms1000` as its identifer.
+
 CPU backends currently supported: TMS1000, TMS1100.
 
 <details>
@@ -350,8 +352,6 @@ CPU backends currently supported: TMS1000, TMS1100.
 <tr><td>TMS1300</td><td>Texas Instruments &rarr; TMS1100</td><td><a href="https://en.wikichip.org/w/images/f/ff/TMS1000_Series_Programmer%27s_reference_manual.pdf">Datasheet</td></tr>
 </table>
 </details>
-
-This plugin can be referenced from the command line tool using ```tms1000``` as its identifer.
 
 #### TODO for next version:
 
@@ -371,7 +371,7 @@ _version 0.0.1_
 
 This file loader plugin allows you to load Apple ][ binaries in A2 format to be disassembled (or basically anything you can either `BLOAD` or `BRUN`). _(Please note that the plugin depends on the 6502 CPU core being installed in order to work properly)_
 
-This plugin can be referenced from the command line tool using ```a2``` as its identifer.
+This plugin can be referenced from the command line tool using `a2` as its identifer.
 
 #### TODO for next version:
 
@@ -394,7 +394,7 @@ _version 0.2.2_
 
 This file loader plugin allows you to load Commodore binaries in PRG format to be disassembled.  _(Please note that the plugin depends on the 6502 CPU core being installed in order to work properly)_
 
-This plugin can be referenced from the command line tool using ```cbm``` as its identifer.
+This plugin can be referenced from the command line tool using `cbm` as its identifer.
 
 #### TODO for next version:
 
@@ -418,7 +418,7 @@ _version 0.0.1_
 
 This file loader plugin allows you to load binaries saved as ASCII HEX files.  Currently the plugin only support the following formats: Intel HEX.
 
-This plugin can be referenced from the command line tool using ```hex``` as its identifer.
+This plugin can be referenced from the command line tool using `hex` as its identifer.
 
 #### TODO for next version:
 
@@ -439,7 +439,7 @@ _version 0.0.2_
 
 This tool plugin currently allows to map the full address space of the CPU chosen for the currently loaded file.  When dealing with firmware images and the like, especially on older architectures, the code already assumes a certain memory layout and memory amount.  If a block of code is loaded at a particular address and points to absolute memory locations it is a bit of a pain to handle the situation in Hopper since there is no way (that I know of) to create a segment from the UI.  This plugin solves this very specific situation.
 
-This plugin can be referenced from the command line tool using ```addressspace``` as its identifer.
+This plugin can be referenced from the command line tool using `addressspace` as its identifer.
 
 #### Caveats:
 
@@ -451,7 +451,7 @@ This plugin can be referenced from the command line tool using ```addressspace``
 
 Checkout from Git, open `HopperPlugins.xcworkspace` in Xcode/AppCode, select the plugin you are interested in and then let Xcode/AppCode build the associated project; the plugin will be automatically copied to the appropriate paths (`~/Library/Application Support/Hopper/Plugins/v4/{CPUs,Loaders,Tools}`).  Once done, please close any open instances of Hopper and restart them.  That's all there is to it.
 
-Keep in mind that these plugins require **Hopper 4.3.25** or later to work.  They may work on older versions but they are neither tested nor supported on anything older than v4.3.25.
+Keep in mind that these plugins require **Hopper 4.3.26** or later to work.  They may work on older versions but they are neither tested nor supported on anything older than v4.3.26.
 
 If you are unable or unwilling to update your Hopper installation from v3 to v4 then build the code marked by the `v3api` git tag.  However, since the Hopper author allowed free upgrades from v3 licences to v4 licenses, v3 plugins are effectively unsupported as of v4 release.  It is strongly suggested to update your Hopper installation at your earliest opportunity.
 

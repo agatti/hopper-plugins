@@ -26,6 +26,10 @@
 
 #import "AddressSpace.h"
 
+#if HOPPER_CURRENT_SDK_VERSION != 1
+#error "Unsupported SDK version"
+#endif /* HOPPER_CURRENT_SDK_VERSION */
+
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCUnusedClassInspection"
 
@@ -94,6 +98,10 @@ static NSString *kUnmappedSectionName = @"BSS";
 
 - (NSString *)commandLineIdentifier {
   return @"addressspace";
+}
+
++ (int)sdkVersion {
+  return HOPPER_CURRENT_SDK_VERSION;
 }
 
 - (void)mapWholeAddressSpace:(id)sender {

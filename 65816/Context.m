@@ -25,7 +25,14 @@
  */
 
 #import "Context.h"
+#import "Core.h"
+#import "Definition.h"
 #import "HopperCommon.h"
+
+static const uint8_t kInvalidCPUMode = 0xFF;
+
+static uint8_t translateCPUModeToPBits(uint8_t mode);
+static uint8_t translatePBitsToCPUMode(uint8_t bits);
 
 @interface ItFrobHopper65816Context ()
 
@@ -100,9 +107,9 @@
 }
 
 - (NSObject<HPASMLine> *)
-buildCompleteOperandString:(DisasmStruct *)disasm
-                    inFile:(NSObject<HPDisassembledFile> *)file
-                       raw:(BOOL)raw {
+    buildCompleteOperandString:(DisasmStruct *)disasm
+                        inFile:(NSObject<HPDisassembledFile> *)file
+                           raw:(BOOL)raw {
 
   return [self.provider buildCompleteOperandString:disasm
                                             inFile:file
@@ -144,4 +151,69 @@ buildCompleteOperandString:(DisasmStruct *)disasm
   }
 }
 
+- (uint8_t)cpuModeForNextInstruction:(DisasmStruct *)disasmStruct {
+  FRBInstructionUserData metadata =
+      *(FRBInstructionUserData *)&disasmStruct->instruction.userData;
+  uint8_t bitsValue =
+      (([self.file readUInt8AtVirtualAddress:disasmStruct->virtualAddr + 1]) >>
+       4) &
+      0x03;
+
+  uint8_t currentMode = translateCPUModeToPBits(
+      [self.file cpuModeAtVirtualAddress:disasmStruct->virtualAddr]);
+
+  switch (metadata.opcode) {
+  case OpcodeSEP:
+    currentMode |= bitsValue;
+    break;
+
+  case OpcodeREP:
+    currentMode &= ~bitsValue;
+    break;
+
+  default:
+    return CPUAccumulator8Index8;
+  }
+
+  return translatePBitsToCPUMode(currentMode);
+}
+
 @end
+
+uint8_t translateCPUModeToPBits(uint8_t mode) {
+  switch (mode) {
+  case CPUAccumulator8Index8:
+    return 3;
+
+  case CPUAccumulator8Index16:
+    return 2;
+
+  case CPUAccumulator16Index8:
+    return 1;
+
+  case CPUAccumulator16Index16:
+    return 0;
+
+  default:
+    return kInvalidCPUMode;
+  }
+}
+
+uint8_t translatePBitsToCPUMode(uint8_t bits) {
+  switch (bits) {
+  case 3:
+    return CPUAccumulator8Index8;
+
+  case 2:
+    return CPUAccumulator8Index16;
+
+  case 1:
+    return CPUAccumulator16Index8;
+
+  case 0:
+    return CPUAccumulator16Index16;
+
+  default:
+    return kInvalidCPUMode;
+  }
+}

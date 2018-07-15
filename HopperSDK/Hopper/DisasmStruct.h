@@ -236,26 +236,35 @@ typedef enum {
 } DisasmSegmentReg;
 
 typedef struct {
-    uint8_t lockPrefix;
-    uint8_t repnePrefix;
-    uint8_t repPrefix;
-    uint8_t bndPrefix;
-    uint8_t segmentOverride;
+    unsigned lockPrefix : 1;
+    unsigned repnePrefix : 1;
+    unsigned repPrefix : 1;
+    unsigned bndPrefix : 1;
+    unsigned segmentOverride : 1;
 } DisasmPrefix;
 
 typedef struct {
-    uint8_t OF_flag;
-    uint8_t SF_flag;
-    uint8_t ZF_flag;
-    uint8_t AF_flag;
-    uint8_t PF_flag;
-    uint8_t CF_flag;
-    uint8_t TF_flag;
-    uint8_t IF_flag;
-    uint8_t DF_flag;
-    uint8_t NT_flag;
-    uint8_t RF_flag;
+    DisasmEflagsState OF_flag;
+    DisasmEflagsState SF_flag;
+    DisasmEflagsState ZF_flag;
+    DisasmEflagsState AF_flag;
+    DisasmEflagsState PF_flag;
+    DisasmEflagsState CF_flag;
+    DisasmEflagsState TF_flag;
+    DisasmEflagsState IF_flag;
+    DisasmEflagsState DF_flag;
+    DisasmEflagsState NT_flag;
+    DisasmEflagsState RF_flag;
 } DisasmEFLAGS;
+
+typedef struct {
+    unsigned ARMSBit : 1;                   // ARM specific. Set to 1 if 'S' flag.
+    unsigned ARMWriteBack : 1;              // ARM specific: Set to 1 if writeback flag (!).
+    unsigned ARMSpecial : 1;                // ARM specific: Set to 1 if special flag (^).
+    unsigned ARMThumb : 1;                  // ARM specifig: Set to 1 if thumb instruction.
+
+    unsigned changeNextInstrMode : 1;       // The instruction may change the next instruction CPU mode.
+} DisasmInstrFlags;
 
 /// Define a memory access in the form [BASE_REGISTERS + (INDEX_REGISTERS) * SCALE + DISPLACEMENT]
 typedef struct {
@@ -285,10 +294,7 @@ typedef struct  {
     /// Anyway, it must reflects the exact value of the PC register if read from the instruction.
     Address             pcRegisterValue;
 
-    uint8_t             ARMSBit;                    // ARM specific. Set to 1 if 'S' flag.
-    uint8_t             ARMWriteBack;               // ARM specific: Set to 1 if writeback flag (!).
-    uint8_t             ARMSpecial;                 // ARM specific: Set to 1 if special flag (^).
-    uint8_t             ARMThumb;                   // ARM specifig: Set to 1 if thumb instruction.
+    DisasmInstrFlags    specialFlags;
 } DisasmInstruction;
 
 typedef struct {

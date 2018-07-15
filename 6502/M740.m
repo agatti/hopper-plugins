@@ -37,10 +37,11 @@ static const Opcode kOpcodeTable[256];
 
 @interface ItFrobHopper6502M740 ()
 
-- (void)
-setPositionalArgumentInStructure:(DisasmStruct *_Nonnull)structure
-                      forOperand:(NSUInteger)operand
-                          inFile:(NSObject<HPDisassembledFile> *_Nonnull)file;
+- (void)setPositionalArgumentInStructure:(DisasmStruct *_Nonnull)structure
+                              forOperand:(NSUInteger)operand
+                                  inFile:
+                                      (NSObject<HPDisassembledFile> *_Nonnull)
+                                          file;
 
 @end
 
@@ -105,10 +106,10 @@ setPositionalArgumentInStructure:(DisasmStruct *_Nonnull)structure
 }
 
 - (NSObject<HPASMLine> *_Nullable)
-buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
-                    inFile:(NSObject<HPDisassembledFile> *_Nonnull)file
-                       raw:(BOOL)raw
-              withServices:(NSObject<HPHopperServices> *_Nonnull)services {
+    buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
+                        inFile:(NSObject<HPDisassembledFile> *_Nonnull)file
+                           raw:(BOOL)raw
+                  withServices:(NSObject<HPHopperServices> *_Nonnull)services {
   NSObject<HPASMLine> *_Nullable line =
       [super buildCompleteOperandString:disasm
                                  inFile:file
@@ -302,10 +303,11 @@ buildCompleteOperandString:(DisasmStruct *_Nonnull)disasm
   return YES;
 }
 
-- (void)
-setPositionalArgumentInStructure:(DisasmStruct *_Nonnull)structure
-                      forOperand:(NSUInteger)operand
-                          inFile:(NSObject<HPDisassembledFile> *_Nonnull)file {
+- (void)setPositionalArgumentInStructure:(DisasmStruct *_Nonnull)structure
+                              forOperand:(NSUInteger)operand
+                                  inFile:
+                                      (NSObject<HPDisassembledFile> *_Nonnull)
+                                          file {
   structure->operand[operand].immediateValue =
       (int64_t)(structure->instruction.userData >> 5);
   structure->operand[operand].type = DISASM_OPERAND_CONSTANT_TYPE;
