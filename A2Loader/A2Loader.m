@@ -119,7 +119,7 @@ static NSString *kCPUSubFamily = @"65c02";
   uint16 dataLength = OSReadLittleInt16(data.bytes, 2);
   unsigned long size = data.length - 4;
 
-  if ((startingAddress + size) > 65535) {
+  if ((startingAddress + size) > 65536) {
     [self.services
         logMessage:[NSString stringWithFormat:@"File too big: %lu bytes",
                                               data.length]];
