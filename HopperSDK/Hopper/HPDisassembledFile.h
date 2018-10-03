@@ -166,6 +166,7 @@ typedef void (^FileLoadingCallbackInfo)(NSString *desc, float progress);
 - (NSString *)readCStringAt:(Address)address;
 
 // Misc
+- (BOOL)hasMappedDataAt:(Address)address;
 - (Address)parseAddressString:(NSString *)addressString;
 
 // Undo/Redo Stack Management

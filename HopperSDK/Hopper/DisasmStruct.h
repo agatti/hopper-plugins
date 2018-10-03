@@ -240,7 +240,7 @@ typedef struct {
     unsigned repnePrefix : 1;
     unsigned repPrefix : 1;
     unsigned bndPrefix : 1;
-    unsigned segmentOverride : 1;
+    unsigned segmentOverride : 4;
 } DisasmPrefix;
 
 typedef struct {
