@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 48;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -197,7 +197,7 @@
 				ORGANIZATIONNAME = "Alessandro Gatti - frob.it";
 			};
 			buildConfigurationList = 6801367E19706CC5004964BD /* Build configuration list for PBXProject "6502" */;
-			compatibilityVersion = "Xcode 8.0";
+			compatibilityVersion = "Xcode 10.0";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -315,7 +315,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/65xxCommon $(SRCROOT)/HopperCommon";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/HopperCommon";
 			};
 			name = Debug;
 		};
@@ -370,7 +370,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_NAME = 6502;
 				SDKROOT = macosx;
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/65xxCommon $(SRCROOT)/HopperCommon";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/HopperCommon";
 			};
 			name = Release;
 		};

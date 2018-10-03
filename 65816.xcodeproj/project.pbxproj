@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 48;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -27,7 +27,6 @@
 		684A72541985692100955AF5 /* Definition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Definition.m; sourceTree = "<group>"; };
 		684A72661985692100955AF5 /* Generic65816.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Generic65816.h; sourceTree = "<group>"; };
 		684A72671985692100955AF5 /* Generic65816.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Generic65816.m; sourceTree = "<group>"; };
-		68AD4F1719A4B3AA00E0EBE2 /* lib65xxCommon.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = lib65xxCommon.a; path = "../../Library/Developer/Xcode/DerivedData/HopperPlugins-fzslwhyufvevicghqykcwcprlbow/Build/Products/Debug/lib65xxCommon.a"; sourceTree = "<group>"; };
 		AB5F613FF40E8C4968612B10 /* Core.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Core.m; sourceTree = "<group>"; };
 		AB5F632FBCAC0F0F7DE3D9A0 /* Core.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Core.h; sourceTree = "<group>"; };
 		AB5F65B3B3DFD0FC117EB079 /* M7700.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = M7700.m; sourceTree = "<group>"; };
@@ -84,7 +83,6 @@
 			isa = PBXGroup;
 			children = (
 				68259B2D19B738E00060713A /* libHopperCommon.a */,
-				68AD4F1719A4B3AA00E0EBE2 /* lib65xxCommon.a */,
 				684A7242198568DC00955AF5 /* CoreFoundation.framework */,
 			);
 			name = Frameworks;
@@ -134,7 +132,7 @@
 				ORGANIZATIONNAME = "Alessandro Gatti - frob.it";
 			};
 			buildConfigurationList = 684A723A198568DC00955AF5 /* Build configuration list for PBXProject "65816" */;
-			compatibilityVersion = "Xcode 8.0";
+			compatibilityVersion = "Xcode 10.0";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -237,7 +235,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/65xxCommon";
+				USER_HEADER_SEARCH_PATHS = "";
 			};
 			name = Debug;
 		};
@@ -289,7 +287,7 @@
 				LIBRARY_SEARCH_PATHS = "$(BUILT_PRODUCTS_DIR)";
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				SDKROOT = macosx;
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/65xxCommon";
+				USER_HEADER_SEARCH_PATHS = "";
 			};
 			name = Release;
 		};
@@ -307,7 +305,10 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_BUNDLE_IDENTIFIER = "it.frob.hopper.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/65xxCommon $(SRCROOT)/HopperCommon";
+				USER_HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/65xxCommon",
+					"$(SRCROOT)/HopperCommon",
+				);
 				WRAPPER_EXTENSION = hopperCPU;
 			};
 			name = Debug;
@@ -326,7 +327,10 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_BUNDLE_IDENTIFIER = "it.frob.hopper.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/65xxCommon $(SRCROOT)/HopperCommon";
+				USER_HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/65xxCommon",
+					"$(SRCROOT)/HopperCommon",
+				);
 				WRAPPER_EXTENSION = hopperCPU;
 			};
 			name = Release;
