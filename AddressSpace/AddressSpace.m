@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2014-2018, Alessandro Gatti - frob.it
+ Copyright (c) 2014-2019, Alessandro Gatti - frob.it
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -25,10 +25,6 @@
  */
 
 #import "AddressSpace.h"
-
-#if HOPPER_CURRENT_SDK_VERSION != 1
-#error "Unsupported SDK version"
-#endif /* HOPPER_CURRENT_SDK_VERSION */
 
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCUnusedClassInspection"
@@ -68,7 +64,7 @@ static NSString *kUnmappedSectionName = @"BSS";
   } ];
 }
 
-- (HopperUUID *)pluginUUID {
+- (NSObject<HPHopperUUID> *)pluginUUID {
   return [self.services UUIDWithString:@"FD1B7A50-7264-11E4-82F8-0800200C9A66"];
 }
 
@@ -89,7 +85,7 @@ static NSString *kUnmappedSectionName = @"BSS";
 }
 
 - (NSString *)pluginCopyright {
-  return @"©2014-2018 Alessandro Gatti";
+  return @"©2014-2019 Alessandro Gatti";
 }
 
 - (NSString *)pluginVersion {

@@ -29,8 +29,8 @@
 - (BOOL)isStructured;
 - (BOOL)isEnum;
 
-- (NSString *)name;
-- (void)setName:(NSString *)name;
+- (nullable NSString *)name;
+- (void)setName:(nullable NSString *)name;
 
 - (BOOL)forwardDeclaration;
 - (void)setForwardDeclaration:(BOOL)forward;
@@ -40,31 +40,31 @@
 - (void)setSingleLineDisplay:(BOOL)singleLine;
 
 // String representation
-- (NSString *)string;
-- (NSString *)shortString;
+- (nonnull NSString *)string;
+- (nonnull NSString *)shortString;
 
 // Arrays
 - (NSUInteger)arrayItemCount;
 
 // Struct fields
-- (BOOL)addStructureField:(NSObject<HPTypeStructField> *)field;
-- (NSObject<HPTypeStructField> *)addStructureFieldOfType:(NSObject<HPTypeDesc> *)type named:(NSString *)name;
-- (NSObject<HPTypeStructField> *)addStructureFieldOfType:(NSObject<HPTypeDesc> *)type named:(NSString *)name withComment:(NSString *)comment;
-- (BOOL)removeStructureField:(NSObject<HPTypeStructField> *)field;
+- (BOOL)addStructureField:(nonnull NSObject<HPTypeStructField> *)field;
+- (nonnull NSObject<HPTypeStructField> *)addStructureFieldOfType:(nonnull NSObject<HPTypeDesc> *)type named:(nullable NSString *)name;
+- (nonnull NSObject<HPTypeStructField> *)addStructureFieldOfType:(nonnull NSObject<HPTypeDesc> *)type named:(nullable NSString *)name withComment:(nullable NSString *)comment;
+- (BOOL)removeStructureField:(nonnull NSObject<HPTypeStructField> *)field;
 - (BOOL)removeAllStructureFields;
 
 // Enum
-- (NSObject<HPTypeEnumField> *)addEnumField;
-- (NSObject<HPTypeEnumField> *)addEnumFieldWithName:(NSString *)name;
-- (NSObject<HPTypeEnumField> *)addEnumFieldWithName:(NSString *)name andValue:(int64_t)value;
-- (NSObject<HPTypeEnumField> *)insertEnumFieldWithName:(NSString *)name andValue:(int64_t)value atIndex:(NSUInteger)index;
-- (BOOL)removeEnumField:(NSObject<HPTypeEnumField> *)field;
+- (nonnull NSObject<HPTypeEnumField> *)addEnumField;
+- (nonnull NSObject<HPTypeEnumField> *)addEnumFieldWithName:(nonnull NSString *)name;
+- (nonnull NSObject<HPTypeEnumField> *)addEnumFieldWithName:(nullable NSString *)name andValue:(int64_t)value;
+- (nonnull NSObject<HPTypeEnumField> *)insertEnumFieldWithName:(nullable NSString *)name andValue:(int64_t)value atIndex:(NSUInteger)index;
+- (BOOL)removeEnumField:(nonnull NSObject<HPTypeEnumField> *)field;
 - (BOOL)removeAllEnumFields;
 - (int)enumSize;
 - (void)setEnumSize:(int)sizeInBytes;
 
 // Function pointers
-- (NSObject<HPMethodSignature> *)signature;
-- (void)setSignature:(NSObject<HPMethodSignature> *)signature;
+- (nullable NSObject<HPMethodSignature> *)signature;
+- (void)setSignature:(nullable NSObject<HPMethodSignature> *)signature;
 
 @end

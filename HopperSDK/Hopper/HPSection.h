@@ -16,7 +16,7 @@
 
 @protocol HPSection
 
-@property (nonatomic, copy) NSString *sectionName;
+@property (nonatomic, nullable, copy) NSString *sectionName;
 
 @property (nonatomic, assign) uint64_t fileOffset;
 @property (nonatomic, assign) uint64_t fileLength;
@@ -38,9 +38,9 @@
 
 - (BOOL)hasDataOnDisk;
 
-- (NSObject<HPSegment> *)segment;
-- (NSObject<HPSection> *)previousSection;
-- (NSObject<HPSection> *)nextSection;
+- (nonnull NSObject<HPSegment> *)segment;
+- (nullable NSObject<HPSection> *)previousSection;
+- (nullable NSObject<HPSection> *)nextSection;
 
 - (BOOL)sectionContainsAddress:(Address)address;
 

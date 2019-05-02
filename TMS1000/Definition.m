@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2014-2018, Alessandro Gatti - frob.it
+ Copyright (c) 2014-2019, Alessandro Gatti - frob.it
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -40,7 +40,7 @@
 
 #pragma mark - HopperPlugin protocol implementation
 
-- (HopperUUID *)pluginUUID {
+- (NSObject<HPHopperUUID> *)pluginUUID {
   return [self.services UUIDWithString:@"53C4BE05-3378-4E38-9DBA-F939874E9B49"];
 }
 
@@ -61,7 +61,7 @@
 }
 
 - (NSString *)pluginCopyright {
-  return @"©2014-2018 Alessandro Gatti";
+  return @"©2014-2019 Alessandro Gatti";
 }
 
 - (NSString *)pluginVersion {
@@ -153,13 +153,18 @@
     break;
   }
 
-  return nil;
+  return @"";
 }
 
 - (NSData *)nopWithSize:(NSUInteger)size
                 andMode:(NSUInteger)cpuMode
                 forFile:(NSObject<HPDisassembledFile> *)file {
   return [NSData data];
+}
+
+- (int)integerWidthInBitsForCPUFamily:(nullable NSString *)family
+                         andSubFamily:(nullable NSString *)subFamily {
+  return 8;
 }
 
 @end

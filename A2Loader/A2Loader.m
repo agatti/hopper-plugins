@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2014-2018, Alessandro Gatti - frob.it
+ Copyright (c) 2014-2019, Alessandro Gatti - frob.it
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -51,7 +51,7 @@ static NSString *kCPUSubFamily = @"65c02";
   return self;
 }
 
-- (HopperUUID *)pluginUUID {
+- (NSObject<HPHopperUUID> *)pluginUUID {
   return [self.services UUIDWithString:@"84648F44-2869-4563-99A3-36AA9466D381"];
 }
 
@@ -72,7 +72,7 @@ static NSString *kCPUSubFamily = @"65c02";
 }
 
 - (NSString *)pluginCopyright {
-  return @"©2014-2018 Alessandro Gatti";
+  return @"©2014-2019 Alessandro Gatti";
 }
 
 - (NSString *)pluginVersion {
@@ -89,17 +89,6 @@ static NSString *kCPUSubFamily = @"65c02";
 
 - (BOOL)canLoadDebugFiles {
   return NO;
-}
-
-- (NSArray *)detectedTypesForData:(NSData *)data {
-  NSObject<HPDetectedFileType> *detectedType = self.services.detectedType;
-  detectedType.fileDescription = @"Apple ][ binary code";
-  detectedType.addressWidth = AW_16bits;
-  detectedType.cpuFamily = kCPUFamily;
-  detectedType.cpuSubFamily = kCPUSubFamily;
-  detectedType.additionalParameters = @[];
-  detectedType.shortDescriptionString = @"a2";
-  return @[ detectedType ];
 }
 
 - (FileLoaderLoadingStatus)loadData:(NSData *)data
@@ -128,8 +117,8 @@ static NSString *kCPUSubFamily = @"65c02";
 
   NSData *fileData = [NSData dataWithBytes:data.bytes + 4 length:size];
 
-  NSObject<HPSegment> *segment =
-      [file addSegmentAt:startingAddress size:MAX(size, dataLength)];
+  NSObject<HPSegment> *segment = [file addSegmentAt:startingAddress
+                                               size:MAX(size, dataLength)];
   segment.mappedData = fileData;
   segment.segmentName = @"CODE";
   segment.fileOffset = 4;
@@ -160,15 +149,31 @@ static NSString *kCPUSubFamily = @"65c02";
   return DIS_NotSupported;
 }
 
-- (NSData *)extractFromData:(NSData *)data
-      usingDetectedFileType:(NSObject<HPDetectedFileType> *)fileType
-         returnAdjustOffset:(uint64_t *)adjustOffset {
-  return nil;
-}
-
 - (void)fixupRebasedFile:(NSObject<HPDisassembledFile> *)file
                withSlide:(int64_t)slide
         originalFileData:(NSData *)fileData {
+}
+
+- (nullable NSArray<NSObject<HPDetectedFileType> *> *)
+    detectedTypesForData:(nonnull NSData *)data
+             ofFileNamed:(nullable NSString *)filename {
+  NSObject<HPDetectedFileType> *detectedType = self.services.detectedType;
+  detectedType.fileDescription = @"Apple ][ binary code";
+  detectedType.addressWidth = AW_16bits;
+  detectedType.cpuFamily = kCPUFamily;
+  detectedType.cpuSubFamily = kCPUSubFamily;
+  detectedType.additionalParameters = @[];
+  detectedType.shortDescriptionString = @"a2";
+  return @[ detectedType ];
+}
+
+- (nullable NSData *)
+          extractFromData:(nonnull NSData *)data
+    usingDetectedFileType:(nonnull NSObject<HPDetectedFileType> *)fileType
+       returnAdjustOffset:(nullable uint64_t *)adjustOffset
+     returnAdjustFilename:
+         (NSString *__autoreleasing _Nullable *_Nullable)newFilename {
+  return nil;
 }
 
 #pragma mark Private methods

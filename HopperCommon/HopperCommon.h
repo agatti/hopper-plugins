@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2014-2018, Alessandro Gatti - frob.it
+ Copyright (c) 2014-2019, Alessandro Gatti - frob.it
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -24,6 +24,8 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#import <Hopper/Hopper.h>
+
 #import "65xxUtilities.h"
 #import "BaseContext.h"
 #import "BaseDefinition.h"
@@ -31,6 +33,10 @@
 #import "Miscellaneous.h"
 #import "ModelManager.h"
 #import "NSDataWithFill.h"
+
+#if !defined(HOPPER_CURRENT_SDK_VERSION) || HOPPER_CURRENT_SDK_VERSION != 2
+#error "Unsupported SDK version"
+#endif /* !HOPPER_CURRENT_SDK_VERSION || HOPPER_CURRENT_SDK_VERSION != 2 */
 
 #define HopperUtilities ItFrobHopperCommonHopperUtilities
 #define NSDataWithFiller ItFrobHopperCommonNSDataWithFiller

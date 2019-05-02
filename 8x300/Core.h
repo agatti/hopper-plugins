@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2014-2018, Alessandro Gatti - frob.it
+ Copyright (c) 2014-2019, Alessandro Gatti - frob.it
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -234,7 +234,7 @@ typedef NS_ENUM(uint32_t, EncodingType) {
  */
 - (BOOL)handleJMPOpcode:(uint16_t)opcode
            forStructure:(DisasmStruct *_Nonnull)structure
-                 onFile:(NSObject<HPDisassembledFile> *_Nonnull)file
+                 onFile:(__unused NSObject<HPDisassembledFile> *_Nonnull)file
                metadata:(InstructionMetadata *_Nonnull)metadata;
 
 @end

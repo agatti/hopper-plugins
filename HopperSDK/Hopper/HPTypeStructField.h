@@ -14,18 +14,18 @@
 
 @protocol HPTypeStructField
 
-- (NSString *)name;
-- (void)setName:(NSString *)name;
+- (nullable NSString *)name;
+- (void)setName:(nullable NSString *)name;
 
-- (NSString *)comment;
-- (void)setComment:(NSString *)comment;
+- (nullable NSString *)comment;
+- (void)setComment:(nullable NSString *)comment;
 
 - (ArgFormat)displayFormat;
 - (void)setDisplayFormat:(ArgFormat)displayFormat;
 
 - (NSUInteger)fieldIndex;
-- (NSString *)string;
-- (NSString *)shortString;
+- (nonnull NSString *)string;
+- (nonnull NSString *)shortString;
 
 @end
 

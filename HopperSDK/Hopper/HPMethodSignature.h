@@ -17,25 +17,25 @@
 
 @protocol HPMethodSignature
 
-- (NSObject<HPTypeDesc> *)returnType;
-- (void)setReturnType:(NSObject<HPTypeDesc> *)returnType;
+- (nullable NSObject<HPTypeDesc> *)returnType;
+- (void)setReturnType:(nullable NSObject<HPTypeDesc> *)returnType;
 
-- (NSString *)argumentNameAtIndex:(NSUInteger)index;
-- (NSString *)argumentNameAtIndex:(NSUInteger)index withDefaultBasename:(NSString *)defaultBasename;
+- (nullable NSString *)argumentNameAtIndex:(NSUInteger)index;
+- (nullable NSString *)argumentNameAtIndex:(NSUInteger)index withDefaultBasename:(nullable NSString *)defaultBasename;
 
 - (NSUInteger)argumentCount;
-- (NSObject<HPMethodArgument> *)argumentAtIndex:(NSUInteger)index;
-- (void)addArgument:(NSObject<HPMethodArgument> *)argument;
+- (nullable NSObject<HPMethodArgument> *)argumentAtIndex:(NSUInteger)index;
+- (void)addArgument:(nonnull NSObject<HPMethodArgument> *)argument;
 - (void)removeArgumentAtIndex:(NSUInteger)index;
-- (NSArray<NSObject<HPMethodArgument> *> *)allArguments;
+- (nonnull NSArray<NSObject<HPMethodArgument> *> *)allArguments;
 
-- (void)addArgumentWithType:(NSObject<HPTypeDesc> *)type;
-- (void)addArgumentWithType:(NSObject<HPTypeDesc> *)type name:(NSString *)name;
-- (void)insertArgumentWithType:(NSObject<HPTypeDesc> *)type atIndex:(NSUInteger)index;
-- (void)insertArgumentWithType:(NSObject<HPTypeDesc> *)type andName:(NSString *)name atIndex:(NSUInteger)index;
+- (void)addArgumentWithType:(nonnull NSObject<HPTypeDesc> *)type;
+- (void)addArgumentWithType:(nonnull NSObject<HPTypeDesc> *)type name:(nullable NSString *)name;
+- (void)insertArgumentWithType:(nonnull NSObject<HPTypeDesc> *)type atIndex:(NSUInteger)index;
+- (void)insertArgumentWithType:(nonnull NSObject<HPTypeDesc> *)type andName:(nullable NSString *)name atIndex:(NSUInteger)index;
 
-- (NSString *)string;
-- (NSString *)stringWithMethodName:(NSString *)name;
-- (NSString *)stringWithMethodName:(NSString *)name andDefaultArgumentBasename:(NSString *)argBasename;
+- (nonnull NSString *)string;
+- (nonnull NSString *)stringWithMethodName:(nullable NSString *)name;
+- (nonnull NSString *)stringWithMethodName:(nullable NSString *)name andDefaultArgumentBasename:(nullable NSString *)argBasename;
 
 @end

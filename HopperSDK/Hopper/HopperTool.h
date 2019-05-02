@@ -23,6 +23,6 @@
 /// A description contains at least a HPM_TITLE key, and a HPM_SELECTOR or a HPM_SUBMENU key.
 /// The HPM_SELECTOR is a string which contains a selector name, which will be resolved by
 /// Hopper at runtime, using the NSSelectorFromString system method.
-- (NSArray *)toolMenuDescription;
+- (nonnull NSArray<NSDictionary<NSString *, id> *> *)toolMenuDescription;
 
 @end

@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2014-2018, Alessandro Gatti - frob.it
+ Copyright (c) 2014-2019, Alessandro Gatti - frob.it
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -26,10 +26,6 @@
 
 #import "CBMLoader.h"
 #import "BasicTokens.h"
-
-#if HOPPER_CURRENT_SDK_VERSION != 1
-#error "Unsupported SDK version"
-#endif /* HOPPER_CURRENT_SDK_VERSION */
 
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCUnusedClassInspection"
@@ -119,7 +115,7 @@ typedef NS_ENUM(NSUInteger, BasicVersion) {
   return self;
 }
 
-- (HopperUUID *)pluginUUID {
+- (NSObject<HPHopperUUID> *)pluginUUID {
   return [self.services UUIDWithString:@"92AF9450-09AD-11E4-9191-0800200C9A66"];
 }
 
@@ -140,7 +136,7 @@ typedef NS_ENUM(NSUInteger, BasicVersion) {
 }
 
 - (NSString *)pluginCopyright {
-  return @"©2014-2018 Alessandro Gatti";
+  return @"©2014-2019 Alessandro Gatti";
 }
 
 - (NSString *)pluginVersion {
@@ -159,7 +155,107 @@ typedef NS_ENUM(NSUInteger, BasicVersion) {
   return NO;
 }
 
-- (NSArray *)detectedTypesForData:(NSData *)data {
+- (FileLoaderLoadingStatus)loadData:(NSData *)data
+              usingDetectedFileType:(NSObject<HPDetectedFileType> *)fileType
+                            options:(FileLoaderOptions)options
+                            forFile:(NSObject<HPDisassembledFile> *)file
+                      usingCallback:(FileLoadingCallbackInfo)callback {
+  NSObject<HPLoaderOptionComponents> *hasBasic =
+      fileType.additionalParameters[0];
+  NSObject<HPLoaderOptionComponents> *basicVersion =
+      fileType.additionalParameters[1];
+
+  if (data.length > 65538) {
+    [self.services
+        logMessage:[NSString stringWithFormat:@"File too big: %lu bytes",
+                                              data.length]];
+    return DIS_BadFormat;
+  }
+
+  uint16 startingAddress = OSReadLittleInt16(data.bytes, 0);
+  unsigned long size = data.length - 2;
+
+  if ((startingAddress + size) > 65536) {
+    [self.services
+        logMessage:[NSString stringWithFormat:@"File too big: %lu bytes",
+                                              data.length]];
+    return DIS_BadFormat;
+  }
+
+  NSData *fileData = [NSData dataWithBytes:data.bytes + 2 length:size];
+
+  NSObject<HPSegment> *segment = [file addSegmentAt:startingAddress size:size];
+  segment.mappedData = fileData;
+  segment.segmentName = @"CODE";
+  segment.fileOffset = 2;
+  segment.fileLength = size;
+
+  size_t fileOffset = 2;
+  unsigned long fileLength = size;
+
+  if (hasBasic.isChecked) {
+    const BasicVersion version = (BasicVersion)basicVersion.selectedStringIndex;
+    NSMutableArray *lines = [NSMutableArray new];
+    NSUInteger basicSize = 0;
+    NSError *error = [self parseBasicProgram:fileData
+                                   atAddress:startingAddress
+                                     toArray:lines
+                                        size:&basicSize
+                                     version:version];
+    if (!error) {
+      NSObject<HPSection> *section = [segment addSectionAt:startingAddress
+                                                      size:basicSize];
+      section.pureCodeSection = NO;
+      section.fileOffset = fileOffset;
+      section.fileLength = basicSize;
+      section.sectionName = @"BASIC";
+
+      [file setType:Type_Int8
+          atVirtualAddress:startingAddress
+                 forLength:basicSize];
+
+      fileOffset += basicSize;
+      fileLength -= basicSize;
+
+      [file setComment:[NSString
+                           stringWithFormat:@"Basic program:\n\n%@",
+                                            [lines
+                                                componentsJoinedByString:@"\n"]]
+          atVirtualAddress:startingAddress
+                    reason:CCReason_Script];
+    }
+  }
+
+  NSObject<HPSection> *section =
+      [segment addSectionAt:(startingAddress + fileOffset - 2) size:fileLength];
+  section.pureDataSection = NO;
+  section.pureCodeSection = NO;
+  section.containsCode = YES;
+  section.fileOffset = fileOffset;
+  section.fileLength = fileLength;
+  section.sectionName = @"CODE";
+
+  file.cpuFamily = kCPUFamily;
+  file.cpuSubFamily = kCPUSubFamily;
+  [file setAddressSpaceWidthInBits:16];
+
+  return DIS_OK;
+}
+
+- (FileLoaderLoadingStatus)loadDebugData:(NSData *)data
+                                 forFile:(NSObject<HPDisassembledFile> *)file
+                           usingCallback:(FileLoadingCallbackInfo)callback {
+  return DIS_NotSupported;
+}
+
+- (void)fixupRebasedFile:(NSObject<HPDisassembledFile> *)file
+               withSlide:(int64_t)slide
+        originalFileData:(NSData *)fileData {
+}
+
+- (nullable NSArray<NSObject<HPDetectedFileType> *> *)
+    detectedTypesForData:(nonnull NSData *)data
+             ofFileNamed:(nullable NSString *)filename {
   NSObject<HPDetectedFileType> *detectedType = self.services.detectedType;
   detectedType.fileDescription = @"CBM Executable code";
   detectedType.addressWidth = AW_16bits;
@@ -215,108 +311,13 @@ typedef NS_ENUM(NSUInteger, BasicVersion) {
   return @[ detectedType ];
 }
 
-- (FileLoaderLoadingStatus)loadData:(NSData *)data
-              usingDetectedFileType:(NSObject<HPDetectedFileType> *)fileType
-                            options:(FileLoaderOptions)options
-                            forFile:(NSObject<HPDisassembledFile> *)file
-                      usingCallback:(FileLoadingCallbackInfo)callback {
-  NSObject<HPLoaderOptionComponents> *hasBasic =
-      fileType.additionalParameters[0];
-  NSObject<HPLoaderOptionComponents> *basicVersion =
-      fileType.additionalParameters[1];
-
-  if (data.length > 65538) {
-    [self.services
-        logMessage:[NSString stringWithFormat:@"File too big: %lu bytes",
-                                              data.length]];
-    return DIS_BadFormat;
-  }
-
-  uint16 startingAddress = OSReadLittleInt16(data.bytes, 0);
-  unsigned long size = data.length - 2;
-
-  if ((startingAddress + size) > 65536) {
-    [self.services
-        logMessage:[NSString stringWithFormat:@"File too big: %lu bytes",
-                                              data.length]];
-    return DIS_BadFormat;
-  }
-
-  NSData *fileData = [NSData dataWithBytes:data.bytes + 2 length:size];
-
-  NSObject<HPSegment> *segment = [file addSegmentAt:startingAddress size:size];
-  segment.mappedData = fileData;
-  segment.segmentName = @"CODE";
-  segment.fileOffset = 2;
-  segment.fileLength = size;
-
-  size_t fileOffset = 2;
-  unsigned long fileLength = size;
-
-  if (hasBasic.isChecked) {
-    const BasicVersion version = (BasicVersion)basicVersion.selectedStringIndex;
-    NSMutableArray *lines = [NSMutableArray new];
-    NSUInteger basicSize = 0;
-    NSError *error = [self parseBasicProgram:fileData
-                                   atAddress:startingAddress
-                                     toArray:lines
-                                        size:&basicSize
-                                     version:version];
-    if (!error) {
-      NSObject<HPSection> *section =
-          [segment addSectionAt:startingAddress size:basicSize];
-      section.pureCodeSection = NO;
-      section.fileOffset = fileOffset;
-      section.fileLength = basicSize;
-      section.sectionName = @"BASIC";
-
-      [file setType:Type_Int8
-          atVirtualAddress:startingAddress
-                 forLength:basicSize];
-
-      fileOffset += basicSize;
-      fileLength -= basicSize;
-
-      [file setComment:[NSString
-                           stringWithFormat:@"Basic program:\n\n%@",
-                                            [lines
-                                                componentsJoinedByString:@"\n"]]
-          atVirtualAddress:startingAddress
-                    reason:CCReason_Script];
-    }
-  }
-
-  NSObject<HPSection> *section =
-      [segment addSectionAt:(startingAddress + fileOffset - 2) size:fileLength];
-  section.pureDataSection = NO;
-  section.pureCodeSection = NO;
-  section.containsCode = YES;
-  section.fileOffset = fileOffset;
-  section.fileLength = fileLength;
-  section.sectionName = @"CODE";
-
-  file.cpuFamily = kCPUFamily;
-  file.cpuSubFamily = kCPUSubFamily;
-  [file setAddressSpaceWidthInBits:16];
-
-  return DIS_OK;
-}
-
-- (FileLoaderLoadingStatus)loadDebugData:(NSData *)data
-                                 forFile:(NSObject<HPDisassembledFile> *)file
-                           usingCallback:(FileLoadingCallbackInfo)callback {
-  return DIS_NotSupported;
-}
-
-- (NSData *)extractFromData:(NSData *)data
-      usingDetectedFileType:(NSObject<HPDetectedFileType> *)fileType
-         returnAdjustOffset:(uint64_t *)adjustOffset {
+- (nullable NSData *)
+          extractFromData:(nonnull NSData *)data
+    usingDetectedFileType:(nonnull NSObject<HPDetectedFileType> *)fileType
+       returnAdjustOffset:(nullable uint64_t *)adjustOffset
+     returnAdjustFilename:
+         (NSString *__autoreleasing _Nullable *_Nullable)newFilename {
   return nil;
-}
-
-- (void)fixupRebasedFile:(NSObject<HPDisassembledFile> *)file
-               withSlide:(int64_t)slide
-        originalFileData:(NSData *)fileData {
 }
 
 #pragma mark Private methods

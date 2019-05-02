@@ -14,6 +14,6 @@
 
 @protocol HPTag <NSObject>
 
-- (NSString *)name;
+- (nonnull NSString *)name;
 
 @end

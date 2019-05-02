@@ -23,22 +23,24 @@
 @protocol HPASMLine;
 @protocol HPTypeDesc;
 
-typedef void (^FileLoadingCallbackInfo)(NSString *desc, float progress);
+typedef void (^FileLoadingCallbackInfo)(NSString * _Nonnull desc, float progress);
 
 @protocol HPDisassembledFile
 
-@property (copy) HopperUUID *fileUUID;
+@property (nullable, copy) HopperUUID *fileUUID;
 
-@property (copy) NSString *cpuFamily;
-@property (copy) NSString *cpuSubFamily;
-@property (strong) NSObject<CPUDefinition> *cpuDefinition;
+@property (nullable, copy) NSString *cpuFamily;
+@property (nullable, copy) NSString *cpuSubFamily;
+@property (nonnull, strong) NSObject<CPUDefinition> *cpuDefinition;
 @property (readonly) NSUInteger userRequestedSyntaxIndex;
 
-- (NSString *)originalFilePath;
+- (nullable NSString *)originalFilePath;
 
 // Methods essentially used by Loader plugin
 - (NSUInteger)addressSpaceWidthInBits;
 - (void)setAddressSpaceWidthInBits:(NSUInteger)bits;
+- (NSUInteger)integerWidthInBits;
+- (void)setIntegerWidthInBits:(NSUInteger)bits;
 
 - (BOOL)is32Bits;
 - (BOOL)is64Bits;
@@ -46,51 +48,53 @@ typedef void (^FileLoadingCallbackInfo)(NSString *desc, float progress);
 - (Address)fileBaseAddress;
 
 - (void)addEntryPoint:(Address)address;
+- (void)addEntryPoint:(Address)address withCPUMode:(uint8_t)cpuMode;
 - (void)addPotentialProcedure:(Address)address;
+- (void)addPotentialProcedure:(Address)address withCPUMode:(uint8_t)cpuMode;
 - (Address)firstEntryPoint;
-- (NSArray<NSNumber *> *)entryPointAddresses;
+- (nonnull NSArray<NSNumber *> *)entryPointAddresses;
 
 // Get access to segments and sections
-- (NSArray<NSObject<HPSegment> *> *)segments;
+- (nonnull NSArray<NSObject<HPSegment> *> *)segments;
 - (NSUInteger)segmentCount;
 
-- (NSObject<HPSegment> *)segmentForVirtualAddress:(Address)virtualAddress;
-- (NSObject<HPSection> *)sectionForVirtualAddress:(Address)virtualAddress;
+- (nullable NSObject<HPSegment> *)segmentForVirtualAddress:(Address)virtualAddress;
+- (nullable NSObject<HPSection> *)sectionForVirtualAddress:(Address)virtualAddress;
 
-- (NSObject<HPSegment> *)segmentNamed:(NSString *)name;
-- (NSObject<HPSection> *)sectionNamed:(NSString *)name;
+- (nullable NSObject<HPSegment> *)segmentNamed:(nonnull NSString *)name;
+- (nullable NSObject<HPSection> *)sectionNamed:(nonnull NSString *)name;
 
-- (NSObject<HPSegment> *)addSegmentAt:(Address)address size:(size_t)length;
-- (NSObject<HPSegment> *)addSegmentAt:(Address)address toExcludedAddress:(Address)endAddress;
+- (nonnull NSObject<HPSegment> *)addSegmentAt:(Address)address size:(size_t)length;
+- (nonnull NSObject<HPSegment> *)addSegmentAt:(Address)address toExcludedAddress:(Address)endAddress;
 
-- (NSObject<HPSegment> *)firstSegment;
-- (NSObject<HPSegment> *)lastSegment;
-- (NSObject<HPSection> *)firstSection;
-- (NSObject<HPSection> *)lastSection;
+- (nullable NSObject<HPSegment> *)firstSegment;
+- (nullable NSObject<HPSegment> *)lastSegment;
+- (nullable NSObject<HPSection> *)firstSection;
+- (nullable NSObject<HPSection> *)lastSection;
 
-- (NSObject<HPSegment> *)previousSegment:(NSObject<HPSegment> *)segment;
-- (NSObject<HPSegment> *)nextSegment:(NSObject<HPSegment> *)segment;
+- (nullable NSObject<HPSegment> *)previousSegment:(nonnull NSObject<HPSegment> *)segment;
+- (nullable NSObject<HPSegment> *)nextSegment:(nonnull NSObject<HPSegment> *)segment;
 
 // CPUContext factory
-- (NSObject<CPUContext> *)buildCPUContext;
+- (nonnull NSObject<CPUContext> *)buildCPUContext;
 
 // Access to the labels
 /// An array of NSString objects, containing all labels.
-- (NSArray<NSString *> *)allNames;
+- (nonnull NSArray<NSString *> *)allNames;
 /// An array of NSNumber objects, representing the address of memory locations that was named.
-- (NSArray<NSNumber *> *)allNamedAddresses;
-- (NSString *)nameForVirtualAddress:(Address)virtualAddress;
-- (NSString *)nearestNameBeforeVirtualAddress:(Address)virtualAddress;
-- (void)setName:(NSString *)name forVirtualAddress:(Address)virtualAddress reason:(NameCreationReason)reason;
-- (Address)findVirtualAddressNamed:(NSString *)name;
+- (nonnull NSArray<NSNumber *> *)allNamedAddresses;
+- (nullable NSString *)nameForVirtualAddress:(Address)virtualAddress;
+- (nullable NSString *)nearestNameBeforeVirtualAddress:(Address)virtualAddress;
+- (void)setName:(nullable NSString *)name forVirtualAddress:(Address)virtualAddress reason:(NameCreationReason)reason;
+- (Address)findVirtualAddressNamed:(nonnull NSString *)name;
 
 // Comments
 - (void)removeCommentAtVirtualAddress:(Address)virtualAddress;
 - (void)removeInlineCommentAtVirtualAddress:(Address)virtualAddress;
-- (NSString *)commentAtVirtualAddress:(Address)virtualAddress;
-- (NSString *)inlineCommentAtVirtualAddress:(Address)virtualAddress;
-- (void)setComment:(NSString *)comment atVirtualAddress:(Address)virtualAddress reason:(CommentCreationReason)reason;
-- (void)setInlineComment:(NSString *)comment atVirtualAddress:(Address)virtualAddress reason:(CommentCreationReason)reason;
+- (nullable NSString *)commentAtVirtualAddress:(Address)virtualAddress;
+- (nullable NSString *)inlineCommentAtVirtualAddress:(Address)virtualAddress;
+- (void)setComment:(nullable NSString *)comment atVirtualAddress:(Address)virtualAddress reason:(CommentCreationReason)reason;
+- (void)setInlineComment:(nullable NSString *)comment atVirtualAddress:(Address)virtualAddress reason:(CommentCreationReason)reason;
 
 // Types
 - (BOOL)typeCanBeModifiedAtAddress:(Address)va;
@@ -109,14 +113,14 @@ typedef void (^FileLoadingCallbackInfo)(NSString *desc, float progress);
 - (void)setFormat:(ArgFormat)format relativeTo:(Address)relTo forArgument:(NSUInteger)argIndex atVirtualAddress:(Address)virtualAddress;
 
 // Format a number
-- (NSObject<HPASMLine> *)formatNumber:(uint64_t)immediate at:(Address)address usingFormat:(ArgFormat)format andBitSize:(uint64_t)bitSize;
+- (nonnull NSObject<HPASMLine> *)formatNumber:(uint64_t)immediate at:(Address)address usingFormat:(ArgFormat)format andBitSize:(uint64_t)bitSize;
 
 // Procedures
 - (BOOL)hasProcedureAt:(Address)address;
-- (NSObject<HPProcedure> *)procedureAt:(Address)address;
-- (void)removeProcedure:(NSObject<HPProcedure> *)procedure;
+- (nullable NSObject<HPProcedure> *)procedureAt:(Address)address;
+- (void)removeProcedure:(nonnull NSObject<HPProcedure> *)procedure;
 - (void)removeProcedureAt:(Address)address;
-- (NSObject<HPProcedure> *)makeProcedureAt:(Address)address;
+- (nullable NSObject<HPProcedure> *)makeProcedureAt:(Address)address;
 - (void)makeProceduresRecursivelyStartingAt:(Address)address;
 
 // Colors
@@ -128,22 +132,22 @@ typedef void (^FileLoadingCallbackInfo)(NSString *desc, float progress);
 - (void)clearColorAtRange:(AddressRange)range;
 
 // Tags
-- (NSObject<HPTag> *)tagWithName:(NSString *)tagName;
-- (NSObject<HPTag> *)buildTag:(NSString *)tagName;
-- (void)deleteTag:(NSObject<HPTag> *)tag;
-- (void)deleteTagName:(NSString *)tagName;
+- (nullable NSObject<HPTag> *)tagWithName:(nonnull NSString *)tagName;
+- (nonnull NSObject<HPTag> *)buildTag:(nonnull NSString *)tagName;
+- (void)deleteTag:(nonnull NSObject<HPTag> *)tag;
+- (void)deleteTagName:(nonnull NSString *)tagName;
 
-- (void)addTag:(NSObject<HPTag> *)tag at:(Address)address;
-- (void)removeTag:(NSObject<HPTag> *)tag at:(Address)address;
-- (NSArray<NSObject<HPTag> *> *)tagsAt:(Address)virtualAddress;
-- (BOOL)hasTag:(NSObject<HPTag> *)tag at:(Address)virtualAddress;
+- (void)addTag:(nonnull NSObject<HPTag> *)tag at:(Address)address;
+- (void)removeTag:(nonnull NSObject<HPTag> *)tag at:(Address)address;
+- (nullable NSArray<NSObject<HPTag> *> *)tagsAt:(Address)virtualAddress;
+- (BOOL)hasTag:(nonnull NSObject<HPTag> *)tag at:(Address)virtualAddress;
 
 // Problem list
-- (void)addProblemAt:(Address)address withString:(NSString *)message;
+- (void)addProblemAt:(Address)address withString:(nonnull NSString *)message;
 
 // Assembler
-- (NSData *)assembleInstruction:(NSString *)instr atAddress:(Address)address withCPUMode:(uint8_t)cpuMode usingSyntaxVariant:(NSUInteger)syntax isRawData:(BOOL *)isRawData error:(NSError **)error;
-- (NSData *)nopDataForRegion:(AddressRange)range;
+- (nullable NSData *)assembleInstruction:(nonnull NSString *)instr atAddress:(Address)address withCPUMode:(uint8_t)cpuMode usingSyntaxVariant:(NSUInteger)syntax isRawData:(nonnull BOOL *)isRawData error:(NSError * _Nonnull * _Nonnull)error;
+- (nullable NSData *)nopDataForRegion:(AddressRange)range;
 
 // Reading file
 // Warning: don't use these methods in a Loader plugin, because no CPU plugin
@@ -160,86 +164,86 @@ typedef void (^FileLoadingCallbackInfo)(NSString *desc, float progress);
 
 - (Address)readAddressAtVirtualAddress:(Address)virtualAddress;
 
-- (int64_t)readSignedLEB128AtVirtualAddress:(Address)virtualAddress length:(size_t *)numberLength;
-- (uint64_t)readUnsignedLEB128AtVirtualAddress:(Address)virtualAddress length:(size_t *)numberLength;
+- (int64_t)readSignedLEB128AtVirtualAddress:(Address)virtualAddress length:(nonnull size_t *)numberLength;
+- (uint64_t)readUnsignedLEB128AtVirtualAddress:(Address)virtualAddress length:(nonnull size_t *)numberLength;
 
-- (NSString *)readCStringAt:(Address)address;
+- (nullable NSString *)readCStringAt:(Address)address;
 
 // Misc
 - (BOOL)hasMappedDataAt:(Address)address;
-- (Address)parseAddressString:(NSString *)addressString;
+- (Address)parseAddressString:(nonnull NSString *)addressString;
 
 // Undo/Redo Stack Management
 - (BOOL)undoRedoLoggingEnabled;
 
-- (void)beginUndoRedoTransactionWithName:(NSString *)name;
+- (void)beginUndoRedoTransactionWithName:(nonnull NSString *)name;
 - (void)endUndoRedoTransaction;
 - (void)discardUndoRedoTransaction;
 
 // Types
-- (NSObject<HPTypeDesc> *)voidType;
-- (NSObject<HPTypeDesc> *)int8Type;
-- (NSObject<HPTypeDesc> *)uint8Type;
-- (NSObject<HPTypeDesc> *)int16Type;
-- (NSObject<HPTypeDesc> *)uint16Type;
-- (NSObject<HPTypeDesc> *)int32Type;
-- (NSObject<HPTypeDesc> *)uint32Type;
-- (NSObject<HPTypeDesc> *)int64Type;
-- (NSObject<HPTypeDesc> *)uint64Type;
-- (NSObject<HPTypeDesc> *)floatType;
-- (NSObject<HPTypeDesc> *)doubleType;
-- (NSObject<HPTypeDesc> *)intType;
-- (NSObject<HPTypeDesc> *)uintType;
-- (NSObject<HPTypeDesc> *)longType;
-- (NSObject<HPTypeDesc> *)ulongType;
-- (NSObject<HPTypeDesc> *)longlongType;
-- (NSObject<HPTypeDesc> *)ulonglongType;
-- (NSObject<HPTypeDesc> *)charType;
-- (NSObject<HPTypeDesc> *)ucharType;
-- (NSObject<HPTypeDesc> *)shortType;
-- (NSObject<HPTypeDesc> *)ushortType;
-- (NSObject<HPTypeDesc> *)boolType;
+- (nonnull NSObject<HPTypeDesc> *)voidType;
+- (nonnull NSObject<HPTypeDesc> *)int8Type;
+- (nonnull NSObject<HPTypeDesc> *)uint8Type;
+- (nonnull NSObject<HPTypeDesc> *)int16Type;
+- (nonnull NSObject<HPTypeDesc> *)uint16Type;
+- (nonnull NSObject<HPTypeDesc> *)int32Type;
+- (nonnull NSObject<HPTypeDesc> *)uint32Type;
+- (nonnull NSObject<HPTypeDesc> *)int64Type;
+- (nonnull NSObject<HPTypeDesc> *)uint64Type;
+- (nonnull NSObject<HPTypeDesc> *)floatType;
+- (nonnull NSObject<HPTypeDesc> *)doubleType;
+- (nonnull NSObject<HPTypeDesc> *)intType;
+- (nonnull NSObject<HPTypeDesc> *)uintType;
+- (nonnull NSObject<HPTypeDesc> *)longType;
+- (nonnull NSObject<HPTypeDesc> *)ulongType;
+- (nonnull NSObject<HPTypeDesc> *)longlongType;
+- (nonnull NSObject<HPTypeDesc> *)ulonglongType;
+- (nonnull NSObject<HPTypeDesc> *)charType;
+- (nonnull NSObject<HPTypeDesc> *)ucharType;
+- (nonnull NSObject<HPTypeDesc> *)shortType;
+- (nonnull NSObject<HPTypeDesc> *)ushortType;
+- (nonnull NSObject<HPTypeDesc> *)boolType;
 
-- (NSObject<HPTypeDesc> *)voidPtrType;
-- (NSObject<HPTypeDesc> *)int8PtrType;
-- (NSObject<HPTypeDesc> *)uint8PtrType;
-- (NSObject<HPTypeDesc> *)int16PtrType;
-- (NSObject<HPTypeDesc> *)uint16PtrType;
-- (NSObject<HPTypeDesc> *)int32PtrType;
-- (NSObject<HPTypeDesc> *)uint32PtrType;
-- (NSObject<HPTypeDesc> *)int64PtrType;
-- (NSObject<HPTypeDesc> *)uint64PtrType;
-- (NSObject<HPTypeDesc> *)floatPtrType;
-- (NSObject<HPTypeDesc> *)doublePtrType;
-- (NSObject<HPTypeDesc> *)intPtrType;
-- (NSObject<HPTypeDesc> *)uintPtrType;
-- (NSObject<HPTypeDesc> *)longPtrType;
-- (NSObject<HPTypeDesc> *)ulongPtrType;
-- (NSObject<HPTypeDesc> *)longlongPtrType;
-- (NSObject<HPTypeDesc> *)ulonglongPtrType;
-- (NSObject<HPTypeDesc> *)charPtrType;
-- (NSObject<HPTypeDesc> *)ucharPtrType;
-- (NSObject<HPTypeDesc> *)shortPtrType;
-- (NSObject<HPTypeDesc> *)ushortPtrType;
-- (NSObject<HPTypeDesc> *)boolPtrType;
+- (nonnull NSObject<HPTypeDesc> *)voidPtrType;
+- (nonnull NSObject<HPTypeDesc> *)int8PtrType;
+- (nonnull NSObject<HPTypeDesc> *)uint8PtrType;
+- (nonnull NSObject<HPTypeDesc> *)int16PtrType;
+- (nonnull NSObject<HPTypeDesc> *)uint16PtrType;
+- (nonnull NSObject<HPTypeDesc> *)int32PtrType;
+- (nonnull NSObject<HPTypeDesc> *)uint32PtrType;
+- (nonnull NSObject<HPTypeDesc> *)int64PtrType;
+- (nonnull NSObject<HPTypeDesc> *)uint64PtrType;
+- (nonnull NSObject<HPTypeDesc> *)floatPtrType;
+- (nonnull NSObject<HPTypeDesc> *)doublePtrType;
+- (nonnull NSObject<HPTypeDesc> *)intPtrType;
+- (nonnull NSObject<HPTypeDesc> *)uintPtrType;
+- (nonnull NSObject<HPTypeDesc> *)longPtrType;
+- (nonnull NSObject<HPTypeDesc> *)ulongPtrType;
+- (nonnull NSObject<HPTypeDesc> *)longlongPtrType;
+- (nonnull NSObject<HPTypeDesc> *)ulonglongPtrType;
+- (nonnull NSObject<HPTypeDesc> *)charPtrType;
+- (nonnull NSObject<HPTypeDesc> *)ucharPtrType;
+- (nonnull NSObject<HPTypeDesc> *)shortPtrType;
+- (nonnull NSObject<HPTypeDesc> *)ushortPtrType;
+- (nonnull NSObject<HPTypeDesc> *)boolPtrType;
 
-- (NSObject<HPTypeDesc> *)structureType; /// Build a new empty struct
-- (NSObject<HPTypeDesc> *)unionType;     /// Build a new empty union
-- (NSObject<HPTypeDesc> *)enumType;      /// Build a new empty enum
+- (nonnull NSObject<HPTypeDesc> *)structureType; /// Build a new empty struct
+- (nonnull NSObject<HPTypeDesc> *)unionType;     /// Build a new empty union
+- (nonnull NSObject<HPTypeDesc> *)enumType;      /// Build a new empty enum
 
-- (NSObject<HPTypeDesc> *)pointerTypeOn:(NSObject<HPTypeDesc> *)base;   /// Find the type, or build a new one.
-- (NSObject<HPTypeDesc> *)arrayTypeOf:(NSObject<HPTypeDesc> *)base withCount:(NSUInteger)count;
+- (nonnull NSObject<HPTypeDesc> *)pointerTypeOn:(nonnull NSObject<HPTypeDesc> *)base;   /// Find the type, or build a new one.
+- (nonnull NSObject<HPTypeDesc> *)arrayTypeOf:(nonnull NSObject<HPTypeDesc> *)base withCount:(NSUInteger)count;
 
 - (BOOL)hasStructureDefinedAt:(Address)address;
-- (void)defineStructure:(NSObject<HPTypeDesc> *)type at:(Address)address;
-- (NSObject<HPTypeDesc> *)structureTypeAt:(Address)address;
+- (void)defineStructure:(nonnull NSObject<HPTypeDesc> *)type at:(Address)address;
+- (nonnull NSObject<HPTypeDesc> *)structureTypeAt:(Address)address;
 
-- (NSArray<NSObject<HPTypeDesc> *> *)typeDatabase;
-- (NSObject<HPTypeDesc> *)typeWithName:(NSString *)name;
-- (NSArray<NSObject<HPTypeDesc> *> *)allStructuredTypes;
-- (NSArray<NSObject<HPTypeDesc> *> *)allEnumTypes;
+- (nonnull NSArray<NSObject<HPTypeDesc> *> *)typeDatabase;
+- (nullable NSObject<HPTypeDesc> *)typeWithName:(nonnull NSString *)name;
+- (nonnull NSArray<NSObject<HPTypeDesc> *> *)allStructuredTypes;
+- (nonnull NSArray<NSObject<HPTypeDesc> *> *)allEnumTypes;
 
-- (BOOL)importTypesFromData:(NSData *)data;
-- (NSData *)exportTypes;
+- (BOOL)importTypesFromData:(nonnull NSData *)data;
+- (nonnull NSData *)exportTypes;
 
 @end

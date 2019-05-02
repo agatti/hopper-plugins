@@ -21,24 +21,25 @@
 - (BOOL)canLoadDebugFiles;
 
 /// Returns an array of DetectedFileType objects.
-- (NSArray<NSObject<HPDetectedFileType> *> *)detectedTypesForData:(NSData *)data;
+- (nullable NSArray<NSObject<HPDetectedFileType> *> *)detectedTypesForData:(nonnull NSData *)data ofFileNamed:(nullable NSString *)filename;
 
 /// Load a file.
 /// The plugin should create HPSegment and HPSection objects.
 /// It should also fill information about the CPU by setting the CPU family, the CPU subfamily and optionally the CPU plugin UUID.
 /// The CPU plugin UUID should be set ONLY if you want a specific CPU plugin to be used. If you don't set it, it will be later set by Hopper.
 /// During long operations, you should call the provided "callback" block to give a feedback to the user on the loading process.
-- (FileLoaderLoadingStatus)loadData:(NSData *)data usingDetectedFileType:(NSObject<HPDetectedFileType> *)fileType options:(FileLoaderOptions)options forFile:(NSObject<HPDisassembledFile> *)file usingCallback:(FileLoadingCallbackInfo)callback;
-- (FileLoaderLoadingStatus)loadDebugData:(NSData *)data forFile:(NSObject<HPDisassembledFile> *)file usingCallback:(FileLoadingCallbackInfo)callback;
+- (FileLoaderLoadingStatus)loadData:(nonnull NSData *)data usingDetectedFileType:(nonnull NSObject<HPDetectedFileType> *)fileType options:(FileLoaderOptions)options forFile:(nonnull NSObject<HPDisassembledFile> *)file usingCallback:(nullable FileLoadingCallbackInfo)callback;
+- (FileLoaderLoadingStatus)loadDebugData:(nonnull NSData *)data forFile:(nonnull NSObject<HPDisassembledFile> *)file usingCallback:(nullable FileLoadingCallbackInfo)callback;
 
 /// Hopper changed the base address of the file, and needs help to fix it up.
 /// The address of every segment was shifted of "slide" bytes.
-- (void)fixupRebasedFile:(NSObject<HPDisassembledFile> *)file withSlide:(int64_t)slide originalFileData:(NSData *)fileData;
+- (void)fixupRebasedFile:(nonnull NSObject<HPDisassembledFile> *)file withSlide:(int64_t)slide originalFileData:(nonnull NSData *)fileData;
 
 /// Extract a file
 /// In the case of a "composite loader", extract the NSData object of the selected file.
-- (NSData *)extractFromData:(NSData *)data
-      usingDetectedFileType:(NSObject<HPDetectedFileType> *)fileType
-         returnAdjustOffset:(uint64_t *)adjustOffset;
+- (nullable NSData *)extractFromData:(nonnull NSData *)data
+               usingDetectedFileType:(nonnull NSObject<HPDetectedFileType> *)fileType
+                  returnAdjustOffset:(nullable uint64_t *)adjustOffset
+                returnAdjustFilename:(NSString * _Nullable * _Nullable)newFilename;
 
 @end

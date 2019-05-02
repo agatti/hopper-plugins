@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2014-2018, Alessandro Gatti - frob.it
+ Copyright (c) 2014-2019, Alessandro Gatti - frob.it
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -25,10 +25,6 @@
  */
 
 #import "HexLoader.h"
-
-#if HOPPER_CURRENT_SDK_VERSION != 1
-#error "Unsupported SDK version"
-#endif /* HOPPER_CURRENT_SDK_VERSION */
 
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCUnusedClassInspection"
@@ -73,7 +69,7 @@ typedef NS_ENUM(NSUInteger, IntelHexRecordType) {
 @interface DataBlock : NSObject
 
 @property(nonatomic, assign) NSUInteger address;
-@property(nonatomic, strong) NSMutableData *_Nonnull data;
+@property(nonatomic, nonnull, strong) NSMutableData *data;
 
 - (instancetype)initWithIntelHexRecord:(IntelHexRecord *_Nonnull)record;
 
@@ -145,7 +141,7 @@ static const uint8_t kHexTable[16] = {'0', '1', '2', '3', '4', '5', '6', '7',
   return self;
 }
 
-- (HopperUUID *)pluginUUID {
+- (NSObject<HPHopperUUID> *)pluginUUID {
   return [self.services UUIDWithString:@"8960E92F-7292-4726-B2A6-EC4B329FD945"];
 }
 
@@ -166,7 +162,7 @@ static const uint8_t kHexTable[16] = {'0', '1', '2', '3', '4', '5', '6', '7',
 }
 
 - (NSString *)pluginCopyright {
-  return @"©2014-2018 Alessandro Gatti";
+  return @"©2014-2019 Alessandro Gatti";
 }
 
 - (NSString *)pluginVersion {
@@ -183,28 +179,6 @@ static const uint8_t kHexTable[16] = {'0', '1', '2', '3', '4', '5', '6', '7',
 
 - (BOOL)canLoadDebugFiles {
   return NO;
-}
-
-- (NSArray<NSObject<HPDetectedFileType> *> *)detectedTypesForData:
-    (NSData *)data {
-  NSObject<HPDetectedFileType> *detectedType = self.services.detectedType;
-  detectedType.additionalParameters = @[
-    [self.services cpuComponentWithLabel:@"Processor type"],
-  ];
-
-  switch ([self detectFileType:data]) {
-  case IntelHexFileType:
-    detectedType.fileDescription = @"Intel HEX";
-    detectedType.shortDescriptionString = @"intelhex";
-    detectedType.internalId = IntelHexFileType;
-    break;
-
-  case UnknownFileType:
-  default:
-    return @[];
-  }
-
-  return @[ detectedType ];
 }
 
 - (FileLoaderLoadingStatus)loadData:(NSData *)data
@@ -224,8 +198,9 @@ static const uint8_t kHexTable[16] = {'0', '1', '2', '3', '4', '5', '6', '7',
   NSUInteger consumed = 0;
 
   do {
-    IntelHexRecord *record =
-        [self recordInData:data atOffset:offset consuming:&consumed];
+    IntelHexRecord *record = [self recordInData:data
+                                       atOffset:offset
+                                      consuming:&consumed];
 
     if (!record) {
       return DIS_BadFormat;
@@ -341,10 +316,10 @@ static const uint8_t kHexTable[16] = {'0', '1', '2', '3', '4', '5', '6', '7',
   // Create segments
 
   for (DataBlock *block in blocks) {
-    NSObject<HPSegment> *segment =
-        [file addSegmentAt:block.start size:block.size];
-    NSObject<HPSection> *section =
-        [segment addSectionAt:block.start size:block.size];
+    NSObject<HPSegment> *segment = [file addSegmentAt:block.start
+                                                 size:block.size];
+    NSObject<HPSection> *section = [segment addSectionAt:block.start
+                                                    size:block.size];
     section.pureCodeSection = YES;
     section.containsCode = YES;
     [segment setMappedData:block.data];
@@ -376,9 +351,35 @@ static const uint8_t kHexTable[16] = {'0', '1', '2', '3', '4', '5', '6', '7',
   return DIS_NotSupported;
 }
 
-- (NSData *)extractFromData:(NSData *)data
-      usingDetectedFileType:(NSObject<HPDetectedFileType> *)fileType
-         returnAdjustOffset:(uint64_t *)adjustOffset {
+- (nullable NSArray<NSObject<HPDetectedFileType> *> *)
+    detectedTypesForData:(nonnull NSData *)data
+             ofFileNamed:(nullable NSString *)filename {
+  NSObject<HPDetectedFileType> *detectedType = self.services.detectedType;
+  detectedType.additionalParameters = @[
+    [self.services cpuComponentWithLabel:@"Processor type"],
+  ];
+
+  switch ([self detectFileType:data]) {
+  case IntelHexFileType:
+    detectedType.fileDescription = @"Intel HEX";
+    detectedType.shortDescriptionString = @"intelhex";
+    detectedType.internalId = IntelHexFileType;
+    break;
+
+  case UnknownFileType:
+  default:
+    return @[];
+  }
+
+  return @[ detectedType ];
+}
+
+- (nullable NSData *)
+          extractFromData:(nonnull NSData *)data
+    usingDetectedFileType:(nonnull NSObject<HPDetectedFileType> *)fileType
+       returnAdjustOffset:(nullable uint64_t *)adjustOffset
+     returnAdjustFilename:
+         (NSString *__autoreleasing _Nullable *_Nullable)newFilename {
   return nil;
 }
 

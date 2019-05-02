@@ -17,12 +17,12 @@
 
 @protocol HPMethodArgument
 
-- (NSObject<HPMethodSignature> *)owner;
+- (nonnull NSObject<HPMethodSignature> *)owner;
 
-- (NSString *)name;
-- (void)setName:(NSString *)name;
+- (nullable NSString *)name;
+- (void)setName:(nullable NSString *)name;
 
-- (NSObject<HPTypeDesc> *)type;
-- (void)setType:(NSObject<HPTypeDesc> *)type;
+- (nonnull NSObject<HPTypeDesc> *)type;
+- (void)setType:(nonnull NSObject<HPTypeDesc> *)type;
 
 @end

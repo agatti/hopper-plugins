@@ -10,15 +10,11 @@
 // PARTICULAR PURPOSE.
 //
 
-#import "CommonTypes.h"
+#import <Foundation/Foundation.h>
 
-@protocol HPTypeEnumField
+@protocol HPHopperUUID
 
-- (nullable NSString *)name;
-- (void)setName:(nullable NSString *)name;
-
-- (int64_t)value;
-- (void)setValue:(int64_t)value;
+- (nonnull NSString *)UUIDString;
 
 @end
 

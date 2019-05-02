@@ -23,9 +23,9 @@ typedef void (^CancelBlock)(void);
 
 @protocol HPDocument <NSObject>
 
-- (NSObject<HPDisassembledFile> *)disassembledFile;
-- (NSObject<HPSegment> *)currentSegment;
-- (NSObject<HPSection> *)currentSection;
+- (nullable NSObject<HPDisassembledFile> *)disassembledFile;
+- (nullable NSObject<HPSegment> *)currentSegment;
+- (nullable NSObject<HPSection> *)currentSection;
 
 // Cursor position, and moving without the navigation stack
 - (Address)currentAddress;
@@ -35,7 +35,7 @@ typedef void (^CancelBlock)(void);
 
 // Moving using navigation stack
 - (void)gotoVirtualAddress:(Address)virtualAddress;
-- (BOOL)gotoVirtualAddressString:(NSString *)virtualAddressString;
+- (BOOL)gotoVirtualAddressString:(nonnull NSString *)virtualAddressString;
 - (void)popAddressFromNavigationStack;
 
 // Background process
@@ -45,19 +45,19 @@ typedef void (^CancelBlock)(void);
 
 // Determines if the user can interact with the document
 - (BOOL)isWaiting;
-- (void)beginToWait:(NSString *)message;
-- (void)beginToWait:(NSString *)message cancelBlock:(CancelBlock)block;
+- (void)beginToWait:(nullable NSString *)message;
+- (void)beginToWait:(nullable NSString *)message cancelBlock:(nullable CancelBlock)block;
 - (void)endWaiting;
 
 // Display message
-- (void)logStringMessage:(NSString *)message;
-- (void)logErrorStringMessage:(NSString *)message;
-- (void)logInfoMessage:(NSString *)message;
-- (NSInteger)displayAlertWithMessageText:(NSString *)text
-                           defaultButton:(NSString *)defaultButton
-                         alternateButton:(NSString *)alternateButton
-                             otherButton:(NSString *)otherButton
-                         informativeText:(NSString *)message;
+- (void)logStringMessage:(nonnull NSString *)message;
+- (void)logErrorStringMessage:(nonnull NSString *)message;
+- (void)logInfoMessage:(nonnull NSString *)message;
+- (NSInteger)displayAlertWithMessageText:(nonnull NSString *)text
+                           defaultButton:(nonnull NSString *)defaultButton
+                         alternateButton:(nullable NSString *)alternateButton
+                             otherButton:(nullable NSString *)otherButton
+                         informativeText:(nullable NSString *)message;
 
 // Reading and modifying file
 // These operations are performed in the endianess of the CPU module attached
@@ -73,7 +73,7 @@ typedef void (^CancelBlock)(void);
 - (uint64_t)readUInt64AtVirtualAddress:(Address)virtualAddress;
 - (Address)readAddressAtVirtualAddress:(Address)virtualAddress;
 
-- (NSString *)readCStringAt:(Address)virtualAddress;
+- (nullable NSString *)readCStringAt:(Address)virtualAddress;
 
 - (BOOL)writeInt8:(int8_t)value atVirtualAddress:(Address)virtualAddress;
 - (BOOL)writeInt16:(int16_t)value atVirtualAddress:(Address)virtualAddress;
@@ -87,6 +87,6 @@ typedef void (^CancelBlock)(void);
 
 // Global UI
 - (void)updateUI;
-- (NSWindow *)windowForSheet;
+- (nonnull NSWindow *)windowForSheet;
 
 @end

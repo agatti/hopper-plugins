@@ -20,18 +20,18 @@
 - (Address)from;
 - (Address)to;
 
-- (NSObject<HPProcedure> *)procedure;
+- (nonnull NSObject<HPProcedure> *)procedure;
 - (NSUInteger)index;
 
 - (BOOL)hasSuccessors;
 - (BOOL)hasPredecessors;
 
-- (NSArray<NSObject<HPBasicBlock> *> *)predecessors;
-- (NSArray<NSObject<HPBasicBlock> *> *)successors;
+- (nullable NSArray<NSObject<HPBasicBlock> *> *)predecessors;
+- (nullable NSArray<NSObject<HPBasicBlock> *> *)successors;
 
 // Tags
-- (void)addTag:(NSObject<HPTag> *)tag;
-- (void)removeTag:(NSObject<HPTag> *)tag;
-- (BOOL)hasTag:(NSObject<HPTag> *)tag;
+- (void)addTag:(nonnull NSObject<HPTag> *)tag;
+- (void)removeTag:(nonnull NSObject<HPTag> *)tag;
+- (BOOL)hasTag:(nonnull NSObject<HPTag> *)tag;
 
 @end

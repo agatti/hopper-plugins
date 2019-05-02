@@ -96,8 +96,8 @@
 				68CAC1881EEC136C0067E360 /* Common.h */,
 				68CAC1851EEC12580067E360 /* Definition.h */,
 				68CAC1861EEC12580067E360 /* Definition.m */,
-				AB5F67A86907AE0D9D14429A /* Context.m */,
 				AB5F652CB746D47A36538908 /* Context.h */,
+				AB5F67A86907AE0D9D14429A /* Context.m */,
 			);
 			path = TMS1000;
 			sourceTree = "<group>";
@@ -129,15 +129,16 @@
 		AB5F654004B2FBC3F372DAFC /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0930;
+				LastUpgradeCheck = 1020;
 				ORGANIZATIONNAME = "Alessandro Gatti - frob.it";
 			};
 			buildConfigurationList = AB5F6E703787811EDE9C7BD1 /* Build configuration list for PBXProject "TMS1000" */;
 			compatibilityVersion = "Xcode 10.0";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = AB5F6678AFCACBBF8F7C85F9;
 			productRefGroup = AB5F60EC5F66F6FC36CB655D /* Products */;
@@ -195,6 +196,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -266,6 +268,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";

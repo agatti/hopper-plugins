@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2014-2018, Alessandro Gatti - frob.it
+ Copyright (c) 2014-2019, Alessandro Gatti - frob.it
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -27,10 +27,6 @@
 #import "BaseDefinition.h"
 
 #import "HopperCommon.h"
-
-#if HOPPER_CURRENT_SDK_VERSION != 1
-#error "Unsupported SDK version"
-#endif /* HOPPER_CURRENT_SDK_VERSION */
 
 static NSString *const kDefaultCPUMode = @"Generic";
 static NSString *const kDefaultSyntax = @"Generic";
@@ -167,7 +163,7 @@ static NSString *const kDefaultSyntax = @"Generic";
 - (NSData *)nopWithSize:(NSUInteger)size
                 andMode:(NSUInteger)cpuMode
                 forFile:(NSObject<HPDisassembledFile> *)file {
-  return nil;
+  return [NSData data];
 }
 
 - (BOOL)canAssembleInstructionsForCPUFamily:(NSString *)family
@@ -178,6 +174,11 @@ static NSString *const kDefaultSyntax = @"Generic";
 - (BOOL)canDecompileProceduresForCPUFamily:(NSString *)family
                               andSubFamily:(NSString *)subFamily {
   return NO;
+}
+
+- (int)integerWidthInBitsForCPUFamily:(nullable NSString *)family
+                         andSubFamily:(nullable NSString *)subFamily {
+  return 0;
 }
 
 - (instancetype)initWithHopperServices:(NSObject<HPHopperServices> *)services {

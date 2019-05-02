@@ -12,8 +12,7 @@
 
 #import "CommonTypes.h"
 
-@class HopperUUID;
-
+@protocol HPHopperUUID;
 @protocol HPASMLine;
 @protocol HPDocument;
 @protocol HPDetectedFileType;
@@ -26,43 +25,43 @@
 - (NSInteger)hopperMajorVersion;
 - (NSInteger)hopperMinorVersion;
 - (NSInteger)hopperRevision;
-- (NSString *)hopperVersionString;
+- (nonnull NSString *)hopperVersionString;
 
-- (NSObject<HPDocument> *)currentDocument;
-- (void)logMessage:(NSString *)message;
+- (nullable NSObject<HPDocument> *)currentDocument;
+- (void)logMessage:(nonnull NSString *)message;
 
 // Build an UUID object from a string like XXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
-- (HopperUUID *)UUIDWithString:(NSString *)uuidString;
+- (nonnull NSObject<HPHopperUUID> *)UUIDWithString:(nonnull NSString *)uuidString;
 
 // New detected type
-- (NSObject<HPDetectedFileType> *)detectedType;
+- (nullable NSObject<HPDetectedFileType> *)detectedType;
 
 // ASMLine Constructors
-- (NSObject<HPASMLine> *)blankASMLine;
+- (nonnull NSObject<HPASMLine> *)blankASMLine;
 
-- (NSObject<HPASMLine> *)lineForFileHeader:(NSString *)fileHeader;
-- (NSObject<HPASMLine> *)lineForSegmentHeader:(NSString *)segmentHeader;
-- (NSObject<HPASMLine> *)lineForSectionHeader:(NSString *)sectionHeader;
-- (NSObject<HPASMLine> *)lineForProcedureInfo:(NSString *)procedureInfo;
-- (NSObject<HPASMLine> *)lineForSuffix:(NSString *)suffix;
-- (NSObject<HPASMLine> *)lineWithRawString:(NSString *)string;
-- (NSObject<HPASMLine> *)lineWithString:(NSString *)string;
-- (NSObject<HPASMLine> *)lineWithName:(NSString *)name atAddress:(Address)address;
-- (NSObject<HPASMLine> *)lineWithLocalName:(NSString *)name atAddress:(Address)address;
-- (NSObject<HPASMLine> *)lineWithFormattedNumber:(NSString *)string withValue:(NSNumber *)number;
-- (NSObject<HPASMLine> *)lineWithFormattedAddress:(NSString *)string withValue:(Address)address;
+- (nonnull NSObject<HPASMLine> *)lineForFileHeader:(nonnull NSString *)fileHeader;
+- (nonnull NSObject<HPASMLine> *)lineForSegmentHeader:(nonnull NSString *)segmentHeader;
+- (nonnull NSObject<HPASMLine> *)lineForSectionHeader:(nonnull NSString *)sectionHeader;
+- (nonnull NSObject<HPASMLine> *)lineForProcedureInfo:(nonnull NSString *)procedureInfo;
+- (nonnull NSObject<HPASMLine> *)lineForSuffix:(nonnull NSString *)suffix;
+- (nonnull NSObject<HPASMLine> *)lineWithRawString:(nonnull NSString *)string;
+- (nonnull NSObject<HPASMLine> *)lineWithString:(nonnull NSString *)string;
+- (nonnull NSObject<HPASMLine> *)lineWithName:(nonnull NSString *)name atAddress:(Address)address;
+- (nonnull NSObject<HPASMLine> *)lineWithLocalName:(nonnull NSString *)name atAddress:(Address)address;
+- (nonnull NSObject<HPASMLine> *)lineWithFormattedNumber:(nonnull NSString *)string withValue:(nonnull NSNumber *)number;
+- (nonnull NSObject<HPASMLine> *)lineWithFormattedAddress:(nonnull NSString *)string withValue:(Address)address;
 
 // Options for loaders
-- (NSObject<HPLoaderOptionComponents> *)addressComponentWithLabel:(NSString *)label;
-- (NSObject<HPLoaderOptionComponents> *)checkboxComponentWithLabel:(NSString *)label;
-- (NSObject<HPLoaderOptionComponents> *)cpuComponentWithLabel:(NSString *)label;
-- (NSObject<HPLoaderOptionComponents> *)addressComponentWithLabel:(NSString *)label andValue:(Address)value;
-- (NSObject<HPLoaderOptionComponents> *)checkboxComponentWithLabel:(NSString *)label checked:(BOOL)checked;
-- (NSObject<HPLoaderOptionComponents> *)stringListComponentWithLabel:(NSString *)label andList:(NSArray<NSString *> *)strings;
-- (NSObject<HPLoaderOptionComponents> *)comboBoxComponentWithLabel:(NSString *)label andList:(NSArray<NSString *> *)strings;
+- (nonnull NSObject<HPLoaderOptionComponents> *)addressComponentWithLabel:(nonnull NSString *)label;
+- (nonnull NSObject<HPLoaderOptionComponents> *)checkboxComponentWithLabel:(nonnull NSString *)label;
+- (nonnull NSObject<HPLoaderOptionComponents> *)cpuComponentWithLabel:(nonnull NSString *)label;
+- (nonnull NSObject<HPLoaderOptionComponents> *)addressComponentWithLabel:(nonnull NSString *)label andValue:(Address)value;
+- (nonnull NSObject<HPLoaderOptionComponents> *)checkboxComponentWithLabel:(nonnull NSString *)label checked:(BOOL)checked;
+- (nonnull NSObject<HPLoaderOptionComponents> *)stringListComponentWithLabel:(nonnull NSString *)label andList:(nonnull NSArray<NSString *> *)strings;
+- (nonnull NSObject<HPLoaderOptionComponents> *)comboBoxComponentWithLabel:(nonnull NSString *)label andList:(nonnull NSArray<NSString *> *)strings;
 
 // Call Destination
-- (NSObject<HPCallDestination> *)callDestination:(Address)address;
-- (NSObject<HPCallDestination> *)callDestination:(Address)address withCPUMode:(uint8_t)cpuMode;
+- (nullable NSObject<HPCallDestination> *)callDestination:(Address)address;
+- (nullable NSObject<HPCallDestination> *)callDestination:(Address)address withCPUMode:(uint8_t)cpuMode;
 
 @end

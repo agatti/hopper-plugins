@@ -26,9 +26,9 @@
 
 @protocol CPUContext
 
-- (NSObject<CPUDefinition> *)cpuDefinition;
+- (nonnull NSObject<CPUDefinition> *)cpuDefinition;
 
-- (void)initDisasmStructure:(DisasmStruct*)disasm withSyntaxIndex:(NSUInteger)syntaxIndex;
+- (void)initDisasmStructure:(nonnull DisasmStruct*)disasm withSyntaxIndex:(NSUInteger)syntaxIndex;
 
 ////////////////////////////////////////////////////////////////////////////////
 //
@@ -71,16 +71,16 @@
 - (void)analysisEnded;
 
 /// A Procedure object is about to be created.
-- (void)procedureAnalysisBeginsForProcedure:(NSObject<HPProcedure> *)procedure atEntryPoint:(Address)entryPoint;
+- (void)procedureAnalysisBeginsForProcedure:(nonnull NSObject<HPProcedure> *)procedure atEntryPoint:(Address)entryPoint;
 /// The prolog of the created procedure is being analyzed.
 /// Warning: this method is not called at the begining of the procedure creation, but once all basic blocks
 /// have been created.
-- (void)procedureAnalysisOfPrologForProcedure:(NSObject<HPProcedure> *)procedure atEntryPoint:(Address)entryPoint;
-- (void)procedureAnalysisOfEpilogForProcedure:(NSObject<HPProcedure> *)procedure atEntryPoint:(Address)entryPoint;
-- (void)procedureAnalysisEndedForProcedure:(NSObject<HPProcedure> *)procedure atEntryPoint:(Address)entryPoint;
+- (void)procedureAnalysisOfPrologForProcedure:(nonnull NSObject<HPProcedure> *)procedure atEntryPoint:(Address)entryPoint;
+- (void)procedureAnalysisOfEpilogForProcedure:(nonnull NSObject<HPProcedure> *)procedure atEntryPoint:(Address)entryPoint;
+- (void)procedureAnalysisEndedForProcedure:(nonnull NSObject<HPProcedure> *)procedure atEntryPoint:(Address)entryPoint;
 
 /// A new basic bloc is created
-- (void)procedureAnalysisContinuesOnBasicBlock:(NSObject<HPBasicBlock> *)basicBlock;
+- (void)procedureAnalysisContinuesOnBasicBlock:(nonnull NSObject<HPBasicBlock> *)basicBlock;
 
 /// This method may be called when the internal state of the disassembler should be reseted.
 /// For instance, the ARM plugin maintains a state during the disassembly process to
@@ -90,40 +90,40 @@
 /// Disassemble a single instruction, filling the DisasmStruct structure.
 /// Only a few fields are set by Hopper (mainly, the syntaxIndex, the "bytes" field and the virtualAddress of the instruction).
 /// The CPU should fill as much information as possible.
-- (int)disassembleSingleInstruction:(DisasmStruct *)disasm usingProcessorMode:(NSUInteger)mode;
+- (int)disassembleSingleInstruction:(nonnull DisasmStruct *)disasm usingProcessorMode:(NSUInteger)mode;
 
 /// Returns whether or not an instruction may halt the processor (like the HLT Intel instruction).
-- (BOOL)instructionHaltsExecutionFlow:(DisasmStruct *)disasm;
+- (BOOL)instructionHaltsExecutionFlow:(nonnull DisasmStruct *)disasm;
 
 /// These methods are called to let you update your internal plugin state during the analysis.
-- (void)performProcedureAnalysis:(NSObject<HPProcedure> *)procedure basicBlock:(NSObject<HPBasicBlock> *)basicBlock disasm:(DisasmStruct *)disasm;
-- (void)updateProcedureAnalysis:(DisasmStruct *)disasm;
+- (void)performProcedureAnalysis:(nonnull NSObject<HPProcedure> *)procedure basicBlock:(nonnull NSObject<HPBasicBlock> *)basicBlock disasm:(nonnull DisasmStruct *)disasm;
+- (void)updateProcedureAnalysis:(nonnull DisasmStruct *)disasm;
 
 /// Return YES if the provided DisasmStruct represents an instruction that can directly reference a memory address.
 /// Ususally, this methods returns YES. This is used by the ARM plugin to avoid false references on "MOVW" instruction
 /// for instance.
-- (BOOL)instructionCanBeUsedToExtractDirectMemoryReferences:(DisasmStruct *)disasmStruct;
+- (BOOL)instructionCanBeUsedToExtractDirectMemoryReferences:(nonnull DisasmStruct *)disasmStruct;
 
 /// Return YES if the instruction is used to load an address, but will not read, or write at this address.
 /// Example: the "LEA" x86 instruction.
-- (BOOL)instructionOnlyLoadsAddress:(DisasmStruct *)disasmStruct;
+- (BOOL)instructionOnlyLoadsAddress:(nonnull DisasmStruct *)disasmStruct;
 
 /// Return YES if the instruction uses float.
-- (BOOL)instructionManipulatesFloat:(DisasmStruct *)disasmStruct;
+- (BOOL)instructionManipulatesFloat:(nonnull DisasmStruct *)disasmStruct;
 
 /// This method is called on branching instruction (like CALL on x86, or BL on ARM).
 /// If the instruction conditions the CPU mode of the target address, the method should return YES, and set the cpuMode given in argument.
 /// Otherwise, return NO if you don't know if the CPU mode is altered.
-- (BOOL)instructionConditionsCPUModeAtTargetAddress:(DisasmStruct *)disasmStruct resultCPUMode:(uint8_t *)cpuMode;
+- (BOOL)instructionConditionsCPUModeAtTargetAddress:(nonnull DisasmStruct *)disasmStruct resultCPUMode:(nonnull uint8_t *)cpuMode;
 
 /// This method is called during the analysis when the field disasm.instruction.specialFlags.changeNextInstrMode is set in order
 /// to determine the future CPU mode for the next instruction.
-- (uint8_t)cpuModeForNextInstruction:(DisasmStruct *)disasmStruct;
+- (uint8_t)cpuModeForNextInstruction:(nonnull DisasmStruct *)disasmStruct;
 
 /// Return YES if the instruction may be used to build a switch/case statement.
 /// For instance, for the Intel processor, it returns YES for the "JMP reg" and the "JMP [xxx+reg*4]" instructions,
 /// and for the Am processor, it returns YES for the "TBB" and "TBH" instructions.
-- (BOOL)instructionMayBeASwitchStatement:(DisasmStruct *)disasmStruct;
+- (BOOL)instructionMayBeASwitchStatement:(nonnull DisasmStruct *)disasmStruct;
 
 /// If a branch instruction is found, Hopper calls this method to compute additional destinations of the instruction.
 /// The "*next" value is already set to the address which follows the instruction if the jump does not occurs.
@@ -135,19 +135,19 @@
 /// The purpose of this method is to compute additional destinations.
 /// Most of the time, Hopper already found the destinations, so there is no need to do more.
 /// This is used by the Intel CPU plugin to compute the destinations of switch/case constructions when it found a "JMP register" instruction.
-- (void)performBranchesAnalysis:(DisasmStruct *)disasm
-           computingNextAddress:(Address *)next
-                    andBranches:(NSMutableArray<NSNumber *> *)branches
-                   forProcedure:(NSObject<HPProcedure> *)procedure
-                     basicBlock:(NSObject<HPBasicBlock> *)basicBlock
-                      ofSegment:(NSObject<HPSegment> *)segment
-                calledAddresses:(NSMutableArray<NSObject<HPCallDestination> *> *)calledAddresses
-                      callsites:(NSMutableArray<NSNumber *> *)callSitesAddresses;
+- (void)performBranchesAnalysis:(nonnull DisasmStruct *)disasm
+           computingNextAddress:(nonnull Address *)next
+                    andBranches:(nonnull NSMutableArray<NSNumber *> *)branches
+                   forProcedure:(nonnull NSObject<HPProcedure> *)procedure
+                     basicBlock:(nonnull NSObject<HPBasicBlock> *)basicBlock
+                      ofSegment:(nonnull NSObject<HPSegment> *)segment
+                calledAddresses:(nonnull NSMutableArray<NSObject<HPCallDestination> *> *)calledAddresses
+                      callsites:(nonnull NSMutableArray<NSNumber *> *)callSitesAddresses;
 
 /// If you need a specific analysis, this method will be called once the previous branch analysis is performed.
 /// For instance, this is used by the ARM CPU plugin to set the type of the destination of an LDR instruction to
 /// an int of the correct size.
-- (void)performInstructionSpecificAnalysis:(DisasmStruct *)disasm forProcedure:(NSObject<HPProcedure> *)procedure inSegment:(NSObject<HPSegment> *)segment;
+- (void)performInstructionSpecificAnalysis:(nonnull DisasmStruct *)disasm forProcedure:(nonnull NSObject<HPProcedure> *)procedure inSegment:(nonnull NSObject<HPSegment> *)segment;
 
 /// Returns the destination address if the function starting at the given address is a thunk (ie: a direct jump to another method)
 /// Returns BAD_ADDRESS is the instruction is not a thunk.
@@ -161,9 +161,9 @@
 
 /// Build the complete instruction string in the DisasmStruct structure.
 /// This is the string to be displayed in Hopper.
-- (NSObject<HPASMLine> *)buildMnemonicString:(DisasmStruct *)disasm inFile:(NSObject<HPDisassembledFile> *)file;
-- (NSObject<HPASMLine> *)buildOperandString:(DisasmStruct *)disasm forOperandIndex:(NSUInteger)operandIndex inFile:(NSObject<HPDisassembledFile> *)file raw:(BOOL)raw;
-- (NSObject<HPASMLine> *)buildCompleteOperandString:(DisasmStruct *)disasm inFile:(NSObject<HPDisassembledFile> *)file raw:(BOOL)raw;
+- (nonnull NSObject<HPASMLine> *)buildMnemonicString:(nonnull DisasmStruct *)disasm inFile:(nonnull NSObject<HPDisassembledFile> *)file;
+- (nonnull NSObject<HPASMLine> *)buildOperandString:(nonnull DisasmStruct *)disasm forOperandIndex:(NSUInteger)operandIndex inFile:(nonnull NSObject<HPDisassembledFile> *)file raw:(BOOL)raw;
+- (nonnull NSObject<HPASMLine> *)buildCompleteOperandString:(nonnull DisasmStruct *)disasm inFile:(nonnull NSObject<HPDisassembledFile> *)file raw:(BOOL)raw;
 
 ////////////////////////////////////////////////////////////////////////////////
 //
@@ -171,20 +171,20 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-- (BOOL)canDecompileProcedure:(NSObject<HPProcedure> *)procedure;
+- (BOOL)canDecompileProcedure:(nonnull NSObject<HPProcedure> *)procedure;
 
 /// Return the address of the first instruction of the procedure, after its prolog.
-- (Address)skipHeader:(NSObject<HPBasicBlock> *)basicBlock ofProcedure:(NSObject<HPProcedure> *)procedure;
+- (Address)skipHeader:(nonnull NSObject<HPBasicBlock> *)basicBlock ofProcedure:(nonnull NSObject<HPProcedure> *)procedure;
 
 /// Return the address of the last instruction of the procedure, before its epilog.
-- (Address)skipFooter:(NSObject<HPBasicBlock> *)basicBlock ofProcedure:(NSObject<HPProcedure> *)procedure;
+- (Address)skipFooter:(nonnull NSObject<HPBasicBlock> *)basicBlock ofProcedure:(nonnull NSObject<HPProcedure> *)procedure;
 
 /// Decompile an assembly instruction.
 /// Note: ASTNode is not publicly exposed yet. You cannot write a decompiler at the moment.
-- (ASTNode *)decompileInstructionAtAddress:(Address)a
-                                    disasm:(DisasmStruct *)d
-                                 addNode_p:(BOOL *)addNode_p
-                           usingDecompiler:(Decompiler *)decompiler;
+- (nonnull ASTNode *)decompileInstructionAtAddress:(Address)a
+                                            disasm:(nonnull DisasmStruct *)d
+                                         addNode_p:(nonnull BOOL *)addNode_p
+                                   usingDecompiler:(nonnull Decompiler *)decompiler;
 
 ////////////////////////////////////////////////////////////////////////////////
 //
@@ -192,6 +192,6 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-- (NSData *)assembleRawInstruction:(NSString *)instr atAddress:(Address)addr forFile:(NSObject<HPDisassembledFile> *)file withCPUMode:(uint8_t)cpuMode usingSyntaxVariant:(NSUInteger)syntax error:(NSError **)error;
+- (nonnull NSData *)assembleRawInstruction:(nonnull NSString *)instr atAddress:(Address)addr forFile:(nonnull NSObject<HPDisassembledFile> *)file withCPUMode:(uint8_t)cpuMode usingSyntaxVariant:(NSUInteger)syntax error:(NSError * _Nullable * _Nullable)error;
 
 @end

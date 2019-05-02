@@ -3,55 +3,6 @@
    version = "1.0">
    <Group
       location = "container:"
-      name = "CPUs">
-      <FileRef
-         location = "group:8x300.xcodeproj">
-      </FileRef>
-      <FileRef
-         location = "group:65816.xcodeproj">
-      </FileRef>
-      <FileRef
-         location = "group:6502.xcodeproj">
-      </FileRef>
-      <FileRef
-         location = "group:TMS1000.xcodeproj">
-      </FileRef>
-   </Group>
-   <Group
-      location = "container:"
-      name = "Loaders">
-      <FileRef
-         location = "group:A2Loader.xcodeproj">
-      </FileRef>
-      <FileRef
-         location = "group:HexLoader.xcodeproj">
-      </FileRef>
-      <FileRef
-         location = "group:CBMLoader.xcodeproj">
-      </FileRef>
-   </Group>
-   <Group
-      location = "container:"
-      name = "Other">
-      <FileRef
-         location = "group:HopperCommon.xcodeproj">
-      </FileRef>
-   </Group>
-   <Group
-      location = "container:"
-      name = "Tools">
-      <FileRef
-         location = "group:AddressSpace.xcodeproj">
-      </FileRef>
-   </Group>
-   <FileRef
-      location = "group:LICENSE">
-   </FileRef>
-   <FileRef
-      location = "group:README.md">
-   </FileRef>
-   <Group
-      location = "container:"
       name = "Hopper SDK include files">
       <FileRef
          location = "group:HopperSDK/Hopper/CommonTypes.h">
@@ -114,4 +65,53 @@
          location = "group:HopperSDK/Hopper/HPTag.h">
       </FileRef>
    </Group>
+   <Group
+      location = "container:"
+      name = "CPUs">
+      <FileRef
+         location = "group:8x300.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:65816.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:6502.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:TMS1000.xcodeproj">
+      </FileRef>
+   </Group>
+   <Group
+      location = "container:"
+      name = "Loaders">
+      <FileRef
+         location = "group:A2Loader.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:HexLoader.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:CBMLoader.xcodeproj">
+      </FileRef>
+   </Group>
+   <Group
+      location = "container:"
+      name = "Other">
+      <FileRef
+         location = "group:HopperCommon.xcodeproj">
+      </FileRef>
+   </Group>
+   <Group
+      location = "container:"
+      name = "Tools">
+      <FileRef
+         location = "group:AddressSpace.xcodeproj">
+      </FileRef>
+   </Group>
+   <FileRef
+      location = "group:LICENSE">
+   </FileRef>
+   <FileRef
+      location = "group:README.md">
+   </FileRef>
 </Workspace>

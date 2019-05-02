@@ -15,22 +15,22 @@
 @protocol HPDetectedFileType
 
 /// Internal information for the loader. You can put any value you need here.
-@property (assign) NSUInteger internalId;
-@property (strong) id internalObject;
+@property (assign)           NSUInteger internalId;
+@property (nullable, strong) id internalObject;
 
-@property (strong) NSString *shortDescriptionString;    /// This string can be used by the command line tool to select the loader.
+@property (nullable, strong) NSString *shortDescriptionString;    /// This string can be used by the command line tool to select the loader.
 
-@property (assign) BOOL compositeFile;                  /// The loader handles only a container (like a static library, a ZIP file...) and will delegate the loading process of the contained file to another loader.
+@property (assign)           BOOL compositeFile;                  /// The loader handles only a container (like a static library, a ZIP file...) and will delegate the loading process of the contained file to another loader.
 
-@property (copy)   NSString *fileDescription;
+@property (nullable, copy)   NSString *fileDescription;
 
-@property (assign) BOOL debugData;                      /// set to YES if this is debug data, like a dSYM file for instance.
-@property (assign) DFTAddressWidth addressWidth;
-@property (copy)   NSString *cpuFamily;                 /// Generic CPU family name to discriminate CPU modules. Names may be "intel", "arm", "aarch64" or any other kind.
-@property (copy)   NSString *cpuSubFamily;              /// Modes could be "x86" or "x86_64" for the "intel" family, or "v6", "v7", "v7s", "v7m" for the "arm" family.
+@property (assign)           BOOL debugData;                      /// set to YES if this is debug data, like a dSYM file for instance.
+@property (assign)           DFTAddressWidth addressWidth;
+@property (nullable, copy)   NSString *cpuFamily;                 /// Generic CPU family name to discriminate CPU modules. Names may be "intel", "arm", "aarch64" or any other kind.
+@property (nullable, copy)   NSString *cpuSubFamily;              /// Modes could be "x86" or "x86_64" for the "intel" family, or "v6", "v7", "v7s", "v7m" for the "nullable, arm" family.
 
-@property (strong) NSArray *additionalParameters;       /// An array of NSObject<HPLoaderOptionComponents> that describes some additional parameters to present to the user when using this loader.
+@property (nullable, strong) NSArray *additionalParameters;       /// An array of NSObject<HPLoaderOptionComponents> that describes some additional parameters to present to the user when using this loader.
 
-@property (assign) BOOL lowPriority;
+@property (assign)           BOOL lowPriority;
 
 @end

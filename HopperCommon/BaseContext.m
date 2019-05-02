@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2014-2018, Alessandro Gatti - frob.it
+ Copyright (c) 2014-2019, Alessandro Gatti - frob.it
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -222,6 +222,7 @@
                                     disasm:(DisasmStruct *)d
                                  addNode_p:(BOOL *)addNode_p
                            usingDecompiler:(Decompiler *)decompiler {
+  // 4.5.0 headers expect to return a non-nil value for an unexported type?
   return nil;
 }
 
@@ -231,7 +232,7 @@
                        withCPUMode:(uint8_t)cpuMode
                 usingSyntaxVariant:(NSUInteger)syntax
                              error:(NSError **)error {
-  return nil;
+  return [NSData data];
 }
 
 - (uint8_t)cpuModeForNextInstruction:(DisasmStruct *)disasmStruct {

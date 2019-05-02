@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2014-2018, Alessandro Gatti - frob.it
+ Copyright (c) 2014-2019, Alessandro Gatti - frob.it
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -75,7 +75,7 @@ static NSString *const kCPUModeAccumulator16Index16 = @"A16 I16";
   return self;
 }
 
-- (HopperUUID *)pluginUUID {
+- (NSObject<HPHopperUUID> *)pluginUUID {
   return [self.services UUIDWithString:@"18D19920-2858-11E4-8C21-0800200C9A66"];
 }
 
@@ -96,7 +96,7 @@ static NSString *const kCPUModeAccumulator16Index16 = @"A16 I16";
 }
 
 - (NSString *)pluginCopyright {
-  return @"©2014-2018 Alessandro Gatti";
+  return @"©2014-2019 Alessandro Gatti";
 }
 
 - (NSString *)pluginVersion {
@@ -187,12 +187,7 @@ static NSString *const kCPUModeAccumulator16Index16 = @"A16 I16";
     break;
   }
 
-  return nil;
-}
-
-- (BOOL)registerIndexIsStackPointer:(NSUInteger)reg
-                            ofClass:(RegClass)reg_class {
-  return reg == RegisterS && reg_class == RegClass_GeneralPurposeRegister;
+  return @"";
 }
 
 - (NSData *)nopWithSize:(NSUInteger)size
@@ -204,6 +199,11 @@ static NSString *const kCPUModeAccumulator16Index16 = @"A16 I16";
             andModel:file.cpuSubFamily] nopOpcodeSignature];
 
   return NSDataWithFillerData(opcode, size);
+}
+
+- (int)integerWidthInBitsForCPUFamily:(nullable NSString *)family
+                         andSubFamily:(nullable NSString *)subFamily {
+  return 8;
 }
 
 @end

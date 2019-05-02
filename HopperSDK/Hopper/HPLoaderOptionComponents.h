@@ -21,11 +21,11 @@
 
 @property (assign) BOOL isChecked;
 
-@property (strong) HopperUUID *cpuUUID;
-@property (strong) NSString *cpuFamily;
-@property (strong) NSString *cpuSubFamily;
+@property (nullable, strong) HopperUUID *cpuUUID;
+@property (nullable, strong) NSString *cpuFamily;
+@property (nullable, strong) NSString *cpuSubFamily;
 
-@property (strong) NSArray *stringList;
+@property (nullable, strong) NSArray *stringList;
 @property (assign) NSUInteger selectedStringIndex;
 
 @end

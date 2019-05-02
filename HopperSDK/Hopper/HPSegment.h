@@ -17,7 +17,7 @@
 
 @protocol HPSegment
 
-@property (nonatomic, copy) NSString *segmentName;
+@property (nonatomic, nullable, copy) NSString *segmentName;
 
 @property (nonatomic, assign) uint64_t fileOffset;
 @property (nonatomic, assign) uint64_t fileLength;
@@ -28,8 +28,8 @@
 - (NSUInteger)segmentIndex;
 
 - (BOOL)hasMappedData;
-- (NSData *)mappedData;
-- (void)setMappedData:(NSData *)data;
+- (nullable NSData *)mappedData;
+- (void)setMappedData:(nullable NSData *)data;
 
 - (Address)startAddress;
 - (Address)endAddress;
@@ -38,29 +38,29 @@
 
 - (BOOL)containsVirtualAddress:(Address)virtualAddress;
 
-- (NSArray<NSObject<HPSection> *> *)sections;
+- (nonnull NSArray<NSObject<HPSection> *> *)sections;
 - (NSUInteger)sectionCount;
 
-- (NSObject<HPSegment> *)nextSegment;
-- (NSObject<HPSegment> *)previousSegment;
+- (nullable NSObject<HPSegment> *)nextSegment;
+- (nullable NSObject<HPSegment> *)previousSegment;
 
-- (NSObject<HPSection> *)addSectionAt:(Address)address size:(size_t)length;
-- (NSObject<HPSection> *)addSectionAt:(Address)address toExcludedAddress:(Address)endAddress;
+- (nonnull NSObject<HPSection> *)addSectionAt:(Address)address size:(size_t)length;
+- (nonnull NSObject<HPSection> *)addSectionAt:(Address)address toExcludedAddress:(Address)endAddress;
 
-- (NSObject<HPSection> *)firstSection;
-- (NSObject<HPSection> *)lastSection;
-- (NSObject<HPSection> *)sectionNamed:(NSString *)name;
+- (nullable NSObject<HPSection> *)firstSection;
+- (nullable NSObject<HPSection> *)lastSection;
+- (nullable NSObject<HPSection> *)sectionNamed:(nonnull NSString *)name;
 
 - (NSUInteger)procedureCount;
 - (BOOL)hasProcedureAt:(Address)virtualAddress;
-- (NSObject<HPProcedure> *)procedureAt:(Address)virtualAddress;
-- (NSObject<HPProcedure> *)procedureAtIndex:(NSUInteger)index;
-- (NSInteger)procedureIndex:(NSObject<HPProcedure> *)procedure;
-- (NSArray<NSObject<HPProcedure> *> *)procedures;
+- (nullable NSObject<HPProcedure> *)procedureAt:(Address)virtualAddress;
+- (nullable NSObject<HPProcedure> *)procedureAtIndex:(NSUInteger)index;
+- (NSInteger)procedureIndex:(nonnull NSObject<HPProcedure> *)procedure;
+- (nonnull NSArray<NSObject<HPProcedure> *> *)procedures;
 
 // XREFs
-- (NSArray<NSNumber *> *)referencesToAddress:(Address)virtualAddress;
-- (NSArray<NSNumber *> *)referencesFromAddress:(Address)virtualAddress;
+- (nullable NSArray<NSNumber *> *)referencesToAddress:(Address)virtualAddress;
+- (nullable NSArray<NSNumber *> *)referencesFromAddress:(Address)virtualAddress;
 - (void)removeReferencesOfAddress:(Address)referenced fromAddress:(Address)origin;
 - (void)addReferencesToAddress:(Address)referenced fromAddress:(Address)origin;
 
