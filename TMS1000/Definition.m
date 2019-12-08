@@ -68,8 +68,8 @@
   return @"0.0.1";
 }
 
-- (NSString *)commandLineIdentifier {
-  return @"tms1000";
+- (nonnull NSArray<NSString *> *)commandLineIdentifiers {
+  return @[ @"tms1000" ];
 }
 
 #pragma mark - CPUDefinition protocol implementation

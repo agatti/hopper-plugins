@@ -53,8 +53,8 @@ static NSString *const kSignedSizeErrorFormat =
                atAddress:(Address)address
                   inFile:(NSObject<HPDisassembledFile> *_Nonnull)file {
 
-  if ([file formatForArgument:argument atVirtualAddress:address] !=
-      Format_Default) {
+  if ([file formatForArgument:argument
+             atVirtualAddress:address] != Format_Default) {
     return;
   }
 

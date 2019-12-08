@@ -632,8 +632,9 @@ static const char *kOpcodeNames[OpcodesCount] = {"MOVE", "ADD",  "AND",  "XOR",
                   onFile:(NSObject<HPDisassembledFile> *_Nonnull)file
                 metadata:(InstructionMetadata *_Nonnull)metadata {
 
-  return
-      [self handleALUInstruction:structure withOpcode:opcode metadata:metadata];
+  return [self handleALUInstruction:structure
+                         withOpcode:opcode
+                           metadata:metadata];
 }
 
 - (BOOL)handleADDOpcode:(uint16_t)opcode
@@ -641,8 +642,9 @@ static const char *kOpcodeNames[OpcodesCount] = {"MOVE", "ADD",  "AND",  "XOR",
                  onFile:(NSObject<HPDisassembledFile> *_Nonnull)file
                metadata:(InstructionMetadata *_Nonnull)metadata {
 
-  BOOL result =
-      [self handleALUInstruction:structure withOpcode:opcode metadata:metadata];
+  BOOL result = [self handleALUInstruction:structure
+                                withOpcode:opcode
+                                  metadata:metadata];
 
   if (result) {
     structure->implicitlyReadRegisters[DISASM_OPERAND_GENERAL_REG_INDEX] |=
@@ -657,8 +659,9 @@ static const char *kOpcodeNames[OpcodesCount] = {"MOVE", "ADD",  "AND",  "XOR",
                  onFile:(NSObject<HPDisassembledFile> *_Nonnull)file
                metadata:(InstructionMetadata *_Nonnull)metadata {
 
-  BOOL result =
-      [self handleALUInstruction:structure withOpcode:opcode metadata:metadata];
+  BOOL result = [self handleALUInstruction:structure
+                                withOpcode:opcode
+                                  metadata:metadata];
 
   if (result) {
     structure->implicitlyReadRegisters[DISASM_OPERAND_GENERAL_REG_INDEX] |=
@@ -673,8 +676,9 @@ static const char *kOpcodeNames[OpcodesCount] = {"MOVE", "ADD",  "AND",  "XOR",
                  onFile:(NSObject<HPDisassembledFile> *_Nonnull)file
                metadata:(InstructionMetadata *_Nonnull)metadata {
 
-  BOOL result =
-      [self handleALUInstruction:structure withOpcode:opcode metadata:metadata];
+  BOOL result = [self handleALUInstruction:structure
+                                withOpcode:opcode
+                                  metadata:metadata];
 
   if (result) {
     structure->implicitlyReadRegisters[DISASM_OPERAND_GENERAL_REG_INDEX] |=
@@ -689,8 +693,9 @@ static const char *kOpcodeNames[OpcodesCount] = {"MOVE", "ADD",  "AND",  "XOR",
                  onFile:(NSObject<HPDisassembledFile> *_Nonnull)file
                metadata:(InstructionMetadata *_Nonnull)metadata {
 
-  return
-      [self handleXECInstruction:structure withOpcode:opcode metadata:metadata];
+  return [self handleXECInstruction:structure
+                         withOpcode:opcode
+                           metadata:metadata];
 }
 
 - (BOOL)handleNZTOpcode:(uint16_t)opcode
@@ -698,8 +703,9 @@ static const char *kOpcodeNames[OpcodesCount] = {"MOVE", "ADD",  "AND",  "XOR",
                  onFile:(NSObject<HPDisassembledFile> *_Nonnull)file
                metadata:(InstructionMetadata *_Nonnull)metadata {
 
-  return
-      [self handleNZTInstruction:structure withOpcode:opcode metadata:metadata];
+  return [self handleNZTInstruction:structure
+                         withOpcode:opcode
+                           metadata:metadata];
 }
 
 - (BOOL)handleXMITOpcode:(uint16_t)opcode
@@ -717,8 +723,9 @@ static const char *kOpcodeNames[OpcodesCount] = {"MOVE", "ADD",  "AND",  "XOR",
                  onFile:(__unused NSObject<HPDisassembledFile> *_Nonnull)file
                metadata:(InstructionMetadata *_Nonnull)metadata {
 
-  return
-      [self handleJMPInstruction:structure withOpcode:opcode metadata:metadata];
+  return [self handleJMPInstruction:structure
+                         withOpcode:opcode
+                           metadata:metadata];
 }
 
 @end

@@ -34,9 +34,9 @@
 #import "ModelManager.h"
 #import "NSDataWithFill.h"
 
-#if !defined(HOPPER_CURRENT_SDK_VERSION) || HOPPER_CURRENT_SDK_VERSION != 2
+#if !defined(HOPPER_CURRENT_SDK_VERSION) || HOPPER_CURRENT_SDK_VERSION != 3
 #error "Unsupported SDK version"
-#endif /* !HOPPER_CURRENT_SDK_VERSION || HOPPER_CURRENT_SDK_VERSION != 2 */
+#endif /* !HOPPER_CURRENT_SDK_VERSION || HOPPER_CURRENT_SDK_VERSION != 3 */
 
 #define HopperUtilities ItFrobHopperCommonHopperUtilities
 #define NSDataWithFiller ItFrobHopperCommonNSDataWithFiller

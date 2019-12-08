@@ -65,8 +65,8 @@
   return @"0.2.2";
 }
 
-- (NSString *)commandLineIdentifier {
-  return @"6502";
+- (nonnull NSArray<NSString *> *)commandLineIdentifiers {
+  return @[ @"6502" ];
 }
 
 #pragma mark - CPUDefinition protocol implementation

@@ -61,8 +61,9 @@ static const char *kRegisterNames[] = {
 
 - (instancetype)initWithHopperServices:(NSObject<HPHopperServices> *)services {
   if (self = [super initWithHopperServices:services]) {
-    _formatterInstances =
-        @ [[ItFrobHopper8x300ASFormat new], [ItFrobHopper8x300MCCAPFormat new]];
+    _formatterInstances = @[
+      [ItFrobHopper8x300ASFormat new], [ItFrobHopper8x300MCCAPFormat new]
+    ];
   }
 
   return self;
@@ -96,8 +97,8 @@ static const char *kRegisterNames[] = {
   return @"0.1.1";
 }
 
-- (NSString *)commandLineIdentifier {
-  return @"8x300";
+- (nonnull NSArray<NSString *> *)commandLineIdentifiers {
+  return @[ @"8x300" ];
 }
 
 #pragma mark - CPUDefinition protocol implementation

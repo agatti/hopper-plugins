@@ -92,8 +92,8 @@ static NSString *kUnmappedSectionName = @"BSS";
   return @"0.0.2";
 }
 
-- (NSString *)commandLineIdentifier {
-  return @"addressspace";
+- (nonnull NSArray<NSString *> *)commandLineIdentifiers {
+  return @[ @"addressspace" ];
 }
 
 + (int)sdkVersion {

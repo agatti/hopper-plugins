@@ -222,7 +222,7 @@
                                     disasm:(DisasmStruct *)d
                                  addNode_p:(BOOL *)addNode_p
                            usingDecompiler:(Decompiler *)decompiler {
-  // 4.5.0 headers expect to return a non-nil value for an unexported type?
+  // Headers expect to return a non-nil value for an unexported type?
   return nil;
 }
 

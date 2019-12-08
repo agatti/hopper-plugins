@@ -103,8 +103,8 @@ static NSString *const kCPUModeAccumulator16Index16 = @"A16 I16";
   return @"0.2.1";
 }
 
-- (NSString *)commandLineIdentifier {
-  return @"65816";
+- (nonnull NSArray<NSString *> *)commandLineIdentifiers {
+  return @[ @"65816" ];
 }
 
 #pragma mark - CPUDefinition protocol implementation

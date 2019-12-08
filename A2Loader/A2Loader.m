@@ -79,8 +79,8 @@ static NSString *kCPUSubFamily = @"65c02";
   return @"0.0.1";
 }
 
-- (NSString *)commandLineIdentifier {
-  return @"a2";
+- (nonnull NSArray<NSString *> *)commandLineIdentifiers {
+  return @[ @"a2" ];
 }
 
 + (int)sdkVersion {

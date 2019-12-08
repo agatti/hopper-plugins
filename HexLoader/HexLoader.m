@@ -169,8 +169,8 @@ static const uint8_t kHexTable[16] = {'0', '1', '2', '3', '4', '5', '6', '7',
   return @"0.0.1";
 }
 
-- (NSString *)commandLineIdentifier {
-  return @"hex";
+- (nonnull NSArray<NSString *> *)commandLineIdentifiers {
+  return @[ @"hex" ];
 }
 
 + (int)sdkVersion {

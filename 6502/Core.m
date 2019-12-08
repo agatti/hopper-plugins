@@ -393,9 +393,9 @@
   strcpy(structure->instruction.unconditionalMnemonic,
          instruction.mnemonic->name);
   structure->implicitlyReadRegisters[DISASM_OPERAND_GENERAL_REG_INDEX] =
-      instruction.opcode->readRegisters;
+      (uint32_t) instruction.opcode->readRegisters;
   structure->implicitlyWrittenRegisters[DISASM_OPERAND_GENERAL_REG_INDEX] =
-      instruction.opcode->writtenRegisters;
+      (uint32_t) instruction.opcode->writtenRegisters;
   structure->instruction.length =
       (uint8_t)kOpcodeLengths[instruction.opcode->addressMode];
 
@@ -404,8 +404,9 @@
   if (instruction.mnemonic->branchType == DISASM_BRANCH_NONE) {
     [self decodeNonBranch:structure forInstruction:&instruction inFile:file];
   } else {
-    if (!
-        [self decodeBranch:structure forInstruction:&instruction inFile:file]) {
+    if (![self decodeBranch:structure
+             forInstruction:&instruction
+                     inFile:file]) {
       return DISASM_UNKNOWN_OPCODE;
     }
   }

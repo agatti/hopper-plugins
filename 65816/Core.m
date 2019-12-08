@@ -171,9 +171,9 @@
   }
 
   structure->implicitlyReadRegisters[DISASM_OPERAND_GENERAL_REG_INDEX] =
-      opcode->readRegisters;
+      (uint32_t) opcode->readRegisters;
   structure->implicitlyWrittenRegisters[DISASM_OPERAND_GENERAL_REG_INDEX] =
-      opcode->writtenRegisters;
+      (uint32_t) opcode->writtenRegisters;
   structure->instruction.length = (uint8_t)kOpcodeLength[opcode->addressMode];
 
   if ((opcode->addressMode == ModeImmediate) && (opcode->type != OpcodeREP) &&

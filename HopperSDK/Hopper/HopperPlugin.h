@@ -13,7 +13,7 @@
 #import <Foundation/Foundation.h>
 #import "CommonTypes.h"
 
-#define HOPPER_CURRENT_SDK_VERSION  2
+#define HOPPER_CURRENT_SDK_VERSION  3
 
 @protocol HPHopperUUID;
 @protocol HPHopperServices;
@@ -38,6 +38,6 @@
 /// Returns a string identifying the plugin for the command line tool.
 /// For instance, the Mach-O loader returns "Mach-O".
 /// You should avoid spaces in order to avoid quotes in the command line.
-- (nonnull NSString *)commandLineIdentifier;
+- (nonnull NSArray<NSString *> *)commandLineIdentifiers;
 
 @end
