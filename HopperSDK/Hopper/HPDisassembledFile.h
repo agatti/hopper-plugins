@@ -66,6 +66,7 @@ typedef void (^FileLoadingCallbackInfo)(NSString * _Nonnull desc, float progress
 
 - (nonnull NSObject<HPSegment> *)addSegmentAt:(Address)address size:(size_t)length;
 - (nonnull NSObject<HPSegment> *)addSegmentAt:(Address)address toExcludedAddress:(Address)endAddress;
+- (void)removeSegment:(nonnull NSObject<HPSegment> *)segment;
 
 - (nullable NSObject<HPSegment> *)firstSegment;
 - (nullable NSObject<HPSegment> *)lastSegment;

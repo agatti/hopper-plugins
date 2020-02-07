@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2014-2019, Alessandro Gatti - frob.it
+ Copyright (c) 2014-2020, Alessandro Gatti - frob.it
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -162,7 +162,7 @@ static const uint8_t kHexTable[16] = {'0', '1', '2', '3', '4', '5', '6', '7',
 }
 
 - (NSString *)pluginCopyright {
-  return @"©2014-2019 Alessandro Gatti";
+  return @"©2014-2020 Alessandro Gatti";
 }
 
 - (NSString *)pluginVersion {

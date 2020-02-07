@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2014-2019, Alessandro Gatti - frob.it
+ Copyright (c) 2014-2020, Alessandro Gatti - frob.it
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -85,7 +85,7 @@ static NSString *kUnmappedSectionName = @"BSS";
 }
 
 - (NSString *)pluginCopyright {
-  return @"©2014-2019 Alessandro Gatti";
+  return @"©2014-2020 Alessandro Gatti";
 }
 
 - (NSString *)pluginVersion {
