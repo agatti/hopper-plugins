@@ -92,10 +92,10 @@ CPU backends currently supported: 6502, 65C02, 65N02, 65R02, 65S02, HuC6280, MEL
 <tr><td>8501</td><td>Generic &rarr; 6502</td><td>N/A</td></tr>
 <tr><td>8502</td><td>Generic &rarr; 6502</td><td>N/A</td></tr>
 <tr><td>8510</td><td>Generic &rarr; 6502</td><td>N/A</td></tr>
-<tr><td>NCR</td><td>NCR65C02</td><td>Generic &rarr; 65C02</td><td><a href="pdf.datasheetarchive.com/datasheetsmain/Datasheets-110/DSAP0017899.pdf">Datasheet</a></td></tr>
-<tr><td rowspan="3">Novatek</td><td>NT6880</td><td>Generic &rarr; 6502</td><td><a href="http://pdf.datasheetarchive.com/indexerfiles/Datasheet-022/DSA00385399.pdf">Datasheet</td></tr>
-<tr><td>NT6881</td><td>Generic &rarr; 6502</td><td><a href="http://pdf.datasheetarchive.com/indexerfiles/Datasheet-06/DSA0092333.pdf">Datasheet</td></tr>
-<tr><td>NT68P1</td><td>Generic &rarr; 6502</td><td><a href="http://pdf.datasheetarchive.com/indexerfiles/Datasheet-015/DSA00259184.pdf">Datasheet</td></tr>
+<tr><td>NCR</td><td>NCR65C02</td><td>Generic &rarr; 65C02</td><td><a href="http://pdf.datasheetarchive.com/datasheetsmain/Datasheets-110/DSAP0017899.pdf">Datasheet</a></td></tr>
+<tr><td rowspan="3">Novatek</td><td>NT6880</td><td>Generic &rarr; 6502</td><td><a href="http://pdf.datasheetarchive.com/indexerfiles/Datasheet-022/DSA00385399.pdf">Datasheet</a></td></tr>
+<tr><td>NT6881</td><td>Generic &rarr; 6502</td><td><a href="http://pdf.datasheetarchive.com/indexerfiles/Datasheet-06/DSA0092333.pdf">Datasheet</a></td></tr>
+<tr><td>NT68P1</td><td>Generic &rarr; 6502</td><td><a href="http://pdf.datasheetarchive.com/indexerfiles/Datasheet-015/DSA00259184.pdf">Datasheet</a></td></tr>
 <tr><td rowspan="3">Ricoh</td><td>RP2A03</td><td>Generic &rarr; 6502</td><td>N/A</td></tr>
 <tr><td>RP2A07</td><td>Generic &rarr; 6502</td><td>N/A</td></tr>
 <tr><td>RP65C02</td><td>Generic &rarr; 65C02</td><td>N/A</td></tr>
@@ -170,7 +170,7 @@ CPU backends currently supported: 6502, 65C02, 65N02, 65R02, 65S02, HuC6280, MEL
 <tr><td>SPL31A</td><td>Sunplus &rarr; SunPlus</td><td><a href="http://read.pudn.com/downloads89/ebook/340950/6502%E6%8C%87%E4%BB%A4/sunplus_6502.pdf">Datasheet</a></td></tr>
 <tr><td>SPL60A</td><td>Sunplus &rarr; SunPlus</td><td><a href="http://read.pudn.com/downloads89/ebook/340950/6502%E6%8C%87%E4%BB%A4/sunplus_6502.pdf">Datasheet</a></td></tr>
 <tr><td>SPL190A</td><td>Sunplus &rarr; SunPlus</td><td><a href="http://read.pudn.com/downloads89/ebook/340950/6502%E6%8C%87%E4%BB%A4/sunplus_6502.pdf">Datasheet</a></td></tr>
-<td>SPMC65P1504A</td><td>Generic &rarr; 6502</td><td><a href="http://www.chinaeds.com/zl/%B3%A3%D3%C3IC/S%CF%B5%C1%D0/SP/SPmc65p1504_1502_v11_cn.pdf">Datasheet</a></td></tr>
+<tr><td>SPMC65P1504A</td><td>Generic &rarr; 6502</td><td><a href="http://www.chinaeds.com/zl/%B3%A3%D3%C3IC/S%CF%B5%C1%D0/SP/SPmc65p1504_1502_v11_cn.pdf">Datasheet</a></td></tr>
 <tr><td>SPMC65P1502A</td><td>Generic &rarr; 6502</td><td><a href="http://www.chinaeds.com/zl/%B3%A3%D3%C3IC/S%CF%B5%C1%D0/SP/SPmc65p1504_1502_v11_cn.pdf">Datasheet</a></td></tr>
 <tr><td rowspan="11">Synertek</td><td>SY6502</td><td>Generic &rarr; 6502</td><td><a href="http://www.happytrees.org/main-files/datasheets/datasheet-Synertek-SY6500.pdf">Datasheet</a></td></tr>
 <tr><td>SY6503</td><td>Generic &rarr; 6502</td><td><a href="http://www.happytrees.org/main-files/datasheets/datasheet-Synertek-SY6500.pdf">Datasheet</a></td></tr>
@@ -197,10 +197,10 @@ CPU backends currently supported: 6502, 65C02, 65N02, 65R02, 65S02, HuC6280, MEL
 <tr><td>WT6148</td><td>Generic &rarr; 6502</td><td><a href="http://pdf.datasheetarchive.com/indexerfiles/Datasheet-03/DSA0041318.pdf">Datasheet</a></td></tr>
 <tr><td>WT6160</td><td>Generic &rarr; 6502</td><td><a href="http://pdf.datasheetarchive.com/indexerfiles/Datasheet-03/DSA0041318.pdf">Datasheet</a></td></tr>
 <tr><td>WT62P2</td><td>Generic &rarr; 6502</td><td><a href="http://pdf.datasheetarchive.com/indexerfiles/Datasheet-05/DSA0078955.pdf">Datasheet</a></td></tr>
-<tr><td>WT65F1</td><td>Generic &rarr; 6502</td><td><a href="http://pdf.datasheetarchive.com/datasheetsmain/Datasheets-35/DSA-696231.pdf">Datasheet</td></tr>
-<tr><td>WT6511</td><td>Generic &rarr; 6502</td><td><a href="#">N/A</td></tr>
-<tr><td>WT6512</td><td>Generic &rarr; 6502</td><td><a href="#">N/A</td></tr>
-<tr><td>WT6512F</td><td>Generic &rarr; 6502</td><td><a href="#">N/A</td></tr>
+<tr><td>WT65F1</td><td>Generic &rarr; 6502</td><td><a href="http://pdf.datasheetarchive.com/datasheetsmain/Datasheets-35/DSA-696231.pdf">Datasheet</a></td></tr>
+<tr><td>WT6511</td><td>Generic &rarr; 6502</td><td><a href="#">N/A</a></td></tr>
+<tr><td>WT6512</td><td>Generic &rarr; 6502</td><td><a href="#">N/A</a></td></tr>
+<tr><td>WT6512F</td><td>Generic &rarr; 6502</td><td><a href="#">N/A</a></td></tr>
 </tbody>
 </table>
 </details>
@@ -299,7 +299,7 @@ CPU backends currently supported: 8x300, 8x305.
 <tr><th>Manufacturer</th><th>Model</th><th>Provider</th><th>Datasheet</th></tr>
 </thead>
 <tbody>
-<tr><td rowspan="2">AMD</td><td>AM29x305</td><td>Generic &rarr; 8x305</td><td><a href="http://pdf.datasheetarchive.com/datasheetsmain/Datasheets-115/DSAP00756.pdf">Datasheet</td></tr>
+<tr><td rowspan="2">AMD</td><td>AM29x305</td><td>Generic &rarr; 8x305</td><td><a href="http://pdf.datasheetarchive.com/datasheetsmain/Datasheets-115/DSAP00756.pdf">Datasheet</a></td></tr>
 <tr><td>AM29x305A</td><td>Generic &rarr; 8x305</td><td><a href="http://pdf.datasheetarchive.com/datasheetsmain/Datasheets-115/DSAP00756.pdf">Datasheet</a></td></tr>
 <tr><td>Lansdale</td><td>SL8X305</td><td>Generic &rarr; 8x305</td><td><a href="http://www.lansdale.com/datasheets/sl8x305_rev0.pdf">Datasheet</a></td></tr>
 <tr><td>Philips</td><td>S8X305I</td><td>Generic &rarr; 8x305</td><td><a href="#">N/A</a></td></tr>
@@ -344,12 +344,12 @@ CPU backends currently supported: TMS1000, TMS1100.
 <tr><th>Manufacturer</th><th>Model</th><th>Provider</th><th>Datasheet</th></tr>
 </thead>
 <tbody>
-<tr><td rowspan="6">Texas Instruments</td><td>TMS1000</td><td>Texas Instruments &rarr; TMS1000</td><td><a href="https://en.wikichip.org/w/images/f/ff/TMS1000_Series_Programmer%27s_reference_manual.pdf">Datasheet</td></tr>
-<tr><td>TMS1070</td><td>Texas Instruments &rarr; TMS1000</td><td><a href="https://en.wikichip.org/w/images/f/ff/TMS1000_Series_Programmer%27s_reference_manual.pdf">Datasheet</td></tr>
-<tr><td>TMS1100</td><td>Texas Instruments &rarr; TMS1100</td><td><a href="https://en.wikichip.org/w/images/f/ff/TMS1000_Series_Programmer%27s_reference_manual.pdf">Datasheet</td></tr>
-<tr><td>TMS1200</td><td>Texas Instruments &rarr; TMS1000</td><td><a href="https://en.wikichip.org/w/images/f/ff/TMS1000_Series_Programmer%27s_reference_manual.pdf">Datasheet</td></tr>
-<tr><td>TMS1270</td><td>Texas Instruments &rarr; TMS1000</td><td><a href="https://en.wikichip.org/w/images/f/ff/TMS1000_Series_Programmer%27s_reference_manual.pdf">Datasheet</td></tr>
-<tr><td>TMS1300</td><td>Texas Instruments &rarr; TMS1100</td><td><a href="https://en.wikichip.org/w/images/f/ff/TMS1000_Series_Programmer%27s_reference_manual.pdf">Datasheet</td></tr>
+<tr><td rowspan="6">Texas Instruments</td><td>TMS1000</td><td>Texas Instruments &rarr; TMS1000</td><td><a href="https://en.wikichip.org/w/images/f/ff/TMS1000_Series_Programmer%27s_reference_manual.pdf">Datasheet</a></td></tr>
+<tr><td>TMS1070</td><td>Texas Instruments &rarr; TMS1000</td><td><a href="https://en.wikichip.org/w/images/f/ff/TMS1000_Series_Programmer%27s_reference_manual.pdf">Datasheet</a></td></tr>
+<tr><td>TMS1100</td><td>Texas Instruments &rarr; TMS1100</td><td><a href="https://en.wikichip.org/w/images/f/ff/TMS1000_Series_Programmer%27s_reference_manual.pdf">Datasheet</a></td></tr>
+<tr><td>TMS1200</td><td>Texas Instruments &rarr; TMS1000</td><td><a href="https://en.wikichip.org/w/images/f/ff/TMS1000_Series_Programmer%27s_reference_manual.pdf">Datasheet</a></td></tr>
+<tr><td>TMS1270</td><td>Texas Instruments &rarr; TMS1000</td><td><a href="https://en.wikichip.org/w/images/f/ff/TMS1000_Series_Programmer%27s_reference_manual.pdf">Datasheet</a></td></tr>
+<tr><td>TMS1300</td><td>Texas Instruments &rarr; TMS1100</td><td><a href="https://en.wikichip.org/w/images/f/ff/TMS1000_Series_Programmer%27s_reference_manual.pdf">Datasheet</a></td></tr>
 </table>
 </details>
 
@@ -451,7 +451,7 @@ This plugin can be referenced from the command line tool using `addressspace` as
 
 Checkout from Git, open `HopperPlugins.xcworkspace` in Xcode/AppCode, select the plugin you are interested in and then let Xcode/AppCode build the associated project; the plugin will be automatically copied to the appropriate paths (`~/Library/Application Support/Hopper/Plugins/v4/{CPUs,Loaders,Tools}`).  Once done, please close any open instances of Hopper and restart them.  That's all there is to it.
 
-Keep in mind that these plugins require **Hopper 4.5.19** or later to work.  They may work on older versions but they are neither tested nor supported on anything older than v4.5.19.
+Keep in mind that these plugins require **Hopper 4.7.0** or later to work.  They may work on older versions but they are neither tested nor supported on anything older than v4.7.0.
 
 If you are unable or unwilling to update your Hopper installation from v3 to v4 then build the code marked by the `v3api` git tag.  However, since the Hopper author allowed free upgrades from v3 licences to v4 licenses, v3 plugins are effectively unsupported as of v4 release.  It is strongly suggested to update your Hopper installation at your earliest opportunity.
 

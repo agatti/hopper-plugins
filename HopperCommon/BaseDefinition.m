@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2014-2020, Alessandro Gatti - frob.it
+ Copyright (c) 2014-2021, Alessandro Gatti - frob.it
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without

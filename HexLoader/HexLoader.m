@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2014-2020, Alessandro Gatti - frob.it
+ Copyright (c) 2014-2021, Alessandro Gatti - frob.it
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -162,7 +162,7 @@ static const uint8_t kHexTable[16] = {'0', '1', '2', '3', '4', '5', '6', '7',
 }
 
 - (NSString *)pluginCopyright {
-  return @"©2014-2020 Alessandro Gatti";
+  return @"©2014-2021 Alessandro Gatti";
 }
 
 - (NSString *)pluginVersion {
@@ -374,13 +374,17 @@ static const uint8_t kHexTable[16] = {'0', '1', '2', '3', '4', '5', '6', '7',
   return @[ detectedType ];
 }
 
-- (nullable NSData *)
-          extractFromData:(nonnull NSData *)data
-    usingDetectedFileType:(nonnull NSObject<HPDetectedFileType> *)fileType
-       returnAdjustOffset:(nullable uint64_t *)adjustOffset
-     returnAdjustFilename:
-         (NSString *__autoreleasing _Nullable *_Nullable)newFilename {
+- (nullable NSData *)extractFromData:(NSData *)data
+               usingDetectedFileType:(NSObject <HPDetectedFileType> *)fileType
+                    originalFileName:(NSString *)filename
+                  returnAdjustOffset:(uint64_t *)adjustOffset
+                returnAdjustFilename:(__autoreleasing NSString **)newFilename {
   return nil;
+}
+
+- (void)setupFile:(NSObject <HPDisassembledFile> *)file
+afterExtractionOf:(NSString *)filename
+             type:(NSObject <HPDetectedFileType> *)fileType {
 }
 
 - (HexFileType)detectFileType:(NSData *_Nonnull)data {

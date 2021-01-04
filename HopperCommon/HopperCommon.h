@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2014-2020, Alessandro Gatti - frob.it
+ Copyright (c) 2014-2021, Alessandro Gatti - frob.it
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -34,9 +34,9 @@
 #import "ModelManager.h"
 #import "NSDataWithFill.h"
 
-#if !defined(HOPPER_CURRENT_SDK_VERSION) || HOPPER_CURRENT_SDK_VERSION != 3
+#if !defined(HOPPER_CURRENT_SDK_VERSION) || HOPPER_CURRENT_SDK_VERSION != 4
 #error "Unsupported SDK version"
-#endif /* !HOPPER_CURRENT_SDK_VERSION || HOPPER_CURRENT_SDK_VERSION != 3 */
+#endif /* !HOPPER_CURRENT_SDK_VERSION || HOPPER_CURRENT_SDK_VERSION != 4 */
 
 #define HopperUtilities ItFrobHopperCommonHopperUtilities
 #define NSDataWithFiller ItFrobHopperCommonNSDataWithFiller

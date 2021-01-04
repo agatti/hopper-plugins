@@ -1,6 +1,5 @@
-#import <limits.h>
 /*
- Copyright (c) 2014-2020, Alessandro Gatti - frob.it
+ Copyright (c) 2014-2021, Alessandro Gatti - frob.it
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -24,6 +23,8 @@
  OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+
+#import <limits.h>
 
 #import "Core.h"
 #import "InstructionFormatter.h"

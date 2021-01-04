@@ -13,7 +13,7 @@
 #import <Foundation/Foundation.h>
 #import "CommonTypes.h"
 
-#define HOPPER_CURRENT_SDK_VERSION  3
+#define HOPPER_CURRENT_SDK_VERSION  4
 
 @protocol HPHopperUUID;
 @protocol HPHopperServices;
